@@ -1,0 +1,47 @@
+.sidenav-area {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+  
+    .mat-toolbar {
+      flex: 0;
+    }
+  
+    .mat-sidenav-container {
+      flex: 1;
+    }
+  
+    .sidenav-content {
+      padding: 32px;
+    }
+  
+    .demo-filler-content {
+      padding: 60px;
+    }
+  }
+
+  .toolbar {
+    padding: 0px;
+  
+    .toolbar-icon {
+      padding: 0 14px;
+    }
+  
+    .fill-remaining {
+      flex: 1 1 auto;
+    }
+  
+  }
+  
+  md-sidenav {
+    width: 200px;
+  }
+
+
+  .mat-list, .mat-nav-list, .mat-selection-list {
+    top-padding: 0px;
+  }

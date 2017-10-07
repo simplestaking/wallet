@@ -1,13 +1,66 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="button-row">
-  <button mat-button>Basic</button>
-  <button mat-button color="primary">Primary</button>
-  <button mat-button color="accent">Accent</button>
-  <button mat-button color="warn">Warn</button>
-  <button mat-button disabled>Disabled</button>
-  <a mat-button routerLink=".">Link</a>
+<div class="sidenav-area">
+  <!-- Header -->
+  <div class="toolbar">
+    <mat-toolbar color="primary" *ngIf="showHeader && !coverHeader">
+      <button mat-icon-button>
+              <mat-icon (click)="start.toggle()" >menu</mat-icon>
+          </button>
+      <span> simplestaking.com</span>
+    </mat-toolbar>
+  </div>
+
+  <!-- Sidebar -->
+  <mat-sidenav-container>
+    <mat-sidenav #start mode="side" opened="true" [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom">
+      <mat-nav-list>
+        <a mat-list-item href="/balance">Balance</a>
+        <a mat-list-item href="/accounts">Accounts</a>
+        <a mat-list-item href="/transactions">Transactions</a>
+        <a mat-list-item href="/settings">Settings</a>
+      </mat-nav-list>
+
+      <mat-list>
+        <mat-list-item>
+          <mat-icon>account_balance_wallet</mat-icon>
+          <span>Balance</span>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon>account_circle</mat-icon>
+          <span>Account</span>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon>swap_horiz</mat-icon>
+          <span>Transactions</span>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </mat-list-item>
+
+      </mat-list>
+
+    </mat-sidenav>
+
+    <!-- Content -->
+    <mat-sidenav-content>
+      <mat-toolbar *ngIf="showHeader && coverHeader">Header</mat-toolbar>
+      <div class="sidenav-content">
+
+        <div>
+          <mat-form-field hintLabel="Max 10 characters">
+            <input matInput #input maxlength="10" placeholder="Enter mnemmonic">
+            <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+          </mat-form-field>
+          <br>
+         
+        </div>
+
+        <button mat-raised-button color="warn">Create account</button>
+
+
+      </div>
+      <mat-toolbar *ngIf="showFooter && coverHeader">Footer</mat-toolbar>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <mat-toolbar *ngIf="showFooter && !coverHeader">Footer</mat-toolbar>
 </div>
-
-
-
-
