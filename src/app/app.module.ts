@@ -1,9 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component'
+import { AppRouting } from './app.routing'
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -37,14 +40,26 @@ import {
   MatStepperModule,
 } from '@angular/material';
 
+import { BalanceComponent } from './balance/balance.component';
+import { AccountComponent } from './account/account.component';
+import { TransactionComponent } from './transaction/transaction.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BalanceComponent,
+    AccountComponent,
+    TransactionComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
     NoopAnimationsModule,
+    RouterModule.forRoot(AppRouting,{
+      //useHash:true
+    }),
+
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,

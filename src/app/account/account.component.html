@@ -1,0 +1,14 @@
+<p>
+  account works!
+</p>
+<div>
+
+  <mat-form-field hintLabel="Max 10 characters">
+    <input matInput #input maxlength="10" placeholder="Enter mnemmonic">
+    <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+  </mat-form-field>
+  <br>
+
+</div>
+
+<button mat-raised-button color="warn">Create account</button>
