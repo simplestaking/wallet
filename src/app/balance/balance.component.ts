@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-balance',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BalanceComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
   ngOnInit() {
+  }
+
+  getBalance() {
+    console.log('[balance][get]')
+    this.store.dispatch({
+      type:'BALANCE_GET'
+    })
   }
 
 }

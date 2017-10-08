@@ -1,10 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component'
 import { AppRouting } from './app.routing'
-
+import { reducers, metaReducers } from './app.reducers';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -56,9 +61,16 @@ import { SettingsComponent } from './settings/settings.component';
   imports: [
     BrowserModule,
     NoopAnimationsModule,
-    RouterModule.forRoot(AppRouting,{
+
+    RouterModule.forRoot(AppRouting, {
       //useHash:true
     }),
+
+    // Set reducers  
+    StoreModule.forRoot(reducers, { metaReducers }),
+
+    // https://github.com/zalmoxisus/redux-devtools-extension
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
 
     MatAutocompleteModule,
     MatButtonModule,
