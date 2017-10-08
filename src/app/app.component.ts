@@ -21,7 +21,6 @@ export class AppComponent {
   ngOnInit() {
     this.app$ = this.store.select('app')
     this.app$.subscribe(data => this.app = data)
-    
   }
 
   get fixedTop() { return this.fixed && this.showHeader && !this.coverHeader ? 64 : 0; }

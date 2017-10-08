@@ -34,7 +34,7 @@ import {
   export interface State {
     app: any;
     balance: fromBalance.State;    
-    account: fromAccount.State;
+    account: any;
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
   }
   

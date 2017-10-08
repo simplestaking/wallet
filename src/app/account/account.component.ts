@@ -8,9 +8,13 @@ import { Store } from '@ngrx/store'
 })
 export class AccountComponent implements OnInit {
 
+  private account
+  private account$
   constructor(private store: Store<any>) { }
 
   ngOnInit() {
+    this.account$ = this.store.select('account')
+    this.account$.subscribe(data => this.account = data)
   }
 
   generateMnemonic(){
@@ -24,5 +28,5 @@ export class AccountComponent implements OnInit {
   create(){
     this.store.dispatch({type:"ACCOUNT_CREATE"})    
   }
-  
+
 }
