@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -10,6 +11,9 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component'
 import { AppRouting } from './app.routing'
 import { reducers, metaReducers } from './app.reducers';
+
+import { AllEffects } from './app.effects'
+import { BalanceEffects } from './balance/balance.effects'
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -60,6 +64,7 @@ import { SettingsComponent } from './settings/settings.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     NoopAnimationsModule,
 
     RouterModule.forRoot(AppRouting, {
@@ -68,7 +73,13 @@ import { SettingsComponent } from './settings/settings.component';
 
     // Set reducers  
     StoreModule.forRoot(reducers, { metaReducers }),
-
+    
+    // Set side effects
+    EffectsModule.forRoot([
+      AllEffects,
+      BalanceEffects
+    ]),
+    
     // https://github.com/zalmoxisus/redux-devtools-extension
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 

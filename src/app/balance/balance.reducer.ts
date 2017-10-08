@@ -12,8 +12,13 @@ export function reducer(state = initialState, action): State {
             return {
                 value: 10,
             };
+        
+        case 'BALANCE_GET_SUCCESS':
+            return {
+                value: 20,
+            };
 
-        default:
+            default:
             return state;
     }
 }

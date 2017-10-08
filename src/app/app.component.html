@@ -3,9 +3,27 @@
   <div class="toolbar">
     <mat-toolbar color="primary" *ngIf="showHeader && !coverHeader">
       <button mat-icon-button>
-              <mat-icon (click)="start.toggle()" >menu</mat-icon>
-          </button>
+        <mat-icon (click)="start.toggle()">menu</mat-icon>
+      </button>
       <span> simplestaking.com</span>
+      <span class="filler-content"></span>
+
+      <mat-icon 
+        *ngIf="app.node.isConnected"
+        matTooltip="Client is connected to node! {{app.node.timestamp}}"
+        matTooltipPosition="left"
+        >done</mat-icon>
+
+      <mat-icon color="warn"
+        *ngIf="!app.node.isConnected" 
+        matTooltip="Node is out of sync! {{app.node.timestamp}}"
+        matTooltipPosition="left" >error</mat-icon>
+
+      <mat-icon color="accent"
+        *ngIf="!app.node.isUpdated" 
+        matTooltip="Client is disconected from node! {{app.node.timestamp}}"
+        matTooltipPosition="left" >warning</mat-icon>
+
     </mat-toolbar>
   </div>
 
@@ -26,8 +44,8 @@
       <mat-toolbar *ngIf="showHeader && coverHeader">Header</mat-toolbar>
       <div class="sidenav-content">
 
- 
-        <router-outlet></router-outlet>        
+
+        <router-outlet></router-outlet>
 
       </div>
       <mat-toolbar *ngIf="showFooter && coverHeader">Footer</mat-toolbar>

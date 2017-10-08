@@ -22,7 +22,8 @@ import {
    * the state of the reducer plus any selector functions. The `* as`
    * notation packages up all of the exports into a single object.
    */
-  
+
+  import * as fromApp from './app.reducer';  
   import * as fromBalance from './balance/balance.reducer';
   import * as fromAccount from './account/account.reducer';
   
@@ -31,6 +32,7 @@ import {
    * our top level state interface is just a map of keys to inner state types.
    */
   export interface State {
+    app: any;
     balance: fromBalance.State;    
     account: fromAccount.State;
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
@@ -42,6 +44,7 @@ import {
    * and the current or initial state and return a new immutable state.
    */
   export const reducers: ActionReducerMap<State> = {
+    app: fromApp.reducer,
     balance: fromBalance.reducer,    
     account: fromAccount.reducer,
     routerReducer: fromRouter.routerReducer,
