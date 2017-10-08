@@ -1,14 +1,23 @@
-<p>
-  account works!
-</p>
-<div>
+<div class="create-account">
 
-  <mat-form-field hintLabel="Max 10 characters">
-    <input matInput #input maxlength="10" placeholder="Enter mnemmonic">
-    <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+  <mat-form-field>
+    <textarea matInput placeholder="Mnemonic"></textarea>
   </mat-form-field>
-  <br>
+    
+  <mat-form-field hintLabel="Max 32 characters">
+    <input matInput #input maxlength="32" placeholder="Passphrase">
+    <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+  </mat-form-field>
 
+
+  <br>
+  <br>
+  
 </div>
 
-<button mat-raised-button color="warn">Create account</button>
+<button mat-raised-button color="primary" (click)="generateMnemonic()">Generate new mnemonic</button>
+<button mat-raised-button color="primary" (click)="generateKeys()">Generate keys</button>
+<br>
+<br>
+<button mat-raised-button color="warn" (click)="create()" disabled>Create account</button>
+

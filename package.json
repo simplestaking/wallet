@@ -30,7 +30,12 @@
     "core-js": "^2.4.1",
     "ngrx-store-freeze": "^0.2.0",
     "rxjs": "^5.4.2",
-    "zone.js": "^0.8.14"
+    "zone.js": "^0.8.14",
+    "bip39": "^2.4.0",
+    "bs58check": "^2.0.2",
+    "buffer": "^5.0.7",
+    "libsodium-wrappers": "^0.5.4",
+    "pbkdf2": "^3.0.14"
   },
   "devDependencies": {
     "@angular/cli": "1.4.4",

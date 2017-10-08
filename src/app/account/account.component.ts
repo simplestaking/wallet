@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
 
 @Component({
   selector: 'app-account',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
   ngOnInit() {
   }
 
+  generateMnemonic(){
+    this.store.dispatch({type:"ACCOUNT_GENERATE_MNEMONIC"})
+  }
+
+  generateKeys(){
+    this.store.dispatch({type:"ACCOUNT_GENERATE_KEYS"})    
+  }
+
+  create(){
+    this.store.dispatch({type:"ACCOUNT_CREATE"})    
+  }
+  
 }

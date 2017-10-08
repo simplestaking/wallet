@@ -8,10 +8,10 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { SettingsComponent } from './settings/settings.component';
 
 export const AppRouting: Routes = [
-    { path: 'balance', component: BalanceComponent },
+    // { path: 'balance', component: BalanceComponent },
     { path: 'accounts', component: AccountComponent },
-    { path: 'transactions', component: TransactionComponent },
-    { path: 'settings', component: SettingsComponent },
+    // { path: 'transactions', component: TransactionComponent },
+    // { path: 'settings', component: SettingsComponent },
     //{ path: '**', component: PageNotFoundComponent }
 ];
 
