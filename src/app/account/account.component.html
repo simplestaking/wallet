@@ -3,9 +3,9 @@
   <mat-form-field>
     <textarea matInput placeholder="Mnemonic" formControlName="mnemonic"></textarea>
   </mat-form-field>
-  
+
   <mat-form-field hintLabel="Max 32 characters">
-    <input matInput #input placeholder="Passpharse" formControlName="passpharse"/>
+    <input matInput #input placeholder="Passpharse" formControlName="passpharse" />
     <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
   </mat-form-field>
 
@@ -14,8 +14,33 @@
 
 </div>
 
-<button mat-raised-button color="primary" (click)="generateMnemonic()">Generate new mnemonic</button>
-<button mat-raised-button color="primary" (click)="generateKeys()">Generate keys</button>
+<button mat-raised-button color="primary" (click)="generateMnemonic()">
+  Generate new mnemonic
+</button>
+<button mat-raised-button color="primary" (click)="generateKeys()" [disabled]=!account.form.mnemonic>
+  Generate keys
+</button>
+
 <br>
 <br>
-<button mat-raised-button color="warn" (click)="create()" disabled>Create account</button>
+
+<button mat-raised-button color="warn" (click)="create()" [disabled]=!account.keys.secretKey>
+  Create account
+</button>
+
+<br>
+<br>
+
+<div *ngIf=account.keys.secretKey >
+  <span class="mat-body-1">
+    <b>secretKey:</b> {{account.keys.secretKey}}
+  </span>
+  <br>
+  <span class="mat-body-1">
+    <b>publicKey:</b> {{account.keys.publicKey}}
+  </span>
+  <br>
+  <span class="mat-body-1">
+    <b>publicKeyHash:</b> {{account.keys.publicKeyHash }}
+  </span>
+</div>

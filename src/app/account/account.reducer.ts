@@ -2,6 +2,7 @@ import bs58check from 'bs58check'
 import bip39 from 'bip39'
 import sodium from 'libsodium-wrappers'
 import pbkdf2 from 'pbkdf2'
+import { Buffer } from 'buffer/'
 
 const prefix = {
     tz1: new Uint8Array([6, 161, 159]),
@@ -11,29 +12,39 @@ const prefix = {
     o: new Uint8Array([5, 116]),
 }
 
-const initialState = {
+const initialState: any = {
     name: 'default',
-    form: '',
+    form: {},
+    keys: {
+        secretKey: '',
+        publicKey: '',
+        publicKeyHash: '',
+    }
 }
 
 export function reducer(state = initialState, action) {
     switch (action.type) {
 
+        // generate menmonic
         case 'ACCOUNT_GENERATE_MNEMONIC':
-            let mnemonic = bip39.generateMnemonic(160)
-            let kp = sodium.crypto_sign_keypair()
             return Object.assign({}, state, {
                 form: {
-                    mnemonic: mnemonic,
+                    mnemonic: bip39.generateMnemonic(160),
                 }
             })
 
+        // generate keyPair    
         case 'ACCOUNT_GENERATE_KEYS':
-            // var s = bip39.mnemonicToSeed(state.mnemonic, state.passpharse).slice(0, 32);
-            // var kp = sodium.crypto_sign_seed_keypair(s);
-            return {
-                // kp: kp,
-            };
+            let seed = bip39.mnemonicToSeed(state.form.mnemonic, state.form.passpharse).slice(0, 32);
+            // keyType ed25519
+            let keyPair = sodium.crypto_sign_seed_keypair(seed);
+            return Object.assign({}, state, {
+                keys: {
+                    secretKey : o(keyPair.privateKey, prefix.edsk),
+                    publicKey : o(keyPair.publicKey, prefix.edpk),
+                    publicKeyHash : o(sodium.crypto_generichash(20, keyPair.publicKey), prefix.tz1),
+                }
+            })
 
         // update state with form data
         case 'ACCOUNT_FORM_CHANGE': {
@@ -45,4 +56,12 @@ export function reducer(state = initialState, action) {
         default:
             return state;
     }
+}
+
+// helper function for bs58 encode 
+function o(payload, prefix) {
+    let n = new Uint8Array(prefix.length + payload.length);
+    n.set(prefix);
+    n.set(payload, prefix.length);
+    return bs58check.encode(new Buffer(n, 'hex'));
 }

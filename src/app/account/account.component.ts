@@ -36,10 +36,8 @@ export class AccountComponent implements OnInit {
     this.account$.subscribe(state => {
       this.account = state
 
-      console.log('[account]', state)
       // update account form with redux data
       this.accountForm.patchValue(this.account.form, { emitEvent: false });
-
     })
   }
 
