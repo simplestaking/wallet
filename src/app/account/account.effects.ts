@@ -71,7 +71,7 @@ export class AccountEffects {
                                         "operations": [{
                                             "kind": "transaction",
                                             "amount": 100, // This is in centiles, i.e. 100 = 1.00 tez
-                                            "destination": "tz1NhhF1S6qhhEepykUyFmpvd6wBuTAbmToD"
+                                            "destination": "tz1R2MbSrN3L5D8pkDfcxUCsAjn7PsxCH1Sb"
                                         }]
                                     })
                                         .map(response => response.json().ok.operation)

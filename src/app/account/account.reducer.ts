@@ -16,9 +16,9 @@ const initialState: any = {
     name: 'default',
     form: {},
     keys: {
-        secretKey: '',
-        publicKey: '',
-        publicKeyHash: '',
+        secretKey: 'edskRoyEVXMAKNbrM5GDVDxXmoWjXzpaCxawPTvXEgPQNEbFSQVuXFwSYeZVZzPMkk4XMW7pqvMMvPLMsKZbvbm8hzCqTaoLWh',
+        publicKey: 'edpku9d36XQwwPiTEuuPHqoxP1DSLJ6GytBL48BscXGiPD7epmURhf',
+        publicKeyHash: 'tz1cTykuj5JbmCLdCC8ZRqRZQwRn2dhhUzkt'
     }
 }
 
