@@ -14,6 +14,7 @@ import { AppRouting } from './app.routing'
 import { reducers, metaReducers } from './app.reducers';
 
 import { AllEffects } from './app.effects'
+import { AccountEffects } from './account/account.effects'
 import { BalanceEffects } from './balance/balance.effects'
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
@@ -68,7 +69,7 @@ import { SettingsComponent } from './settings/settings.component';
     HttpModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
-    
+
     RouterModule.forRoot(AppRouting, {
       //useHash:true
     }),
@@ -79,6 +80,7 @@ import { SettingsComponent } from './settings/settings.component';
     // Set side effects
     EffectsModule.forRoot([
       AllEffects,
+      AccountEffects,
       BalanceEffects
     ]),
     
