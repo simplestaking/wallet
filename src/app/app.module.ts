@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { environment } from '../environments/environment';
 
@@ -66,7 +67,8 @@ import { SettingsComponent } from './settings/settings.component';
     BrowserModule,
     HttpModule,
     NoopAnimationsModule,
-
+    ReactiveFormsModule,
+    
     RouterModule.forRoot(AppRouting, {
       //useHash:true
     }),

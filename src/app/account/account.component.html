@@ -1,18 +1,17 @@
-<div class="create-account">
+<div class="create-account" [formGroup]="accountForm">
 
   <mat-form-field>
-    <textarea matInput placeholder="Mnemonic"></textarea>
+    <textarea matInput placeholder="Mnemonic" formControlName="mnemonic"></textarea>
   </mat-form-field>
-    
+  
   <mat-form-field hintLabel="Max 32 characters">
-    <input matInput #input maxlength="32" placeholder="Passphrase">
+    <input matInput #input placeholder="Passpharse" formControlName="passpharse"/>
     <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
   </mat-form-field>
 
+  <br>
+  <br>
 
-  <br>
-  <br>
-  
 </div>
 
 <button mat-raised-button color="primary" (click)="generateMnemonic()">Generate new mnemonic</button>
@@ -20,4 +19,3 @@
 <br>
 <br>
 <button mat-raised-button color="warn" (click)="create()" disabled>Create account</button>
-
