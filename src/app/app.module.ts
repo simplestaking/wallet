@@ -7,6 +7,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component'
@@ -86,6 +89,10 @@ import { SettingsComponent } from './settings/settings.component';
     
     // https://github.com/zalmoxisus/redux-devtools-extension
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+
+    // Cloud firestore
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
 
     MatAutocompleteModule,
     MatButtonModule,

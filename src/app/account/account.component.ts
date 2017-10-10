@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core'
+import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
+
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-account',
@@ -13,12 +16,28 @@ export class AccountComponent implements OnInit {
   private account$
   private accountForm
 
+  private accountDoc
+  private accountDocument: AngularFirestoreDocument<any>;  
+  private accountCollection: AngularFirestoreCollection<any>;
+  private accounts: Observable<any[]>
+
   constructor(
     private store: Store<any>,
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private db: AngularFirestore,
+  ) {
+
+    // listen to accounts from FireBase 
+    this.accountCollection = this.db.collection('account');
+    this.accountCollection.valueChanges().subscribe(data => {
+     console.log('[account][collestion]', data)
+    })
+    this.accountCollection.add({a:'a'})
+
+  }
 
   ngOnInit() {
+
 
     // initilize form
     this.accountForm = this.fb.group({
@@ -40,6 +59,11 @@ export class AccountComponent implements OnInit {
       // update account form with redux data
       this.accountForm.patchValue(this.account.form, { emitEvent: false });
     })
+
+    // listen to firebasestore account collection
+
+
+
   }
 
   generateMnemonic() {
