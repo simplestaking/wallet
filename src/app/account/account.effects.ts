@@ -70,8 +70,8 @@ export class AccountEffects {
                                         "counter": counter + 1 ,
                                         "operations": [{
                                             "kind": "transaction",
-                                            "amount": 1, // This is in centiles, i.e. 100 = 1.00 tez
-                                            "destination": "tz1R2MbSrN3L5D8pkDfcxUCsAjn7PsxCH1Sb"
+                                            "amount": 66, // This is in centiles, i.e. 100 = 1.00 tez
+                                            "destination": "TZ1rFCGBc27UPGM8Kocev6qF3S7ve9YNBJvZ"
                                         }]
                                     })
                                         .map(response => response.json().ok.operation)
