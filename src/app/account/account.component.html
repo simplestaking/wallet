@@ -1,5 +1,10 @@
 <div class="create-account" [formGroup]="accountForm">
 
+  <mat-form-field hintLabel="Max 10 characters">
+    <input matInput #input placeholder="Name" formControlName="name" />
+    <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+  </mat-form-field>
+
   <mat-form-field>
     <textarea matInput placeholder="Mnemonic" formControlName="mnemonic"></textarea>
   </mat-form-field>
@@ -31,7 +36,7 @@
 <br>
 <br>
 
-<div *ngIf=account.keys.secretKey >
+<div *ngIf=account.keys.secretKey>
   <span class="mat-body-1">
     <b>secretKey:</b> {{account.keys.secretKey}}
   </span>
@@ -43,4 +48,11 @@
   <span class="mat-body-1">
     <b>publicKeyHash:</b> {{account.keys.publicKeyHash }}
   </span>
+  <br>
+  <br>
+  <span class="mat-body-1">
+    ./alphanet.sh client add secret key '{{account.form.name}}' '{{account.keys.secretKey}}'
+  </span>
+
+
 </div>

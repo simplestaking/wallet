@@ -70,7 +70,7 @@ export class AccountEffects {
                                         "counter": counter + 1 ,
                                         "operations": [{
                                             "kind": "transaction",
-                                            "amount": 100, // This is in centiles, i.e. 100 = 1.00 tez
+                                            "amount": 1, // This is in centiles, i.e. 100 = 1.00 tez
                                             "destination": "tz1R2MbSrN3L5D8pkDfcxUCsAjn7PsxCH1Sb"
                                         }]
                                     })

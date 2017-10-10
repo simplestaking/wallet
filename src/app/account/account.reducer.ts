@@ -13,7 +13,6 @@ const prefix = {
 }
 
 const initialState: any = {
-    name: 'default',
     form: {},
     keys: {
         secretKey: 'edskRoyEVXMAKNbrM5GDVDxXmoWjXzpaCxawPTvXEgPQNEbFSQVuXFwSYeZVZzPMkk4XMW7pqvMMvPLMsKZbvbm8hzCqTaoLWh',

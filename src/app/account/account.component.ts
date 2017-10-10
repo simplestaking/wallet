@@ -22,6 +22,7 @@ export class AccountComponent implements OnInit {
 
     // initilize form
     this.accountForm = this.fb.group({
+      name: '',
       mnemonic: '',
       passpharse: ''
     })
