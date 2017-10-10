@@ -19,6 +19,9 @@ import { Buffer } from 'buffer/'
 import sodium from 'libsodium-wrappers'
 import bs58check from 'bs58check'
 import bip39 from 'bip39'
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Injectable()
 export class AccountEffects {
@@ -33,12 +36,30 @@ export class AccountEffects {
         o: new Uint8Array([5, 116]),
     }
 
-    // mnemonic
+    private accountCollection: AngularFirestoreCollection<any>;
+
+    // test 1 
     // soap voice defense run leg bamboo remind dawn gravity start pony develop squeeze october blue
-    
-    @Effect()
-    AccountCreate$: Observable<Action> = this.actions$
+    // test 2 
+    // dutch tell sudden alpha uniform slide poverty miss amount whale smart often improve student regret
+
+
+    @Effect({ dispatch: false })
+    AccountCreate$: Observable<any> = this.actions$
         .ofType('ACCOUNT_CREATE')
+        .do((action: any) => {
+            // listen to accounts from FireBase 
+            this.accountCollection = this.db.collection('account');
+            // add value to firestore
+            this.accountCollection.add({ ...action.payload, balance: 0 })
+            // redirect back to accounts list
+            this.router.navigate(['/accounts'])
+        })
+
+
+    @Effect()
+    AccountCreate_$: Observable<Action> = this.actions$
+        .ofType('ACCOUNT_TRANSACTION')
         // add state to effect
         .withLatestFrom(this.store, (action, state) => state.account)
 
@@ -67,7 +88,7 @@ export class AccountEffects {
                                         "source": state.keys.publicKeyHash,
                                         "public_key": state.keys.publicKey,
                                         "fee": 0,
-                                        "counter": counter + 1 ,
+                                        "counter": counter + 1,
                                         "operations": [{
                                             "kind": "transaction",
                                             "amount": 66, // This is in centiles, i.e. 100 = 1.00 tez
@@ -118,18 +139,20 @@ export class AccountEffects {
         )
         // dispatch action based on result
         .map(response => ({
-            type: 'ACCOUNT_CREATE_SUCCESS',
+            type: 'ACCOUNT_TRANSACTION_SUCCESS',
             payload: response
         }))
         .catch(error => of({
-            type: 'ACCOUNT_CREATE_ERROR',
+            type: 'ACCOUNT_TRANSACTION_ERROR',
             payload: error
         }))
 
     constructor(
         private actions$: Actions,
         private http: Http,
-        private store: Store<any>
+        private store: Store<any>,
+        private router: Router,
+        private db: AngularFirestore,
     ) { }
 
 }

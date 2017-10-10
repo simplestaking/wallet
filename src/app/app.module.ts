@@ -58,6 +58,7 @@ import { BalanceComponent } from './balance/balance.component';
 import { AccountComponent } from './account/account.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AccountNewComponent } from './account/account-new/account-new.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { SettingsComponent } from './settings/settings.component';
     BalanceComponent,
     AccountComponent,
     TransactionComponent,
-    SettingsComponent
+    SettingsComponent,
+    AccountNewComponent
   ],
   imports: [
     BrowserModule,

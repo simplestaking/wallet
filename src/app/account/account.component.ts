@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { DataSource } from '@angular/cdk/collections';
+import 'rxjs/add/observable/of';
 
 @Component({
   selector: 'app-account',
@@ -16,11 +18,11 @@ export class AccountComponent implements OnInit {
   private account$
   private accountForm
 
-  private accountDoc
-  private accountDocument: AngularFirestoreDocument<any>;  
   private accountCollection: AngularFirestoreCollection<any>;
-  private accounts: Observable<any[]>
 
+  // set data source for table  
+  private accountTableDataSource
+  
   constructor(
     private store: Store<any>,
     private fb: FormBuilder,
@@ -29,53 +31,37 @@ export class AccountComponent implements OnInit {
 
     // listen to accounts from FireBase 
     this.accountCollection = this.db.collection('account');
-    this.accountCollection.valueChanges().subscribe(data => {
-     console.log('[account][collestion]', data)
-    })
-    this.accountCollection.add({a:'a'})
+    // set data source for table  
+    this.accountTableDataSource = new AccountDataSource(this.accountCollection.valueChanges());
 
+    // TODO:
+    // v effecte na create_account_success
+    // najprv spustim akciu po zmene z firebase potom vlozim hodnotu do reduxu a potom select deduxu do tabulky
+    
   }
 
   ngOnInit() {
-
-
-    // initilize form
-    this.accountForm = this.fb.group({
-      name: '',
-      mnemonic: '',
-      passpharse: ''
-    })
-
-    // listen to formData change
-    this.accountForm.valueChanges.subscribe(accountFormData => {
-      this.store.dispatch({ type: "ACCOUNT_FORM_CHANGE", payload: accountFormData })
-    })
 
     // listen to changes from redux
     this.account$ = this.store.select('account')
     this.account$.subscribe(state => {
       this.account = state
-
-      // update account form with redux data
-      this.accountForm.patchValue(this.account.form, { emitEvent: false });
     })
 
-    // listen to firebasestore account collection
-
-
-
   }
 
-  generateMnemonic() {
-    this.store.dispatch({ type: "ACCOUNT_GENERATE_MNEMONIC" })
+}
+
+// define data source for account table
+export class AccountDataSource extends DataSource<any> {
+  
+  constructor(private data: Observable<any>) {
+    super();
   }
 
-  generateKeys() {
-    this.store.dispatch({ type: "ACCOUNT_GENERATE_KEYS" })
+  connect(): Observable<any[]> {
+    return this.data
   }
 
-  create() {
-    this.store.dispatch({ type: "ACCOUNT_CREATE" })
-  }
-
+  disconnect() { }
 }

@@ -4,13 +4,16 @@ import { RouterStateSerializer } from '@ngrx/router-store';
 
 import { BalanceComponent } from './balance/balance.component';
 import { AccountComponent } from './account/account.component';
+import { AccountNewComponent } from './account/account-new/account-new.component';
+
 import { TransactionComponent } from './transaction/transaction.component';
 import { SettingsComponent } from './settings/settings.component';
 
 export const AppRouting: Routes = [
-    { path: 'balance', component: BalanceComponent },
+    // { path: 'balance', component: BalanceComponent },
     { path: 'accounts', component: AccountComponent },
-    { path: 'transactions', component: TransactionComponent },
+    { path: 'accounts/new', component: AccountNewComponent },
+    // { path: 'transactions', component: TransactionComponent },
     // { path: 'settings', component: SettingsComponent },
     //{ path: '**', component: PageNotFoundComponent }
 ];

@@ -1,58 +1,35 @@
-<div class="create-account" [formGroup]="accountForm">
-
-  <mat-form-field hintLabel="Max 10 characters">
-    <input matInput #input placeholder="Name" formControlName="name" />
-    <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
-  </mat-form-field>
-
-  <mat-form-field>
-    <textarea matInput placeholder="Mnemonic" formControlName="mnemonic"></textarea>
-  </mat-form-field>
-
-  <mat-form-field hintLabel="Max 32 characters">
-    <input matInput #input placeholder="Passpharse" formControlName="passpharse" />
-    <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
-  </mat-form-field>
-
-  <br>
-  <br>
-
-</div>
-
-<button mat-raised-button color="primary" (click)="generateMnemonic()">
-  Generate new mnemonic
-</button>
-<button mat-raised-button color="primary" (click)="generateKeys()" [disabled]=!account.form.mnemonic>
-  Generate keys
+<button mat-raised-button color="warn" routerLink="/accounts/new">
+  New account
 </button>
 
 <br>
 <br>
 
-<button mat-raised-button color="warn" (click)="create()" [disabled]=!account.keys.secretKey>
-  Create account
-</button>
+<div class="mat-elevation-z1">
+  <mat-table #table [dataSource]="accountTableDataSource">
 
-<br>
-<br>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a routerLink="/account/{{element.address}}">{{element.name}}</a>
+      </mat-cell>
+    </ng-container>
 
-<div *ngIf=account.keys.secretKey>
-  <span class="mat-body-1">
-    <b>secretKey:</b> {{account.keys.secretKey}}
-  </span>
-  <br>
-  <span class="mat-body-1">
-    <b>publicKey:</b> {{account.keys.publicKey}}
-  </span>
-  <br>
-  <span class="mat-body-1">
-    <b>publicKeyHash:</b> {{account.keys.publicKeyHash }}
-  </span>
-  <br>
-  <br>
-  <span class="mat-body-1">
-    ./alphanet.sh client add secret key '{{account.form.name}}' '{{account.keys.secretKey}}'
-  </span>
+    <!-- Address Column -->
+    <!-- <ng-container matColumnDef="publicKeyHash">
+      <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a routerLink="/account/{{element.address}}">{{element.publicKeyHash}}</a></mat-cell>
+    </ng-container> -->
 
+    <!-- Balance Column -->
+    <ng-container matColumnDef="balance">
+      <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.balance}} </mat-cell>
+    </ng-container>
 
+    <mat-header-row *matHeaderRowDef="['name','balance']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name','balance'];"></mat-row>
+
+  </mat-table>
 </div>
