@@ -28,6 +28,7 @@ export function reducer(state = initialState, action) {
         case 'ACCOUNT_NEW_GENERATE_MNEMONIC':
             return Object.assign({}, state, {
                 form: {
+                    ...state.form,   
                     mnemonic: bip39.generateMnemonic(160),
                 }
             })

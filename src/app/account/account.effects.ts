@@ -44,17 +44,39 @@ export class AccountEffects {
     // dutch tell sudden alpha uniform slide poverty miss amount whale smart often improve student regret
 
 
-    @Effect({ dispatch: false })
+    // create new account
+    @Effect()
     AccountCreate$: Observable<any> = this.actions$
         .ofType('ACCOUNT_CREATE')
-        .do((action: any) => {
+        .flatMap((action: any) => {
             // listen to accounts from FireBase 
             this.accountCollection = this.db.collection('account');
             // add value to firestore
-            this.accountCollection.add({ ...action.payload, balance: 0 })
-            // redirect back to accounts list
-            this.router.navigate(['/accounts'])
+            return this.accountCollection.add({ ...action.payload, balance: 0 })
         })
+        // dispatch action
+        .map(response => ({ type: 'ACCOUNT_CREATE_SUCCESS' }))
+        .catch(error => of({ type: 'ACCOUNT_CREATE_ERROR' }))
+        // redirect back to accounts list
+        .do(() => this.router.navigate(['/accounts']))
+
+
+    // check balance for each account
+    @Effect()
+    AccountBalance$: Observable<any> = this.actions$
+        .ofType('ACCOUNT_BALANCE','ACCOUNT_FIREBASE_CHANGE')
+        .withLatestFrom(this.store)
+        .flatMap(([action, state]) => {
+            state.account.entities
+                .map(account => {
+                    console.log('[ACCOUNT_BALANCE]', account)
+                })
+
+            return state
+        })
+        // dispatch action
+        .map(response => ({ type: 'ACCOUNT_BALANCE_SUCCESS' }))
+        .catch(error => of({ type: 'ACCOUNT_BALANCE_ERROR' }))
 
 
     @Effect()

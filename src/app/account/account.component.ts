@@ -22,23 +22,12 @@ export class AccountComponent implements OnInit {
 
   // set data source for table  
   private accountTableDataSource
-  
+
   constructor(
     private store: Store<any>,
     private fb: FormBuilder,
     private db: AngularFirestore,
-  ) {
-
-    // listen to accounts from FireBase 
-    this.accountCollection = this.db.collection('account');
-    // set data source for table  
-    this.accountTableDataSource = new AccountDataSource(this.accountCollection.valueChanges());
-
-    // TODO:
-    // v effecte na create_account_success
-    // najprv spustim akciu po zmene z firebase potom vlozim hodnotu do reduxu a potom select deduxu do tabulky
-    
-  }
+  ) { }
 
   ngOnInit() {
 
@@ -48,13 +37,31 @@ export class AccountComponent implements OnInit {
       this.account = state
     })
 
+    // listen to accounts from FireBase 
+    this.accountCollection = this.db.collection('account');
+
+    // set data source for table  
+    this.accountTableDataSource = new AccountDataSource(this.accountCollection.valueChanges());
+
+    // listen to changes from firebase
+    this.accountCollection.valueChanges()
+      .subscribe(data =>
+        this.store.dispatch({
+          type: 'ACCOUNT_FIREBASE_CHANGE',
+          payload: data
+        })
+      )
+
+    // get balance in periodic intervals
+    this.store.dispatch({ type: 'ACCOUNT_BALANCE' })
+    
   }
 
 }
 
 // define data source for account table
 export class AccountDataSource extends DataSource<any> {
-  
+
   constructor(private data: Observable<any>) {
     super();
   }
