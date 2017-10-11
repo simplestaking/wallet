@@ -20,7 +20,7 @@ export class AccountComponent implements OnInit {
 
   public accountCol: AngularFirestoreCollection<any>;
   public accountDoc: AngularFirestoreDocument<any>;
-  
+
   // set data source for table  
   public accountTableDataSource
 
@@ -38,13 +38,18 @@ export class AccountComponent implements OnInit {
       this.account = state
     })
 
+    // set data source for table  
+    this.accountTableDataSource = new AccountDataSource(this.store.select('account', 'entities'));
+
     // listen to accounts from FireBase 
     this.accountCol = this.db.collection('account');
-    //this.accountDoc = this.db.doc('account');
-    
 
-    // set data source for table  
-    this.accountTableDataSource = new AccountDataSource(this.accountCol.valueChanges());
+    this.accountDoc = this.db.doc('account/O0lVMhy02Mn6I9WYGm0L');
+    this.accountDoc.update({ balance: 4, name: 'account 1' })
+
+    this.accountDoc = this.db.doc('account/VYPQYatsbsIqt2Tammoq');
+    this.accountDoc.update({ balance: 5, name: 'account 2' })
+
 
     // listen to changes from firebase
     this.accountCol.valueChanges()
@@ -55,22 +60,25 @@ export class AccountComponent implements OnInit {
         })
       )
 
-    this.accountCol.valueChanges()
-      .subscribe(data =>
-        console.log('[valueChanges]', data)
-      )
-
-    this.accountCol.stateChanges()
-      .subscribe(data =>{
-        console.log('[stateChanges]', data)
-      })
-
+    // process all account changes from firebase
     this.accountCol.snapshotChanges()
-      .subscribe(data =>
-        console.log('[snapshotChanges]', data)
+      .subscribe(accounts =>
+        accounts.map(account => {
+          // console.log('[account]', account.payload)
+          this.store.dispatch({
+            type: 'ACCOUNT_ADD_FIREBASE_CHANGE',
+            payload: {
+              id: account.payload.doc.id,
+              data: account.payload.doc.data(),
+              newIndex: account.payload.newIndex,
+              oldIndex: account.payload.oldIndex,
+            }
+            //   account.payload.doc.ref.update({ balance:  1 })
+            //   console.log('[snapshotChanges]', account.payload.doc.id, account.payload.doc.data(), )
+          })
+        })
+
       )
-
-
 
     // get balance in periodic intervals
     this.store.dispatch({ type: 'ACCOUNT_BALANCE' })

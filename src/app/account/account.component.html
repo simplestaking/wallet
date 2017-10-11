@@ -12,7 +12,8 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <a routerLink="/account/{{element.address}}">{{element.name}}</a>
+        <!-- <a routerLink="/account/{{element.address}}">{{element.name}}</a> -->
+        {{element.name}}
       </mat-cell>
     </ng-container>
 
