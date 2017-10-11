@@ -12,13 +12,13 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 })
 export class AccountNewComponent implements OnInit {
 
-  private account
-  private account$
-  private accountForm
+  public account
+  public account$
+  public accountForm
 
   constructor( private store: Store<any>,
-    private fb: FormBuilder,
-    private db: AngularFirestore
+    public fb: FormBuilder,
+    public db: AngularFirestore
   ) { }
 
   ngOnInit() {

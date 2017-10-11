@@ -26,7 +26,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 @Injectable()
 export class AccountEffects {
 
-    public api = 'http://46.101.236.136:3000/'
+    public api = 'https://node.simplestaking.com:3000/'
 
     public prefix = {
         tz1: new Uint8Array([6, 161, 159]),

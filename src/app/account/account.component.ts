@@ -14,19 +14,20 @@ import 'rxjs/add/observable/of';
 })
 export class AccountComponent implements OnInit {
 
-  private account
-  private account$
-  private accountForm
+  public account
+  public account$
+  public accountForm
 
-  private accountCollection: AngularFirestoreCollection<any>;
-
+  public accountCol: AngularFirestoreCollection<any>;
+  public accountDoc: AngularFirestoreDocument<any>;
+  
   // set data source for table  
-  private accountTableDataSource
+  public accountTableDataSource
 
   constructor(
-    private store: Store<any>,
-    private fb: FormBuilder,
-    private db: AngularFirestore,
+    public store: Store<any>,
+    public fb: FormBuilder,
+    public db: AngularFirestore,
   ) { }
 
   ngOnInit() {
@@ -38,13 +39,15 @@ export class AccountComponent implements OnInit {
     })
 
     // listen to accounts from FireBase 
-    this.accountCollection = this.db.collection('account');
+    this.accountCol = this.db.collection('account');
+    //this.accountDoc = this.db.doc('account');
+    
 
     // set data source for table  
-    this.accountTableDataSource = new AccountDataSource(this.accountCollection.valueChanges());
+    this.accountTableDataSource = new AccountDataSource(this.accountCol.valueChanges());
 
     // listen to changes from firebase
-    this.accountCollection.valueChanges()
+    this.accountCol.valueChanges()
       .subscribe(data =>
         this.store.dispatch({
           type: 'ACCOUNT_FIREBASE_CHANGE',
@@ -52,9 +55,26 @@ export class AccountComponent implements OnInit {
         })
       )
 
+    this.accountCol.valueChanges()
+      .subscribe(data =>
+        console.log('[valueChanges]', data)
+      )
+
+    this.accountCol.stateChanges()
+      .subscribe(data =>{
+        console.log('[stateChanges]', data)
+      })
+
+    this.accountCol.snapshotChanges()
+      .subscribe(data =>
+        console.log('[snapshotChanges]', data)
+      )
+
+
+
     // get balance in periodic intervals
     this.store.dispatch({ type: 'ACCOUNT_BALANCE' })
-    
+
   }
 
 }
@@ -62,7 +82,7 @@ export class AccountComponent implements OnInit {
 // define data source for account table
 export class AccountDataSource extends DataSource<any> {
 
-  constructor(private data: Observable<any>) {
+  constructor(public data: Observable<any>) {
     super();
   }
 

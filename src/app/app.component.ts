@@ -9,14 +9,14 @@ import { Store } from '@ngrx/store'
 })
 export class AppComponent {
 
-  private app
-  private app$
-  private fixed = true;
-  private coverHeader = false;
-  private showHeader = true;
-  private showFooter = false;
+  public app
+  public app$
+  public fixed = true;
+  public coverHeader = false;
+  public showHeader = true;
+  public showFooter = false;
 
-  constructor(private store: Store<any>) { }
+  constructor(public store: Store<any>) { }
 
   ngOnInit() {
     this.app$ = this.store.select('app')

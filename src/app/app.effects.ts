@@ -18,7 +18,7 @@ import { defer } from 'rxjs/observable/defer';
 @Injectable()
 export class AllEffects {
 
-    public api = 'http://46.101.236.136:3000/'
+    public api = 'https://node.simplestaking.com:3000/'
 
     @Effect()
     HeartbeatEffects$: Observable<Action> = this.actions$
