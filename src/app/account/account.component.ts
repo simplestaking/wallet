@@ -41,12 +41,6 @@ export class AccountComponent implements OnInit {
     // listen to accounts from FireBase 
     this.accountCol = this.db.collection('account');
 
-    this.accountDoc = this.db.doc('account/O0lVMhy02Mn6I9WYGm0L');
-    this.accountDoc.update({ balance: 4, name: 'account 1' })
-
-    this.accountDoc = this.db.doc('account/VYPQYatsbsIqt2Tammoq');
-    this.accountDoc.update({ balance: 5, name: 'account 2' })
-    
     //   account.payload.doc.ref.update({ balance:  1 })
     //   console.log('[snapshotChanges]', account.payload.doc.id, account.payload.doc.data(), )
 
@@ -58,7 +52,7 @@ export class AccountComponent implements OnInit {
           switch (action.payload.type) {
 
             case 'added':
-              console.log('added', action)
+              // console.log('added', action)
               return this.store.dispatch({
                 type: 'ACCOUNT_ADD_FIREBASE',
                 payload: {
@@ -68,7 +62,7 @@ export class AccountComponent implements OnInit {
               })
 
             case 'modified':
-              console.log('modified', action)
+              // console.log('modified', action)
               return this.store.dispatch({
                 type: 'ACCOUNT_MODIFY_FIREBASE',
                 payload: {
@@ -78,7 +72,7 @@ export class AccountComponent implements OnInit {
               })
 
             case 'removed':
-              console.log('removed', action)
+              //console.log('removed', action)
               return this.store.dispatch({
                 type: 'ACCOUNT_REMOVE_FIREBASE',
                 payload: {
@@ -92,9 +86,12 @@ export class AccountComponent implements OnInit {
         })
       )
 
+
+  }
+
+  balance() {
     // get balance in periodic intervals
     this.store.dispatch({ type: 'ACCOUNT_BALANCE' })
-
   }
 
 }

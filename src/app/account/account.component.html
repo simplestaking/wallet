@@ -2,6 +2,9 @@
   New account
 </button>
 
+<button mat-button  (click)="balance()">
+  Reload balance
+</button>
 <br>
 <br>
 
@@ -26,7 +29,7 @@
     <!-- Balance Column -->
     <ng-container matColumnDef="balance">
       <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.balance}} ꜩ</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.balance*0.01}} ꜩ</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="['name','balance']"></mat-header-row>

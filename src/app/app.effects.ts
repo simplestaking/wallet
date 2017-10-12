@@ -24,7 +24,7 @@ export class AllEffects {
     HeartbeatEffects$: Observable<Action> = this.actions$
         .ofType('HEARTBEAT')
         .switchMap(() =>
-            Observable.timer(0, 30000)
+            Observable.timer(0, 60000)
                 .switchMap(() =>
                     this.http.post(this.api + 'blocks/head/timestamp', {})
                         .map(response => response.json())

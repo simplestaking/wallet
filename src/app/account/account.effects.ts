@@ -36,8 +36,9 @@ export class AccountEffects {
         o: new Uint8Array([5, 116]),
     }
 
-    private accountCollection: AngularFirestoreCollection<any>;
-
+    public accountCol: AngularFirestoreCollection<any>;
+    public accountDoc: AngularFirestoreDocument<any>;
+    
     // test 1 
     // soap voice defense run leg bamboo remind dawn gravity start pony develop squeeze october blue
     // test 2 
@@ -50,9 +51,9 @@ export class AccountEffects {
         .ofType('ACCOUNT_ADD')
         .flatMap((action: any) => {
             // listen to accounts from FireBase 
-            this.accountCollection = this.db.collection('account');
+            this.accountCol = this.db.collection('account');
             // add value to firestore
-            return this.accountCollection.add({ ...action.payload, balance: 0 })
+            return this.accountCol.add({ ...action.payload, balance: 0 })
         })
         // dispatch action
         .map(response => ({ type: 'ACCOUNT_ADD_SUCCESS' }))
@@ -64,18 +65,24 @@ export class AccountEffects {
     // check balance for each account
     @Effect()
     AccountBalance$: Observable<any> = this.actions$
-        .ofType('ACCOUNT_BALANCE','ACCOUNT_FIREBASE_CHANGE')
-        .withLatestFrom(this.store)
-        .flatMap(([action, state]) => {
-            state.account.entities
-                .map(account => {
-                    console.log('[ACCOUNT_BALANCE]', account)
+        .ofType('ACCOUNT_BALANCE')
+        .withLatestFrom(this.store, (action, state) => state.account)
+        // get all accounts address
+        .flatMap(state => state.ids.map(id => ({ id, publicKeyHash: state.entities[id].publicKeyHash })))
+        // get balance
+        .flatMap(({ id, publicKeyHash }) =>
+            this.http.post(this.api +
+                '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash + '/balance', {})
+                .map(response => response.json().ok)
+                .map(balance => {
+                    // update balance on firebase 
+                    this.accountDoc = this.db.doc('account/' + id );
+                    this.accountDoc.update({ balance: balance })                
+                    return { id, balance }
                 })
-
-            return state
-        })
+        )
         // dispatch action
-        .map(response => ({ type: 'ACCOUNT_BALANCE_SUCCESS' }))
+        .map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action }))
         .catch(error => of({ type: 'ACCOUNT_BALANCE_ERROR' }))
 
 
