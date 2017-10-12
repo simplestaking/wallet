@@ -47,7 +47,7 @@ export class AccountEffects {
     // create new account
     @Effect()
     AccountCreate$: Observable<any> = this.actions$
-        .ofType('ACCOUNT_CREATE')
+        .ofType('ACCOUNT_ADD')
         .flatMap((action: any) => {
             // listen to accounts from FireBase 
             this.accountCollection = this.db.collection('account');
@@ -55,8 +55,8 @@ export class AccountEffects {
             return this.accountCollection.add({ ...action.payload, balance: 0 })
         })
         // dispatch action
-        .map(response => ({ type: 'ACCOUNT_CREATE_SUCCESS' }))
-        .catch(error => of({ type: 'ACCOUNT_CREATE_ERROR' }))
+        .map(response => ({ type: 'ACCOUNT_ADD_SUCCESS' }))
+        .catch(error => of({ type: 'ACCOUNT_ADD_ERROR' }))
         // redirect back to accounts list
         .do(() => this.router.navigate(['/accounts']))
 

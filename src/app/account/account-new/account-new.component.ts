@@ -54,9 +54,9 @@ export class AccountNewComponent implements OnInit {
     this.store.dispatch({ type: "ACCOUNT_NEW_GENERATE_KEYS" })
   }
 
-  create() {
+  add() {
     this.store.dispatch({ 
-      type: "ACCOUNT_CREATE",
+      type: "ACCOUNT_ADD",
       payload: {
         name: this.account.form.name,
         secretKey: this.account.keys.secretKey,

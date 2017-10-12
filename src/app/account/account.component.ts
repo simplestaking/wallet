@@ -34,12 +34,9 @@ export class AccountComponent implements OnInit {
 
     // listen to changes from redux
     this.account$ = this.store.select('account')
-    this.account$.subscribe(state => {
-      this.account = state
-    })
 
     // set data source for table  
-    this.accountTableDataSource = new AccountDataSource(this.store.select('account', 'entities'));
+    this.accountTableDataSource = new AccountDataSource(this.account$);
 
     // listen to accounts from FireBase 
     this.accountCol = this.db.collection('account');
@@ -49,35 +46,50 @@ export class AccountComponent implements OnInit {
 
     this.accountDoc = this.db.doc('account/VYPQYatsbsIqt2Tammoq');
     this.accountDoc.update({ balance: 5, name: 'account 2' })
+    
+    //   account.payload.doc.ref.update({ balance:  1 })
+    //   console.log('[snapshotChanges]', account.payload.doc.id, account.payload.doc.data(), )
 
-
-    // listen to changes from firebase
-    this.accountCol.valueChanges()
-      .subscribe(data =>
-        this.store.dispatch({
-          type: 'ACCOUNT_FIREBASE_CHANGE',
-          payload: data
-        })
-      )
-
-    // process all account changes from firebase
-    this.accountCol.snapshotChanges()
+    // process all account add actions from firebase
+    this.accountCol.stateChanges()
       .subscribe(accounts =>
-        accounts.map(account => {
-          // console.log('[account]', account.payload)
-          this.store.dispatch({
-            type: 'ACCOUNT_ADD_FIREBASE_CHANGE',
-            payload: {
-              id: account.payload.doc.id,
-              data: account.payload.doc.data(),
-              newIndex: account.payload.newIndex,
-              oldIndex: account.payload.oldIndex,
-            }
-            //   account.payload.doc.ref.update({ balance:  1 })
-            //   console.log('[snapshotChanges]', account.payload.doc.id, account.payload.doc.data(), )
-          })
-        })
+        accounts.map(action => {
+          // dispatch action for each element
+          switch (action.payload.type) {
 
+            case 'added':
+              console.log('added', action)
+              return this.store.dispatch({
+                type: 'ACCOUNT_ADD_FIREBASE',
+                payload: {
+                  id: action.payload.doc.id,
+                  data: action.payload.doc.data()
+                }
+              })
+
+            case 'modified':
+              console.log('modified', action)
+              return this.store.dispatch({
+                type: 'ACCOUNT_MODIFY_FIREBASE',
+                payload: {
+                  id: action.payload.doc.id,
+                  data: action.payload.doc.data()
+                }
+              })
+
+            case 'removed':
+              console.log('removed', action)
+              return this.store.dispatch({
+                type: 'ACCOUNT_REMOVE_FIREBASE',
+                payload: {
+                  id: action.payload.doc.id,
+                  data: action.payload.doc.data()
+                }
+              })
+
+          }
+
+        })
       )
 
     // get balance in periodic intervals
@@ -94,8 +106,10 @@ export class AccountDataSource extends DataSource<any> {
     super();
   }
 
-  connect(): Observable<any[]> {
-    return this.data
+  connect(): Observable<any> {
+    return this.data.map(data =>
+      data.ids.map(id => data.entities[id])
+    )
   }
 
   disconnect() { }

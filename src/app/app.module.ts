@@ -94,7 +94,7 @@ import { AccountNewComponent } from './account/account-new/account-new.component
 
     // Cloud firestore
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule,
 
     MatAutocompleteModule,
     MatButtonModule,
