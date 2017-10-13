@@ -38,6 +38,12 @@ export class AllEffects {
                         }))
                 )
         )
+    
+    // get account balance    
+    @Effect()
+    HeartbeatBalanceEffects$: Observable<Action> = this.actions$
+        .ofType('HEARTBEAT_SUCCESS')
+        .map(response => ({ type: 'ACCOUNT_BALANCE' }))
 
     @Effect()
     init$: Observable<Action> = defer(() => {

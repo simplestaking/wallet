@@ -59,6 +59,7 @@ import { AccountComponent } from './account/account.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
+import { AccountDetailComponent } from './account/account-detail/account-detail.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { AccountNewComponent } from './account/account-new/account-new.component
     AccountComponent,
     TransactionComponent,
     SettingsComponent,
-    AccountNewComponent
+    AccountNewComponent,
+    AccountDetailComponent
   ],
   imports: [
     BrowserModule,

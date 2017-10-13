@@ -15,8 +15,7 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <!-- <a routerLink="/account/{{element.address}}">{{element.name}}</a> -->
-        {{element.name}}
+        <a routerLink="/account/{{element.id}}">{{element.name}}</a>
       </mat-cell>
     </ng-container>
 
@@ -29,7 +28,9 @@
     <!-- Balance Column -->
     <ng-container matColumnDef="balance">
       <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.balance*0.01}} ꜩ</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <a routerLink="/account/{{element.id}}">{{element.balance*0.01}} ꜩ</a>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="['name','balance']"></mat-header-row>

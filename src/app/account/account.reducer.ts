@@ -9,6 +9,12 @@ export function reducer(state = initialState, action) {
 
         // add accoutn to list
         case 'ACCOUNT_ADD_FIREBASE': {
+           
+            // if id exist already do nothing
+            if (state.ids.indexOf(action.payload.id) > -1) {
+                return state
+            }
+
             return {
                 ids: [
                     ...state.ids, action.payload.id
@@ -39,7 +45,7 @@ export function reducer(state = initialState, action) {
         case 'ACCOUNT_REMOVE_FIREBASE': {
             return {
                 ...state,
-                ids: state.ids.filter(id => id !== action.payload.id),                
+                ids: state.ids.filter(id => id !== action.payload.id),
             }
         }
         default:
