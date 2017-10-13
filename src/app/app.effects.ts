@@ -42,7 +42,7 @@ export class AllEffects {
     // get account balance    
     @Effect()
     HeartbeatBalanceEffects$: Observable<Action> = this.actions$
-        .ofType('HEARTBEAT_SUCCESS')
+        .ofType('HEARTBEAT_SUCCESS','ACCOUNT_TRANSACTION_SUCCESS')
         .map(response => ({ type: 'ACCOUNT_BALANCE' }))
 
     @Effect()
