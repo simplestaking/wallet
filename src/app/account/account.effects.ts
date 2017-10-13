@@ -90,7 +90,7 @@ export class AccountEffects {
     AccountCreate_$: Observable<Action> = this.actions$
         .ofType('ACCOUNT_TRANSACTION')
         // add state to effect
-        .withLatestFrom(this.store, (action, state) => state.account)
+        .withLatestFrom(this.store, (action, state) => state.accountDetail)
 
         // get head from node
         .flatMap(state =>
@@ -100,7 +100,7 @@ export class AccountEffects {
                 // get counter from node
                 .flatMap(head =>
                     this.http.post(this.api +
-                        '/blocks/prevalidation/proto/context/contracts/' + state.keys.publicKeyHash + '/counter', {})
+                        '/blocks/prevalidation/proto/context/contracts/' + state.form.from + '/counter', {})
                         .map(response => response.json().ok)
 
                         // get predecessor from node
@@ -114,14 +114,14 @@ export class AccountEffects {
                                     return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/operations', {
                                         "net_id": head.net_id,
                                         "branch": predecessorBlock,
-                                        "source": state.keys.publicKeyHash,
-                                        "public_key": state.keys.publicKey,
+                                        "source": state.form.from,
+                                        "public_key": state.form.publicKey,
                                         "fee": 0,
                                         "counter": counter + 1,
                                         "operations": [{
                                             "kind": "transaction",
-                                            "amount": 66, // This is in centiles, i.e. 100 = 1.00 tez
-                                            "destination": "TZ1rFCGBc27UPGM8Kocev6qF3S7ve9YNBJvZ"
+                                            "amount": state.form.amount, // This is in centiles, i.e. 100 = 1.00 tez
+                                            "destination": state.form.to
                                         }]
                                     })
                                         .map(response => response.json().ok.operation)
@@ -131,7 +131,7 @@ export class AccountEffects {
 
                                             let ok = sodium.crypto_sign_detached(
                                                 hex2buf(operationBytes),
-                                                p(state.keys.secretKey, this.prefix.edsk),
+                                                p(state.form.secretKey, this.prefix.edsk),
                                                 'uint8array'
                                             );
                                             let ok58 = o(ok, this.prefix.edsig);

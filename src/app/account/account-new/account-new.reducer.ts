@@ -15,9 +15,9 @@ const prefix = {
 const initialState: any = {
     form: {},
     keys: {
-        secretKey: '', //'edskSAFXGby2XBmJYRVDb96h5Bqfz8Uf5PKSZYmwXarU3ahQJVnCmnKu1UBdrVphiG4RzqaavepWcjaSZuxWGQeaHLhnGWDAt8',
-        publicKey: '', //'edpkuMYJFzDg1f6XAbjmP3y5JZ2QoYmP9rNitawJVEZthy2PQAYLDx',
-        publicKeyHash: '', //'tz1R2MbSrN3L5D8pkDfcxUCsAjn7PsxCH1Sb'
+        secretKey: '', 
+        publicKey: '', 
+        publicKeyHash: '',
     }
 }
 

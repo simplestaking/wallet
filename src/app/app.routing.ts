@@ -14,7 +14,7 @@ export const AppRouting: Routes = [
     // { path: 'balance', component: BalanceComponent },
     { path: 'accounts', component: AccountComponent },
     { path: 'accounts/new', component: AccountNewComponent },
-    { path: 'account/:publickKeyHash', component: AccountDetailComponent },
+    { path: 'account/:id', component: AccountDetailComponent },
     // { path: 'transactions', component: TransactionComponent },
     // { path: 'settings', component: SettingsComponent },
     //{ path: '**', component: PageNotFoundComponent }

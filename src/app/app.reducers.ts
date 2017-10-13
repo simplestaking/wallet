@@ -27,6 +27,7 @@ import {
   import * as fromBalance from './balance/balance.reducer';
   import * as fromAccount from './account/account.reducer';
   import * as fromAccountNew from './account/account-new/account-new.reducer';
+  import * as fromAccountDetail from './account/account-detail/account-detail.reducer';
   
   /**
    * As mentioned, we treat each reducer like a table in a database. This means
@@ -37,6 +38,7 @@ import {
     balance: fromBalance.State;    
     account: any;
     accountNew: any;
+    accountDetail: any;    
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
   }
   
@@ -50,6 +52,7 @@ import {
     balance: fromBalance.reducer,    
     account: fromAccount.reducer,
     accountNew: fromAccountNew.reducer,
+    accountDetail: fromAccountDetail.reducer,    
     routerReducer: fromRouter.routerReducer,
   };
   

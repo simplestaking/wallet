@@ -1,15 +1,20 @@
 <div class="create-account" [formGroup]="accountDetailForm">
 
   <mat-form-field>
+    <input matInput #input4 placeholder="Name" formControlName="name" />
+    <mat-hint align="end">{{input4.value?.length || 0}}/10</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
     <input matInput #input placeholder="From Address" formControlName="from" />
     <mat-hint align="end">{{input.value?.length || 0}}/36</mat-hint>
   </mat-form-field>
 
   <mat-form-field>
-      <input matInput #input2 placeholder="To Address" formControlName="to" />
-      <mat-hint align="end">{{input2.value?.length || 0}}/36</mat-hint>
+    <input matInput #input2 placeholder="To Address" formControlName="to" />
+    <mat-hint align="end">{{input2.value?.length || 0}}/36</mat-hint>
   </mat-form-field>
-  
+
 
   <mat-form-field>
     <input matInput #input3 type="number" placeholder="Amount" formControlName="amount" />
@@ -19,6 +24,6 @@
 </div>
 <br>
 
-<button mat-raised-button color="warn" (click)="send()">
+<button mat-raised-button color="warn" (click)="send()" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
   Send ꜩ
 </button>
