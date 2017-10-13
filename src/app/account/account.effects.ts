@@ -38,7 +38,7 @@ export class AccountEffects {
 
     public accountCol: AngularFirestoreCollection<any>;
     public accountDoc: AngularFirestoreDocument<any>;
-    
+
     // test 1 
     // soap voice defense run leg bamboo remind dawn gravity start pony develop squeeze october blue
     // test 2 
@@ -76,8 +76,8 @@ export class AccountEffects {
                 .map(response => response.json().ok)
                 .map(balance => {
                     // update balance on firebase 
-                    this.accountDoc = this.db.doc('account/' + id );
-                    this.accountDoc.update({ balance: balance })                
+                    this.accountDoc = this.db.doc('account/' + id);
+                    this.accountDoc.update({ balance: balance })
                     return { id, balance }
                 })
         )
@@ -175,6 +175,8 @@ export class AccountEffects {
             type: 'ACCOUNT_TRANSACTION_ERROR',
             payload: error
         }))
+        // redirect back to accounts list
+        .do(() => this.router.navigate(['/accounts']))
 
     constructor(
         private actions$: Actions,
