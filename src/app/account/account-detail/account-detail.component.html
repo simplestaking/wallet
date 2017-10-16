@@ -11,8 +11,16 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput #input2 placeholder="To Address" formControlName="to" />
+    <input matInput #input2 placeholder="To Address" formControlName="to" [matAutocomplete]="auto" />
     <mat-hint align="end">{{input2.value?.length || 0}}/36</mat-hint>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let to of accountDetailTo | async" [value]="to.publicKeyHash">
+        <small>{{ to.name }} | {{ to.balance * 0.01}} ꜩ</small>
+        <!-- <small>{{ state.publicKeyHash }} | {{ state.balance }} ꜩ</small>  -->
+      </mat-option>
+    </mat-autocomplete>
+
   </mat-form-field>
 
 
@@ -27,3 +35,5 @@
 <button mat-raised-button color="warn" (click)="send()" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
   Send ꜩ
 </button>
+
+

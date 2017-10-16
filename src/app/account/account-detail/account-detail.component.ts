@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs/Observable';
+
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
 
 // import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -18,6 +20,7 @@ export class AccountDetailComponent implements OnInit {
   public accountDetail
   public accountDetail$
   public accountDetailForm
+  public accountDetailTo
 
   constructor(private store: Store<any>,
     public fb: FormBuilder,
@@ -54,7 +57,15 @@ export class AccountDetailComponent implements OnInit {
 
     // listen to changes from redux
     this.account$ = this.store.select('account')
-    this.account$.subscribe(state => this.account = state)
+    this.account$.subscribe(state => {
+      this.account = state
+      // create account list 
+      this.accountDetailTo = Observable
+        .of(this.account.ids
+          .filter(id => id !== this.id)
+          .map(id => this.account.entities[id])
+        )
+    })
 
     // listen to changes from redux
     this.accountDetail$ = this.store.select('accountDetail')
@@ -73,8 +84,12 @@ export class AccountDetailComponent implements OnInit {
 
     })
 
+
+
   }
+
   send() {
+    console.log('[SEND][TRANSACTION]')
     this.store.dispatch({
       type: "ACCOUNT_TRANSACTION",
     })
