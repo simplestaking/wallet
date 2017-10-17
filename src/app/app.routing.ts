@@ -8,6 +8,7 @@ import { AccountNewComponent } from './account/account-new/account-new.component
 import { AccountDetailComponent } from './account/account-detail/account-detail.component';
 
 import { TransactionComponent } from './transaction/transaction.component';
+import { DelegateComponent } from './delegate/delegate.component';
 import { SettingsComponent } from './settings/settings.component';
 
 export const AppRouting: Routes = [
@@ -17,6 +18,7 @@ export const AppRouting: Routes = [
     { path: 'account/:id', component: AccountDetailComponent },
     // { path: 'transactions', component: TransactionComponent },
     // { path: 'settings', component: SettingsComponent },
+    { path: 'delegates', component: DelegateComponent },    
     //{ path: '**', component: PageNotFoundComponent }
 ];
 

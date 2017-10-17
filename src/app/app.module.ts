@@ -23,6 +23,8 @@ import { AccountDetailEffects } from './account/account-detail/account-detail.ef
 
 import { BalanceEffects } from './balance/balance.effects'
 
+import { DelegateEffects } from './delegate/delegate.effects'
+
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
   MatAutocompleteModule,
@@ -63,6 +65,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
 import { AccountDetailComponent } from './account/account-detail/account-detail.component';
+import { DelegateComponent } from './delegate/delegate.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +75,8 @@ import { AccountDetailComponent } from './account/account-detail/account-detail.
     TransactionComponent,
     SettingsComponent,
     AccountNewComponent,
-    AccountDetailComponent
+    AccountDetailComponent,
+    DelegateComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +97,8 @@ import { AccountDetailComponent } from './account/account-detail/account-detail.
       AccountEffects,
       AccountNewEffects,
       AccountDetailEffects,
-      BalanceEffects
+      BalanceEffects,
+      DelegateEffects
     ]),
     
     // https://github.com/zalmoxisus/redux-devtools-extension
