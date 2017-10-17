@@ -18,6 +18,9 @@ import { reducers, metaReducers } from './app.reducers';
 
 import { AllEffects } from './app.effects'
 import { AccountEffects } from './account/account.effects'
+import { AccountNewEffects } from './account/account-new/account-new.effects'
+import { AccountDetailEffects } from './account/account-detail/account-detail.effects'
+
 import { BalanceEffects } from './balance/balance.effects'
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
@@ -88,6 +91,8 @@ import { AccountDetailComponent } from './account/account-detail/account-detail.
     EffectsModule.forRoot([
       AllEffects,
       AccountEffects,
+      AccountNewEffects,
+      AccountDetailEffects,
       BalanceEffects
     ]),
     
