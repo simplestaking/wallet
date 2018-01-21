@@ -12,13 +12,14 @@ import { DelegateComponent } from './delegate/delegate.component';
 import { SettingsComponent } from './settings/settings.component';
 
 export const AppRouting: Routes = [
+    { path: '', redirectTo: 'accounts', pathMatch: 'full' },
     // { path: 'balance', component: BalanceComponent },
     { path: 'accounts', component: AccountComponent },
     { path: 'accounts/new', component: AccountNewComponent },
     { path: 'account/:id', component: AccountDetailComponent },
     // { path: 'transactions', component: TransactionComponent },
     // { path: 'settings', component: SettingsComponent },
-    { path: 'delegates', component: DelegateComponent },    
+    // { path: 'delegates', component: DelegateComponent },    
     //{ path: '**', component: PageNotFoundComponent }
 ];
 
