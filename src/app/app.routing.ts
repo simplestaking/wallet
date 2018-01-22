@@ -12,7 +12,7 @@ import { DelegateComponent } from './delegate/delegate.component';
 import { SettingsComponent } from './settings/settings.component';
 
 export const AppRouting: Routes = [
-    { path: '', redirectTo: 'accounts', pathMatch: 'full' },
+    { path: '', component: AccountComponent },
     // { path: 'balance', component: BalanceComponent },
     { path: 'accounts', component: AccountComponent },
     { path: 'accounts/new', component: AccountNewComponent },
