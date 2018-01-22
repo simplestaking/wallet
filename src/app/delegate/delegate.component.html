@@ -1,3 +1,32 @@
-<button mat-button  (click)="delegates()">
-    Reload delegates
-  </button>
+<button mat-button (click)="reloadDelegates()">
+  Reload delegates
+</button>
+
+<button mat-button (click)="saveDelegates()">
+  Save delegates
+</button>
+
+<div class="mat-elevation-z1">
+  <mat-table #table [dataSource]="delegateTableDataSource">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a routerLink="/account/{{element.id}}">{{element.delegate.value}}</a>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Balance Column -->
+    <ng-container matColumnDef="balance">
+      <mat-header-cell *matHeaderCellDef (click)="sortDelegatesBalance()">Balance </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.balance*0.01 | number}} ꜩ
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['name','balance']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name','balance'];"></mat-row>
+
+  </mat-table>
+</div>

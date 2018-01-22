@@ -4,6 +4,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/timer';
 import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
 import { Http } from '@angular/http';
@@ -36,8 +37,7 @@ export class DelegateEffects {
         .flatMap(() =>
             // get all contracts 
             this.http.post(this.api + '/blocks/head/proto/context/contracts', {})
-                .map(response => response.json().ok)
-
+            .map(response => response.json().ok)
         )
         // dispatch action
         .map(response => ({ type: 'DELEGATE_LIST_SUCCESS', payload: response }))
@@ -51,7 +51,7 @@ export class DelegateEffects {
         //.withLatestFrom(this.store, (action, state) => state.account)
         // TODO: get this from state instead of action
         .do((action)=>console.log(action))
-        .flatMap((action:any) => action.payload)
+        .flatMap((action:any) => action.payload.slice(300,400))
         // get detail for each contract
         .flatMap((publicKeyHash) =>
             this.http.post(this.api +
