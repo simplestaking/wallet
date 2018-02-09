@@ -26,8 +26,8 @@ export class DelegateEffects {
 
     public api = 'https://node.simplestaking.com:3000/'
 
-    public accountCol: AngularFirestoreCollection<any>;
-    public accountDoc: AngularFirestoreDocument<any>;
+    public delegateCol: AngularFirestoreCollection<any>;
+    public delegateDoc: AngularFirestoreDocument<any>;
 
     // get all contracts
     @Effect()
@@ -37,7 +37,7 @@ export class DelegateEffects {
         .flatMap(() =>
             // get all contracts 
             this.http.post(this.api + '/blocks/head/proto/context/contracts', {})
-            .map(response => response.json().ok)
+                .map(response => response.json().ok)
         )
         // dispatch action
         .map(response => ({ type: 'DELEGATE_LIST_SUCCESS', payload: response }))
@@ -50,8 +50,8 @@ export class DelegateEffects {
         .ofType('DELEGATE_LIST_SUCCESS')
         //.withLatestFrom(this.store, (action, state) => state.account)
         // TODO: get this from state instead of action
-        .do((action)=>console.log(action))
-        .flatMap((action:any) => action.payload.slice(300,400))
+        .do((action) => console.log(action))
+        .flatMap((action: any) => action.payload)
         // get detail for each contract
         .flatMap((publicKeyHash) =>
             this.http.post(this.api +
@@ -62,6 +62,25 @@ export class DelegateEffects {
         .map(action => ({ type: 'DELEGATE_LIST_ADD_SUCCESS', payload: action }))
         .catch(error => of({ type: 'DELEGATE_LIST_ADD_ERROR' }))
 
+
+    // save delegates 
+    @Effect()
+    DelegateListSave: Observable<any> = this.actions$
+        .ofType('DELEGATE_LIST_SAVE')
+        .withLatestFrom(this.store, (action, state) => state.delegate.entities)
+        // add each delegate
+        // .flatMap((state: any) => Object.keys(state.delegate.entities))
+        .flatMap((delegates: any) => {
+            // listen to accounts from FireBase 
+            this.delegateCol = this.db.collection('delegate');
+            // debugger
+            console.log(delegates)
+            // add value to firestore
+            return this.delegateCol.add({ ...delegates })
+        })
+        // dispatch action
+        .map(response => ({ type: 'DELEGATE_LIST_SAVE_SUCCESS', payload: response }))
+        .catch(error => of({ type: 'DELEGATE_LIST_SAVE_ERROR' }))
 
     constructor(
         private actions$: Actions,
