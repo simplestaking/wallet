@@ -66,6 +66,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
 import { AccountDetailComponent } from './account/account-detail/account-detail.component';
 import { DelegateComponent } from './delegate/delegate.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,10 @@ import { DelegateComponent } from './delegate/delegate.component';
     SettingsComponent,
     AccountNewComponent,
     AccountDetailComponent,
-    DelegateComponent
+    DelegateComponent,
+    AuthComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

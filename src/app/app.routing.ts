@@ -2,6 +2,9 @@ import { Routes } from '@angular/router'
 import { RouterStateSnapshot, Params } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
 
+import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
+
 import { BalanceComponent } from './balance/balance.component';
 import { AccountComponent } from './account/account.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
@@ -18,7 +21,11 @@ export const AppRouting: Routes = [
   { path: 'account/:id', component: AccountDetailComponent },
   // { path: 'transactions', component: TransactionComponent },
   // { path: 'settings', component: SettingsComponent },
-  { path: 'delegates', component: DelegateComponent },    
+  { path: 'delegates', component: DelegateComponent },  
+
+  { path: 'login', component: LoginComponent },    
+  { path: 'registration', component: RegistrationComponent },    
+  
   { path: '', redirectTo: '/accounts', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }
 ];
