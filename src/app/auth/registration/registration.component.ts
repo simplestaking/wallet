@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
     this.registrationForm = this.fb.group({
       email: '',
       password: '',
-      repeatPassword: '', 
+      repeatPassword: '',
     })
 
     // listen to formData change
@@ -42,9 +42,14 @@ export class RegistrationComponent implements OnInit {
 
       // update account form with redux data
       // this.loginForm.patchValue(this.login.form, { emitEvent: false });
-      this.registrationForm.patchValue({ }, { emitEvent: false });
+      this.registrationForm.patchValue({}, { emitEvent: false });
 
     })
 
+  }
+
+  register() {
+    console.log('[register] ', this.registration)
+    this.store.dispatch({ type: 'REGISTRATION_SIGNUP', payload: this.registration })
   }
 }
