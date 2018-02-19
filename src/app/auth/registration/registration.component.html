@@ -4,11 +4,15 @@
     <input matInput #input placeholder="Email" formControlName="email" />
     <mat-hint align="start">{{input.value?.length || 0}}/10</mat-hint>
   </mat-form-field>
+  
+  <br>
 
   <mat-form-field>
     <input matInput #input placeholder="Password" formControlName="password" />
     <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
   </mat-form-field>
+
+  <br>
 
   <mat-form-field>
     <input matInput #input placeholder="Password" formControlName="repeatPassword" />
@@ -22,5 +26,4 @@
 <button mat-raised-button color="primary" (click)="register()">
   Register
 </button>
-
 

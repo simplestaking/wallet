@@ -19,6 +19,7 @@ import { Buffer } from 'buffer/'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class RegistrationEffects {
@@ -34,28 +35,31 @@ export class RegistrationEffects {
         .ofType('REGISTRATION_SIGNUP')
         .withLatestFrom(this.store, (action, state) => state.account)
         // register user
-        // .flatMap(({ id, publicKeyHash }) =>
-        //     this.http.post(this.api +
-        //         '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash + '/balance', {})
-        //         .map(response => response.json().ok)
-        //         .map(balance => {
-        //             // update balance on firebase 
-        //             this.accountDoc = this.db.doc('account/' + id);
-        //             this.accountDoc.update({ balance: balance })
-        //             return { id, balance }
-        //         })
-        // )
+        .flatMap(({ id, publicKeyHash }) => {
+            this.fbAuth.auth.createUserWithEmailAndPassword
+            return Observable.of([])
+            // this.http.post(this.api +
+            //     '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash + '/balance', {})
+            //     .map(response => response.json().ok)
+            //     .map(balance => {
+            //         // update balance on firebase 
+            //         this.accountDoc = this.db.doc('account/' + id);
+            //         this.accountDoc.update({ balance: balance })
+            //         return { id, balance }
+            //     })
+        })
         // dispatch action
         .map(action => ({ type: 'REGISTRATION_SIGNUP_SUCCESS', payload: action }))
         .catch(error => of({ type: 'REGISTRATION_SIGNUP_ERROR' }))
 
-  
+
     constructor(
         private actions$: Actions,
         private http: Http,
         private store: Store<any>,
         private router: Router,
         private db: AngularFirestore,
+        private fbAuth: AngularFireAuth,
     ) { }
 
 }

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-registration',
@@ -18,7 +19,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private store: Store<any>,
     public fb: FormBuilder,
-    public db: AngularFirestore
+    public db: AngularFirestore,
+    public fbAuth: AngularFireAuth,
   ) { }
 
   ngOnInit() {
@@ -49,7 +51,25 @@ export class RegistrationComponent implements OnInit {
   }
 
   register() {
-    console.log('[register] ', this.registration)
-    this.store.dispatch({ type: 'REGISTRATION_SIGNUP', payload: this.registration })
+    console.log('[register]')
+
+    // this.fbAuth.auth.createUserWithEmailAndPassword('jurajselep@gmail.com', 'test1234')
+    //   .then(function (firebaseUser) {
+    //     console.log('log', firebaseUser)
+    //   })
+
+    var fbAuth = Observable.fromPromise(
+      this.fbAuth.auth.createUserAndRetrieveDataWithEmailAndPassword('jurajselep@gmail.com', 'test1234')
+    );
+
+    fbAuth.subscribe(firebaseUser => {
+      console.log('[firebaseUser] registration succes', firebaseUser)
+    }, firebaseUser => {
+      console.error('[firebaseUser] registration error', firebaseUser)
+    });
+
+    // this.store.dispatch({ type: 'REGISTRATION_SIGNUP', payload: this.registration })
   }
+
+
 }
