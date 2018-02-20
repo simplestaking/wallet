@@ -1,7 +1,7 @@
 <div class="sidenav-area">
   <!-- Header -->
   <div class="toolbar">
-    <mat-toolbar color="primary" *ngIf="showHeader && !coverHeader">
+    <mat-toolbar  *ngIf="showHeader && !coverHeader">
       <button mat-icon-button>
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
@@ -23,6 +23,19 @@
         *ngIf="!app.node.isUpdated" 
         matTooltip="Client is disconected from node! {{app.node.timestamp}}"
         matTooltipPosition="left" >warning</mat-icon>
+
+      <mat-menu #appMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+        <!-- <button mat-menu-item>Profile</button> -->
+        <button mat-menu-item>Login</button>
+        <button mat-menu-item>Logout</button>
+      </mat-menu>
+      
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon
+          matTooltip="User"
+          matTooltipPosition="left">account_circle
+        </mat-icon>
+      </button>
 
     </mat-toolbar>
   </div>
