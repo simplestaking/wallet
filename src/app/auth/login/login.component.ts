@@ -54,21 +54,29 @@ export class LoginComponent implements OnInit {
   logIn() {
 
     console.log('[logIn] ', this.login.form.email, this.login.form.password)
-    
-    this.loginError = ''
 
-    this.store.dispatch({ type: "AUTH_LOGIN" })
+    // dispatch action with password
+    this.store.dispatch({
+      type: "AUTH_LOGIN", 
+      payload: {
+        email: this.login.form.email,
+        passwords: this.login.form.password,
+      }
+    })
 
-    var fbAuth = Observable.fromPromise(
-      this.fbAuth.auth.signInWithEmailAndPassword(this.login.form.email, this.login.form.password)
-    );
+    // this.loginError = ''
 
-    fbAuth.subscribe(fbUser => {
-      console.log('[firebaseUser] login succes - ', fbUser.uid)
-    }, fbError => {
-      console.error('[firebaseUser] login error ', fbError.code)
-      this.loginError = fbError.message
-    });
+
+    // var fbAuth = Observable.fromPromise(
+    //   this.fbAuth.auth.signInWithEmailAndPassword(this.login.form.email, this.login.form.password)
+    // );
+
+    // fbAuth.subscribe(fbUser => {
+    //   console.log('[firebaseUser] login succes - ', fbUser.uid)
+    // }, fbError => {
+    //   console.error('[firebaseUser] login error ', fbError.code)
+    //   this.loginError = fbError.message
+    // });
 
   }
 

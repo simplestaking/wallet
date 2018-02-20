@@ -6,9 +6,8 @@
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
       <span> simplestaking.com</span>
-      <span class="filler-content"></span>
 
-      <mat-icon 
+      <!-- <mat-icon 
         *ngIf="app.node.isConnected"
         matTooltip="Client is connected to node! {{app.node.timestamp}}"
         matTooltipPosition="left"
@@ -22,21 +21,21 @@
       <mat-icon color="accent"
         *ngIf="!app.node.isUpdated" 
         matTooltip="Client is disconected from node! {{app.node.timestamp}}"
-        matTooltipPosition="left" >warning</mat-icon>
+        matTooltipPosition="left" >warning</mat-icon> -->
 
-      <mat-menu #appMenu="matMenu" yPosition="below" [overlapTrigger]="false">
-        <!-- <button mat-menu-item>Profile</button> -->
-        <button mat-menu-item>Login</button>
-        <button mat-menu-item>Logout</button>
-      </mat-menu>
-      
-      <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <mat-icon
-          matTooltip="User"
-          matTooltipPosition="left">account_circle
-        </mat-icon>
+      <!-- create space -->
+
+      <span class="filler-content"></span>
+
+      <button mat-button routerLink="/login" >
+        Sign in
+      </button>
+      <button mat-raised-button color="warn" routerLink="/registration">
+        Create Account
       </button>
 
+
+      
     </mat-toolbar>
   </div>
 
@@ -48,7 +47,6 @@
         <a mat-list-item routerLink="/accounts">Accounts</a>
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
         <a mat-list-item routerLink="/delegates">Delegates</a> 
-        <a mat-list-item routerLink="/login">Login</a> 
         <!-- <a mat-list-item routerLink="/settings">Settings</a>  -->
       </mat-nav-list>
 
