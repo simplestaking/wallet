@@ -29,6 +29,8 @@ import {
   import * as fromAccount from './account/account.reducer';
   import * as fromAccountNew from './account/account-new/account-new.reducer';
   import * as fromAccountDetail from './account/account-detail/account-detail.reducer';
+  import * as fromAuthLogin from './auth/login/login.reducer';
+  import * as fromAuthRegistration from './auth/registration/registration.reducer';
   
   /**
    * As mentioned, we treat each reducer like a table in a database. This means
@@ -40,6 +42,8 @@ import {
     account: any;
     accountNew: any;
     accountDetail: any;
+    authLogin: any;
+    authRegistration: any;
     delegate: any;    
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
   }
@@ -56,6 +60,8 @@ import {
     accountNew: fromAccountNew.reducer,
     accountDetail: fromAccountDetail.reducer, 
     delegate: fromDelegate.reducer,   
+    authLogin: fromAuthLogin.reducer,
+    authRegistration: fromAuthRegistration.reducer,
     routerReducer: fromRouter.routerReducer,
   };
   

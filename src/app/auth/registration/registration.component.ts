@@ -16,6 +16,7 @@ export class RegistrationComponent implements OnInit {
   public registration
   public registration$
   public registrationForm
+  public registrationError
 
   constructor(private store: Store<any>,
     public fb: FormBuilder,
@@ -34,41 +35,39 @@ export class RegistrationComponent implements OnInit {
 
     // listen to formData change
     this.registrationForm.valueChanges.subscribe(accountFormData => {
-      this.store.dispatch({ type: "LOGIN_FORM_CHANGE", payload: accountFormData })
+      this.store.dispatch({ type: "AUTH_REGISTRATION_FORM_CHANGE", payload: accountFormData })
     })
 
     // listen to changes from redux
-    this.registration$ = this.store.select('registration')
+    this.registration$ = this.store.select('authRegistration')
     this.registration$.subscribe(state => {
       this.registration = state
 
       // update account form with redux data
       // this.loginForm.patchValue(this.login.form, { emitEvent: false });
-      this.registrationForm.patchValue({}, { emitEvent: false });
+      this.registrationForm.patchValue(this.registration.form, { emitEvent: false });
 
     })
 
   }
 
   register() {
-    console.log('[register]')
-
-    // this.fbAuth.auth.createUserWithEmailAndPassword('jurajselep@gmail.com', 'test1234')
-    //   .then(function (firebaseUser) {
-    //     console.log('log', firebaseUser)
-    //   })
-
-    var fbAuth = Observable.fromPromise(
-      this.fbAuth.auth.createUserAndRetrieveDataWithEmailAndPassword('jurajselep@gmail.com', 'test1234')
-    );
-
-    fbAuth.subscribe(firebaseUser => {
-      console.log('[firebaseUser] registration succes', firebaseUser)
-    }, firebaseUser => {
-      console.error('[firebaseUser] registration error', firebaseUser)
-    });
+    console.log('[register] ', this.registration.form.email, this.registration.form.password)
+    this.registrationError = ''
 
     // this.store.dispatch({ type: 'REGISTRATION_SIGNUP', payload: this.registration })
+
+    var fbAuth = Observable.fromPromise(
+      this.fbAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(this.registration.form.email, this.registration.form.password)
+    );
+
+    fbAuth.subscribe(fbUser => {
+      console.log('[firebaseUser] registration succes', fbUser.uid)
+    }, fbError => {
+      console.error('[firebaseUser] registration error', fbError)
+      this.registrationError = fbError.message
+    });
+
   }
 
 

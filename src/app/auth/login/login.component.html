@@ -4,7 +4,7 @@
     <input matInput #input placeholder="Email" formControlName="email" />
     <mat-hint align="start">{{input.value?.length || 0}}/10</mat-hint>
   </mat-form-field>
-  
+
   <br>
 
   <mat-form-field>
@@ -16,6 +16,10 @@
 
 <br>
 
+<p> {{this.loginError}} </p>
+
+<br>
+
 <button mat-raised-button color="primary" (click)="logIn()">
   Login
 </button>
@@ -23,7 +27,6 @@
 <br>
 <br>
 
-<button mat-button color="primary" routerLink="/registration" >
+<button mat-button color="primary" routerLink="/registration">
   Sign Up
 </button>
-
