@@ -1,0 +1,17 @@
+.auth-main {
+    height: 65vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+    min-width: 250px;    
+    max-width: 300px;
+}
+
+.auth-content {
+    display: flex;
+    flex-direction: column;
+}
+

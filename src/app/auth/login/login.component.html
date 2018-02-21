@@ -1,38 +1,48 @@
-<div class="auth-login" [formGroup]="loginForm">
+<div class="auth-main" [formGroup]="loginForm">
 
-  <mat-form-field>
-    <input matInput #input placeholder="Email" formControlName="email" />
-    <mat-hint align="start">{{input.value?.length || 0}}/10</mat-hint>
-  </mat-form-field>
+  <mat-card class="auth-card">
 
-  <br>
+    <mat-card-content>
 
-  <mat-form-field>
-    <input matInput #input placeholder="Password" formControlName="password" />
-    <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
-  </mat-form-field>
+      <div class="auth-content">
 
-  <br>
+        <br>
 
+        <mat-form-field>
+          <input matInput #input placeholder="Email" formControlName="email" />
+          <mat-hint align="end">{{input.value?.length || 0}}/64</mat-hint>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <input matInput #input placeholder="Password" formControlName="password" />
+          <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+        </mat-form-field>
+
+        <br>
+        <span> {{this.loginError}} </span>
+        <br>
+
+        <button mat-raised-button color="primary" (click)="logIn()">
+          Sign in
+        </button>
+
+        <br>
+
+        <div>
+          <button mat-button color="primary" routerLink="/registration">
+            Create an account
+          </button>
+          <button mat-button color="primary" routerLink="/registration">
+            Forgot password ?
+          </button>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
 
 </div>
-
-<br>
-
-<p> {{this.loginError}} </p>
-
-<br>
-
-<button mat-raised-button color="primary" (click)="logIn()">
-  Sign in
-</button>
-
-<br>
-<br>
-
-<button mat-button color="primary" routerLink="/registration">
-  Create an account
-</button>
-<button mat-button color="primary" routerLink="/registration">
-  Forgot password?
-</button>

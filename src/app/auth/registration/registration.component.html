@@ -1,33 +1,47 @@
-<div class="auth-registration" [formGroup]="registrationForm">
+<div class="auth-main" [formGroup]="registrationForm">
 
-  <mat-form-field>
-    <input matInput #input placeholder="Email" formControlName="email" />
-    <mat-hint align="start">{{input.value?.length || 0}}/10</mat-hint>
-  </mat-form-field>
-  
-  <br>
+  <mat-card class="auth-card">
 
-  <mat-form-field>
-    <input matInput #input placeholder="Password" formControlName="password" />
-    <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
-  </mat-form-field>
+    <mat-card-content>
 
-  <br>
+      <div class="auth-content">
 
-  <mat-form-field>
-    <input matInput #input placeholder="Password" formControlName="repeatPassword" />
-    <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
-  </mat-form-field>
+        <br>
+
+        <mat-form-field>
+          <input matInput #input placeholder="Email" formControlName="email" />
+          <mat-hint align="end">{{input.value?.length || 0}}/64</mat-hint>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <input matInput #input placeholder="Password" formControlName="password" />
+          <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <input matInput #input placeholder="Repeat password" formControlName="repeatPassword" />
+          <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+        </mat-form-field>
+
+
+        <br>
+        <span> {{this.registrationError}} </span>
+        <br>
+
+        <button mat-raised-button color="primary" (click)="register()">
+          Create account
+        </button>
+
+        <br>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
 
 </div>
-
-<br>
-
-<p> {{this.registrationError}} </p>
-
-<br>
-
-<button mat-raised-button color="primary" (click)="register()">
-  Register
-</button>
-
