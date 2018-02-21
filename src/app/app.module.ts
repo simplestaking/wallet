@@ -22,6 +22,9 @@ import { AccountEffects } from './account/account.effects'
 import { AccountNewEffects } from './account/account-new/account-new.effects'
 import { AccountDetailEffects } from './account/account-detail/account-detail.effects'
 
+import { LoginEffects } from './auth/login/login.effects'
+import { RegistrationEffects } from './auth/registration/registration.effects'
+
 import { BalanceEffects } from './balance/balance.effects'
 
 import { DelegateEffects } from './delegate/delegate.effects'
@@ -104,6 +107,8 @@ import { RegistrationComponent } from './auth/registration/registration.componen
       AccountEffects,
       AccountNewEffects,
       AccountDetailEffects,
+      LoginEffects,
+      RegistrationEffects,
       BalanceEffects,
       DelegateEffects
     ]),

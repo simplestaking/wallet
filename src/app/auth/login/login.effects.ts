@@ -19,9 +19,10 @@ import { Buffer } from 'buffer/'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
-export class AccountEffects {
+export class LoginEffects {
 
     public api = 'https://node.simplestaking.com:3000/'
 
@@ -34,21 +35,25 @@ export class AccountEffects {
         .ofType('AUTH_LOGIN')
         .withLatestFrom(this.store, (action, state) => state)
         // login to service
-        .flatMap( () => {
-            
-            return Observable.of([ ])
-        })
-        // dispatch action
-        .map(action => ({ type: 'AUTH_LOGIN_SUCCESS', payload: action }))
-        .catch(error => of({ type: 'AUTH_LOGIN_ERROR' }))
+        .flatMap((state) => {
 
-  
+            console.log('[effect][signIn] ', state.authLogin.form.email, state.authLogin.form.password)
+            return Observable.fromPromise(
+                this.fbAuth.auth.signInWithEmailAndPassword(state.authLogin.form.email, state.authLogin.form.password)
+            )
+                // dispatch action
+                .map(action => ({ type: 'AUTH_LOGIN_SUCCESS', payload: action }))
+                .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))
+        })
+
+
     constructor(
         private actions$: Actions,
         private http: Http,
         private store: Store<any>,
         private router: Router,
         private db: AngularFirestore,
+        public fbAuth: AngularFireAuth,
     ) { }
 
 }

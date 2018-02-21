@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store'
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
+import { FormControl, FormGroup, FormGroupDirective, NgForm, FormBuilder, Validators } from '@angular/forms'
+import { ErrorStateMatcher } from '@angular/material/core';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   public login$
   public loginForm
   public loginError
+  public emailErrorMatcher = new EmailErrorStateMatcher();
 
   constructor(private store: Store<any>,
     public fb: FormBuilder,
@@ -29,9 +31,13 @@ export class LoginComponent implements OnInit {
 
     // initilize form
     this.loginForm = this.fb.group({
-      email: '',
-      password: '',
+      email: ['', [
+        Validators.required,
+        Validators.email,
+      ]],
+      password: ['', Validators.required],
     })
+
 
     // listen to formData change
     this.loginForm.valueChanges.subscribe(accountFormData => {
@@ -51,18 +57,28 @@ export class LoginComponent implements OnInit {
 
   }
 
-  logIn() {
+  signIn() {
 
-    console.log('[logIn] ', this.login.form.email, this.login.form.password)
+    // mark input 
+    this.loginForm.controls.email.markAsTouched()
+    this.loginForm.controls.password.markAsTouched()
 
-    // dispatch action with password
-    this.store.dispatch({
-      type: "AUTH_LOGIN", 
-      payload: {
-        email: this.login.form.email,
-        passwords: this.login.form.password,
-      }
-    })
+    // check validity
+    this.loginForm.updateValueAndValidity()
+    
+    // dispatch only if valid
+    if (this.loginForm.valid) {
+
+      // dispatch action with password
+      this.store.dispatch({
+        type: "AUTH_LOGIN",
+        payload: {
+          email: this.login.form.email,
+          passwords: this.login.form.password,
+        }
+      })
+
+    }
 
     // this.loginError = ''
 
@@ -80,4 +96,12 @@ export class LoginComponent implements OnInit {
 
   }
 
+}
+
+// Error when invalid control is dirty, touched, or submitted. 
+export class EmailErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store'
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
+import { FormControl, FormGroup, FormGroupDirective, NgForm, FormBuilder, Validators } from '@angular/forms'
+import { ErrorStateMatcher } from '@angular/material/core';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
+
 
 @Component({
   selector: 'app-registration',
@@ -28,9 +30,12 @@ export class RegistrationComponent implements OnInit {
 
     // initilize form
     this.registrationForm = this.fb.group({
-      email: '',
-      password: '',
-      repeatPassword: '',
+      email: ['', [
+        Validators.required,
+        Validators.email,
+      ]],
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required],
     })
 
     // listen to formData change
@@ -71,4 +76,12 @@ export class RegistrationComponent implements OnInit {
   }
 
 
+}
+
+// Error when invalid control is dirty, touched, or submitted. 
+export class EmailErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
 }

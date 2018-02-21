@@ -9,27 +9,39 @@
         <br>
 
         <mat-form-field>
-          <input matInput #input placeholder="Email" formControlName="email" />
-          <mat-hint align="end">{{input.value?.length || 0}}/64</mat-hint>
+          <input matInput #input placeholder="Email" formControlName="email" [errorStateMatcher]="emailErrorMatcher" />
+          <!-- <mat-hint align="end">{{input.value?.length || 0}}/64</mat-hint> -->
+          <mat-error>
+            Please enter a valid email address
+          </mat-error>
         </mat-form-field>
 
         <br>
 
         <mat-form-field>
-          <input matInput #input placeholder="Password" formControlName="password" />
+          <input matInput #input placeholder="Password" formControlName="password" type="password" />
           <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+          <!-- <mat-error>
+            Password is required
+          </mat-error> -->
         </mat-form-field>
 
         <br>
 
         <mat-form-field>
-          <input matInput #input placeholder="Repeat password" formControlName="repeatPassword" />
+          <input matInput #input placeholder="Repeat password" formControlName="repeatPassword" type="password" />
           <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+          <mat-error>
+            Password does not match
+          </mat-error>
         </mat-form-field>
 
-
         <br>
-        <span> {{this.registrationError}} </span>
+
+        <mat-error>
+          {{this.registrationError}}
+        </mat-error>
+
         <br>
 
         <button mat-raised-button color="primary" (click)="register()">
