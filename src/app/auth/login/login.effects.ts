@@ -41,9 +41,9 @@ export class LoginEffects {
             return Observable.fromPromise(
                 this.fbAuth.auth.signInWithEmailAndPassword(state.authLogin.form.email, state.authLogin.form.password)
             )
-                // dispatch action
-                .map(action => ({ type: 'AUTH_LOGIN_SUCCESS', payload: action }))
-                .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))
+            // dispatch action
+            .map(action => ({ type: 'AUTH_LOGIN_SUCCESS', payload: action }))
+            .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))
         })
 
 
