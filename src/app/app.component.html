@@ -1,7 +1,7 @@
 <div class="sidenav-area">
   <!-- Header -->
   <div class="toolbar">
-    <mat-toolbar  *ngIf="showHeader && !coverHeader">
+    <mat-toolbar *ngIf="showHeader && !coverHeader">
       <button mat-icon-button>
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
@@ -27,13 +27,22 @@
 
       <span class="filler-content"></span>
 
-      <button mat-button routerLink="/login" >
+      <app-auth></app-auth>
+      
+      <button *ngIf="!app.user.uid" mat-button routerLink="/login">
         Sign in
       </button>
-      <button mat-raised-button color="warn" routerLink="/registration">
+      <button *ngIf="!app.user.uid" mat-raised-button color="warn" routerLink="/registration">
         Create Account
       </button>
 
+      <button *ngIf="app.user.uid" mat-button routerLink="/singout">
+        {{app.user.uid}}
+      </button>
+
+      <button *ngIf="app.user.uid" mat-button (click)="signOut()">
+        Sign out
+      </button>
 
       
     </mat-toolbar>
@@ -42,11 +51,11 @@
   <!-- Sidebar -->
   <mat-sidenav-container>
     <mat-sidenav #start mode="side" opened="true" [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom">
-      <mat-nav-list> 
+      <mat-nav-list>
         <!-- <a mat-list-item routerLink="/balance">Balance</a> -->
         <a mat-list-item routerLink="/accounts">Accounts</a>
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
-        <a mat-list-item routerLink="/delegates">Delegates</a> 
+        <a mat-list-item routerLink="/delegates">Delegates</a>
         <!-- <a mat-list-item routerLink="/settings">Settings</a>  -->
       </mat-nav-list>
 

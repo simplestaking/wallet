@@ -5,8 +5,9 @@ import { FormControl, FormGroup, FormGroupDirective, NgForm, FormBuilder, Valida
 import { ErrorStateMatcher } from '@angular/material/core';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-
 import { AngularFireAuth } from 'angularfire2/auth';
+
+import { AuthService } from '../auth.service'
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
     public fb: FormBuilder,
     public db: AngularFirestore,
     public fbAuth: AngularFireAuth,
+    public as: AuthService
   ) { }
 
   ngOnInit() {
@@ -65,11 +67,11 @@ export class LoginComponent implements OnInit {
 
     // check validity
     this.loginForm.updateValueAndValidity()
-    
+
     // dispatch only if valid
     if (this.loginForm.valid) {
 
-      // dispatch action with password
+      // dispatch action with login 
       this.store.dispatch({
         type: "AUTH_LOGIN",
         payload: {
@@ -78,21 +80,15 @@ export class LoginComponent implements OnInit {
         }
       })
 
+      // dispatch action with login result info
+      this.fbAuth.auth.signInWithEmailAndPassword(this.login.form.email, this.login.form.password)
+        .catch(error => {
+          console.error('[auth] error', error)
+          return this.store.dispatch({ type: "AUTH_LOGIN_ERROR", payload: error })
+        }
+        )
+
     }
-
-    // this.loginError = ''
-
-
-    // var fbAuth = Observable.fromPromise(
-    //   this.fbAuth.auth.signInWithEmailAndPassword(this.login.form.email, this.login.form.password)
-    // );
-
-    // fbAuth.subscribe(fbUser => {
-    //   console.log('[firebaseUser] login succes - ', fbUser.uid)
-    // }, fbError => {
-    //   console.error('[firebaseUser] login error ', fbError.code)
-    //   this.loginError = fbError.message
-    // });
 
   }
 

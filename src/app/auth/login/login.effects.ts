@@ -30,22 +30,54 @@ export class LoginEffects {
     public accountDoc: AngularFirestoreDocument<any>;
 
     // check balance for each account
-    @Effect()
-    AuthLogin$: Observable<any> = this.actions$
-        .ofType('AUTH_LOGIN')
-        .withLatestFrom(this.store, (action, state) => state)
-        // login to service
-        .flatMap((state) => {
+    // @Effect()
+    // AuthLogin$: Observable<any> = this.actions$
+    //     .ofType('AUTH_LOGIN')
+    //     .withLatestFrom(this.store, (action, state) => state)
+    //     // login to service
+    //     .flatMap((state) => {
 
-            console.log('[effect][signIn] ', state.authLogin.form.email, state.authLogin.form.password)
-            return Observable.fromPromise(
-                this.fbAuth.auth.signInWithEmailAndPassword(state.authLogin.form.email, state.authLogin.form.password)
+    //         console.log('[effect][signIn] ', state.authLogin.form.email, state.authLogin.form.password)
+    //         return Observable.fromPromise(
+    //             this.fbAuth.auth.signInWithEmailAndPassword(state.authLogin.form.email, state.authLogin.form.password)
+    //         )
+    //         // dispatch action
+    //         .map(action => ({ type: 'AUTH_LOGIN_SUCCESS', payload: action }))
+    //         .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))
+    //     })
+
+        // logout 
+
+    // login success redirect 
+    @Effect()
+    AuthLoginSuccessRedicert$: Observable<any> = this.actions$
+        .ofType('AUTH_LOGIN_SUCCESS')
+        .do(()=>this.router.navigate(['/']))  
+        .map(action => ({ type: 'AUTH_LOGIN_SUCCESS_REDIRECT' }))
+        
+    // logout 
+    @Effect()
+    AuthLogout$: Observable<any> = this.actions$
+        .ofType('AUTH_LOGOUT')
+        .withLatestFrom(this.store, (action, state) => state)
+        // logout from service
+        .flatMap((state) =>
+            // convert promise to observable
+            Observable.fromPromise(
+                // sign out from fb
+                this.fbAuth.auth.signOut()
             )
             // dispatch action
-            .map(action => ({ type: 'AUTH_LOGIN_SUCCESS', payload: action }))
-            .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))
-        })
+            .map(action => ({ type: 'AUTH_LOGOUT_SUCCESS', payload: action }))
+            .catch(error => of({ type: 'AUTHLOGOUT_ERROR', payload: error }))
+        )
 
+    // logout success redirect 
+    @Effect()
+    AuthLogoutSuccessRedicert$: Observable<any> = this.actions$
+        .ofType('AUTH_LOGOUT_SUCCESS')
+        .do(()=>this.router.navigate(['/login']))
+        .map(action => ({ type: 'AUTH_LOGOUT_SUCCESS_REDIRECT' }))
 
     constructor(
         private actions$: Actions,

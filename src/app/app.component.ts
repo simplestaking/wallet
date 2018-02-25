@@ -25,4 +25,11 @@ export class AppComponent {
 
   get fixedTop() { return this.fixed && this.showHeader && !this.coverHeader ? 64 : 0; }
   get fixedBottom() { return this.fixed && this.showFooter && !this.coverHeader ? 64 : 0; }
+
+  signOut() {
+    this.store.dispatch({
+      type: 'AUTH_LOGOUT',
+    })
+  }
+
 }

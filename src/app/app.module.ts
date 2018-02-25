@@ -74,6 +74,8 @@ import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 
+import { AuthService } from './auth/auth.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,7 +102,7 @@ import { RegistrationComponent } from './auth/registration/registration.componen
 
     // Set reducers  
     StoreModule.forRoot(reducers, { metaReducers }),
-    
+
     // Set side effects
     EffectsModule.forRoot([
       AllEffects,
@@ -112,7 +114,7 @@ import { RegistrationComponent } from './auth/registration/registration.componen
       BalanceEffects,
       DelegateEffects
     ]),
-    
+
     // https://github.com/zalmoxisus/redux-devtools-extension
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 
@@ -120,7 +122,7 @@ import { RegistrationComponent } from './auth/registration/registration.componen
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-
+    
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -185,7 +187,7 @@ import { RegistrationComponent } from './auth/registration/registration.componen
     MatToolbarModule,
     MatTooltipModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
