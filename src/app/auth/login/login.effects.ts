@@ -15,46 +15,42 @@ import { async } from 'rxjs/scheduler/async';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { defer } from 'rxjs/observable/defer';
-import { Buffer } from 'buffer/'
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class LoginEffects {
 
-    public api = 'https://node.simplestaking.com:3000/'
 
-    public accountCol: AngularFirestoreCollection<any>;
-    public accountDoc: AngularFirestoreDocument<any>;
 
-    // check balance for each account
-    // @Effect()
-    // AuthLogin$: Observable<any> = this.actions$
-    //     .ofType('AUTH_LOGIN')
-    //     .withLatestFrom(this.store, (action, state) => state)
-    //     // login to service
-    //     .flatMap((state) => {
+    // login to app
+    @Effect()
+    AuthLogin$: Observable<any> = this.actions$
+        .ofType('AUTH_LOGIN')
+        .withLatestFrom(this.store, (action, state) => state)
+        // login to service
+        .flatMap((state) =>
+            // convert promise to observable
+            Observable.fromPromise(
+                this.fbAuth.auth.signInWithEmailAndPassword(state.authLogin.form.email, state.authLogin.form.password)
+            )
+                // dispatch epmty observable
+                // success is handled in auth.component.ts with this.fbAuth.authState
+                .map(action => ({ type: 'AUTH_LOGIN_NULL' }))
+                // dispatch error action
+                .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))
+        )
 
-    //         console.log('[effect][signIn] ', state.authLogin.form.email, state.authLogin.form.password)
-    //         return Observable.fromPromise(
-    //             this.fbAuth.auth.signInWithEmailAndPassword(state.authLogin.form.email, state.authLogin.form.password)
-    //         )
-    //         // dispatch action
-    //         .map(action => ({ type: 'AUTH_LOGIN_SUCCESS', payload: action }))
-    //         .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))
-    //     })
-
-        // logout 
+    // logout 
 
     // login success redirect 
     @Effect()
     AuthLoginSuccessRedicert$: Observable<any> = this.actions$
         .ofType('AUTH_LOGIN_SUCCESS')
-        .do(()=>this.router.navigate(['/']))  
+        .do(() => this.router.navigate(['/']))
         .map(action => ({ type: 'AUTH_LOGIN_SUCCESS_REDIRECT' }))
-        
+
     // logout 
     @Effect()
     AuthLogout$: Observable<any> = this.actions$
@@ -67,16 +63,16 @@ export class LoginEffects {
                 // sign out from fb
                 this.fbAuth.auth.signOut()
             )
-            // dispatch action
-            .map(action => ({ type: 'AUTH_LOGOUT_SUCCESS', payload: action }))
-            .catch(error => of({ type: 'AUTHLOGOUT_ERROR', payload: error }))
+                // dispatch action
+                .map(action => ({ type: 'AUTH_LOGOUT_SUCCESS', payload: action }))
+                .catch(error => of({ type: 'AUTHLOGOUT_ERROR', payload: error }))
         )
 
     // logout success redirect 
     @Effect()
     AuthLogoutSuccessRedicert$: Observable<any> = this.actions$
         .ofType('AUTH_LOGOUT_SUCCESS')
-        .do(()=>this.router.navigate(['/login']))
+        .do(() => this.router.navigate(['/login']))
         .map(action => ({ type: 'AUTH_LOGOUT_SUCCESS_REDIRECT' }))
 
     constructor(
@@ -84,7 +80,6 @@ export class LoginEffects {
         private http: Http,
         private store: Store<any>,
         private router: Router,
-        private db: AngularFirestore,
         public fbAuth: AngularFireAuth,
     ) { }
 

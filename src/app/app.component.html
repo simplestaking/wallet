@@ -28,7 +28,7 @@
       <span class="filler-content"></span>
 
       <app-auth></app-auth>
-      
+
       <button *ngIf="!app.user.uid" mat-button routerLink="/login">
         Sign in
       </button>
@@ -36,15 +36,26 @@
         Create Account
       </button>
 
-      <button *ngIf="app.user.uid" mat-button routerLink="/singout">
-        {{app.user.uid}}
+      <button *ngIf="app.user.uid" mat-button>
+        {{app.user.email}}
       </button>
 
       <button *ngIf="app.user.uid" mat-button (click)="signOut()">
         Sign out
       </button>
 
-      
+      <!-- <button *ngIf="app.user.uid" mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button> -->
+
+      <!-- <mat-menu #userMenu="matMenu" [overlapTrigger]="false" [yPosition]="below" [xPosition]="after">
+        <button *ngIf="app.user.uid" mat-menu-item (click)="signOut()">
+          Sign out
+        </button>
+      </mat-menu> -->
+
+
+
     </mat-toolbar>
   </div>
 

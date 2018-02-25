@@ -80,14 +80,6 @@ export class LoginComponent implements OnInit {
         }
       })
 
-      // dispatch action with login result info
-      this.fbAuth.auth.signInWithEmailAndPassword(this.login.form.email, this.login.form.password)
-        .catch(error => {
-          console.error('[auth] error', error)
-          return this.store.dispatch({ type: "AUTH_LOGIN_ERROR", payload: error })
-        }
-        )
-
     }
 
   }

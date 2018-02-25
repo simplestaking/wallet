@@ -47,7 +47,7 @@ export function reducer(state = initialState, action) {
                 ...state,
                 user: {
                     uid: action.payload.uid,
-                    email: action.payload.user,
+                    email: action.payload.email,
                     displayName: action.payload.displayName,
                 }
             }

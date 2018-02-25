@@ -29,7 +29,7 @@
         <br>
 
         <mat-error>
-          {{this.loginError}}
+          {{this.login.error.message}}
         </mat-error>
 
         <br>
@@ -54,5 +54,30 @@
     </mat-card-content>
 
   </mat-card>
+
+  <br>
+
+  <!-- <mat-card class="auth-card" flex>
+
+    <mat-card-content>
+
+      <div class="auth-content">
+
+
+        <button mat-raised-button color="primary" (click)="signIn()">
+          Facebook login
+        </button>
+        <br>
+        <button mat-raised-button color="primary" (click)="signIn()">
+          Google login
+        </button>
+
+
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card> -->
 
 </div>
