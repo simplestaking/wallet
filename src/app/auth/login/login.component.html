@@ -9,7 +9,7 @@
         <br>
 
         <mat-form-field>
-          <input matInput #input placeholder="Email" formControlName="email" [errorStateMatcher]="emailErrorMatcher" />
+          <input matInput #input placeholder="Email" formControlName="email" [errorStateMatcher]="emailLoginErrorMatcher" />
           <!-- <mat-hint align="end">{{input.value?.length || 0}}/64</mat-hint> -->
           <mat-error>
             Please enter a valid email address

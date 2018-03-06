@@ -29,29 +29,22 @@ export class RegistrationEffects {
     public accountCol: AngularFirestoreCollection<any>;
     public accountDoc: AngularFirestoreDocument<any>;
 
-    // check balance for each account
+    // register new user
     @Effect()
     RegistrationSignUp$: Observable<any> = this.actions$
         .ofType('REGISTRATION_SIGNUP')
-        .withLatestFrom(this.store, (action, state) => state.account)
+        .withLatestFrom(this.store, (action, state) => state)
         // register user
-        .flatMap(({ id, publicKeyHash }) => {
-            this.fbAuth.auth.createUserWithEmailAndPassword
-            return Observable.of([])
-            // this.http.post(this.api +
-            //     '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash + '/balance', {})
-            //     .map(response => response.json().ok)
-            //     .map(balance => {
-            //         // update balance on firebase 
-            //         this.accountDoc = this.db.doc('account/' + id);
-            //         this.accountDoc.update({ balance: balance })
-            //         return { id, balance }
-            //     })
-        })
-        // dispatch action
-        .map(action => ({ type: 'REGISTRATION_SIGNUP_SUCCESS', payload: action }))
-        .catch(error => of({ type: 'REGISTRATION_SIGNUP_ERROR' }))
-
+        .flatMap((state) =>
+            Observable.fromPromise(
+                // create and register new user
+                this.fbAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(
+                    state.authRegistration.form.email, state.authRegistration.form.password)
+            )
+            // dispatch action
+            .map(action => ({ type: 'REGISTRATION_SIGNUP_SUCCESS', payload: action }))
+            .catch(error => of({ type: 'REGISTRATION_SIGNUP_ERROR',payload: error }))
+        )
 
     constructor(
         private actions$: Actions,

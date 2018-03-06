@@ -1,4 +1,8 @@
 const initialState: any = {
+    error: {
+        message: null,
+        code: null,
+    },
     form: {},
 }
 
@@ -11,6 +15,18 @@ export function reducer(state = initialState, action) {
                 form: action.payload,
             })
         }
+
+        case 'REGISTRATION_SIGNUP_ERROR': {
+            
+            return {
+                ...state,
+                error: {
+                    message: action.payload.message,
+                    code: action.payload.code
+                }
+            }
+        }
+        
 
         default:
             return state;

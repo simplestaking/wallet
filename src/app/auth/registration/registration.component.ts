@@ -19,6 +19,8 @@ export class RegistrationComponent implements OnInit {
   public registration$
   public registrationForm
   public registrationError
+  public emailRegistrationErrorMatcher = new EmailRegistrationErrorStateMatcher();
+  public passwordRegistrationErrorMatcher = new PasswordRegistrationErrorStateMatcher();
 
   constructor(private store: Store<any>,
     public fb: FormBuilder,
@@ -56,22 +58,32 @@ export class RegistrationComponent implements OnInit {
 
   }
 
-  register() {
-    console.log('[register] ', this.registration.form.email, this.registration.form.password)
-    this.registrationError = ''
+  signUp() {
 
-    // this.store.dispatch({ type: 'REGISTRATION_SIGNUP', payload: this.registration })
 
-    var fbAuth = Observable.fromPromise(
-      this.fbAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(this.registration.form.email, this.registration.form.password)
-    );
+    // mark input 
+    this.registrationForm.controls.email.markAsTouched()
+    this.registrationForm.controls.password.markAsTouched()
+    this.registrationForm.controls.repeatPassword.markAsTouched()
 
-    fbAuth.subscribe(fbUser => {
-      console.log('[firebaseUser] registration succes', fbUser.uid)
-    }, fbError => {
-      console.error('[firebaseUser] registration error', fbError)
-      this.registrationError = fbError.message
-    });
+    // check validity
+    this.registrationForm.updateValueAndValidity()
+
+    // dispatch only if valid
+    if (this.registrationForm.valid &&
+      // check if passwords match
+      (this.registration.form.password === this.registration.form.repeatPassword)) {
+
+      // dispatch action with registration 
+      this.store.dispatch({
+        type: "REGISTRATION_SIGNUP",
+        payload: {
+          email: this.registration.form.email,
+          passwords: this.registration.form.password,
+        }
+      })
+
+    }
 
   }
 
@@ -79,9 +91,18 @@ export class RegistrationComponent implements OnInit {
 }
 
 // Error when invalid control is dirty, touched, or submitted. 
-export class EmailErrorStateMatcher implements ErrorStateMatcher {
+export class EmailRegistrationErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
+export class PasswordRegistrationErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+
+    const isSubmitted = form && form.submitted;
+    const isPasswordMatch = form.control.controls.password.value === form.control.controls.repeatPassword.value
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted) || !isPasswordMatch)
   }
 }

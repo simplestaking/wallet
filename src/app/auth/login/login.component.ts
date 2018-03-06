@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   public login$
   public loginForm
   public loginError
-  public emailErrorMatcher = new EmailErrorStateMatcher();
+  public emailLoginErrorMatcher = new EmailLoginErrorStateMatcher();
 
   constructor(private store: Store<any>,
     public fb: FormBuilder,
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
 }
 
 // Error when invalid control is dirty, touched, or submitted. 
-export class EmailErrorStateMatcher implements ErrorStateMatcher {
+export class EmailLoginErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
