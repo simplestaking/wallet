@@ -1,0 +1,40 @@
+<div class="auth-main" [formGroup]="forgotForm">
+
+  <mat-card class="auth-card">
+
+    <mat-card-content>
+
+      <div class="auth-content">
+
+        <br>
+
+        <mat-form-field>
+          <input matInput #input placeholder="Email" formControlName="email" [errorStateMatcher]="emailForgotErrorMatcher" />
+          <mat-error>
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+
+        <br>
+
+        <mat-error>
+          {{this.forgot.error.message}}
+        </mat-error>
+
+        <br>
+
+        <button mat-raised-button color="primary" (click)="resetPassword()">
+          Reset password
+        </button>
+
+        <br>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <br>
+
+</div>

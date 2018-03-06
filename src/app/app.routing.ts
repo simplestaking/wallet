@@ -4,6 +4,7 @@ import { RouterStateSerializer } from '@ngrx/router-store';
 
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
+import { ForgotComponent } from './auth/forgot/forgot.component';
 
 import { BalanceComponent } from './balance/balance.component';
 import { AccountComponent } from './account/account.component';
@@ -25,7 +26,8 @@ export const AppRouting: Routes = [
 
   { path: 'login', component: LoginComponent },    
   { path: 'registration', component: RegistrationComponent },    
-  
+  { path: 'forgot', component: ForgotComponent },    
+
   { path: '', redirectTo: '/accounts', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }
 ];

@@ -15,35 +15,30 @@ import { async } from 'rxjs/scheduler/async';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { defer } from 'rxjs/observable/defer';
-import { Buffer } from 'buffer/'
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
-export class AuthRegistrationEffects {
+export class AuthForgotEffects {
 
-    public api = 'https://node.simplestaking.com:3000/'
 
-    public accountCol: AngularFirestoreCollection<any>;
-    public accountDoc: AngularFirestoreDocument<any>;
 
-    // register new user
+    // forgot to app
     @Effect()
-    RegistrationSignUp$: Observable<any> = this.actions$
-        .ofType('REGISTRATION_SIGNUP')
+    Authforgot$: Observable<any> = this.actions$
+        .ofType('AUTH_FORGOT')
         .withLatestFrom(this.store, (action, state) => state)
-        // register user
+        // forgot to service
         .flatMap((state) =>
+            // convert promise to observable
             Observable.fromPromise(
-                // create and register new user
-                this.fbAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(
-                    state.authRegistration.form.email, state.authRegistration.form.password)
+                this.fbAuth.auth.sendPasswordResetEmail(state.authForgot.form.email)
             )
-            // dispatch action
-            .map(action => ({ type: 'REGISTRATION_SIGNUP_SUCCESS', payload: action }))
-            .catch(error => of({ type: 'REGISTRATION_SIGNUP_ERROR',payload: error }))
+                // dispatch epmty observable
+                .map(action => ({ type: 'AUTH_FORGOT_SUCCESS', payload: action }))
+                // dispatch error action
+                .catch(error => of({ type: 'AUTH_FORGOT_ERROR', payload: error }))
         )
 
     constructor(
@@ -51,8 +46,7 @@ export class AuthRegistrationEffects {
         private http: Http,
         private store: Store<any>,
         private router: Router,
-        private db: AngularFirestore,
-        private fbAuth: AngularFireAuth,
+        public fbAuth: AngularFireAuth,
     ) { }
 
 }

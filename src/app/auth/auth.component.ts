@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Store } from '@ngrx/store'
 
@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store'
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, AfterViewInit {
 
   constructor(private store: Store<any>,
     public fbAuth: AngularFireAuth
@@ -36,6 +36,14 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  ngAfterViewInit() {
+    // dispatch action for auth init
+    this.store.dispatch({
+      type: "AUTH_INIT",
+    })
   }
 
 }

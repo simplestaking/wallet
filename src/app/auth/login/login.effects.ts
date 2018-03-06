@@ -20,7 +20,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
-export class LoginEffects {
+export class AuthLoginEffects {
 
 
 
@@ -36,7 +36,6 @@ export class LoginEffects {
                 this.fbAuth.auth.signInWithEmailAndPassword(state.authLogin.form.email, state.authLogin.form.password)
             )
                 // dispatch epmty observable
-                // success is handled in auth.component.ts with this.fbAuth.authState
                 .map(action => ({ type: 'AUTH_LOGIN_NULL' }))
                 // dispatch error action
                 .catch(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error }))

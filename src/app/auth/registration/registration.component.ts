@@ -30,6 +30,11 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
 
+    // initialize component
+    this.store.dispatch({
+      type: "AUTH_REGISTRATION_INIT",
+    })
+
     // initilize form
     this.registrationForm = this.fb.group({
       email: ['', [

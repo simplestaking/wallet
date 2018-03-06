@@ -22,8 +22,9 @@ import { AccountEffects } from './account/account.effects'
 import { AccountNewEffects } from './account/account-new/account-new.effects'
 import { AccountDetailEffects } from './account/account-detail/account-detail.effects'
 
-import { LoginEffects } from './auth/login/login.effects'
-import { RegistrationEffects } from './auth/registration/registration.effects'
+import { AuthLoginEffects } from './auth/login/login.effects'
+import { AuthRegistrationEffects } from './auth/registration/registration.effects'
+import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 
 import { BalanceEffects } from './balance/balance.effects'
 
@@ -74,7 +75,8 @@ import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 
-import { AuthService } from './auth/auth.service'
+import { AuthService } from './auth/auth.service';
+import { ForgotComponent } from './auth/forgot/forgot.component'
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { AuthService } from './auth/auth.service'
     DelegateComponent,
     AuthComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ForgotComponent
   ],
   imports: [
     BrowserModule,
@@ -109,8 +112,11 @@ import { AuthService } from './auth/auth.service'
       AccountEffects,
       AccountNewEffects,
       AccountDetailEffects,
-      LoginEffects,
-      RegistrationEffects,
+
+      AuthLoginEffects,
+      AuthRegistrationEffects,
+      AuthForgotEffects,
+      
       BalanceEffects,
       DelegateEffects
     ]),

@@ -10,17 +10,17 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from '../auth.service'
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-forgot',
+  templateUrl: './forgot.component.html',
+  styleUrls: ['./forgot.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class ForgotComponent implements OnInit {
 
-  public login
-  public login$
-  public loginForm
-  public loginError
-  public emailLoginErrorMatcher = new EmailLoginErrorStateMatcher();
+  public forgot
+  public forgot$
+  public forgotForm
+  public forgotError
+  public emailForgotErrorMatcher = new EmailForgotErrorStateMatcher();
 
   constructor(private store: Store<any>,
     public fb: FormBuilder,
@@ -33,55 +33,51 @@ export class LoginComponent implements OnInit {
     
     // initialize component
     this.store.dispatch({
-      type: "AUTH_LOGIN_INIT",
+      type: "AUTH_FORGOT_INIT",
     })
 
     // initilize form
-    this.loginForm = this.fb.group({
+    this.forgotForm = this.fb.group({
       email: ['', [
         Validators.required,
         Validators.email,
       ]],
-      password: ['', Validators.required],
     })
 
 
     // listen to formData change
-    this.loginForm.valueChanges.subscribe(accountFormData => {
-      this.store.dispatch({ type: "AUTH_LOGIN_FORM_CHANGE", payload: accountFormData })
+    this.forgotForm.valueChanges.subscribe(accountFormData => {
+      this.store.dispatch({ type: "AUTH_FORGOT_FORM_CHANGE", payload: accountFormData })
     })
 
     // listen to changes from redux
-    this.login$ = this.store.select('authLogin')
-    this.login$.subscribe(state => {
-      this.login = state
+    this.forgot$ = this.store.select('authForgot')
+    this.forgot$.subscribe(state => {
+      this.forgot = state
 
-      // update account form with redux data
-      // this.loginForm.patchValue(this.login.form, { emitEvent: false });
-      this.loginForm.patchValue(this.login.form, { emitEvent: false });
+      // update forgot form with redux data
+      this.forgotForm.patchValue(this.forgot.form, { emitEvent: false });
 
     })
 
   }
 
-  signIn() {
+  resetPassword() {
 
     // mark input 
-    this.loginForm.controls.email.markAsTouched()
-    this.loginForm.controls.password.markAsTouched()
+    this.forgotForm.controls.email.markAsTouched()
 
     // check validity
-    this.loginForm.updateValueAndValidity()
+    this.forgotForm.updateValueAndValidity()
 
     // dispatch only if valid
-    if (this.loginForm.valid) {
+    if (this.forgotForm.valid) {
 
       // dispatch action with login 
       this.store.dispatch({
-        type: "AUTH_LOGIN",
+        type: "AUTH_FORGOT",
         payload: {
-          email: this.login.form.email,
-          passwords: this.login.form.password,
+          email: this.forgot.form.email,
         }
       })
 
@@ -92,7 +88,7 @@ export class LoginComponent implements OnInit {
 }
 
 // Error when invalid control is dirty, touched, or submitted. 
-export class EmailLoginErrorStateMatcher implements ErrorStateMatcher {
+export class EmailForgotErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
