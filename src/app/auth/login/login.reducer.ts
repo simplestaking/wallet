@@ -18,7 +18,7 @@ export function reducer(state = initialState, action) {
 
         case 'AUTH_LOGIN_SUCCESS': {
             return {
-                ...state,
+                form: {},
                 error: {
                     message: null,
                     code: null,

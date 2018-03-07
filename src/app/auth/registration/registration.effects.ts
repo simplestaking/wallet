@@ -42,7 +42,7 @@ export class AuthRegistrationEffects {
                     state.authRegistration.form.email, state.authRegistration.form.password)
             )
             // dispatch action
-            .map(action => ({ type: 'REGISTRATION_SIGNUP_SUCCESS', payload: action }))
+            .map(action => ({ type: 'REGISTRATION_SIGNUP_SUCCESS' }))
             .catch(error => of({ type: 'REGISTRATION_SIGNUP_ERROR',payload: error }))
         )
 
