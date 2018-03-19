@@ -22,8 +22,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 @Injectable()
 export class AuthForgotEffects {
 
-
-
     // forgot to app
     @Effect()
     Authforgot$: Observable<any> = this.actions$

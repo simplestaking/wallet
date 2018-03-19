@@ -1,7 +1,7 @@
-import bs58check from 'bs58check'
-import bip39 from 'bip39'
-import sodium from 'libsodium-wrappers'
-import pbkdf2 from 'pbkdf2'
+import * as bs58check from 'bs58check'
+import * as bip39 from 'bip39'
+import * as sodium from 'libsodium-wrappers'
+import * as pbkdf2 from 'pbkdf2'
 import { Buffer } from 'buffer/'
 
 const prefix = {

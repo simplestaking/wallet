@@ -26,7 +26,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 @Injectable()
 export class AccountNewEffects {
 
-    public api = 'https://node.simplestaking.com:3000/'
+    public api = 'https://node.simplestaking.com:4000'
 
     public prefix = {
         tz1: new Uint8Array([6, 161, 159]),
@@ -66,69 +66,67 @@ export class AccountNewEffects {
     AccountCreate$: Observable<Action> = this.actions$
         .ofType('ACCOUNT_CREATE', 'ACCOUNT_ADD')
 
+        // check this link
+        // https://github.com/stephenandrews/eztz/blob/master/src/main.js
+
         // get head from node
         .flatMap((action: any) =>
+            // get head from node
             this.http.post(this.api + '/blocks/head', {})
                 .map(response => response.json())
 
-                // get predecessor from node
-                .flatMap(head =>
-                    this.http.post(this.api + '/blocks/prevalidation/predecessor', {})
-                        .map(response => response.json().predecessor)
+                // forge operation
+                .flatMap(head => {
+                    console.log(head.timestamp, head.predecessor)
+                    return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/operations', {
+                        "branch": head.predecessor,
+                        "operations": [{
+                            "kind": "faucet",
+                            "id": action.payload.publicKeyHash,
+                            "nonce": hexNonce(32)
+                        }]
+                    })
+                        .map(response => response.json().ok.operation)
 
                         // forge operation
-                        .flatMap(predecessorBlock => {
-                            console.log(head.timestamp, predecessorBlock)
-                            return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/operations', {
-                                "net_id": head.net_id,
-                                "branch": predecessorBlock,
-                                "operations": [{
-                                    "kind": "faucet",
-                                    "id": action.payload.publicKeyHash,
-                                    "nonce": hexNonce(32)
-                                }]
+                        .flatMap(operationBytes => {
+
+                            let ok = sodium.crypto_sign_detached(
+                                hex2buf(operationBytes),
+                                p(action.payload.secretKey, this.prefix.edsk),
+                                'uint8array'
+                            );
+                            let ok58 = o(ok, this.prefix.edsig);
+                            let secretOperationBytes = operationBytes + buf2hex(ok);
+                            let operationHash = o(
+                                sodium.crypto_generichash(
+                                    32,
+                                    hex2buf(secretOperationBytes),
+                                    'uint8array'
+                                ),
+                                this.prefix.o
+                            );
+
+                            return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/apply_operation', {
+                                "pred_block": head.predecessor,
+                                "operation_hash": operationHash,
+                                "forged_operation": operationBytes,
+                                "signature": ok58
                             })
-                                .map(response => response.json().ok.operation)
+                                .map(response => response.json())
 
-                                // forge operation
-                                .flatMap(operationBytes => {
-
-                                    let ok = sodium.crypto_sign_detached(
-                                        hex2buf(operationBytes),
-                                        p(action.payload.secretKey, this.prefix.edsk),
-                                        'uint8array'
-                                    );
-                                    let ok58 = o(ok, this.prefix.edsig);
-                                    let secretOperationBytes = operationBytes + buf2hex(ok);
-                                    let operationHash = o(
-                                        sodium.crypto_generichash(
-                                            32,
-                                            hex2buf(secretOperationBytes),
-                                            'uint8array'
-                                        ),
-                                        this.prefix.o
-                                    );
-
-                                    return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/apply_operation', {
-                                        "pred_block": predecessorBlock,
-                                        "operation_hash": operationHash,
-                                        "forged_operation": operationBytes,
-                                        "signature": ok58
+                                // inject operation
+                                .flatMap(response =>
+                                    this.http.post(this.api + '/inject_operation', {
+                                        "signedOperationContents": secretOperationBytes,
                                     })
                                         .map(response => response.json())
-
-                                        // inject operation
-                                        .flatMap(response =>
-                                            this.http.post(this.api + '/inject_operation', {
-                                                "signedOperationContents": secretOperationBytes,
-                                            })
-                                                .map(response => response.json())
-                                        )
-                                        // TODO: save contract id 
-                                        // here we can get contract ID
-                                })
+                                )
+                            // TODO: save contract id 
+                            // here we can get contract ID
                         })
-                )
+
+                })
 
 
         )
