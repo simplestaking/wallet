@@ -82,7 +82,7 @@ export class AccountNewEffects {
                         "branch": head.predecessor,
                         "operations": [{
                             "kind": "faucet",
-                            "id": action.payload.publicKeyHash,
+                            // "id": action.payload.publicKeyHash,
                             "nonce": hexNonce(32)
                         }]
                     })
