@@ -39,7 +39,7 @@ export class AccountEffects {
         .flatMap(({ id, publicKeyHash }) =>
             this.http.post(this.api +
                 '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash + '/balance', {})
-                .map(response => response.json().ok)
+                .map(response => response.json().balance)
                 .map(balance => {
                     // update balance on firebase 
                     this.accountDoc = this.db.doc('account/' + id);
@@ -51,7 +51,7 @@ export class AccountEffects {
         .map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action }))
         .catch(error => of({ type: 'ACCOUNT_BALANCE_ERROR' }))
 
-  
+
     constructor(
         private actions$: Actions,
         private http: Http,

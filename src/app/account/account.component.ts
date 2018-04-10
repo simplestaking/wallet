@@ -7,6 +7,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { DataSource } from '@angular/cdk/collections';
 import 'rxjs/add/observable/of';
 
+import { DecimalPipe } from '@angular/common';
+
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',

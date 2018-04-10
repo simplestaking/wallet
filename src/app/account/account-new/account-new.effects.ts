@@ -16,9 +16,8 @@ import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { defer } from 'rxjs/observable/defer';
 import { Buffer } from 'buffer/'
-import sodium from 'libsodium-wrappers'
-import bs58check from 'bs58check'
-import bip39 from 'bip39'
+import * as sodium from 'libsodium-wrappers'
+import * as bs58check from 'bs58check'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -26,7 +25,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 @Injectable()
 export class AccountNewEffects {
 
-    public api = 'https://node.simplestaking.com:4000'
+    public api = 'https://node.simplestaking.com:3000'
 
     public prefix = {
         tz1: new Uint8Array([6, 161, 159]),
@@ -78,47 +77,37 @@ export class AccountNewEffects {
                 // forge operation
                 .flatMap(head => {
                     console.log(head.timestamp, head.predecessor)
-                    return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/operations', {
+                    return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/forge/operations', {
                         "branch": head.predecessor,
                         "operations": [{
                             "kind": "faucet",
-                            // "id": action.payload.publicKeyHash,
+                            "id": action.payload.publicKeyHash,
                             "nonce": hexNonce(32)
                         }]
                     })
-                        .map(response => response.json().ok.operation)
+                        .map(response => response.json().operation)
 
                         // forge operation
                         .flatMap(operationBytes => {
 
-                            let ok = sodium.crypto_sign_detached(
-                                hex2buf(operationBytes),
-                                p(action.payload.secretKey, this.prefix.edsk),
-                                'uint8array'
-                            );
-                            let ok58 = o(ok, this.prefix.edsig);
-                            let secretOperationBytes = operationBytes + buf2hex(ok);
                             let operationHash = o(
                                 sodium.crypto_generichash(
-                                    32,
-                                    hex2buf(secretOperationBytes),
-                                    'uint8array'
+                                    32, hex2buf(operationBytes),
                                 ),
                                 this.prefix.o
-                            );
+                            )
 
                             return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/apply_operation', {
                                 "pred_block": head.predecessor,
                                 "operation_hash": operationHash,
                                 "forged_operation": operationBytes,
-                                "signature": ok58
                             })
                                 .map(response => response.json())
 
                                 // inject operation
                                 .flatMap(response =>
                                     this.http.post(this.api + '/inject_operation', {
-                                        "signedOperationContents": secretOperationBytes,
+                                        "signedOperationContents": operationBytes,
                                     })
                                         .map(response => response.json())
                                 )
@@ -139,8 +128,8 @@ export class AccountNewEffects {
             type: 'ACCOUNT_CREATE_ERROR',
             payload: error
         }))
-        // redirect back to accounts list
-        .do(() => this.router.navigate(['/accounts']))
+    // redirect back to accounts list
+    //.do(() => this.router.navigate(['/accounts']))
 
     constructor(
         private actions$: Actions,

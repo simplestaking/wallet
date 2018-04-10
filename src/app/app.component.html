@@ -5,18 +5,21 @@
       <button mat-icon-button>
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
-      <span> simplestaking.com</span>
-
-      <!-- <mat-icon 
+      <span  
+        matTooltip="Client is connected to node! {{app.node.timestamp}}"
+        matTooltipPosition="left">
+        simplestaking.com</span>
+      
+      <!-- 
+      <mat-icon 
         *ngIf="app.node.isConnected"
         matTooltip="Client is connected to node! {{app.node.timestamp}}"
-        matTooltipPosition="left"
-        >done</mat-icon> -->
+        matTooltipPosition="left">wifi</mat-icon> -->
 
       <mat-icon color="warn"
         *ngIf="!app.node.isConnected" 
         matTooltip="Node is out of sync! {{app.node.timestamp}}"
-        matTooltipPosition="left" >error</mat-icon>
+        matTooltipPosition="left" >cloud_off</mat-icon>
 
       <mat-icon color="accent"
         *ngIf="!app.node.isUpdated" 
