@@ -37,7 +37,7 @@ export class DelegateEffects {
         .flatMap(() =>
             // get all contracts 
             this.http.post(this.api + '/blocks/head/proto/context/contracts', {})
-                .map(response => response.json().ok)
+                .map(response => response.json())
         )
         // dispatch action
         .map(response => ({ type: 'DELEGATE_LIST_SUCCESS', payload: response }))
@@ -56,27 +56,34 @@ export class DelegateEffects {
         .flatMap((publicKeyHash) =>
             this.http.post(this.api +
                 '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash, {})
-                .map(response => response.json().ok)
+                .map(response => response.json())
         )
         // dispatch action
         .map(action => ({ type: 'DELEGATE_LIST_ADD_SUCCESS', payload: action }))
         .catch(error => of({ type: 'DELEGATE_LIST_ADD_ERROR' }))
 
+    // TODO: 
+    //  create array with multiple objects where object contains delegate informations 
 
     // save delegates 
     @Effect()
     DelegateListSave: Observable<any> = this.actions$
         .ofType('DELEGATE_LIST_SAVE')
-        .withLatestFrom(this.store, (action, state) => state.delegate.entities)
+        .withLatestFrom(this.store, (action, state) =>
+            // create delegates array with objects  
+            state.delegate.ids
+                .map(id => state.delegate.entities[id])
+        )
+        // create observable from each gelegates
+        .flatMap((delegates: any) => delegates )
         // add each delegate
-        // .flatMap((state: any) => Object.keys(state.delegate.entities))
-        .flatMap((delegates: any) => {
+        .flatMap((delegate: any) => {
             // listen to accounts from FireBase 
             this.delegateCol = this.db.collection('delegate');
             // debugger
-            console.log(delegates)
+            console.log(delegate)
             // add value to firestore
-            return this.delegateCol.add({ ...delegates })
+            return this.delegateCol.add({ ...delegate })
         })
         // dispatch action
         .map(response => ({ type: 'DELEGATE_LIST_SAVE_SUCCESS', payload: response }))

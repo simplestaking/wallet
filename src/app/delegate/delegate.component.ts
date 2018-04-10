@@ -21,6 +21,8 @@ export class DelegateComponent implements OnInit {
   // set data source for table  
   public delegateTableDataSource
 
+  public delegateCol: AngularFirestoreCollection<any>;
+
   constructor(
     public store: Store<any>,
     public fb: FormBuilder,
@@ -34,6 +36,53 @@ export class DelegateComponent implements OnInit {
 
     // set data source for table  
     this.delegateTableDataSource = new DelegateDataSource(this.delegate$);
+
+    // listen to accounts from FireBase 
+    this.delegateCol = this.db.collection('delegate');
+
+    // process all account add actions from firebase
+    this.delegateCol.stateChanges()
+        .subscribe(delegates =>
+            delegates.map(action => {
+                // dispatch action for each element
+                switch (action.payload.type) {
+
+                    case 'added':
+                        // console.log('added', action)
+                        return this.store.dispatch({
+                            type: 'DELEGATE_ADD_FIREBASE',
+                            payload: {
+                                id: action.payload.doc.id,
+                                data: action.payload.doc.data()
+                            }
+                        })
+
+                    case 'modified':
+                        // console.log('modified', action)
+                        return this.store.dispatch({
+                            type: 'DELEGATE_MODIFY_FIREBASE',
+                            payload: {
+                                id: action.payload.doc.id,
+                                data: action.payload.doc.data()
+                            }
+                        })
+
+                    case 'removed':
+                        //console.log('removed', action)
+                        return this.store.dispatch({
+                            type: 'DELEGATE_REMOVE_FIREBASE',
+                            payload: {
+                                id: action.payload.doc.id,
+                                data: action.payload.doc.data()
+                            }
+                        })
+
+                }
+
+            })
+        )
+
+
   }
 
   reloadDelegates() {
@@ -66,7 +115,7 @@ export class DelegateDataSource extends DataSource<any> {
   connect(): Observable<any> {
     return this.data.map(data =>
       data.ids
-        .slice(0, 10)
+        .slice(0, 20)
         .map(id => ({ id, ...data.entities[id] }))
     )
   }

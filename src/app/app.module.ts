@@ -122,7 +122,7 @@ import { ForgotComponent } from './auth/forgot/forgot.component'
     ]),
 
     // https://github.com/zalmoxisus/redux-devtools-extension
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 20 }) : [],
 
     // Cloud firestore
     AngularFireModule.initializeApp(environment.firebase),

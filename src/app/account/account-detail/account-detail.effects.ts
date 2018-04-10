@@ -51,7 +51,7 @@ export class AccountDetailEffects {
                 .flatMap(head =>
                     this.http.post(this.api +
                         '/blocks/prevalidation/proto/context/contracts/' + state.form.from + '/counter', {})
-                        .map(response => response.json().ok)
+                        .map(response => response.json())
 
                         // get predecessor from node
                         .flatMap(counter =>
@@ -74,7 +74,7 @@ export class AccountDetailEffects {
                                             "destination": state.form.to
                                         }]
                                     })
-                                        .map(response => response.json().ok.operation)
+                                        .map(response => response.json().operation)
 
                                         // forge operation
                                         .flatMap(operationBytes => {

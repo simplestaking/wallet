@@ -1,10 +1,10 @@
-<button mat-button (click)="reloadDelegates()">
+<!-- <button mat-button (click)="reloadDelegates()">
   Reload delegates
 </button>
 
 <button mat-button (click)="saveDelegates()">
   Save delegates
-</button>
+</button> -->
 
 <div>
   <mat-table #table [dataSource]="delegateTableDataSource">
@@ -21,7 +21,7 @@
     <ng-container matColumnDef="balance">
       <mat-header-cell *matHeaderCellDef (click)="sortDelegatesBalance()">Balance </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.balance*0.01 | number}} ꜩ
+        {{element.balance*0.01 | number:'1.2-2' }} ꜩ
       </mat-cell>
     </ng-container>
 
