@@ -16,9 +16,8 @@ import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { defer } from 'rxjs/observable/defer';
 import { Buffer } from 'buffer/'
-import sodium from 'libsodium-wrappers'
-import bs58check from 'bs58check'
-import bip39 from 'bip39'
+import * as sodium from 'libsodium-wrappers'
+import * as bs58check from 'bs58check'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -49,29 +48,35 @@ export class AccountDetailEffects {
 
                 // get counter from node
                 .flatMap(head =>
-                    this.http.post(this.api +
-                        '/blocks/prevalidation/proto/context/contracts/' + state.form.from + '/counter', {})
-                        .map(response => response.json())
+                    this.http.post(this.api + '/blocks/prevalidation/predecessor', {})
+                        .map(response => response.json().predecessor)
 
                         // get predecessor from node
-                        .flatMap(counter =>
-                            this.http.post(this.api + '/blocks/prevalidation/predecessor', {})
-                                .map(response => response.json().predecessor)
+                        .flatMap(predecessorBlock =>
+                            this.http.post(this.api +
+                                '/blocks/prevalidation/proto/context/contracts/' + state.form.from + '/counter', {})
+                                .map(response => response.json().counter)
 
                                 // forge operation
-                                .flatMap(predecessorBlock => {
-                                    console.log(head.timestamp, counter, predecessorBlock)
+                                .flatMap(counter => {
+                                    console.log(head, head.timestamp, counter, predecessorBlock)
                                     return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/operations', {
-                                        "net_id": head.net_id,
                                         "branch": predecessorBlock,
+                                        "kind": "manager",
                                         "source": state.form.from,
-                                        "public_key": state.form.publicKey,
                                         "fee": 0,
                                         "counter": counter + 1,
                                         "operations": [{
+                                            "kind": "reveal",
+                                            "public_key": state.form.publicKey,
+                                        }, {
                                             "kind": "transaction",
                                             "amount": state.form.amount, // This is in centiles, i.e. 100 = 1.00 tez
-                                            "destination": state.form.to
+                                            "destination": state.form.to, 
+                                            "parameters": {
+                                                "prim":"Unit",
+                                                "args":[],
+                                            },
                                         }]
                                     })
                                         .map(response => response.json().operation)
