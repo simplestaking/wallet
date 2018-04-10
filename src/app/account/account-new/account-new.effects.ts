@@ -77,7 +77,7 @@ export class AccountNewEffects {
                 // forge operation
                 .flatMap(head => {
                     console.log(head.timestamp, head.predecessor)
-                    return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/forge/operations', {
+                    return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/operations', {
                         "branch": head.predecessor,
                         "operations": [{
                             "kind": "faucet",

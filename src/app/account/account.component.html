@@ -29,7 +29,7 @@
     <ng-container matColumnDef="balance">
       <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <a routerLink="/account/{{element.id}}">{{element.balance*0.000001 | number:'1.0-6' }} ꜩ</a>
+        <a routerLink="/account/{{element.id}}">{{element.balance*0.000001 | number:'1.2-2' }} ꜩ</a>
       </mat-cell>
     </ng-container>
 
