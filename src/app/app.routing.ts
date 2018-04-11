@@ -14,6 +14,7 @@ import { AccountDetailComponent } from './account/account-detail/account-detail.
 import { TransactionComponent } from './transaction/transaction.component';
 import { DelegateComponent } from './delegate/delegate.component';
 import { SettingsComponent } from './settings/settings.component';
+import { TrezorComponent } from './trezor/trezor.component';
 
 export const AppRouting: Routes = [
   // { path: 'balance', component: BalanceComponent },
@@ -23,6 +24,7 @@ export const AppRouting: Routes = [
   // { path: 'transactions', component: TransactionComponent },
   // { path: 'settings', component: SettingsComponent },
   { path: 'delegates', component: DelegateComponent },  
+  { path: 'trezor', component: TrezorComponent },  
 
   { path: 'login', component: LoginComponent },    
   { path: 'registration', component: RegistrationComponent },    

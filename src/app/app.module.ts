@@ -76,7 +76,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 
 import { AuthService } from './auth/auth.service';
-import { ForgotComponent } from './auth/forgot/forgot.component'
+import { ForgotComponent } from './auth/forgot/forgot.component';
+import { TrezorComponent } from './trezor/trezor.component'
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ForgotComponent } from './auth/forgot/forgot.component'
     AuthComponent,
     LoginComponent,
     RegistrationComponent,
-    ForgotComponent
+    ForgotComponent,
+    TrezorComponent
   ],
   imports: [
     BrowserModule,
