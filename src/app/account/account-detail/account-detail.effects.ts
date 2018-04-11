@@ -71,12 +71,12 @@ export class AccountDetailEffects {
                                             "public_key": state.form.publicKey,
                                         }, {
                                             "kind": "transaction",
-                                            "amount": state.form.amount, // This is in centiles, i.e. 100 = 1.00 tez
+                                            "amount": ""+(+state.form.amount * +1000000)+"", // 1 000 000 = 1.00 tez
                                             "destination": state.form.to, 
-                                            "parameters": {
-                                                "prim":"Unit",
-                                                "args":[],
-                                            },
+                                            // "parameters": {
+                                            //     "prim":"Unit",
+                                            //     "args":[],
+                                            // },
                                         }]
                                     })
                                         .map(response => response.json().operation)

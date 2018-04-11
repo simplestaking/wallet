@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
 
+import { DecimalPipe } from '@angular/common';
+
 // import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Component({
