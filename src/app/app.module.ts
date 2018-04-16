@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -27,8 +28,8 @@ import { AuthRegistrationEffects } from './auth/registration/registration.effect
 import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 
 import { BalanceEffects } from './balance/balance.effects'
-
 import { DelegateEffects } from './delegate/delegate.effects'
+import { TrezorEffects } from './trezor/trezor.effects'
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -98,6 +99,7 @@ import { TrezorComponent } from './trezor/trezor.component'
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
 
@@ -120,7 +122,9 @@ import { TrezorComponent } from './trezor/trezor.component'
       AuthForgotEffects,
       
       BalanceEffects,
-      DelegateEffects
+      DelegateEffects,
+      TrezorEffects
+
     ]),
 
     // https://github.com/zalmoxisus/redux-devtools-extension

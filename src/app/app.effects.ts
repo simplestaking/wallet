@@ -46,7 +46,7 @@ export class AllEffects {
         .map(response => ({ type: 'ACCOUNT_BALANCE' }))
 
     @Effect()
-    init$: Observable<Action> = defer(() => {
+    Init$: Observable<Action> = defer(() => {
         return of({ type: 'HEARTBEAT' })
     });
 
