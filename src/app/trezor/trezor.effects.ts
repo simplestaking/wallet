@@ -28,14 +28,14 @@ export class TrezorEffects {
         .switchMap(() => {
             
             console.log('[trezor]' , this.httpClient )
-            debugger
+            // debugger
             return this.http.post(this.api, {})
                 .map(response => ({
                     type: 'TREZOR_SUCCESS',
                     payload: response.json
                 }))
                 .catch((error: HttpErrorResponse) => {
-                    debugger
+                    // debugger
                     return of({
                         type: 'TREZOR_ERROR',
                         payload: error
