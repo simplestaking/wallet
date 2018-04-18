@@ -48,6 +48,12 @@ export function reducer(state = initialState, action) {
                 ids: state.ids.filter(id => id !== action.payload.id),
             }
         }
+
+        // remove all accounts
+        case 'ACCOUNT_CLEAN_ALL': {
+            return initialState
+        }
+
         default:
             return state;
     }

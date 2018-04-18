@@ -64,8 +64,14 @@ export class AuthLoginEffects {
             )
                 // dispatch action
                 .map(action => ({ type: 'AUTH_LOGOUT_SUCCESS', payload: action }))
-                .catch(error => of({ type: 'AUTHLOGOUT_ERROR', payload: error }))
+                .catch(error => of({ type: 'AUTH_LOGOUT_ERROR', payload: error }))
         )
+    
+    // clean/reload state after login logout 
+    @Effect()
+    AuthClean$: Observable<any> = this.actions$
+        .ofType('AUTH_LOGIN_SUCCESS','AUTH_LOGOUT_SUCCESS')
+        .map(action => ({ type: 'ACCOUNT_CLEAN_ALL' }))
 
     // logout success redirect 
     @Effect()

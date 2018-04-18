@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
 
@@ -14,7 +15,7 @@ import { DecimalPipe } from '@angular/common';
     templateUrl: './account.component.html',
     styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
 
     public account
     public account$
@@ -23,8 +24,15 @@ export class AccountComponent implements OnInit {
     public accountCol: AngularFirestoreCollection<any>;
     public accountDoc: AngularFirestoreDocument<any>;
 
+    public accountColUnsubscribe
+
     // set data source for table  
     public accountTableDataSource
+
+    // user id 
+    public uid
+
+    private onDestroy$ = new Subject()
 
     constructor(
         public store: Store<any>,
@@ -40,14 +48,39 @@ export class AccountComponent implements OnInit {
         // set data source for table  
         this.accountTableDataSource = new AccountDataSource(this.account$);
 
-        // listen to accounts from FireBase 
-        this.accountCol = this.db.collection('account');
+        // get user uid
+        this.store.select('app', 'user', 'uid')
+            .takeUntil(this.onDestroy$)
+            .subscribe(uid => {
+                this.uid = uid
+                // change user and get all accounts
+                this.getAccountFirebase()
+            })
 
-        //   account.payload.doc.ref.update({ balance:  1 })
-        //   console.log('[snapshotChanges]', account.payload.doc.id, account.payload.doc.data(), )
+    }
+
+    ngOnDestroy() {
+        // close all observable streams
+        this.onDestroy$.next()
+    }
+
+    // TODO : move to load effect 
+    // when aplication reloads with already logged user it perserves anonymous accounts
+    // we need to clear state
+    getAccountFirebase() {
+        
+        // prevent multiple streams
+        if (this.accountColUnsubscribe) {
+            this.accountColUnsubscribe.unsubscribe()
+        }
+
+        // TODO: add rules to firebase
+        // listen to accounts from FireBase 
+        this.accountCol = this.db.collection('account', query => query.where('uid', '==', this.uid))
 
         // process all account add actions from firebase
-        this.accountCol.stateChanges()
+        this.accountColUnsubscribe = this.accountCol.stateChanges()
+            .takeUntil(this.onDestroy$)
             .subscribe(accounts =>
                 accounts.map(action => {
                     // dispatch action for each element
@@ -88,7 +121,6 @@ export class AccountComponent implements OnInit {
                 })
             )
 
-
     }
 
     balance() {
@@ -107,7 +139,7 @@ export class AccountDataSource extends DataSource<any> {
 
     connect(): Observable<any> {
         return this.data.map(data =>
-            data.ids.map(id => ({id,...data.entities[id]}))
+            data.ids.map(id => ({ id, ...data.entities[id] }))
         )
     }
 

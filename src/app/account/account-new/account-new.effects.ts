@@ -47,11 +47,21 @@ export class AccountNewEffects {
     @Effect()
     AccountAdd$: Observable<any> = this.actions$
         .ofType('ACCOUNT_ADD')
-        .flatMap((action: any) => {
+        .withLatestFrom(this.store, (action: any, state) => ({ action, state }))
+        .flatMap(({ action, state }) => {
             // listen to accounts from FireBase 
             this.accountCol = this.db.collection('account');
             // add value to firestore
-            return this.accountCol.add({ ...action.payload, balance: 0 })
+            return this.accountCol
+                // set document id as tezos wallet
+                .doc(action.payload.publicKeyHash)
+                .set({
+                    // save uid to set security 
+                    // if user is not logged null will be stored
+                    uid: state.app.user.uid,
+                    ...action.payload,
+                    balance: 0,
+                })
         })
         // dispatch action
         .map(response => ({ type: 'ACCOUNT_ADD_SUCCESS' }))

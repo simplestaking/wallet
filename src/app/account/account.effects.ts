@@ -38,7 +38,7 @@ export class AccountEffects {
         // get balance
         .flatMap(({ id, publicKeyHash }) =>
             this.http.post(this.api +
-                '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash + '/balance', {})
+                '/blocks/head/proto/context/contracts/' + publicKeyHash + '/balance', {})
                 .map(response => response.json().balance)
                 .map(balance => {
                     // update balance on firebase 

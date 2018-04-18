@@ -56,11 +56,7 @@ export function reducer(state = initialState, action) {
         case 'AUTH_LOGOUT_SUCCESS': {
             return {
                 ...state,
-                user: {
-                    uid: null,
-                    email: null,
-                    displayName: null,
-                }
+                user: initialState.user
             }
         }
 
