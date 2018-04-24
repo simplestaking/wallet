@@ -55,7 +55,7 @@ export class DelegateEffects {
         // get detail for each contract
         .flatMap((publicKeyHash) =>
             this.http.post(this.api +
-                '/blocks/prevalidation/proto/context/contracts/' + publicKeyHash, {})
+                '/blocks/head/proto/context/contracts/' + publicKeyHash, {})
                 .map(response => response.json())
         )
         // dispatch action

@@ -47,21 +47,23 @@ export class AccountDetailEffects {
                 .map(response => response.json())
 
                 // get counter from node
+                // TODO: should be moved before apply operation 
                 .flatMap(head =>
-                    this.http.post(this.api + '/blocks/prevalidation/predecessor', {})
+                    this.http.post(this.api + '/blocks/head/predecessor', {})
                         .map(response => response.json().predecessor)
 
                         // get predecessor from node
                         .flatMap(predecessorBlock =>
+
                             this.http.post(this.api +
-                                '/blocks/prevalidation/proto/context/contracts/' + state.form.from + '/counter', {})
+                                '/blocks/head/proto/context/contracts/' + state.form.from + '/counter', {})
                                 .map(response => response.json().counter)
 
                                 // forge operation
                                 .flatMap(counter => {
-                                    console.log(head, head.timestamp, counter, predecessorBlock)
-                                    return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/forge/operations', {
-                                        "branch": predecessorBlock,
+                                    console.log( head.timestamp, head.hash, counter)
+                                    return this.http.post(this.api + '/blocks/head/proto/helpers/forge/operations', {
+                                        "branch": head.hash,
                                         "kind": "manager",
                                         "source": state.form.from,
                                         "fee": 0,
@@ -71,8 +73,8 @@ export class AccountDetailEffects {
                                             "public_key": state.form.publicKey,
                                         }, {
                                             "kind": "transaction",
-                                            "amount": ""+(+state.form.amount * +1000000)+"", // 1 000 000 = 1.00 tez
-                                            "destination": state.form.to, 
+                                            "amount": "" + (+state.form.amount * +1000000) + "", // 1 000 000 = 1.00 tez
+                                            "destination": state.form.to,
                                             // "parameters": {
                                             //     "prim":"Unit",
                                             //     "args":[],
@@ -100,7 +102,7 @@ export class AccountDetailEffects {
                                                 this.prefix.o
                                             );
 
-                                            return this.http.post(this.api + '/blocks/prevalidation/proto/helpers/apply_operation', {
+                                            return this.http.post(this.api + '/blocks/head/proto/helpers/apply_operation', {
                                                 "pred_block": predecessorBlock,
                                                 "operation_hash": operationHash,
                                                 "forged_operation": operationBytes,
@@ -113,7 +115,10 @@ export class AccountDetailEffects {
                                                     this.http.post(this.api + '/inject_operation', {
                                                         "signedOperationContents": secretOperationBytes,
                                                     })
-                                                        .map(response => response.json())
+                                                        .map(response => response.json().injectedOperation)
+                                                        .do(injectedOperation =>
+                                                            console.log("http://tzscan.io/" + injectedOperation)
+                                                        )
                                                 )
                                         })
                                 })
