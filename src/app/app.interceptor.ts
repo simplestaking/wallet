@@ -3,6 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs/observable';
 import { map, filter, catchError } from 'rxjs/operators';
 import { Action, Store } from '@ngrx/store';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
@@ -20,8 +21,15 @@ export class AppInterceptor implements HttpInterceptor {
             }),
 
             catchError(error => {
-                // console.error('response', error)
+                console.error('response', error)
                 this.store.dispatch({ type: 'PROGRESSBAR_HIDE' })
+
+                // show error snack bar
+                this.snackBar.open(error.message, 'OK', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'top',
+                });
+
                 return Observable.throw(error)
             }),
         );
@@ -29,5 +37,6 @@ export class AppInterceptor implements HttpInterceptor {
 
     constructor(
         private store: Store<any>,
+        public snackBar: MatSnackBar
     ) { }
 }

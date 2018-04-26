@@ -11,6 +11,7 @@ const initialState = {
     },
     progressbar: {
         isVisible: false,
+        counter: 0,
     }
 
 };
@@ -68,7 +69,8 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 progressbar: {
-                    isVisible: true,
+                    isVisible: state.progressbar.counter >= 0 ? true : false ,
+                    counter: state.progressbar.counter + 1
                 }
             }
         }    
@@ -77,7 +79,8 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 progressbar: {
-                    isVisible: false,
+                    counter: state.progressbar.counter - 1,
+                    isVisible: state.progressbar.counter === 1 ? false : true,
                 }
             }
         }
