@@ -1,30 +1,28 @@
 <div class="sidenav-area">
+
   <!-- Header -->
   <div class="toolbar">
+
+    <!-- Progress bar -->
+    <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+
     <mat-toolbar *ngIf="showHeader && !coverHeader">
       <button mat-icon-button>
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
-      <span  
-        matTooltip="Client is connected to node! {{app.node.timestamp}}"
-        matTooltipPosition="left">
+      <span matTooltip="Client is connected to node! {{app.node.timestamp}}" matTooltipPosition="left">
         simplestaking.com</span>
-      
+
       <!-- 
       <mat-icon 
         *ngIf="app.node.isConnected"
         matTooltip="Client is connected to node! {{app.node.timestamp}}"
         matTooltipPosition="left">wifi</mat-icon> -->
 
-      <mat-icon color="warn"
-        *ngIf="!app.node.isConnected" 
-        matTooltip="Node is out of sync! {{app.node.timestamp}}"
-        matTooltipPosition="left" >cloud_off</mat-icon>
+      <mat-icon color="warn" *ngIf="!app.node.isConnected" matTooltip="Node is out of sync! {{app.node.timestamp}}" matTooltipPosition="left">cloud_off</mat-icon>
 
-      <mat-icon color="accent"
-        *ngIf="!app.node.isUpdated" 
-        matTooltip="Client is disconected from node! {{app.node.timestamp}}"
-        matTooltipPosition="left" >warning</mat-icon>
+      <mat-icon color="accent" *ngIf="!app.node.isUpdated" matTooltip="Client is disconected from node! {{app.node.timestamp}}"
+        matTooltipPosition="left">warning</mat-icon>
 
       <!-- create space -->
 
