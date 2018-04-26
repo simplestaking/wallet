@@ -8,7 +8,11 @@ const initialState = {
         uid: null,
         email: null, 
         displayName: null,
+    },
+    progressbar: {
+        isVisible: false,
     }
+
 };
 
 export function reducer(state = initialState, action) {
@@ -59,6 +63,26 @@ export function reducer(state = initialState, action) {
                 user: initialState.user
             }
         }
+        
+        case 'PROGRESSBAR_SHOW': {
+            return {
+                ...state,
+                progressbar: {
+                    isVisible: true,
+                }
+            }
+        }    
+        
+        case 'PROGRESSBAR_HIDE': {
+            return {
+                ...state,
+                progressbar: {
+                    isVisible: false,
+                }
+            }
+        }
+        
+
 
         default:
             return state;

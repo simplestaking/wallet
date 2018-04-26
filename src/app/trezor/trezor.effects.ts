@@ -6,7 +6,7 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/observable/timer';
 import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
 import { Http } from '@angular/http';
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
@@ -29,12 +29,12 @@ export class TrezorEffects {
             
             console.log('[trezor]' , this.httpClient )
             // debugger
-            return this.http.post(this.api, {})
+            return this.httpClient.post(this.api, {})
                 .map(response => ({
                     type: 'TREZOR_SUCCESS',
-                    payload: response.json
+                    payload: response
                 }))
-                .catch((error: HttpErrorResponse) => {
+                .catch((error) => {
                     // debugger
                     return of({
                         type: 'TREZOR_ERROR',
@@ -45,13 +45,13 @@ export class TrezorEffects {
 
     @Effect()
     TrezorInit$: Observable<Action> = defer(() => {
-        return of({ type: 'TREZOR' })
+        return of({ type: 'TREZOR_' })
     });
 
     constructor(
         private actions$: Actions,
         private http: Http,
-        private httpClient: HttpClientModule,
+        private httpClient: HttpClient,
 
     ) { }
 

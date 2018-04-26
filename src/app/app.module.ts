@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -16,6 +17,7 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component'
 import { AppRouting } from './app.routing'
+import { AppInterceptor } from './app.interceptor'
 import { reducers, metaReducers } from './app.reducers';
 
 import { AllEffects } from './app.effects'
@@ -30,6 +32,7 @@ import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 import { BalanceEffects } from './balance/balance.effects'
 import { DelegateEffects } from './delegate/delegate.effects'
 import { TrezorEffects } from './trezor/trezor.effects'
+
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -199,7 +202,14 @@ import { TrezorComponent } from './trezor/trezor.component'
     MatToolbarModule,
     MatTooltipModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

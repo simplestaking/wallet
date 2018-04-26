@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { withLatestFrom, flatMap, catchError, map, mergeMap } from 'rxjs/operators';
+import { withLatestFrom, flatMap, catchError, map, tap, defaultIfEmpty } from 'rxjs/operators';
 
 import { of } from 'rxjs/observable/of';
 
@@ -27,26 +27,26 @@ export class AccountEffects {
         flatMap(state => state.ids.map(id => ({ id, publicKeyHash: state.entities[id].publicKeyHash }))),
         // get balance
         flatMap(({ id, publicKeyHash }) =>
-            this.http.post(this.api +
+            this.httpClient.post(this.api +
                 '/blocks/head/proto/context/contracts/' + publicKeyHash + '/balance', {}).pipe(
-                    map(response => response.json().balance),
+                    map((response: any) => response.balance),
                     map(balance => {
-                        // update balance on firebase 
-                        this.accountDoc = this.db.doc('account/' + id);
-                        this.accountDoc.update({ balance: balance })
+                        // // update balance on firebase 
+                        // this.accountDoc = this.db.doc('account/' + id);
+                        // this.accountDoc.update({ balance: balance })
                         return { id, balance }
                     }),
+                    // dispatch action
+                    map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
                     catchError(error => of({ type: 'ACCOUNT_BALANCE_ERROR' })),
-            )
+            ),
         ),
-        // dispatch action
-        map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
     )
-
-
+    
     constructor(
         private actions$: Actions,
         private http: Http,
+        private httpClient: HttpClient,
         private store: Store<any>,
         private db: AngularFirestore,
     ) { }
