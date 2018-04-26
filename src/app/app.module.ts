@@ -29,7 +29,6 @@ import { AuthLoginEffects } from './auth/login/login.effects'
 import { AuthRegistrationEffects } from './auth/registration/registration.effects'
 import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 
-import { BalanceEffects } from './balance/balance.effects'
 import { DelegateEffects } from './delegate/delegate.effects'
 import { TrezorEffects } from './trezor/trezor.effects'
 
@@ -68,7 +67,6 @@ import {
   MatStepperModule,
 } from '@angular/material';
 
-import { BalanceComponent } from './balance/balance.component';
 import { AccountComponent } from './account/account.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -86,7 +84,6 @@ import { TrezorComponent } from './trezor/trezor.component'
 @NgModule({
   declarations: [
     AppComponent,
-    BalanceComponent,
     AccountComponent,
     TransactionComponent,
     SettingsComponent,
@@ -124,7 +121,6 @@ import { TrezorComponent } from './trezor/trezor.component'
       AuthRegistrationEffects,
       AuthForgotEffects,
       
-      BalanceEffects,
       DelegateEffects,
       TrezorEffects
 

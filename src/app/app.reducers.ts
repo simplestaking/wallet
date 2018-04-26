@@ -24,7 +24,6 @@ import {
    */
 
   import * as fromApp from './app.reducer';  
-  import * as fromBalance from './balance/balance.reducer';
   import * as fromDelegate from './delegate/delegate.reducer';
   import * as fromAccount from './account/account.reducer';
   import * as fromAccountNew from './account/account-new/account-new.reducer';
@@ -39,7 +38,6 @@ import {
    */
   export interface State {
     app: any;
-    balance: fromBalance.State;    
     account: any;
     accountNew: any;
     accountDetail: any;
@@ -57,7 +55,6 @@ import {
    */
   export const reducers: ActionReducerMap<State> = {
     app: fromApp.reducer,
-    balance: fromBalance.reducer,    
     account: fromAccount.reducer,
     accountNew: fromAccountNew.reducer,
     accountDetail: fromAccountDetail.reducer, 

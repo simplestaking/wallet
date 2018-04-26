@@ -1,10 +1,10 @@
-<button mat-button (click)="reloadDelegates()">
+<!-- <button mat-button (click)="reloadDelegates()">
   Reload delegates
 </button>
 
 <button mat-button (click)="saveDelegates()">
   Save delegates
-</button>
+</button> -->
 
 <div>
   <mat-table #table [dataSource]="delegateTableDataSource">
@@ -13,7 +13,9 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <a routerLink="/account/{{element.id}}">{{element.delegate.value}}</a>
+        <a target="_blank" href="http://tzscan.io/{{element.delegate.value}}?default=baking">
+          {{element.delegate.value}}
+        </a>
       </mat-cell>
     </ng-container>
 
@@ -21,7 +23,7 @@
     <ng-container matColumnDef="balance">
       <mat-header-cell *matHeaderCellDef (click)="sortDelegatesBalance()">Balance </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.balance*0.01 | number:'1.2-2' }} ꜩ
+        {{element.balance*0.000001 | number:'1.2-2' }} ꜩ
       </mat-cell>
     </ng-container>
 
