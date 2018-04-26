@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -31,9 +30,9 @@ export class AccountEffects {
                 '/blocks/head/proto/context/contracts/' + publicKeyHash + '/balance', {}).pipe(
                     map((response: any) => response.balance),
                     map(balance => {
-                        // // update balance on firebase 
-                        // this.accountDoc = this.db.doc('account/' + id);
-                        // this.accountDoc.update({ balance: balance })
+                        // update balance on firebase 
+                        this.accountDoc = this.db.doc('account/' + id);
+                        this.accountDoc.update({ balance: balance })
                         return { id, balance }
                     }),
                     // dispatch action
@@ -45,7 +44,6 @@ export class AccountEffects {
     
     constructor(
         private actions$: Actions,
-        private http: Http,
         private httpClient: HttpClient,
         private store: Store<any>,
         private db: AngularFirestore,

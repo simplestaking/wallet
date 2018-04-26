@@ -6,7 +6,9 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput #input placeholder="From Address" formControlName="from" />
+    <a target="_blank" href="http://tzscan.io/{{account.entities[this.id].publicKeyHash}}">
+      <input matInput #input placeholder="From Address" formControlName="from" />
+    </a>
     <mat-hint align="end">{{input.value?.length || 0}}/36</mat-hint>
   </mat-form-field>
 
@@ -35,5 +37,3 @@
 <button mat-raised-button color="warn" (click)="send()" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
   Send ꜩ
 </button>
-
-

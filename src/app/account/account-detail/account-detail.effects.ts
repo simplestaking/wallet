@@ -1,20 +1,11 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/withLatestFrom';
-import 'rxjs/add/observable/timer';
-import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
-import { Http } from '@angular/http';
-import { Effect, Actions } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Scheduler } from 'rxjs/Scheduler';
-import { async } from 'rxjs/scheduler/async';
-import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
-import { defer } from 'rxjs/observable/defer';
+import { withLatestFrom, flatMap, catchError, map, tap, defaultIfEmpty } from 'rxjs/operators';
+
 import { Buffer } from 'buffer/'
 import * as sodium from 'libsodium-wrappers'
 import * as bs58check from 'bs58check'
@@ -36,32 +27,31 @@ export class AccountDetailEffects {
     }
 
     @Effect()
-    AccountTransaction$: Observable<Action> = this.actions$
-        .ofType('ACCOUNT_TRANSACTION')
+    AccountTransaction$ = this.actions$.pipe(
+        ofType('ACCOUNT_TRANSACTION'),
         // add state to effect
-        .withLatestFrom(this.store, (action, state) => state.accountDetail)
-
+        withLatestFrom(this.store, (action, state) => state.accountDetail),
         // get head from node
-        .flatMap(state =>
-            this.http.post(this.api + '/blocks/head', {})
-                .map(response => response.json())
+        flatMap((state:any) =>
+            this.http.post(this.api + '/blocks/head', {}).pipe(
+                map((response: any) => response),
 
                 // get counter from node
                 // TODO: should be moved before apply operation 
-                .flatMap(head =>
-                    this.http.post(this.api + '/blocks/head/predecessor', {})
-                        .map(response => response.json().predecessor)
+                flatMap(head =>
+                    this.http.post(this.api + '/blocks/head/predecessor', {}).pipe(
+                        map((response: any) => response.predecessor),
 
                         // get predecessor from node
-                        .flatMap(predecessorBlock =>
+                        flatMap(predecessorBlock =>
 
                             this.http.post(this.api +
                                 '/blocks/head/proto/context/contracts/' + state.form.from + '/counter', {})
-                                .map(response => response.json().counter)
+                                .map((response: any) => response.counter)
 
                                 // forge operation
                                 .flatMap(counter => {
-                                    console.log( head.timestamp, head.hash, counter)
+                                    console.log(head.timestamp, head.hash, counter)
                                     return this.http.post(this.api + '/blocks/head/proto/helpers/forge/operations', {
                                         "branch": head.hash,
                                         "kind": "manager",
@@ -75,16 +65,12 @@ export class AccountDetailEffects {
                                             "kind": "transaction",
                                             "amount": "" + (+state.form.amount * +1000000) + "", // 1 000 000 = 1.00 tez
                                             "destination": state.form.to,
-                                            // "parameters": {
-                                            //     "prim":"Unit",
-                                            //     "args":[],
-                                            // },
                                         }]
-                                    })
-                                        .map(response => response.json().operation)
+                                    }).pipe(
 
+                                        map((response: any) => response.operation),
                                         // forge operation
-                                        .flatMap(operationBytes => {
+                                        flatMap(operationBytes => {
 
                                             let ok = sodium.crypto_sign_detached(
                                                 hex2buf(operationBytes),
@@ -107,40 +93,44 @@ export class AccountDetailEffects {
                                                 "operation_hash": operationHash,
                                                 "forged_operation": operationBytes,
                                                 "signature": ok58
-                                            })
-                                                .map(response => response.json())
-
+                                            }).pipe(
                                                 // inject operation
-                                                .flatMap(response =>
+                                                flatMap(response =>
                                                     this.http.post(this.api + '/inject_operation', {
                                                         "signedOperationContents": secretOperationBytes,
-                                                    })
-                                                        .map(response => response.json().injectedOperation)
-                                                        .do(injectedOperation =>
-                                                            console.log("http://tzscan.io/" + injectedOperation)
+                                                    }).pipe(
+                                                        tap((response:any) =>
+                                                            console.log("http://tzscan.io/" + response.injectedOperation)
                                                         )
+                                                    )
                                                 )
+                                            )
                                         })
+                                    )
                                 })
                         )
+                    )
                 )
+            )
+        ),
 
-        )
         // dispatch action based on result
-        .map(response => ({
+        map(response => ({
             type: 'ACCOUNT_TRANSACTION_SUCCESS',
             payload: response
-        }))
-        .catch(error => of({
+        })),
+        catchError(error => of({
             type: 'ACCOUNT_TRANSACTION_ERROR',
             payload: error
-        }))
+        })),
+        
         // redirect back to accounts list
-        .do(() => this.router.navigate(['/accounts']))
+        tap(() => this.router.navigate(['/accounts']))
+    )
 
     constructor(
         private actions$: Actions,
-        private http: Http,
+        private http: HttpClient,
         private store: Store<any>,
         private router: Router,
         private db: AngularFirestore,

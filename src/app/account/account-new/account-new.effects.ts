@@ -70,10 +70,11 @@ export class AccountNewEffects {
         .do(() => this.router.navigate(['/accounts']))
 
 
+    // TODO: change to activate and originate account    
     // create account and get contract 
     @Effect()
     AccountCreate$: Observable<Action> = this.actions$
-        .ofType('ACCOUNT_CREATE', 'ACCOUNT_ADD')
+        .ofType('ACCOUNT_CREATE_', 'ACCOUNT_ADD_')
 
         // check this link
         // https://github.com/stephenandrews/eztz/blob/master/src/main.js
