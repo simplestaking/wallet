@@ -1,19 +1,9 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/observable/timer';
-import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
-import { Http } from '@angular/http';
-import { Effect, Actions } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Scheduler } from 'rxjs/Scheduler';
-import { async } from 'rxjs/scheduler/async';
-import { empty } from 'rxjs/observable/empty';
-import { of } from 'rxjs/observable/of';
-import { defer } from 'rxjs/observable/defer';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Action, Store } from '@ngrx/store';
+import { of, defer, timer } from 'rxjs';
+import { map, tap, switchMap, flatMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AllEffects {
@@ -21,38 +11,41 @@ export class AllEffects {
     public api = 'https://node.simplestaking.com:3000/'
 
     @Effect()
-    HeartbeatEffects$: Observable<Action> = this.actions$
-        .ofType('HEARTBEAT')
-        .switchMap(() =>
-            Observable.timer(0, 60000)
-                .switchMap(() =>
-                    this.http.post(this.api + 'blocks/head/timestamp', {})
-                        .map(response => response.json())
-                        .map(response => ({
-                            type: 'HEARTBEAT_SUCCESS',
-                            payload: response
-                        }))
-                        .catch(error => of({
-                            type: 'HEARTBEAT_ERROR',
-                            payload: error
-                        }))
-                )
-        )
-    
+    HeartbeatEffects$ = this.actions$
+        .ofType('HEARTBEAT').pipe(
+            switchMap(() =>
+                // run heart beat each second
+                timer(0, 60000).pipe(
+                    switchMap(() =>
+                        this.http.post(this.api + 'blocks/head/timestamp', {}).pipe(
+                            map(response => ({
+                                type: 'HEARTBEAT_SUCCESS',
+                                payload: response
+                            })),
+                            catchError(error => of({
+                                type: 'HEARTBEAT_ERROR',
+                                payload: error
+                            })),
+                        )
+                    ),
+                ),
+            ),
+    )
+
     // get account balance    
     @Effect()
-    HeartbeatBalanceEffects$: Observable<Action> = this.actions$
-        .ofType('HEARTBEAT_SUCCESS','ACCOUNT_TRANSACTION_SUCCESS')
-        .map(response => ({ type: 'ACCOUNT_BALANCE' }))
+    HeartbeatBalanceEffects$ = this.actions$
+        .ofType('HEARTBEAT_SUCCESS', 'ACCOUNT_TRANSACTION_SUCCESS').pipe(
+            map(response => ({ type: 'ACCOUNT_BALANCE' }))
+        )
 
     @Effect()
-    Init$: Observable<Action> = defer(() => {
-        return of({ type: 'HEARTBEAT' })
-    });
+    Init$ = defer(() => of({ type: 'HEARTBEAT' })
+    );
 
     constructor(
         private actions$: Actions,
-        private http: Http,
+        private http: HttpClient,
     ) { }
 
 }

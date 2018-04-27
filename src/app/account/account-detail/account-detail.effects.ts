@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { withLatestFrom, flatMap, catchError, map, tap, defaultIfEmpty } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
 
 import { Buffer } from 'buffer/'
 import * as sodium from 'libsodium-wrappers'
 import * as bs58check from 'bs58check'
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 

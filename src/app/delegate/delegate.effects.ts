@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { defer } from 'rxjs/observable/defer';
 import { Router, ActivatedRoute } from '@angular/router';
-import { withLatestFrom, flatMap, catchError, map, tap } from 'rxjs/operators';
+import { of, defer } from 'rxjs';
+import { map, tap, withLatestFrom, flatMap, catchError } from 'rxjs/operators';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -20,7 +18,7 @@ export class DelegateEffects {
 
     // get all contracts
     @Effect()
-    DelegateListReload: Observable<any> = this.actions$.pipe(
+    DelegateListReload= this.actions$.pipe(
         ofType('DELEGATE_LIST_RELOAD'),
         withLatestFrom(this.store, (action, state) => state.account),
         flatMap(() =>
@@ -34,7 +32,7 @@ export class DelegateEffects {
 
     // get contract detail
     @Effect()
-    DelegateListDetailReload: Observable<any> = this.actions$.pipe(
+    DelegateListDetailReload = this.actions$.pipe(
         ofType('DELEGATE_LIST_SUCCESS'),
         //.withLatestFrom(this.store, (action, state) => state.account)
         // TODO: get this from state instead of action
@@ -55,7 +53,7 @@ export class DelegateEffects {
 
     // save delegates 
     @Effect()
-    DelegateListSave: Observable<any> = this.actions$.pipe(
+    DelegateListSave = this.actions$.pipe(
         ofType('DELEGATE_LIST_SAVE'),
         withLatestFrom(this.store, (action, state) =>
             // create delegates array with objects  
@@ -63,7 +61,7 @@ export class DelegateEffects {
                 .map(id => state.delegate.entities[id])
         ),
         // create observable from each gelegates
-        flatMap((delegates: any) => delegates ),
+        flatMap((delegates: any) => delegates),
         // add each delegate
         flatMap((delegate: any) => {
             // listen to accounts from FireBase 

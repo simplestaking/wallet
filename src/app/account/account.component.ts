@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
-
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { DataSource } from '@angular/cdk/collections';
-import 'rxjs/add/observable/of';
+import { of, Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 
 import { DecimalPipe } from '@angular/common';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Component({
     selector: 'app-account',
@@ -49,8 +47,9 @@ export class AccountComponent implements OnInit, OnDestroy {
         this.accountTableDataSource = new AccountDataSource(this.account$);
 
         // get user uid
-        this.store.select('app', 'user', 'uid')
-            .takeUntil(this.onDestroy$)
+        this.store.select('app', 'user', 'uid').pipe(
+            takeUntil(this.onDestroy$)
+        )
             .subscribe(uid => {
                 this.uid = uid
                 // change user and get all accounts
@@ -68,7 +67,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     // when aplication reloads with already logged user it perserves anonymous accounts
     // we need to clear state
     getAccountFirebase() {
-        
+
         // prevent multiple streams
         if (this.accountColUnsubscribe) {
             this.accountColUnsubscribe.unsubscribe()
@@ -79,8 +78,9 @@ export class AccountComponent implements OnInit, OnDestroy {
         this.accountCol = this.db.collection('account', query => query.where('uid', '==', this.uid))
 
         // process all account add actions from firebase
-        this.accountColUnsubscribe = this.accountCol.stateChanges()
-            .takeUntil(this.onDestroy$)
+        this.accountColUnsubscribe = this.accountCol.stateChanges().pipe(
+                takeUntil(this.onDestroy$)
+            )
             .subscribe(accounts =>
                 accounts.map(action => {
                     // dispatch action for each element
@@ -133,11 +133,11 @@ export class AccountComponent implements OnInit, OnDestroy {
 // define data source for account table
 export class AccountDataSource extends DataSource<any> {
 
-    constructor(public data: Observable<any>) {
+    constructor(public data) {
         super();
     }
 
-    connect(): Observable<any> {
+    connect() {
         return this.data.map(data =>
             data.ids.map(id => ({ id, ...data.entities[id] }))
         )

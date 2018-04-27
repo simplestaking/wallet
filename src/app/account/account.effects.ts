@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { withLatestFrom, flatMap, catchError, map, tap, defaultIfEmpty } from 'rxjs/operators';
-
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
+import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -26,7 +25,7 @@ export class AccountEffects {
         withLatestFrom(this.store, (action, state: any) => state.account),
         // get all accounts address
         flatMap(state => state.ids.map(id => ({ id, publicKeyHash: state.entities[id].publicKeyHash }))),
-        balance(),
+        //balance(),
         map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
 
         // // get state from store
