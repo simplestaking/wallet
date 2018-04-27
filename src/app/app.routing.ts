@@ -6,7 +6,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { ForgotComponent } from './auth/forgot/forgot.component';
 
-import { BalanceComponent } from './balance/balance.component';
 import { AccountComponent } from './account/account.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
 import { AccountDetailComponent } from './account/account-detail/account-detail.component';

@@ -1,12 +1,4 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/withLatestFrom';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/observable/timer';
-import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
@@ -85,7 +77,7 @@ export class DelegateEffects {
         map(response => ({ type: 'DELEGATE_LIST_SAVE_SUCCESS', payload: response })),
         catchError(error => of({ type: 'DELEGATE_LIST_SAVE_ERROR' }))
     )
-    
+
     constructor(
         private actions$: Actions,
         private http: HttpClient,

@@ -8,6 +8,8 @@ import { of } from 'rxjs/observable/of';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
+import { balance } from '../shared/tezos.service'
+
 @Injectable()
 export class AccountEffects {
 
@@ -24,24 +26,31 @@ export class AccountEffects {
         withLatestFrom(this.store, (action, state: any) => state.account),
         // get all accounts address
         flatMap(state => state.ids.map(id => ({ id, publicKeyHash: state.entities[id].publicKeyHash }))),
-        // get balance
-        flatMap(({ id, publicKeyHash }) =>
-            this.httpClient.post(this.api +
-                '/blocks/head/proto/context/contracts/' + publicKeyHash + '/balance', {}).pipe(
-                    map((response: any) => response.balance),
-                    map(balance => {
-                        // update balance on firebase 
-                        this.accountDoc = this.db.doc('account/' + id);
-                        this.accountDoc.update({ balance: balance })
-                        return { id, balance }
-                    }),
-                    // dispatch action
-                    map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
-                    catchError(error => of({ type: 'ACCOUNT_BALANCE_ERROR' })),
-            ),
-        ),
+        balance(),
+        map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
+
+        // // get state from store
+        // withLatestFrom(this.store, (action, state: any) => state.account),
+        // // get all accounts address
+        // flatMap(state => state.ids.map(id => ({ id, publicKeyHash: state.entities[id].publicKeyHash }))),
+        // // get balance
+        // flatMap(({ id, publicKeyHash }) =>
+        //     this.httpClient.post(this.api +
+        //         '/blocks/head/proto/context/contracts/' + publicKeyHash + '/balance', {}).pipe(
+        //             map((response: any) => response.balance),
+        //             map(balance => {
+        //                 // update balance on firebase 
+        //                 this.accountDoc = this.db.doc('account/' + id);
+        //                 this.accountDoc.update({ balance: balance })
+        //                 return { id, balance }
+        //             }),
+        //             // dispatch action
+        //             map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
+        //             catchError(error => of({ type: 'ACCOUNT_BALANCE_ERROR' })),
+        //     ),
+        // ),
     )
-    
+
     constructor(
         private actions$: Actions,
         private httpClient: HttpClient,
