@@ -15,7 +15,6 @@ import { async } from 'rxjs/scheduler/async';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { defer } from 'rxjs/observable/defer';
-import { Buffer } from 'buffer/'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
