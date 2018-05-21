@@ -18,7 +18,7 @@
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let to of accountDetailTo | async" [value]="to.publicKeyHash">
-        <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.2-2' }} ꜩ</small>
+        <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.2-6' }} ꜩ</small>
         <!-- <small>{{ state.publicKeyHash }} | {{ state.balance }} ꜩ</small>  -->
       </mat-option>
     </mat-autocomplete>

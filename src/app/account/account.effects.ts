@@ -1,13 +1,15 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs/index';
 import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-import { balance } from '../shared/tezos.service'
+import { Wallet } from 'tezos-js/types'
+import { initialize, getWallet, emptyTest } from 'tezos-js'
 
 @Injectable()
 export class AccountEffects {
@@ -24,9 +26,24 @@ export class AccountEffects {
         // get state from store
         withLatestFrom(this.store, (action, state: any) => state.account),
         // get all accounts address
-        flatMap(state => state.ids.map(id => ({ id, publicKeyHash: state.entities[id].publicKeyHash }))),
-        //balance(),
+        tap((state: any) => console.log('[balance] ids ', state.ids)),
+        flatMap((state: any) => state.ids.map(id => ({ publicKeyHash: state.entities[id].publicKeyHash }))),
+        tap((state: any) => console.log('[balance] ', state.publicKeyHash)),
+        map((state: any) => ({
+            'publicKeyHash': state.publicKeyHash,
+        })),
+        // init lib sodium 
+        emptyTest(),
+        // get wallet info balance
+        // getWallet(),
+        map((data: any) => {
+            // update balance on firebase
+            this.accountDoc = this.db.doc('account/' + data.publicKeyHash);
+            this.accountDoc.update({ balance: data.balance })
+            return data.balance
+        }),
         map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
+        catchError(error => of({ type: 'ACCOUNT_BALANCE_ERROR' })),
 
         // // get state from store
         // withLatestFrom(this.store, (action, state: any) => state.account),

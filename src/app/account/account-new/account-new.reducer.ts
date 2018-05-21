@@ -8,6 +8,7 @@ const prefix = {
     tz1: new Uint8Array([6, 161, 159]),
     edpk: new Uint8Array([13, 15, 37, 217]),
     edsk: new Uint8Array([43, 246, 78, 7]),
+    edsk2: new Uint8Array([13, 15, 58, 7]),
     edsig: new Uint8Array([9, 245, 205, 134, 18]),
     o: new Uint8Array([5, 116]),
 }
@@ -15,8 +16,8 @@ const prefix = {
 const initialState: any = {
     form: {},
     keys: {
-        secretKey: '', 
-        publicKey: '', 
+        secretKey: '',
+        publicKey: '',
         publicKeyHash: '',
     }
 }
@@ -28,7 +29,7 @@ export function reducer(state = initialState, action) {
         case 'ACCOUNT_NEW_GENERATE_MNEMONIC':
             return Object.assign({}, state, {
                 form: {
-                    ...state.form,   
+                    ...state.form,
                     mnemonic: bip39.generateMnemonic(160),
                 }
             })
@@ -38,11 +39,14 @@ export function reducer(state = initialState, action) {
             let seed = bip39.mnemonicToSeed(state.form.mnemonic, state.form.passpharse).slice(0, 32);
             // keyType ed25519
             let keyPair = sodium.crypto_sign_seed_keypair(seed);
+            console.log('[keyPair]', keyPair)
+            let privateKeyTemp = keyPair.privateKey.slice(0, 32)
+            debugger
             return Object.assign({}, state, {
                 keys: {
-                    secretKey : o(keyPair.privateKey, prefix.edsk),
-                    publicKey : o(keyPair.publicKey, prefix.edpk),
-                    publicKeyHash : o(sodium.crypto_generichash(20, keyPair.publicKey), prefix.tz1),
+                    secretKey: o(privateKeyTemp, prefix.edsk2),
+                    publicKey: o(keyPair.publicKey, prefix.edpk),
+                    publicKeyHash: o(sodium.crypto_generichash(20, keyPair.publicKey), prefix.tz1),
                 }
             })
 

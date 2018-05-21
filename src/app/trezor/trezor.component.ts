@@ -40,7 +40,7 @@ export class TrezorComponent implements OnInit {
 
         console.log('[trezor] open', response)
 
-        //TODO: find better way than try catch
+        // TODO: find better way than try catch
         try {
           // open poppup and connect to trezor bridge listening on 127.0.0.1:21325
           // because of CORS we can call REST only from *.trezor.io domain 
@@ -57,7 +57,7 @@ export class TrezorComponent implements OnInit {
             } else {
               console.error('Error:', response.error); // error message
             }
-            // 1.4.0 is first firmware that supports ethereum  
+            // 1.4.0 is first firmware that supports ethereum
           }, '1.4.0');
 
           // // get address and ask for confirmation

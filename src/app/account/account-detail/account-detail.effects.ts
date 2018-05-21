@@ -6,9 +6,7 @@ import { Action, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
 
-import { Buffer } from 'buffer/'
-import * as sodium from 'libsodium-wrappers'
-import * as bs58check from 'bs58check'
+import { transfer } from 'tezos-js'
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -31,87 +29,101 @@ export class AccountDetailEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => state.accountDetail),
         // get head from node
-        flatMap((state:any) =>
-            this.http.post(this.api + '/blocks/head', {}).pipe(
-                map((response: any) => response),
+        map(state => {
+            return {
+                secretKey: state.form.secretKey,
+                publicKey: state.form.publicKey,
+                publicKeyHash: state.form.from,
+                to: state.form.to,
+                amount: state.form.amount,
+            }
+        }),
+        // transfer(),
+        // flatMap((state:any) =>
+        //     this.http.post(this.api + '/blocks/head', {}).pipe(
+        //         map((response: any) => response),
 
-                // get counter from node
-                // TODO: should be moved before apply operation 
-                flatMap(head =>
-                    this.http.post(this.api + '/blocks/head/predecessor', {}).pipe(
-                        map((response: any) => response.predecessor),
+        //         // get counter from node
+        //         // TODO: should be moved before apply operation 
+        //         flatMap(head =>
+        //             this.http.post(this.api + '/blocks/head/predecessor', {}).pipe(
+        //                 map((response: any) => response.predecessor),
 
-                        // get predecessor from node
-                        flatMap(predecessorBlock =>
+        //                 // get predecessor from node
+        //                 flatMap(predecessorBlock =>
 
-                            this.http.post(this.api +
-                                '/blocks/head/proto/context/contracts/' + state.form.from + '/counter', {})
-                                .map((response: any) => response.counter)
+        //                     this.http.post(this.api +
+        //                         '/blocks/head/proto/context/contracts/' + state.form.from + '/counter', {})
+        //                         .map((response: any) => response.counter)
 
-                                // forge operation
-                                .flatMap(counter => {
-                                    console.log(head.timestamp, head.hash, counter)
-                                    return this.http.post(this.api + '/blocks/head/proto/helpers/forge/operations', {
-                                        "branch": head.hash,
-                                        "kind": "manager",
-                                        "source": state.form.from,
-                                        "fee": 0,
-                                        "counter": counter + 1,
-                                        "operations": [{
-                                            "kind": "reveal",
-                                            "public_key": state.form.publicKey,
-                                        }, {
-                                            "kind": "transaction",
-                                            "amount": "" + (+state.form.amount * +1000000) + "", // 1 000 000 = 1.00 tez
-                                            "destination": state.form.to,
-                                        }]
-                                    }).pipe(
+        //                         // forge operation
+        //                         .flatMap(counter => {
+        //                             console.log(head.timestamp, head.hash, counter)
+        //                             return this.http.post(this.api + '/blocks/head/proto/helpers/forge/operations', {
+        //                                 "branch": head.hash,
+        //                                 "kind": "manager",
+        //                                 "source": state.form.from,
+        //                                 "fee": 0,
+        //                                 "counter": counter + 1,
+        //                                 "operations": [{
+        //                                     "kind": "reveal",
+        //                                     "public_key": state.form.publicKey,
+        //                                 }, {
+        //                                     "kind": "transaction",
+        //                                     "amount": "" + (+state.form.amount * +1000000) + "", // 1 000 000 = 1.00 tez
+        //                                     "destination": state.form.to,
+        //                                 }]
+        //                             }).pipe(
 
-                                        map((response: any) => response.operation),
-                                        // forge operation
-                                        flatMap(operationBytes => {
-
-                                            let ok = sodium.crypto_sign_detached(
-                                                hex2buf(operationBytes),
-                                                p(state.form.secretKey, this.prefix.edsk),
-                                                'uint8array'
-                                            );
-                                            let ok58 = o(ok, this.prefix.edsig);
-                                            let secretOperationBytes = operationBytes + buf2hex(ok);
-                                            let operationHash = o(
-                                                sodium.crypto_generichash(
-                                                    32,
-                                                    hex2buf(secretOperationBytes),
-                                                    'uint8array'
-                                                ),
-                                                this.prefix.o
-                                            );
-
-                                            return this.http.post(this.api + '/blocks/head/proto/helpers/apply_operation', {
-                                                "pred_block": predecessorBlock,
-                                                "operation_hash": operationHash,
-                                                "forged_operation": operationBytes,
-                                                "signature": ok58
-                                            }).pipe(
-                                                // inject operation
-                                                flatMap(response =>
-                                                    this.http.post(this.api + '/inject_operation', {
-                                                        "signedOperationContents": secretOperationBytes,
-                                                    }).pipe(
-                                                        tap((response:any) =>
-                                                            console.log("http://tzscan.io/" + response.injectedOperation)
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        })
-                                    )
-                                })
-                        )
-                    )
-                )
-            )
-        ),
+        //                                 map((response: any) => response.operation),
+        //                                 // forge operation
+        //                                 flatMap(operationBytes => {
+        //                                     debugger
+        //                                     let hexOk = sodium.form_hex(operationBytes);
+        //                                     let pOk = p(state.form.secretKey, this.prefix.edsk);
+        //                                     let ok = sodium.crypto_sign_detached(
+        //                                         hexOk,
+        //                                         pOk,
+        //                                         'uint8array'
+        //                                     );
+        //                                     debugger
+        //                                     let ok58 = o(ok, this.prefix.edsig);
+        //                                     let secretOperationBytes = operationBytes + sodium.to_hex(ok);
+        //                                     debugger
+        //                                     let operationHash = o(
+        //                                         sodium.crypto_generichash(
+        //                                             32,
+        //                                             sodium.form_hex(secretOperationBytes),
+        //                                             'uint8array'
+        //                                         ),
+        //                                         this.prefix.o
+        //                                     );
+        //                                     debugger
+        //                                     return this.http.post(this.api + '/blocks/head/proto/helpers/apply_operation', {
+        //                                         "pred_block": predecessorBlock,
+        //                                         "operation_hash": operationHash,
+        //                                         "forged_operation": operationBytes,
+        //                                         "signature": ok58
+        //                                     }).pipe(
+        //                                         // inject operation
+        //                                         flatMap(response =>
+        //                                             this.http.post(this.api + '/inject_operation', {
+        //                                                 "signedOperationContents": secretOperationBytes,
+        //                                             }).pipe(
+        //                                                 tap((response:any) =>
+        //                                                     console.log("http://tzscan.io/" + response.injectedOperation)
+        //                                                 )
+        //                                             )
+        //                                         )
+        //                                     )
+        //                                 })
+        //                             )
+        //                         })
+        //                 )
+        //             )
+        //         )
+        //     )
+        // ),
 
         // dispatch action based on result
         map(response => ({
@@ -122,7 +134,7 @@ export class AccountDetailEffects {
             type: 'ACCOUNT_TRANSACTION_ERROR',
             payload: error
         })),
-        
+
         // redirect back to accounts list
         tap(() => this.router.navigate(['/accounts']))
     )
@@ -135,27 +147,4 @@ export class AccountDetailEffects {
         private db: AngularFirestore,
     ) { }
 
-}
-
-function o(payload, prefix) {
-    var n = new Uint8Array(prefix.length + payload.length);
-    n.set(prefix);
-    n.set(payload, prefix.length);
-    return bs58check.encode(new Buffer(n, 'hex'));
-}
-
-function p(enc, prefix) {
-    var n = bs58check.decode(enc);
-    n = n.slice(prefix.length);
-    return n;
-}
-
-function buf2hex(buffer) {
-    return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
-}
-
-function hex2buf(hex) {
-    return new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
-        return parseInt(h, 16)
-    }));
 }

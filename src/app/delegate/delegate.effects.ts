@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of, defer } from 'rxjs';
+import { of, defer } from 'rxjs/index';
 import { map, tap, withLatestFrom, flatMap, catchError } from 'rxjs/operators';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -22,7 +22,7 @@ export class DelegateEffects {
         ofType('DELEGATE_LIST_RELOAD'),
         withLatestFrom(this.store, (action, state) => state.account),
         flatMap(() =>
-            // get all contracts 
+            // get all contracts
             this.http.post(this.api + '/blocks/head/proto/context/contracts', {})
         ),
         // dispatch action
@@ -34,7 +34,7 @@ export class DelegateEffects {
     @Effect()
     DelegateListDetailReload = this.actions$.pipe(
         ofType('DELEGATE_LIST_SUCCESS'),
-        //.withLatestFrom(this.store, (action, state) => state.account)
+        // .withLatestFrom(this.store, (action, state) => state.account)
         // TODO: get this from state instead of action
         tap((action) => console.log(action)),
         flatMap((action: any) => action.payload),
@@ -48,15 +48,15 @@ export class DelegateEffects {
         catchError(error => of({ type: 'DELEGATE_LIST_ADD_ERROR' }))
     )
 
-    // TODO: 
-    //  create array with multiple objects where object contains delegate informations 
 
-    // save delegates 
+    // TODO:  create array with multiple objects where object contains delegate informations
+
+    // save delegates
     @Effect()
     DelegateListSave = this.actions$.pipe(
         ofType('DELEGATE_LIST_SAVE'),
         withLatestFrom(this.store, (action, state) =>
-            // create delegates array with objects  
+            // create delegates array with objects
             state.delegate.ids
                 .map(id => state.delegate.entities[id])
         ),
@@ -64,7 +64,7 @@ export class DelegateEffects {
         flatMap((delegates: any) => delegates),
         // add each delegate
         flatMap((delegate: any) => {
-            // listen to accounts from FireBase 
+            // listen to accounts from FireBase
             this.delegateCol = this.db.collection('delegate');
             // debugger
             console.log(delegate)
