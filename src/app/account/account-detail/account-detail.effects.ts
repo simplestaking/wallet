@@ -6,7 +6,7 @@ import { Action, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
 
-import { transfer } from 'tezos-js'
+// import { transfer } from 'tezos-js'
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 

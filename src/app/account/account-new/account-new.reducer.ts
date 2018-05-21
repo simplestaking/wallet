@@ -1,8 +1,8 @@
-import * as bs58check from 'bs58check'
-import * as bip39 from 'bip39'
-import * as sodium from 'libsodium-wrappers'
-import * as pbkdf2 from 'pbkdf2'
-import { Buffer } from 'buffer/'
+// import * as bs58check from 'bs58check'
+// import * as bip39 from 'bip39'
+// import * as sodium from 'libsodium-wrappers'
+// import * as pbkdf2 from 'pbkdf2'
+// import { Buffer } from 'buffer/'
 
 const prefix = {
     tz1: new Uint8Array([6, 161, 159]),
@@ -30,23 +30,23 @@ export function reducer(state = initialState, action) {
             return Object.assign({}, state, {
                 form: {
                     ...state.form,
-                    mnemonic: bip39.generateMnemonic(160),
+                    // mnemonic: bip39.generateMnemonic(160),
                 }
             })
 
         // generate keyPair
         case 'ACCOUNT_NEW_GENERATE_KEYS':
-            let seed = bip39.mnemonicToSeed(state.form.mnemonic, state.form.passpharse).slice(0, 32);
-            // keyType ed25519
-            let keyPair = sodium.crypto_sign_seed_keypair(seed);
-            console.log('[keyPair]', keyPair)
-            let privateKeyTemp = keyPair.privateKey.slice(0, 32)
-            debugger
+            // let seed = bip39.mnemonicToSeed(state.form.mnemonic, state.form.passpharse).slice(0, 32);
+            // // keyType ed25519
+            // let keyPair = sodium.crypto_sign_seed_keypair(seed);
+            // console.log('[keyPair]', keyPair)
+            // let privateKeyTemp = keyPair.privateKey.slice(0, 32)
+            // debugger
             return Object.assign({}, state, {
                 keys: {
-                    secretKey: o(privateKeyTemp, prefix.edsk2),
-                    publicKey: o(keyPair.publicKey, prefix.edpk),
-                    publicKeyHash: o(sodium.crypto_generichash(20, keyPair.publicKey), prefix.tz1),
+                    // secretKey: o(privateKeyTemp, prefix.edsk2),
+                    // publicKey: o(keyPair.publicKey, prefix.edpk),
+                    // publicKeyHash: o(sodium.crypto_generichash(20, keyPair.publicKey), prefix.tz1),
                 }
             })
 
@@ -62,10 +62,10 @@ export function reducer(state = initialState, action) {
     }
 }
 
-// helper function for bs58 encode 
-function o(payload, prefix) {
-    let n = new Uint8Array(prefix.length + payload.length);
-    n.set(prefix);
-    n.set(payload, prefix.length);
-    return bs58check.encode(new Buffer(n, 'hex'));
-}
+// // helper function for bs58 encode 
+// function o(payload, prefix) {
+//     let n = new Uint8Array(prefix.length + payload.length);
+//     n.set(prefix);
+//     n.set(payload, prefix.length);
+//     return bs58check.encode(new Buffer(n, 'hex'));
+// }

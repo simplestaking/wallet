@@ -8,8 +8,8 @@ import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'r
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-import { Wallet } from 'tezos-js/types'
-import { initialize, getWallet, emptyTest } from 'tezos-js'
+// import { Wallet } from 'tezos-js/types'
+// import { initialize, getWallet, emptyTest } from 'tezos-js'
 
 @Injectable()
 export class AccountEffects {
@@ -33,7 +33,7 @@ export class AccountEffects {
             'publicKeyHash': state.publicKeyHash,
         })),
         // init lib sodium 
-        emptyTest(),
+        // emptyTest(),
         // get wallet info balance
         // getWallet(),
         map((data: any) => {
