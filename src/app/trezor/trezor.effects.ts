@@ -62,7 +62,7 @@ export class TrezorEffects {
                         // trezor encoded code for get address
                         '007B0000001808ac80808008088180808008088080808008080008051001',
                         { responseType: 'text', }).pipe(
-                            // tap(response => console.log('[+][TREZOR][debug] address: ', response)),
+                            tap(response => console.log('[+][TREZOR][DEBUG] ', response)),
                             map(response => ({ ...state, result: response }))
                         )
                 ),
@@ -76,7 +76,40 @@ export class TrezorEffects {
                             map(response => hex2string(response.slice(16))),
                             tap(response => console.log('[+][TREZOR] tezos address: ', response)),
                             map(response => ({ ...state, address: response }))
-                       )
+                        )
+                ),
+
+                // sign transaction
+                flatMap((state: any) =>
+                    this.http.post(this.api + 'call/' + state.session,
+                        // trezor encoded code for get address
+                        '007d000000d408ac8080800808c18d80800808808080800808808080800808808080800812890100d2ccf643765f54feb75c172e13581b8a68d8a59b00976188c6c5fe265126920002000043f1dc90c91e0e25e20d3eb7ea53022090540aed0000000000000000000001c0000000410000e0a0b0b38dbf691d0be6a9e5a82f555a2a26d388457917f4136f82372676b9920100000000000f424001a58588c70df4cdd04abd1f5e9050443eeee8c9da001a24747a31527148686f746e536d6d57596e46635a534867375956564741663163397178504e20192803',
+                        { responseType: 'text', }).pipe(
+                            tap(response => console.log('[+][TREZOR][DEBUG] ', response)),
+                            map(response => ({ ...state, result: response }))
+                        )
+                ),
+                // confirm amount and  address 
+                flatMap((state: any) =>
+                    this.http.post(this.api + 'call/' + state.session,
+                        // trezor code to show buttons 
+                        '001b00000000',
+                        { responseType: 'text', }).pipe(
+                            tap(response => console.log('[+][TREZOR][DEBUG] ', response)),
+                            map(response => ({ ...state }))
+                        )
+                ),
+
+                // confirm amount and fee
+                flatMap((state: any) =>
+                    this.http.post(this.api + 'call/' + state.session,
+                        // trezor code to show buttons
+                        '001b00000000',
+                        { responseType: 'text', }).pipe(
+                            map(response => response.slice(16)),
+                            tap(response => console.log('[+][TREZOR] signature: ', response)),
+                            map(response => ({ ...state }))
+                        )
                 ),
 
                 map(response => ({
