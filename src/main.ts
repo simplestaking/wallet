@@ -17,6 +17,8 @@ if (environment.production) {
   enableProdMode();
 }
 
+// hack remove after angular fixes issue
+declare var fs: any;
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
