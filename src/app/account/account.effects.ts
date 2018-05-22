@@ -8,8 +8,8 @@ import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'r
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-// import { Wallet } from 'tezos-js/types'
-// import { initialize, getWallet, emptyTest } from 'tezos-js'
+// import { Wallet } from 'tezos-wallet/types'
+import { initialize, getWallet } from '../../../../tezos-wallet'
 
 @Injectable()
 export class AccountEffects {
@@ -29,13 +29,13 @@ export class AccountEffects {
         tap((state: any) => console.log('[balance] ids ', state.ids)),
         flatMap((state: any) => state.ids.map(id => ({ publicKeyHash: state.entities[id].publicKeyHash }))),
         tap((state: any) => console.log('[balance] ', state.publicKeyHash)),
-        map((state: any) => ({
+        // map((state: any) => ({
+        //     'publicKeyHash': state.publicKeyHash,
+        // })),
+        // get wallet info balance
+        getWallet(state => ({
             'publicKeyHash': state.publicKeyHash,
         })),
-        // init lib sodium 
-        // emptyTest(),
-        // get wallet info balance
-        // getWallet(),
         map((data: any) => {
             // update balance on firebase
             this.accountDoc = this.db.doc('account/' + data.publicKeyHash);

@@ -6,6 +6,7 @@
 /out-tsc
 /functions/node_modules
 /functions/node_modules/firebase-debug.log
+/tezos-wallet/node_modules
 
 # dependencies
 /node_modules

@@ -6,7 +6,7 @@ import { Action, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
 
-// import { transfer } from 'tezos-js'
+import { initialize, transfer } from '../../../../tezos-wallet'
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -28,17 +28,25 @@ export class AccountDetailEffects {
         ofType('ACCOUNT_TRANSACTION'),
         // add state to effect
         withLatestFrom(this.store, (action, state) => state.accountDetail),
-        // get head from node
-        map(state => {
-            return {
-                secretKey: state.form.secretKey,
-                publicKey: state.form.publicKey,
-                publicKeyHash: state.form.from,
-                to: state.form.to,
-                amount: state.form.amount,
-            }
-        }),
-        // transfer(),
+        // map(state => {
+        //     return {
+        //         secretKey: state.form.secretKey,
+        //         publicKey: state.form.publicKey,
+        //         publicKeyHash: state.form.from,
+        //         to: state.form.to,
+        //         amount: state.form.amount,
+        //     }
+        // }),
+        // wait until sodium is ready
+        initialize(),
+        // transfer tokens
+        transfer(state => ({
+            secretKey: state.form.secretKey,
+            publicKey: state.form.publicKey,
+            publicKeyHash: state.form.from,
+            to: state.form.to,
+            amount: state.form.amount,
+        })),
         // flatMap((state:any) =>
         //     this.http.post(this.api + '/blocks/head', {}).pipe(
         //         map((response: any) => response),

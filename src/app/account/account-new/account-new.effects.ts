@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-// import { origination } from 'tezos-js'
+// import { origination } from 'tezos-wallet'
 
 @Injectable()
 export class AccountNewEffects {
