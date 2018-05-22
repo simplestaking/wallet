@@ -30,7 +30,7 @@ export class TrezorComponent implements OnInit {
       type: 'TREZOR_CONNECT',
     })
 
-    let ethPath = "m/44'/60'/0'/0/0"
+    // let ethPath = "m/44'/60'/0'/0/0"
     // let xtzPath = "m/44'/60'/0'/0/0"
 
     // try {
