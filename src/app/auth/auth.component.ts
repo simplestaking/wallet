@@ -18,7 +18,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
     // get curent user status 
     this.fbAuth.authState.subscribe(user => {
-      console.log('[auth] state', user)
+      // console.log('[auth] state', user)
 
       // check if user session exist if login
       if (user !== null) {

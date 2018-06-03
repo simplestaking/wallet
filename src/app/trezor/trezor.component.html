@@ -1,4 +1,4 @@
-<br>
+<!-- <br>
 <span>
   download
   <a href="https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc?hl=en">
@@ -6,8 +6,31 @@
   <br> add https://trezor.io to Origin
 </span>
 <br>
+<br> -->
+
+<button mat-raised-button color="primary" (click)="getAddress()">
+  Sign Transaction with Trezor T
+</button>
+
+<br>
 <br>
 
-<button mat-raised-button color="warn" (click)="getAddress()">
-  Sign Transaction with Trezor T
+<button mat-raised-button color="primary" (click)="getAddressTrezorConnect()">
+  Get Address (TrezorConnect)
+</button>
+
+<br>
+<br>
+
+<button mat-raised-button color="primary" (click)="signTrezorConnect()">
+  Sign Transaction (TrezorConnect)
+</button>
+
+<br>
+<br>
+
+
+
+<button mat-raised-button color="primary" (click)="decodeProtoBuf()">
+  Decode protoBuf
 </button>
