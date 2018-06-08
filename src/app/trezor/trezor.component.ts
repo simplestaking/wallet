@@ -51,6 +51,8 @@ export class TrezorComponent implements OnInit {
           TrezorConnect.tezosGetAddress(xtzPath, response => {
             //TrezorConnect.ethereumGetAddress(ethPath, response => {
             console.log("[trezor] TrezorConnect.xxxGetAddress ", response);
+            console.log("[trezor] Tezos address http://tzscan.io/" + response.address);
+
             // dispatch action with eth address
             this.store.dispatch({
               type: 'TREZOR_GET_ADDRESS_SUCCESS',
@@ -85,31 +87,41 @@ export class TrezorComponent implements OnInit {
 
     let xtzPath = "m/44'/1729'/0'/0'/0'"
 
+    // transaction parameters 
+    let to = "tz1NTCekGUtixDbPgxGhiMUr8yQLkyPm8Vik"
+    let amount = 9.9
+    let fee = 0.1
+    let operation = ""
+
     try {
 
       // open popup
       TrezorConnect.open(response => {
-
         console.log('[trezor] open', response)
 
         // TODO: find better way than try catch
         try {
-          // open poppup and connect to trezor bridge listening on 127.0.0.1:21325
-          // because of CORS we can call REST only from *.trezor.io domain 
-          // so we need to use trezor connect 
 
           // get address and ask for confirmation
-          TrezorConnect.tezosGetAddress(xtzPath, response => {
+          TrezorConnect.tezosSignTx(
+            // Tezos Bip44 path
+            xtzPath, // address_n
+            to,
+            fee,
+            amount,
+            operation,
+            response => {
 
-            //TrezorConnect.ethereumGetAddress(ethPath, response => {
-            console.log("[trezor] TrezorConnect.xxx ", response);
-            // dispatch action with eth address
-            this.store.dispatch({
-              type: 'TREZOR_SIGN_TRANSACTION_SUCCESS',
-              payload: response,
+              //TrezorConnect.ethereumGetAddress(ethPath, response => {
+              console.log("[trezor] sign tx ", response);
+
+              // dispatch action with eth address
+              this.store.dispatch({
+                type: 'TREZOR_SIGN_TRANSACTION_SUCCESS',
+                payload: response,
+              })
+
             })
-
-          })
 
         }
         catch (error) {
