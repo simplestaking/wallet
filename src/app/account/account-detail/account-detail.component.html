@@ -34,6 +34,10 @@
 </div>
 <br>
 
-<button mat-raised-button color="warn" (click)="send()" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
+<button *ngIf="account.entities[this.id].secretKey" mat-raised-button color="warn" (click)="send('WEB')" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
   Send ꜩ
+</button>
+
+<button *ngIf="!account.entities[this.id].secretKey" mat-raised-button color="warn" (click)="send('TREZOR_T')" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
+  Sign with Trezor(Connect) and Send ꜩ
 </button>

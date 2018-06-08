@@ -7,12 +7,8 @@ import { Lowlevel } from 'trezor-link'
 // protoBuff support
 import { load } from "protobufjs";
 
-// declare exterala library
+// declare external library
 declare var TrezorConnect: any;
-declare var Popup: any;
-declare var Channel: any;
-declare var ConnectedChannel: any;
-declare var PopupManager: any;
 
 @Component({
   selector: 'app-trezor',
@@ -31,7 +27,6 @@ export class TrezorComponent implements OnInit {
   // connect to trezor and export address from trezor 
   getAddressTrezorConnect() {
 
-    let ethPath = "m/44'/60'/0'/0/0"
     let xtzPath = "m/44'/1729'/0'/0'/0'"
 
     try {

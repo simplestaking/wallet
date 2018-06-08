@@ -8,13 +8,6 @@
 <br>
 <br> -->
 
-<button mat-raised-button color="primary" (click)="getAddress()">
-  Sign Transaction with Trezor T
-</button>
-
-<br>
-<br>
-
 <button mat-raised-button color="primary" (click)="getAddressTrezorConnect()">
   Get Address (TrezorConnect)
 </button>
@@ -29,8 +22,22 @@
 <br>
 <br>
 
+<button mat-raised-button color="primary" (click)="getAddress()">
+  Sign Transaction (TrezorBridge)
+</button>
 
+<br>
+<br>
 
-<button mat-raised-button color="primary" (click)="decodeProtoBuf()">
+<button mat-raised-button (click)="decodeProtoBuf()">
   Decode protoBuf
 </button>
+
+<!-- 
+  browser-sync start --server --port 8200
+
+  edsk2vmHM6rk8P4xA4x2ys2gXq7JztkfXnmnuTJQkP4erNnLDyoivU
+  edpkvNqqcacLL1xnxCi7jsGcceuM6k3ggU3HrLPQUsQvQP5KpyMLUw
+  tz1NVrksRks82CSZQAGoWvujRxAok4VsJXUZ
+
+-->

@@ -90,11 +90,23 @@ export class AccountDetailComponent implements OnInit {
 
   }
 
-  send() {
-    console.log('[SEND][TRANSACTION]')
-    this.store.dispatch({
-      type: "ACCOUNT_TRANSACTION",
-    })
+  send(walletType) {
+    console.log('[SEND][TRANSACTION] walletType', walletType)
+
+    // TODO: move logic to effect 
+    if (walletType === 'WEB') {
+      this.store.dispatch({
+        type: "ACCOUNT_TRANSACTION",
+        walletType: walletType
+      })
+    }
+
+    if (walletType === 'TREZOR_T') {
+      this.store.dispatch({
+        type: "ACCOUNT_TRANSACTION_TREZOR",
+        walletType: walletType
+      })
+    }
   }
 
 }
