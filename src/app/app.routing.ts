@@ -15,6 +15,8 @@ import { DelegateComponent } from './delegate/delegate.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TrezorComponent } from './trezor/trezor.component';
 
+import { LandingComponent } from './landing/landing.component';
+
 export const AppRouting: Routes = [
   // { path: 'balance', component: BalanceComponent },
   { path: 'accounts', component: AccountComponent },
@@ -23,13 +25,15 @@ export const AppRouting: Routes = [
   // { path: 'transactions', component: TransactionComponent },
   // { path: 'settings', component: SettingsComponent },
   { path: 'delegates', component: DelegateComponent },  
-  { path: 'trezor', component: TrezorComponent },  
+  { path: 'trezor', component: TrezorComponent },
+
+  { path: 'landing', component: LandingComponent },  
 
   { path: 'login', component: LoginComponent },    
   { path: 'registration', component: RegistrationComponent },    
   { path: 'forgot', component: ForgotComponent },    
 
-  { path: '', redirectTo: '/accounts', pathMatch: 'full' },
+  { path: '', redirectTo: '/landing', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }
 ];
 

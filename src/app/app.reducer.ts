@@ -12,6 +12,16 @@ const initialState = {
     progressbar: {
         isVisible: false,
         counter: 0,
+    },
+    // menu in sidebar/sideNav
+    sidenav: {
+        isVisible: false,
+        toggleButton: {
+            isVisible: false,
+        },
+    },
+    logo: {
+        isVisible: false,
     }
 
 };
