@@ -34,9 +34,10 @@
       <button *ngIf="!app.user.uid" mat-button routerLink="/login">
         Sign in
       </button>
-      <button *ngIf="!app.user.uid" mat-raised-button color="warn" routerLink="/registration">
+      
+      <!-- <button *ngIf="!app.user.uid" mat-raised-button color="warn" routerLink="/registration">
         Create Account
-      </button>
+      </button> -->
 
       <button *ngIf="app.user.uid" mat-button>
         {{app.user.email}}
