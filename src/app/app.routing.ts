@@ -16,6 +16,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { TrezorComponent } from './trezor/trezor.component';
 
 import { LandingComponent } from './landing/landing.component';
+import { SignupComponent } from './landing/signup/signup.component';
 
 export const AppRouting: Routes = [
   // { path: 'balance', component: BalanceComponent },
@@ -28,12 +29,14 @@ export const AppRouting: Routes = [
   { path: 'trezor', component: TrezorComponent },
 
   { path: 'landing', component: LandingComponent },  
+  { path: 'landing/signup', component: SignupComponent },  
 
+  
   { path: 'login', component: LoginComponent },    
   { path: 'registration', component: RegistrationComponent },    
   { path: 'forgot', component: ForgotComponent },    
 
-  { path: '', redirectTo: '/landing', pathMatch: 'full' },
+  { path: '', redirectTo: '/landing/signup', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }
 ];
 

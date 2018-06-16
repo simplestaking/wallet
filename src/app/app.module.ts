@@ -80,7 +80,8 @@ import { RegistrationComponent } from './auth/registration/registration.componen
 import { AuthService } from './auth/auth.service';
 import { ForgotComponent } from './auth/forgot/forgot.component';
 import { TrezorComponent } from './trezor/trezor.component';
-import { LandingComponent } from './landing/landing.component'
+import { LandingComponent } from './landing/landing.component';
+import { SignupComponent } from './landing/signup/signup.component'
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { LandingComponent } from './landing/landing.component'
     RegistrationComponent,
     ForgotComponent,
     TrezorComponent,
-    LandingComponent
+    LandingComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
