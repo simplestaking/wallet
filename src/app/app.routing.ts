@@ -36,7 +36,8 @@ export const AppRouting: Routes = [
   { path: 'registration', component: RegistrationComponent },    
   { path: 'forgot', component: ForgotComponent },    
 
-  { path: '', redirectTo: '/landing/signup', pathMatch: 'full' },
+  { path: '', redirectTo: '/accounts', pathMatch: 'full' },
+  //{ path: '', redirectTo: '/landing/signup', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }
 ];
 
