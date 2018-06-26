@@ -82,6 +82,8 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
 import { TrezorComponent } from './trezor/trezor.component';
 import { LandingComponent } from './landing/landing.component';
 import { SignupComponent } from './landing/signup/signup.component'
+import {TransactionService} from "./service/transaction/transaction.service";
+import {UrlApi} from "./service/urlApi";
 
 @NgModule({
   declarations: [
@@ -98,7 +100,7 @@ import { SignupComponent } from './landing/signup/signup.component'
     ForgotComponent,
     TrezorComponent,
     LandingComponent,
-    SignupComponent
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -208,7 +210,8 @@ import { SignupComponent } from './landing/signup/signup.component'
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi: true
-    }
+    },
+      UrlApi, TransactionService,
   ],
   bootstrap: [AppComponent]
 })
