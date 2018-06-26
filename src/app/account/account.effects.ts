@@ -9,7 +9,7 @@ import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'r
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 // import { Wallet } from 'tezos-wallet/types'
-import { initialize, getWallet } from '../../../../tezos-wallet'
+import { initialize, getWallet } from '../../../tezos-wallet'
 
 @Injectable()
 export class AccountEffects {

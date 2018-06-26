@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store'
 // fix async issue
 import 'babel-polyfill';
-import { Lowlevel } from 'trezor-link'
-
-// protoBuff support
-import { load } from "protobufjs";
 
 // declare external library
 declare var TrezorConnect: any;

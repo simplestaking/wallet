@@ -82,6 +82,7 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
 import { TrezorComponent } from './trezor/trezor.component';
 import { TransactionService } from "./service/transaction/transaction.service";
 import { UrlApi } from "./service/urlApi";
+import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 
@@ -99,6 +100,7 @@ import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.compon
     RegistrationComponent,
     ForgotComponent,
     TrezorComponent,
+    LandingComponent,
     TezosPaperWalletComponent,
     TezosBakingComponent,
   ],

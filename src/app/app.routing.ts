@@ -19,6 +19,9 @@ import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.compon
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 
 export const AppRouting: Routes = [
+
+  { path: 'test', loadChildren: 'app/test/test.module#TestModule' },
+
   // { path: 'balance', component: BalanceComponent },
   { path: 'accounts', component: AccountComponent },
   { path: 'accounts/new', component: AccountNewComponent },
