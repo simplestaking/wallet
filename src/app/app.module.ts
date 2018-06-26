@@ -80,10 +80,10 @@ import { RegistrationComponent } from './auth/registration/registration.componen
 import { AuthService } from './auth/auth.service';
 import { ForgotComponent } from './auth/forgot/forgot.component';
 import { TrezorComponent } from './trezor/trezor.component';
-import { LandingComponent } from './landing/landing.component';
-import { SignupComponent } from './landing/signup/signup.component'
-import {TransactionService} from "./service/transaction/transaction.service";
-import {UrlApi} from "./service/urlApi";
+import { TransactionService } from "./service/transaction/transaction.service";
+import { UrlApi } from "./service/urlApi";
+import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
+import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 
 @NgModule({
   declarations: [
@@ -99,8 +99,8 @@ import {UrlApi} from "./service/urlApi";
     RegistrationComponent,
     ForgotComponent,
     TrezorComponent,
-    LandingComponent,
-    SignupComponent,
+    TezosPaperWalletComponent,
+    TezosBakingComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,7 +126,7 @@ import {UrlApi} from "./service/urlApi";
       AuthLoginEffects,
       AuthRegistrationEffects,
       AuthForgotEffects,
-      
+
       DelegateEffects,
       TrezorEffects
 
@@ -139,7 +139,7 @@ import {UrlApi} from "./service/urlApi";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    
+
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -211,7 +211,7 @@ import {UrlApi} from "./service/urlApi";
       useClass: AppInterceptor,
       multi: true
     },
-      UrlApi, TransactionService,
+    UrlApi, TransactionService,
   ],
   bootstrap: [AppComponent]
 })

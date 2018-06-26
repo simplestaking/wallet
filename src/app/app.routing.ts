@@ -15,8 +15,8 @@ import { DelegateComponent } from './delegate/delegate.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TrezorComponent } from './trezor/trezor.component';
 
-import { LandingComponent } from './landing/landing.component';
-import { SignupComponent } from './landing/signup/signup.component';
+import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
+import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 
 export const AppRouting: Routes = [
   // { path: 'balance', component: BalanceComponent },
@@ -25,16 +25,16 @@ export const AppRouting: Routes = [
   { path: 'account/:id', component: AccountDetailComponent },
   // { path: 'transactions', component: TransactionComponent },
   // { path: 'settings', component: SettingsComponent },
-  { path: 'delegates', component: DelegateComponent },  
+  { path: 'delegates', component: DelegateComponent },
   { path: 'trezor', component: TrezorComponent },
 
-  { path: 'landing', component: LandingComponent },  
-  { path: 'landing/signup', component: SignupComponent },  
+  { path: 'login', component: LoginComponent },
+  { path: 'registration', component: RegistrationComponent },
+  { path: 'forgot', component: ForgotComponent },
 
-  
-  { path: 'login', component: LoginComponent },    
-  { path: 'registration', component: RegistrationComponent },    
-  { path: 'forgot', component: ForgotComponent },    
+  // landing pages
+  { path: 'tezos-baking', component: TezosBakingComponent },
+  { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
 
   { path: '', redirectTo: '/accounts', pathMatch: 'full' },
   //{ path: '', redirectTo: '/landing/signup', pathMatch: 'full' },
