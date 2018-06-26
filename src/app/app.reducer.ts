@@ -21,7 +21,7 @@ const initialState = {
         },
     },
     logo: {
-        isVisible: true,
+        isVisible: false,
     }
 
 };
