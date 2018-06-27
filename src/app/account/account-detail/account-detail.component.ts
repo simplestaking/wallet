@@ -85,9 +85,6 @@ export class AccountDetailComponent implements OnInit {
       }
 
     })
-
-
-
   }
 
   send(walletType) {

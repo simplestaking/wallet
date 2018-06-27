@@ -85,6 +85,7 @@ import { UrlApi } from "./service/urlApi";
 import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
+import { DayChartComponent } from "./day-chart/day-chart.component";
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.compon
     LandingComponent,
     TezosPaperWalletComponent,
     TezosBakingComponent,
+    DayChartComponent
   ],
   imports: [
     BrowserModule,
