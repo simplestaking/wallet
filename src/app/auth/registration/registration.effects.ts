@@ -16,6 +16,7 @@ import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { defer } from 'rxjs/observable/defer';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -23,7 +24,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 @Injectable()
 export class AuthRegistrationEffects {
 
-    public api = 'https://node.simplestaking.com:3000/'
+    public api = environment.tezos.betanet
 
     public accountCol: AngularFirestoreCollection<any>;
     public accountDoc: AngularFirestoreDocument<any>;

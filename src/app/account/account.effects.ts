@@ -5,6 +5,7 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs/index';
 import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -14,7 +15,7 @@ import { initialize, getWallet } from '../../../tezos-wallet'
 @Injectable()
 export class AccountEffects {
 
-    public api = 'https://node.simplestaking.com:3000/'
+    public api = environment.tezos.betanet
 
     public accountCol: AngularFirestoreCollection<any>;
     public accountDoc: AngularFirestoreDocument<any>;

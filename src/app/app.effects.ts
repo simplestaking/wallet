@@ -4,11 +4,12 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { of, defer, timer } from 'rxjs';
 import { map, tap, switchMap, flatMap, catchError } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AllEffects {
 
-    public api = 'https://node.simplestaking.com:3000/'
+    public api = environment.tezos.betanet
 
     @Effect()
     HeartbeatEffects$ = this.actions$
@@ -17,7 +18,7 @@ export class AllEffects {
                 // run heart beat each second
                 timer(0, 60000).pipe(
                     switchMap(() =>
-                        this.http.post(this.api + 'blocks/head/timestamp', {}).pipe(
+                        this.http.get(this.api + 'chains/main/blocks/head/header').pipe(
                             map(response => ({
                                 type: 'HEARTBEAT_SUCCESS',
                                 payload: response

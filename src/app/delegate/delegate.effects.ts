@@ -5,13 +5,14 @@ import { Action, Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of, defer } from 'rxjs/index';
 import { map, tap, withLatestFrom, flatMap, catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Injectable()
 export class DelegateEffects {
 
-    public api = 'https://node.simplestaking.com:3000/'
+    public api = environment.tezos.betanet
 
     public delegateCol: AngularFirestoreCollection<any>;
     public delegateDoc: AngularFirestoreDocument<any>;
