@@ -1,6 +1,6 @@
 <mat-tab-group>
   <mat-tab label="Transaction">
-    
+
     <br/>
 
     <div class="create-account" [formGroup]="accountDetailForm">
@@ -46,24 +46,26 @@
     <button *ngIf="!account.entities[this.id].secretKey" mat-raised-button color="warn" (click)="send('TREZOR_T')" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
       Sign with Trezor(Connect) and Send ꜩ
     </button>
-
+    <app-tezos-transaction>
+    </app-tezos-transaction>
   </mat-tab>
   <mat-tab label="Delegation">
-
+    <app-tezos-delegation>
+    </app-tezos-delegation>
   </mat-tab>
   <mat-tab label="Origination">
-
+    <app-tezos-origination>
+    </app-tezos-origination>
   </mat-tab>
   <mat-tab label="Activation">
-
+    <app-tezos-activation>
+    </app-tezos-activation>
   </mat-tab>
 </mat-tab-group>
 
 
-
-<!-- 
 <h2>{{'transactions_history'}}</h2>
-<app-transaction></app-transaction> -->
+<app-transaction></app-transaction>
 
-<!-- <h2>{{'end_of_day_stock_prices'}}</h2>
-<app-day-chart></app-day-chart> -->
+<h2>{{'end_of_day_stock_prices'}}</h2>
+<app-day-chart></app-day-chart>
