@@ -86,6 +86,10 @@ import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 import { DayChartComponent } from "./day-chart/day-chart.component";
+import { TezosTransactionComponent } from './tezos/tezos-transaction/tezos-transaction.component';
+import { TezosDelegationComponent } from './tezos/tezos-delegation/tezos-delegation.component';
+import { TezosOriginationComponent } from './tezos/tezos-origination/tezos-origination.component';
+import { TezosActivationComponent } from './tezos/tezos-activation/tezos-activation.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +108,11 @@ import { DayChartComponent } from "./day-chart/day-chart.component";
     LandingComponent,
     TezosPaperWalletComponent,
     TezosBakingComponent,
-    DayChartComponent
+    DayChartComponent,
+    TezosTransactionComponent,
+    TezosDelegationComponent,
+    TezosOriginationComponent,
+    TezosActivationComponent
   ],
   imports: [
     BrowserModule,

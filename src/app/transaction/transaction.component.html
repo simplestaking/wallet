@@ -1,23 +1,6 @@
 <div>
   <mat-table #table [dataSource]="transactions">
 
-    <!-- Hash Column -->
-    <ng-container matColumnDef="hash">
-      <mat-header-cell *matHeaderCellDef> Txn Hash </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.hash}}
-      </mat-cell>
-    </ng-container>
-
-    <!-- Block Column -->
-    <ng-container matColumnDef="block">
-      <mat-header-cell *matHeaderCellDef> Block </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.level}}
-      </mat-cell>
-    </ng-container>
-
-
     <!-- Timestamp Column -->
     <ng-container matColumnDef="timestamp">
       <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
@@ -39,7 +22,7 @@
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.type.amount *0.000001 | number:'1.2-6'}} ꜩ
+        {{element.type.amount *0.000001 | number:'1.0-6'}} ꜩ
       </mat-cell>
     </ng-container>
 
@@ -52,8 +35,8 @@
     </ng-container>
 
 
-    <mat-header-row *matHeaderRowDef="['hash','block','timestamp','from','amount','fee']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['hash','block','timestamp','from','amount','fee'];"></mat-row>
+    <mat-header-row *matHeaderRowDef="['timestamp','from','amount','fee']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['timestamp','from','amount','fee'];"></mat-row>
 
   </mat-table>
 </div>

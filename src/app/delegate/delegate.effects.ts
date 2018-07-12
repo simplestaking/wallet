@@ -24,7 +24,7 @@ export class DelegateEffects {
         withLatestFrom(this.store, (action, state) => state.account),
         flatMap(() =>
             // get all contracts
-            this.http.post(this.api + '/blocks/head/proto/context/contracts', {})
+            this.http.get(this.api + 'chains/main/blocks/head/context/contracts')
         ),
         // dispatch action
         map(response => ({ type: 'DELEGATE_LIST_SUCCESS', payload: response })),
@@ -41,8 +41,8 @@ export class DelegateEffects {
         flatMap((action: any) => action.payload),
         // get detail for each contract
         flatMap((publicKeyHash) =>
-            this.http.post(this.api +
-                '/blocks/head/proto/context/contracts/' + publicKeyHash, {})
+            this.http.get(this.api +
+                'chains/main/blocks/head/context/contracts/' + publicKeyHash)
         ),
         // dispatch action
         map(action => ({ type: 'DELEGATE_LIST_ADD_SUCCESS', payload: action })),
