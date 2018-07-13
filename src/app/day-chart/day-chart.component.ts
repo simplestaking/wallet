@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChartService} from "../service/chart/chart.service";
 import {Chart} from 'chart.js';
 import {formatNumber} from "@angular/common";
@@ -9,28 +9,27 @@ import {formatNumber} from "@angular/common";
   styleUrls: ['./day-chart.component.scss'],
   providers: [ChartService]
 })
-export class DayChartComponent implements OnInit, AfterViewInit {
+export class DayChartComponent implements OnInit {
     @ViewChild('canvas') public canvas: ElementRef;
     public chart: any = [];
     public price: any = {'min': 0, 'max': 0};
     private ctx: CanvasRenderingContext2D;
+    public data;
 
-    constructor(private _chartService: ChartService, private elRef: ElementRef) { }
-
-    ngOnInit() {}
-
-    ngAfterViewInit() {
+    constructor(private _chartService: ChartService, private elRef: ElementRef) {
         this.getChart()
     }
 
+    ngOnInit() { }
+
     getChart() {
         this._chartService.getDay().subscribe(stocks => {
-            const xdata = [], ydata = []
+            this.data = {xdata: [], ydata: []}
 
             for(const key of Object.keys(stocks)) {
                 if(stocks[key].average > 0) {
-                    xdata.push(stocks[key].minute)
-                    ydata.push(stocks[key].average)
+                    this.data.xdata.push(stocks[key].minute)
+                    this.data.ydata.push(stocks[key].average)
                     // ydata.push(formatNumber(stocks[key].average,'en','0.4-4'));
 
 
@@ -40,9 +39,10 @@ export class DayChartComponent implements OnInit, AfterViewInit {
                     if (this.price['max'] < stocks[key].average) { this.price['max'] = stocks[key].average; }
                 }
             }
-
-            this.showChart(xdata, ydata)
-        })
+        },
+            error => console.log(error),
+            () => this.showChart(this.data.xdata, this.data.ydata)
+        )
     }
 
     showChart(xdata, ydata) {

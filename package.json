@@ -29,6 +29,7 @@
     "@angular/platform-server": "6.0.2",
     "@angular/router": "6.0.2",
     "@ngrx/effects": "^6.0.0-beta.3",
+    "@ngrx/entity": "^6.0.1",
     "@ngrx/router-store": "^6.0.0-beta.3",
     "@ngrx/store": "^6.0.0-beta.3",
     "@ngrx/store-devtools": "^6.0.0-beta.3",

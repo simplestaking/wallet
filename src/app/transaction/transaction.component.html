@@ -1,5 +1,5 @@
 <div>
-  <mat-table #table [dataSource]="transactions">
+  <mat-table #table [dataSource]="transactions$">
 
     <!-- Timestamp Column -->
     <ng-container matColumnDef="timestamp">
@@ -22,7 +22,7 @@
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.type.amount *0.000001 | number:'1.0-6'}} ꜩ
+        {{element.type.operations[0].amount | number:'1.0-6'}} ꜩ
       </mat-cell>
     </ng-container>
 
@@ -40,3 +40,5 @@
 
   </mat-table>
 </div>
+
+<button (click)="getExternalTransactions()">External Transactions</button>

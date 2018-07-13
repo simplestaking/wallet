@@ -31,6 +31,7 @@ import {
   import * as fromAuthLogin from './auth/login/login.reducer';
   import * as fromAuthRegistration from './auth/registration/registration.reducer';
   import * as fromAuthForgot from './auth/forgot/forgot.reducer';
+  import * as fromTransaction from './transaction/transaction.reducer';
   
   /**
    * As mentioned, we treat each reducer like a table in a database. This means
@@ -44,7 +45,8 @@ import {
     authLogin: any;
     authRegistration: any;
     authForgot: any;
-    delegate: any;    
+    delegate: any;
+    transaction: any;
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
   }
   
@@ -62,6 +64,7 @@ import {
     authLogin: fromAuthLogin.reducer,
     authRegistration: fromAuthRegistration.reducer,
     authForgot: fromAuthForgot.reducer,
+    transaction: fromTransaction.reducer,
     routerReducer: fromRouter.routerReducer,
   };
   

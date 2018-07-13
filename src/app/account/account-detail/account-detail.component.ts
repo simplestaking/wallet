@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +14,7 @@ import { DecimalPipe } from '@angular/common';
   templateUrl: './account-detail.component.html',
   styleUrls: ['./account-detail.component.scss']
 })
-export class AccountDetailComponent implements OnInit {
+export class AccountDetailComponent implements OnInit, AfterViewInit {
 
   public id
   public account
@@ -27,11 +27,16 @@ export class AccountDetailComponent implements OnInit {
   constructor(private store: Store<any>,
     public fb: FormBuilder,
     // public db: AngularFirestore, 
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private cd: ChangeDetectorRef
   ) {
     // get params from url
     this.id = this.route.snapshot.params['id'];
   }
+
+    ngAfterViewInit() {
+        this.cd.detectChanges();
+    }
 
   ngOnInit() {
 

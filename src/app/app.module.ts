@@ -90,6 +90,7 @@ import { TezosTransactionComponent } from './tezos/tezos-transaction/tezos-trans
 import { TezosDelegationComponent } from './tezos/tezos-delegation/tezos-delegation.component';
 import { TezosOriginationComponent } from './tezos/tezos-origination/tezos-origination.component';
 import { TezosActivationComponent } from './tezos/tezos-activation/tezos-activation.component';
+import {TransactionEffects} from "./transaction/transaction.effects";
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { TezosActivationComponent } from './tezos/tezos-activation/tezos-activat
       AuthForgotEffects,
 
       DelegateEffects,
-      TrezorEffects
+      TrezorEffects,
+      TransactionEffects
 
     ]),
 

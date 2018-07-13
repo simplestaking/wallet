@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {UrlApi} from "../urlApi";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { UrlApi } from "../urlApi";
 
 import { Observable } from 'rxjs/Observable';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs'
-import 'rxjs/add/observable/throw';
 
 @Injectable({
   providedIn: 'root'
@@ -14,22 +11,27 @@ export class TransactionService {
 
     constructor(private http: HttpClient, private urlApi: UrlApi) { }
 
-    getTransactions(transaction_hash): Observable<any> {
+    getTransactions(user_hash, page = 0): Observable<any> {
         return this.http
-            .get(this.urlApi.getTezos() + '/v2/operations/' + transaction_hash)
-            .pipe(catchError((error: any) => throwError(error.json())));
+            .get(this.urlApi.getTezos() + '/v1/operations/' + user_hash + '?p=' + page +'&number=20')
+            .catch((error: HttpErrorResponse) => Observable.throwError(error.message || 'Server error'));
     }
 
-    getTimestamp(block_hash): Observable<any> {
+    getNumberTransactions(user_hash): Observable<any> {
         return this.http
-            .get(this.urlApi.getTezos() + '/v2/timestamp/' + block_hash)
-            .pipe(catchError((error: any) => throwError(error.json())));
+            .get(this.urlApi.getTezos() + '/v2/number_operations/' + user_hash)
+            .catch((error: HttpErrorResponse) => Observable.throwError(error.message || 'Server error'));
     }
+
+    // getTimestamp(block_hash): Observable<any> {
+    //     return this.http
+    //         .get(this.urlApi.getTezos() + '/v2/timestamp/' + block_hash)
+    //         .catch((error: HttpErrorResponse) => Observable.throwError(error.message || 'Server error'));
+    // }
 
     getBlock(block_hash): Observable<any> {
         return this.http
             .get(this.urlApi.getTezos() + '/v2/block/' + block_hash)
-            .pipe(catchError((error: any) => throwError(error.json())));
+            .catch((error: HttpErrorResponse) => Observable.throwError(error.message || 'Server error'));
     }
-
 }

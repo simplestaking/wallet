@@ -6,6 +6,6 @@ export class UrlApi {
     constructor() { }
 
     getTezos() {
-        return 'http://api.tzscan.io';
+        return 'http://api4.tzscan.io';
     }
 }
