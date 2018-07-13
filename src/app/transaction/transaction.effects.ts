@@ -47,7 +47,7 @@ export class TransactionEffects {
             return Array.from(Array(this.maxPage).keys());
         }),
         concatMap(pages => {
-            const observables = pages.map(p => this.service.getTransactions(this.accountId, 0))
+            const observables = pages.map(p => this.service.getTransactions(this.accountId, p))
 
             return forkJoin(observables)
         }),
