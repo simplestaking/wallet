@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -32,6 +33,7 @@ import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 import { DelegateEffects } from './delegate/delegate.effects'
 import { TrezorEffects } from './trezor/trezor.effects'
 
+import { TrezorTransactionEffects } from './shared/tezos/tezos-transaction/tezos-transaction.effects'
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -126,6 +128,9 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
       //useHash:true
     }),
 
+    // Connects RouterModule with StoreModule
+    StoreRouterConnectingModule.forRoot({}),
+
     // Set reducers  
     StoreModule.forRoot(reducers, { metaReducers }),
 
@@ -142,8 +147,9 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
 
       DelegateEffects,
       TrezorEffects,
-      TransactionEffects
+      TransactionEffects,
 
+      TrezorTransactionEffects
     ]),
 
     // https://github.com/zalmoxisus/redux-devtools-extension
