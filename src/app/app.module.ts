@@ -90,6 +90,7 @@ import { TezosDelegationComponent } from './shared/tezos/tezos-delegation/tezos-
 import { TezosTransactionComponent } from './shared/tezos/tezos-transaction/tezos-transaction.component';
 import { TezosActivationComponent } from './shared/tezos/tezos-activation/tezos-activation.component';
 import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezos-origination.component';
+import { NgrxFormDirective } from './shared/ngrx-form.directive';
 
 @NgModule({
   declarations: [
@@ -112,6 +113,7 @@ import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezo
     TezosTransactionComponent,
     TezosActivationComponent,
     TezosOriginationComponent,
+    NgrxFormDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tezos-transaction',
@@ -6,10 +6,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tezos-transaction.component.scss']
 })
 export class TezosTransactionComponent implements OnInit {
+  @Input('address') address: string;
 
-  constructor() { }
+  public tezosTransactionForm
+
+  constructor() {
+
+      // create from shape for ngrx-form
+      this.tezosTransactionForm = {
+        name: [{ value: '', disabled: true }],
+        from: [{ value: '', disabled: true }],
+        to: '',
+        amount: ''
+      }
+  
+   }
 
   ngOnInit() {
+  
   }
 
 }
