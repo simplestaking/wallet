@@ -10,9 +10,7 @@ import { AccountComponent } from './account/account.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
 import { AccountDetailComponent } from './account/account-detail/account-detail.component';
 
-import { TransactionComponent } from './transaction/transaction.component';
 import { DelegateComponent } from './delegate/delegate.component';
-import { SettingsComponent } from './settings/settings.component';
 import { TrezorComponent } from './trezor/trezor.component';
 
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';

@@ -69,7 +69,6 @@ import {
 
 import { AccountComponent } from './account/account.component';
 import { TransactionComponent } from './transaction/transaction.component';
-import { SettingsComponent } from './settings/settings.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
 import { AccountDetailComponent } from './account/account-detail/account-detail.component';
 import { DelegateComponent } from './delegate/delegate.component';
@@ -86,7 +85,7 @@ import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 import { DayChartComponent } from "./day-chart/day-chart.component";
-import {TransactionEffects} from "./transaction/transaction.effects";
+import { TransactionEffects } from "./transaction/transaction.effects";
 import { TezosDelegationComponent } from './shared/tezos/tezos-delegation/tezos-delegation.component';
 import { TezosTransactionComponent } from './shared/tezos/tezos-transaction/tezos-transaction.component';
 import { TezosActivationComponent } from './shared/tezos/tezos-activation/tezos-activation.component';
@@ -97,7 +96,6 @@ import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezo
     AppComponent,
     AccountComponent,
     TransactionComponent,
-    SettingsComponent,
     AccountNewComponent,
     AccountDetailComponent,
     DelegateComponent,
