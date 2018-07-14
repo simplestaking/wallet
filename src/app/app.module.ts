@@ -86,11 +86,11 @@ import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 import { DayChartComponent } from "./day-chart/day-chart.component";
-import { TezosTransactionComponent } from './tezos/tezos-transaction/tezos-transaction.component';
-import { TezosDelegationComponent } from './tezos/tezos-delegation/tezos-delegation.component';
-import { TezosOriginationComponent } from './tezos/tezos-origination/tezos-origination.component';
-import { TezosActivationComponent } from './tezos/tezos-activation/tezos-activation.component';
 import {TransactionEffects} from "./transaction/transaction.effects";
+import { TezosDelegationComponent } from './shared/tezos/tezos-delegation/tezos-delegation.component';
+import { TezosTransactionComponent } from './shared/tezos/tezos-transaction/tezos-transaction.component';
+import { TezosActivationComponent } from './shared/tezos/tezos-activation/tezos-activation.component';
+import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezos-origination.component';
 
 @NgModule({
   declarations: [
@@ -110,10 +110,10 @@ import {TransactionEffects} from "./transaction/transaction.effects";
     TezosPaperWalletComponent,
     TezosBakingComponent,
     DayChartComponent,
-    TezosTransactionComponent,
     TezosDelegationComponent,
+    TezosTransactionComponent,
+    TezosActivationComponent,
     TezosOriginationComponent,
-    TezosActivationComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@
 
     <br/>
 
-    <div class="create-account" [formGroup]="accountDetailForm">
+    <div class="create-account" [formGroup]="accountDetailForm" >
 
       <mat-form-field>
         <input matInput #input4 placeholder="Name" formControlName="name" />
@@ -64,8 +64,7 @@
 </mat-tab-group>
 
 
-<h2>{{'transactions_history'}}</h2>
-<app-transaction></app-transaction>
+<!-- <app-day-chart></app-day-chart> -->
 
-<h2>{{'end_of_day_stock_prices'}}</h2>
-<app-day-chart></app-day-chart>
+<!-- <app-transaction></app-transaction> -->
+
