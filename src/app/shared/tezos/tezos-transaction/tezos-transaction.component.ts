@@ -27,12 +27,6 @@ export class TezosTransactionComponent implements OnInit, OnDestroy {
       amount: ''
     })
 
-    // initialize tezos transaction component
-    this.store.dispatch({
-      type: 'TEZOS_TRANSACTION_INIT',
-      payload: '',
-    })
-
   }
 
   ngOnDestroy() {

@@ -32,7 +32,8 @@ import {
   import * as fromAuthRegistration from './auth/registration/registration.reducer';
   import * as fromAuthForgot from './auth/forgot/forgot.reducer';
   import * as fromTransaction from './transaction/transaction.reducer';
-  
+  import * as fromTezosTransaction from './shared/tezos/tezos-transaction/tezos-transaction.reducer';
+
   /**
    * As mentioned, we treat each reducer like a table in a database. This means
    * our top level state interface is just a map of keys to inner state types.
@@ -47,6 +48,7 @@ import {
     authForgot: any;
     delegate: any;
     transaction: any;
+    tezosTransaction:any,
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
   }
   
@@ -65,6 +67,7 @@ import {
     authRegistration: fromAuthRegistration.reducer,
     authForgot: fromAuthForgot.reducer,
     transaction: fromTransaction.reducer,
+    tezosTransaction: fromTezosTransaction.reducer,
     routerReducer: fromRouter.routerReducer,
   };
   

@@ -31,7 +31,7 @@ export class AccountDetailComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef
   ) {
     // get params from url
-    this.id = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['address'];
   }
 
     ngAfterViewInit() {
@@ -40,7 +40,7 @@ export class AccountDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    console.log('[id]', this.id )
+    console.log('[address]', this.id )
 
     // initilize form
     this.accountDetailForm = this.fb.group({

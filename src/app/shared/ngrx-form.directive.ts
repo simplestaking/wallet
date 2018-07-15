@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
   selector: '[ngrxForm]'
 })
 export class NgrxFormDirective implements OnInit, OnDestroy {
-  
+
   // use path for meta reducer to locate right place to upade 
   @Input('ngrxForm') path: string;
 
@@ -62,12 +62,11 @@ export class NgrxFormDirective implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
 
-        console.log('[ngrx-from] state:  ', state, this.formGroupDirective)
-
         // update form form with redux data
         if (state) {
+          console.log('[ngrx-from] state:  ', state.form)
           this.formGroupDirective.form.patchValue({ ...state.form }, { emitEvent: false });
-        } 
+        }
 
       })
   }

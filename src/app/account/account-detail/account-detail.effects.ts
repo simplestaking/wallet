@@ -49,7 +49,7 @@ export class AccountDetailEffects {
         })),
 
         // redirect back to accounts list
-        tap(() => this.router.navigate(['/accounts']))
+        tap(() => this.router.navigate(['/tezos/wallet']))
     )
 
     @Effect()
@@ -80,7 +80,7 @@ export class AccountDetailEffects {
         })),
 
         // redirect back to accounts list
-        tap(() => this.router.navigate(['/accounts']))
+        tap(() => this.router.navigate(['/tezos/wallet']))
     )
 
     constructor(

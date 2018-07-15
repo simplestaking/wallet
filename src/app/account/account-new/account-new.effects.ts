@@ -46,7 +46,7 @@ export class AccountNewEffects {
         .map(response => ({ type: 'ACCOUNT_ADD_SUCCESS' }))
         .catch(error => of({ type: 'ACCOUNT_ADD_ERROR' }))
         // redirect back to accounts list
-        .do(() => this.router.navigate(['/accounts']))
+        .do(() => this.router.navigate(['/tezos/wallet']))
 
 
     // originate account from changed account
