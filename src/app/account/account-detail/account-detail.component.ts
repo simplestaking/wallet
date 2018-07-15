@@ -40,7 +40,7 @@ export class AccountDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    console.log('[address]', this.id )
+    //console.log('[address]', this.id )
 
     // initilize form
     this.accountDetailForm = this.fb.group({

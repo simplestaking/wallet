@@ -17,7 +17,7 @@
     <mat-hint align="end">{{input3.value?.length || 0}}/36</mat-hint> 
 
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let to of accountDetailTo | async" [value]="to.publicKeyHash">
+      <mat-option *ngFor="let to of tezosWallets | async" [value]="to.publicKeyHash">
         <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ</small>
       </mat-option>
     </mat-autocomplete>
