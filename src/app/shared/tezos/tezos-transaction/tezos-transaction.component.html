@@ -14,7 +14,7 @@
 
   <mat-form-field>
     <input matInput #input3 placeholder="To Address" formControlName="to" [matAutocomplete]="auto" />
-    <mat-hint align="end">{{input3.value?.length || 0}}/36</mat-hint> 
+    <mat-hint align="end">{{input3.value?.length || 0}}/36</mat-hint>
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let to of tezosWallets | async" [value]="to.publicKeyHash">
@@ -27,15 +27,15 @@
   <mat-form-field>
     <input matInput #input4 type="number" placeholder="Amount" formControlName="amount" />
     <mat-hint align="end">{{input4.value?.length || 0}}/8</mat-hint>
-  </mat-form-field> 
+  </mat-form-field>
 
 </div>
 <br>
 
-<!-- <button *ngIf="account.entities[this.id].secretKey" mat-raised-button color="warn" (click)="send('WEB')" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
+<button *ngIf="tezosTransaction.secretKey" mat-raised-button color="warn" (click)="send('WEB')" [disabled]="!tezosTransaction.to || !tezosTransaction.amount ">
   Send ꜩ
 </button>
 
-<button *ngIf="!account.entities[this.id].secretKey" mat-raised-button color="warn" (click)="send('TREZOR_T')" [disabled]="!accountDetail.form?.to || !accountDetail.form?.amount ">
+<button *ngIf="!tezosTransaction.secretKey" mat-raised-button color="warn" (click)="send('TREZOR_T')" [disabled]="!tezosTransaction.to || !tezosTransaction.amount ">
   Sign with Trezor(Connect) and Send ꜩ
-</button> -->
+</button>
