@@ -42,7 +42,8 @@
     "firebase": "4.12.1",
     "libsodium": "^0.7.3",
     "libsodium-wrappers": "^0.5.4",
-    "ngrx-store-freeze": "^0.2.1"
+    "ngrx-store-freeze": "^0.2.1",
+    "trezor-link": "^1.5.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.3",
