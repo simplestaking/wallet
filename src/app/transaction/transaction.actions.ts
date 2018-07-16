@@ -5,6 +5,7 @@ export const TRANSACTIONS_GET = '[Transaction] Get transactions';
 export const TRANSACTIONS_GET_SUCCESS = '[Transaction] Success get transactions';
 
 export const EXTERN_TRANSACTIONS_GET = '[Transaction] Get external transactions';
+export const EXTERN_TRANSACTIONS_RESOLVE = '[Transaction] Resolve external transactions';
 export const EXTERN_TRANSACTIONS_GET_SUCCESS = '[Transaction] Success get external transactions';
 
 export const TRANSACTION_CREATE = '[Transaction] Create transaction';
@@ -27,9 +28,13 @@ export class GetExternTransactions implements Action {
     constructor(public payload: string) { }
 }
 
+export class ResolveExternTransactions implements Action {
+    readonly  type = EXTERN_TRANSACTIONS_RESOLVE;
+    constructor(public payload:  any[]) { }
+}
+
 export class GetExternTransactionsSuccess implements Action {
     readonly  type = EXTERN_TRANSACTIONS_GET_SUCCESS;
-    constructor(public payload: any[]) { }
 }
 
 //Action for addOne method.
@@ -51,6 +56,7 @@ export class TransactionErrorAction implements Action {
 export type All = GetTransactions
     | GetTransactionsSuccess
     | GetExternTransactions
+    | ResolveExternTransactions
     | GetExternTransactionsSuccess
     | CreateTransaction
     | CreateTransactionSuccess

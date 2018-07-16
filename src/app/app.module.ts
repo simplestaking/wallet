@@ -153,6 +153,7 @@ import {TransactionEffects} from "./transaction/transaction.effects";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFirestoreModule.enablePersistence(),
 
     MatAutocompleteModule,
     MatButtonModule,

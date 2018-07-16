@@ -5,7 +5,7 @@
     <ng-container matColumnDef="timestamp">
       <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.timestamp | date:'dd.MM.yyyy'}}
+        {{element.timestamp }}
       </mat-cell>
     </ng-container>
 
@@ -42,3 +42,5 @@
 </div>
 
 <button (click)="getExternalTransactions()">External Transactions</button>
+
+<!--<div *ngFor="let item of externalTransactions$ | async">-&#45;&#45; {{item.timestamp}} {{item.hash}}</div>-->
