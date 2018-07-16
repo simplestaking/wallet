@@ -1,4 +1,4 @@
-<button mat-raised-button color="warn" routerLink="/accounts/new">
+<button mat-raised-button color="warn" routerLink="/tezos/wallet/new">
   New wallet
 </button>
 
@@ -26,7 +26,7 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <a routerLink="/account/{{element.id}}">{{element.name}}</a>
+        <a routerLink="/tezos/wallet/{{element.id}}">{{element.name}}</a>
       </mat-cell>
     </ng-container>
 
@@ -40,7 +40,7 @@
     <ng-container matColumnDef="balance">
       <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <a routerLink="/account/{{element.id}}">{{element.balance*0.000001 | number:'1.0-6' }} ꜩ</a>
+        <a routerLink="/tezos/wallet/{{element.id}}">{{element.balance*0.000001 | number:'1.0-6' }} ꜩ</a>
       </mat-cell>
     </ng-container>
 

@@ -20,6 +20,11 @@ export class TrezorComponent implements OnInit {
   ngOnInit() {
   }
 
+  getAddressTrezorLink() {
+
+  }
+
+
   // connect to trezor and export address from trezor 
   getAddressTrezorConnect() {
 

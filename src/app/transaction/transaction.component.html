@@ -41,6 +41,7 @@
   </mat-table>
 </div>
 
-<button (click)="getExternalTransactions()">External Transactions</button>
+<button mat-raised-button (click)="getExternalTransactions()">
+  External Transactions
+</button>
 
-<!--<div *ngFor="let item of externalTransactions$ | async">-&#45;&#45; {{item.timestamp}} {{item.hash}}</div>-->

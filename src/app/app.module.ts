@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -32,6 +33,7 @@ import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 import { DelegateEffects } from './delegate/delegate.effects'
 import { TrezorEffects } from './trezor/trezor.effects'
 
+import { TrezorTransactionEffects } from './shared/tezos/tezos-transaction/tezos-transaction.effects'
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -69,7 +71,6 @@ import {
 
 import { AccountComponent } from './account/account.component';
 import { TransactionComponent } from './transaction/transaction.component';
-import { SettingsComponent } from './settings/settings.component';
 import { AccountNewComponent } from './account/account-new/account-new.component';
 import { AccountDetailComponent } from './account/account-detail/account-detail.component';
 import { DelegateComponent } from './delegate/delegate.component';
@@ -86,18 +87,18 @@ import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 import { DayChartComponent } from "./day-chart/day-chart.component";
-import { TezosTransactionComponent } from './tezos/tezos-transaction/tezos-transaction.component';
-import { TezosDelegationComponent } from './tezos/tezos-delegation/tezos-delegation.component';
-import { TezosOriginationComponent } from './tezos/tezos-origination/tezos-origination.component';
-import { TezosActivationComponent } from './tezos/tezos-activation/tezos-activation.component';
-import {TransactionEffects} from "./transaction/transaction.effects";
+import { TransactionEffects } from "./transaction/transaction.effects";
+import { TezosDelegationComponent } from './shared/tezos/tezos-delegation/tezos-delegation.component';
+import { TezosTransactionComponent } from './shared/tezos/tezos-transaction/tezos-transaction.component';
+import { TezosActivationComponent } from './shared/tezos/tezos-activation/tezos-activation.component';
+import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezos-origination.component';
+import { NgrxFormDirective } from './shared/ngrx-form.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountComponent,
     TransactionComponent,
-    SettingsComponent,
     AccountNewComponent,
     AccountDetailComponent,
     DelegateComponent,
@@ -110,10 +111,11 @@ import {TransactionEffects} from "./transaction/transaction.effects";
     TezosPaperWalletComponent,
     TezosBakingComponent,
     DayChartComponent,
-    TezosTransactionComponent,
     TezosDelegationComponent,
+    TezosTransactionComponent,
+    TezosActivationComponent,
     TezosOriginationComponent,
-    TezosActivationComponent
+    NgrxFormDirective,
   ],
   imports: [
     BrowserModule,
@@ -125,6 +127,9 @@ import {TransactionEffects} from "./transaction/transaction.effects";
     RouterModule.forRoot(AppRouting, {
       //useHash:true
     }),
+
+    // Connects RouterModule with StoreModule
+    StoreRouterConnectingModule.forRoot({}),
 
     // Set reducers  
     StoreModule.forRoot(reducers, { metaReducers }),
@@ -142,8 +147,9 @@ import {TransactionEffects} from "./transaction/transaction.effects";
 
       DelegateEffects,
       TrezorEffects,
-      TransactionEffects
+      TransactionEffects,
 
+      TrezorTransactionEffects
     ]),
 
     // https://github.com/zalmoxisus/redux-devtools-extension

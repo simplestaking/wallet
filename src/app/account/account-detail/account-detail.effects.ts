@@ -17,23 +17,15 @@ export class AccountDetailEffects {
     AccountTransaction$ = this.actions$.pipe(
         ofType('ACCOUNT_TRANSACTION'),
         // add state to effect
-        withLatestFrom(this.store, (action, state) => state.accountDetail),
-        // map(state => {
-        //     return {
-        //         secretKey: state.form.secretKey,
-        //         publicKey: state.form.publicKey,
-        //         publicKeyHash: state.form.from,
-        //         to: state.form.to,
-        //         amount: state.form.amount,
-        //     }
-        // }),
+        withLatestFrom(this.store, (action, state) => state.tezosTransaction),
+        tap(state=> console.log('[ACCOUNT_TRANSACTION] state' , state.form )),
         // wait until sodium is ready
         initialize(),
         // transfer tokens
         transfer(state => ({
             secretKey: state.form.secretKey,
             publicKey: state.form.publicKey,
-            publicKeyHash: state.form.from,
+            publicKeyHash: state.form.publicKeyHash,
             to: state.form.to,
             amount: state.form.amount,
         })),
@@ -49,7 +41,7 @@ export class AccountDetailEffects {
         })),
 
         // redirect back to accounts list
-        tap(() => this.router.navigate(['/accounts']))
+        tap(() => this.router.navigate(['/tezos/wallet']))
     )
 
     @Effect()
@@ -80,7 +72,7 @@ export class AccountDetailEffects {
         })),
 
         // redirect back to accounts list
-        tap(() => this.router.navigate(['/accounts']))
+        tap(() => this.router.navigate(['/tezos/wallet']))
     )
 
     constructor(
