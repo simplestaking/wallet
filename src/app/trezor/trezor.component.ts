@@ -4,13 +4,7 @@ import { Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import { tap, map, flatMap } from 'rxjs/operators';
 
-// fix async issue
-import 'babel-polyfill';
-
 import TrezorConnect from 'trezor-connect';
-
-// declare external library
-// declare var TrezorConnect: any;
 
 @Component({
   selector: 'app-trezor',
@@ -24,32 +18,6 @@ export class TrezorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    try {
-
-      const handleTransportEvent = (event) => {
-        console.log("transport event", event)
-        TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
-
-      }
-      TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
-
-      TrezorConnect.init({
-        connectSrc: 'http://localhost:5500/dist/',
-        frame_src: 'http://localhost:5500/dist/iframe.html',
-        popup_src: 'http://localhost:5500/dist/popup.html',
-
-        // frame_src: 'https://sisyfos.trezor.io/iframe.html',
-        // popup_src: 'https://sisyfos.trezor.io/popup.html',
-
-        popup: false,
-        webusb: false,
-        debug: true
-      });
-
-    } catch (error) {
-      throw error;
-    }
 
   }
 
@@ -230,12 +198,12 @@ export class TrezorComponent implements OnInit {
 
     var path = "m/44'/60'/0'/0'/0"
 
-    TrezorConnect.ethereumGetAddress({
-      'path': path,
-      'showOnTrezor': true,
-    }).then(response =>
-      console.warn('[ethereumGetAddress]', response.payload)
-    )
+      TrezorConnect.ethereumGetAddress({
+        'path': path,
+        'showOnTrezor': true,
+      }).then(response =>
+        console.warn('[ethereumGetAddress]', response.payload)
+      )
 
   }
 
@@ -251,7 +219,34 @@ export class TrezorComponent implements OnInit {
       console.warn('[tezosGetAddress]', response.payload)
     )
 
+  }
 
+  signXTZTrezorConnect(curve) {
+
+    let xtzPath = "m/44'/1729'/0'/0'/0'"
+
+    TrezorConnect.tezosSignTx({
+      path: xtzPath,
+      curve: curve,
+      operation: {
+        //'BLy46fN62PmupuKnXEz4KwQc6vfQrVohfyFBdjX7HW6Dd21d7Dm', // 
+        branch: new Uint8Array([165, 60, 185, 244, 17, 96, 255, 24, 107, 8, 154, 91, 128, 4, 208, 48, 77, 106, 63, 48, 128, 73, 65, 233, 207, 151, 194, 248, 183, 140, 68, 207]),   
+        tag: '8', // transaction
+        //'tz1M72kkAJrntPtayM4yU4CCwQPLSdpEgRrn'
+        source: new Uint8Array([0, 234, 189, 52, 172, 29, 32, 49, 24, 216, 83, 74, 83, 170, 27, 143, 33, 118, 28, 152, 217]),
+        fee: '0', 
+        counter: '159066',
+        gas_limit: '0', 
+        storage_limit: '0', 
+      },
+      transaction: {
+        amount:'1',
+        // 'tz1h3DUFfHaJFd1QxH7mGjKRiQ8mKNiJY5uN'
+        destination: new Uint8Array([0, 234, 189, 52, 172, 29, 32, 49, 24, 216, 83, 74, 83, 170, 27, 143, 33, 118, 28, 152, 217]),
+      },
+    }).then(response =>
+      console.warn('[signXTZ]', response.payload)
+    )
   }
 
 }

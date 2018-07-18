@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 
+import TrezorConnect from 'trezor-connect';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,6 +23,34 @@ export class AppComponent {
   ngOnInit() {
     this.app$ = this.store.select('app')
     this.app$.subscribe(data => this.app = data)
+
+
+    try {
+
+      const handleTransportEvent = (event) => {
+        console.log("transport event", event)
+        TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
+
+      }
+      TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
+
+      TrezorConnect.init({
+        connectSrc: 'http://localhost:5500/dist/',
+        frame_src: 'http://localhost:5500/dist/iframe.html',
+        popup_src: 'http://localhost:5500/dist/popup.html',
+
+        // frame_src: 'https://sisyfos.trezor.io/iframe.html',
+        // popup_src: 'https://sisyfos.trezor.io/popup.html',
+
+        popup: false,
+        webusb: false,
+        debug: true
+      });
+
+    } catch (error) {
+      throw error;
+    }
+
   }
 
   get fixedTop() { return this.fixed && this.showHeader && !this.coverHeader ? 64 : 0; }

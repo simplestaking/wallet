@@ -48,16 +48,15 @@ export class AccountDetailEffects {
     AccountTransactionTrezor$ = this.actions$.pipe(
         ofType('ACCOUNT_TRANSACTION_TREZOR'),
         // add state to effect
-        withLatestFrom(this.store, (action, state) => state.accountDetail),
+        withLatestFrom(this.store, (action, state) => state.tezosTransaction),
         // wait until sodium is ready
         initialize(),
         // transfer tokens
         transfer(state => ({
             publicKey: state.form.publicKey,
-            publicKeyHash: state.form.from,
+            publicKeyHash: state.form.publicKeyHash,
             to: state.form.to,
             amount: state.form.amount,
-            fee: 0,
             walletType: 'TREZOR_T',
         })),
 

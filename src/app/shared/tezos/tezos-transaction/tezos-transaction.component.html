@@ -32,6 +32,7 @@
 </div>
 <br>
 
+<br/>
 <button *ngIf="tezosTransaction.secretKey" mat-raised-button color="warn" (click)="send('WEB')" [disabled]="!tezosTransaction.to || !tezosTransaction.amount ">
   Send ꜩ
 </button>
