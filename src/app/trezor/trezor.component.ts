@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store'
+
+import { of } from 'rxjs'
+import { tap, map, flatMap } from 'rxjs/operators';
+
 // fix async issue
 import 'babel-polyfill';
 
+import TrezorConnect from 'trezor-connect';
+
 // declare external library
-declare var TrezorConnect: any;
+// declare var TrezorConnect: any;
 
 @Component({
   selector: 'app-trezor',
@@ -18,6 +24,33 @@ export class TrezorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    try {
+
+      const handleTransportEvent = (event) => {
+        console.log("transport event", event)
+        TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
+
+      }
+      TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
+
+      TrezorConnect.init({
+        connectSrc: 'http://localhost:5500/dist/',
+        frame_src: 'http://localhost:5500/dist/iframe.html',
+        popup_src: 'http://localhost:5500/dist/popup.html',
+
+        // frame_src: 'https://sisyfos.trezor.io/iframe.html',
+        // popup_src: 'https://sisyfos.trezor.io/popup.html',
+
+        popup: false,
+        webusb: false,
+        debug: true
+      });
+
+    } catch (error) {
+      throw error;
+    }
+
   }
 
   getAddressTrezorLink() {
@@ -32,44 +65,44 @@ export class TrezorComponent implements OnInit {
 
     try {
 
-      // open popup
-      TrezorConnect.open(response => {
+      // // open popup
+      // TrezorConnect.open(response => {
 
-        console.log('[trezor] open', response)
+      //   console.log('[trezor] open', response)
 
-        // TODO: find better way than try catch
-        try {
-          // open poppup and connect to trezor bridge listening on 127.0.0.1:21325
-          // because of CORS we can call REST only from *.trezor.io domain 
-          // so we need to use trezor connect 
+      //   // TODO: find better way than try catch
+      //   try {
+      //     // open poppup and connect to trezor bridge listening on 127.0.0.1:21325
+      //     // because of CORS we can call REST only from *.trezor.io domain 
+      //     // so we need to use trezor connect 
 
-          // get address and ask for confirmation
-          TrezorConnect.tezosGetAddress(xtzPath, response => {
-            //TrezorConnect.ethereumGetAddress(ethPath, response => {
-            console.log("[trezor] TrezorConnect.xxxGetAddress ", response);
-            console.log("[trezor] Tezos address http://tzscan.io/" + response.address);
+      //     // get address and ask for confirmation
+      //     TrezorConnect.tezosGetAddress(xtzPath, response => {
+      //       //TrezorConnect.ethereumGetAddress(ethPath, response => {
+      //       console.log("[trezor] TrezorConnect.xxxGetAddress ", response);
+      //       console.log("[trezor] Tezos address http://tzscan.io/" + response.address);
 
-            // dispatch action with eth address
-            this.store.dispatch({
-              type: 'TREZOR_GET_ADDRESS_SUCCESS',
-              payload: response,
-            })
+      //       // dispatch action with eth address
+      //       this.store.dispatch({
+      //         type: 'TREZOR_GET_ADDRESS_SUCCESS',
+      //         payload: response,
+      //       })
 
-          })
+      //     })
 
-        }
-        catch (error) {
+      //   }
+      //   catch (error) {
 
-          // error happens usualy when user trys to open multiple trezor connect windows
-          console.error("[trezor] getXPubKey ", error)
-          // dispatch error message
-          this.store.dispatch({
-            type: 'TREZOR_GET_ADDRESS_ERROR',
-            payload: error,
-          })
-        }
+      //     // error happens usualy when user trys to open multiple trezor connect windows
+      //     console.error("[trezor] getXPubKey ", error)
+      //     // dispatch error message
+      //     this.store.dispatch({
+      //       type: 'TREZOR_GET_ADDRESS_ERROR',
+      //       payload: error,
+      //     })
+      //   }
 
-      })
+      // })
 
     } catch (errorOpen) {
       console.error('[trezor] open', errorOpen)
@@ -91,47 +124,47 @@ export class TrezorComponent implements OnInit {
 
     try {
 
-      // open popup
-      TrezorConnect.open(response => {
-        console.log('[trezor] open', response)
+      // // open popup
+      // TrezorConnect.open(response => {
+      //   console.log('[trezor] open', response)
 
-        // TODO: find better way than try catch
-        try {
+      //   // TODO: find better way than try catch
+      //   try {
 
-          // get address and ask for confirmation
-          TrezorConnect.tezosSignTx(
-            // Tezos Bip44 path
-            xtzPath, // address_n
-            to,
-            fee,
-            amount,
-            operation,
-            response => {
+      //     // get address and ask for confirmation
+      //     TrezorConnect.tezosSignTx(
+      //       // Tezos Bip44 path
+      //       xtzPath, // address_n
+      //       to,
+      //       fee,
+      //       amount,
+      //       operation,
+      //       response => {
 
-              //TrezorConnect.ethereumGetAddress(ethPath, response => {
-              console.log("[trezor] sign tx ", response);
+      //         //TrezorConnect.ethereumGetAddress(ethPath, response => {
+      //         console.log("[trezor] sign tx ", response);
 
-              // dispatch action with eth address
-              this.store.dispatch({
-                type: 'TREZOR_SIGN_TRANSACTION_SUCCESS',
-                payload: response,
-              })
+      //         // dispatch action with eth address
+      //         this.store.dispatch({
+      //           type: 'TREZOR_SIGN_TRANSACTION_SUCCESS',
+      //           payload: response,
+      //         })
 
-            })
+      //       })
 
-        }
-        catch (error) {
+      //   }
+      //   catch (error) {
 
-          // error happens usualy when user trys to open multiple trezor connect windows
-          console.error("[trezor] sign transaction ", error)
-          // dispatch error message
-          this.store.dispatch({
-            type: 'TREZOR_SIGN_TRANSACTION_ERROR',
-            payload: error,
-          })
-        }
+      //     // error happens usualy when user trys to open multiple trezor connect windows
+      //     console.error("[trezor] sign transaction ", error)
+      //     // dispatch error message
+      //     this.store.dispatch({
+      //       type: 'TREZOR_SIGN_TRANSACTION_ERROR',
+      //       payload: error,
+      //     })
+      //   }
 
-      })
+      // })
 
     } catch (errorOpen) {
       console.error('[trezor] open', errorOpen)
@@ -193,12 +226,32 @@ export class TrezorComponent implements OnInit {
   }
 
   // connect to trezor and export address from trezor 
-  getAddress() {
+  getEthAddressTrezorConnect() {
 
-    // dispatch action to get adress from trezor
-    this.store.dispatch({
-      type: 'TREZOR_CONNECT',
-    })
+    var path = "m/44'/60'/0'/0'/0"
+
+    TrezorConnect.ethereumGetAddress({
+      'path': path,
+      'showOnTrezor': true,
+    }).then(response =>
+      console.warn('[ethereumGetAddress]', response.payload)
+    )
 
   }
+
+  getXTZAddressTrezorConnect(curve) {
+
+    let xtzPath = "m/44'/1729'/0'/0'/0'"
+
+    TrezorConnect.tezosGetAddress({
+      'path': xtzPath,
+      'curve': curve,
+      'showOnTrezor': true,
+    }).then(response =>
+      console.warn('[tezosGetAddress]', response.payload)
+    )
+
+
+  }
+
 }
