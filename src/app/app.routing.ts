@@ -15,6 +15,7 @@ import { TrezorComponent } from './trezor/trezor.component';
 
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
+import { LoginViaFileComponent } from "./login-via-file/login-via-file.component";
 
 export const AppRouting: Routes = [
 
@@ -32,6 +33,8 @@ export const AppRouting: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'forgot', component: ForgotComponent },
+
+  { path: 'login-via-file', component: LoginViaFileComponent },
 
   // landing pages
   { path: 'tezos-baking', component: TezosBakingComponent },

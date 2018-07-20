@@ -1,0 +1,50 @@
+<div class="auth-main" [formGroup]="loginForm">
+
+  <mat-card class="auth-card">
+
+    <mat-card-content>
+
+      <div class="auth-content">
+
+        <mat-error *ngIf="submitError && !loginForm.touched">
+          Bad credentials
+        </mat-error>
+
+        <br>
+
+        <button mat-raised-button color="primary" (click)="selectWalletFile()">
+          Select wallet file
+        </button>
+        <mat-error *ngIf="loginForm.controls.walletLocation.errors && loginForm.controls.walletLocation.touched">
+            Please select wallet file
+        </mat-error>
+
+        <br>
+
+        <mat-form-field>
+          <input matInput #input placeholder="Password" formControlName="password" type="password" (keyup.enter)="signIn()" />
+          <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+          <mat-error>
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <br>
+
+        <mat-error>
+          <!--{{this.login.error.message}}-->
+        </mat-error>
+
+        <br>
+
+        <button mat-raised-button color="primary" (click)="import()">
+          Import
+        </button>
+
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

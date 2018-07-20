@@ -93,6 +93,8 @@ import { TezosTransactionComponent } from './shared/tezos/tezos-transaction/tezo
 import { TezosActivationComponent } from './shared/tezos/tezos-activation/tezos-activation.component';
 import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezos-origination.component';
 import { NgrxFormDirective } from './shared/ngrx-form.directive';
+import { LoginViaFileComponent } from './login-via-file/login-via-file.component';
+import {LoginViaFileEffects} from "./login-via-file/login-via-file.effects";
 
 @NgModule({
   declarations: [
@@ -116,6 +118,7 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
     TezosActivationComponent,
     TezosOriginationComponent,
     NgrxFormDirective,
+    LoginViaFileComponent,
   ],
   imports: [
     BrowserModule,
@@ -147,7 +150,9 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
 
       DelegateEffects,
       TrezorEffects,
+
       TransactionEffects,
+      LoginViaFileEffects,
 
       TrezorTransactionEffects
     ]),

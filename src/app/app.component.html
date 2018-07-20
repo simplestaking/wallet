@@ -32,6 +32,10 @@
 
       <app-auth></app-auth>
 
+      <button *ngIf="!app.user.uid" mat-button routerLink="/login-via-file">
+        Sign in via file
+      </button>
+
       <button *ngIf="!app.user.uid" mat-button routerLink="/login">
         Sign in
       </button>
