@@ -5,7 +5,7 @@
     <ng-container matColumnDef="timestamp">
       <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.timestamp | date:'dd.MM.yyyy'}}
+        {{element.timestamp }}
       </mat-cell>
     </ng-container>
 
@@ -41,8 +41,7 @@
   </mat-table>
 </div>
 
-<br/>
-
 <button mat-raised-button (click)="getExternalTransactions()">
   External Transactions
 </button>
+

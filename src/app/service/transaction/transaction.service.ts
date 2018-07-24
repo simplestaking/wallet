@@ -13,7 +13,7 @@ export class TransactionService {
 
     getTransactions(user_hash, page = 0): Observable<any> {
         return this.http
-            .get(this.urlApi.getTezos() + '/v1/operations/' + user_hash + '?p=' + page +'&number=20')
+            .get(this.urlApi.getTezos() + '/v2/operations/' + user_hash + '?p=' + page +'&number=20&type=Transaction')
             .catch((error: HttpErrorResponse) => Observable.throwError(error.message || 'Server error'));
     }
 

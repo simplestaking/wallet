@@ -12,7 +12,7 @@ import {
     mergeMap,
     concatMapTo,
     reduce,
-    mergeAll, scan
+    mergeAll, scan, filter, finalize, share
 } from 'rxjs/operators';
 import * as TransactionActions from './transaction.actions';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
@@ -20,12 +20,14 @@ import { TransactionService } from "../service/transaction/transaction.service";
 import {Store} from "@ngrx/store";
 import {Transaction} from "../model/transaction.model";
 import {forkJoin, concat, merge} from "rxjs";
+import {adapter} from "./transaction.reducer";
+import {pipe} from "rxjs/internal-compatibility";
 
 @Injectable()
 export class TransactionEffects {
     private accountId: string
     private maxPage: number
-    private transactions: any[] = []
+    private transactions: any[];
 
     private externalTransactions: any[] = [];
 
@@ -37,9 +39,11 @@ export class TransactionEffects {
     @Effect()
     GetExternTransactions$ = this.actions$.pipe(
         ofType(TransactionActions.EXTERN_TRANSACTIONS_GET),
-        withLatestFrom(this.store, (action: TransactionActions.GetExternTransactions, state) => { return { accountId: action.payload, state: state.transaction } } ),
+        withLatestFrom(this.store, (action: TransactionActions.GetExternTransactions, state) => { return { accountId: action.payload, state: state.transaction, transactions: state.transaction.entities } } ),
         flatMap((action) => {
             this.accountId = action.accountId;
+            this.transactions = action.transactions;
+
             return this.service.getNumberTransactions(action.accountId)
         }),
         map(count => {
@@ -51,14 +55,14 @@ export class TransactionEffects {
 
             return forkJoin(observables)
         }),
-        concatMap(transactionsArr => {
+        concatMap((transactionsArr: any[])=> {
             const observables = [];
             transactionsArr.map(transactions => transactions.map(transaction =>
                  observables.push(this.service.getBlock(transaction.block_hash).pipe(
                      map(block => {
-                         transaction['block'] = block;
 
-                         this.transactions.push(transaction);
+                         transaction = Object.assign({acc: this.accountId, timestamp: block.timestamp}, transaction)
+
                          return transaction as Transaction
                      })
                  ))
@@ -66,12 +70,32 @@ export class TransactionEffects {
 
             return forkJoin(observables);
         }),
-        map(transactions => {
-            console.log('response', transactions)
-            return new TransactionActions.GetExternTransactionsSuccess(transactions)
+        map((externalTransactions: any[] )=> {
+            let diffArray = externalTransactions.filter((externalTransaction: Transaction) => {
+                for (let i in this.transactions) {
+                    if (externalTransaction.type.counter == this.transactions[i].type.counter) {
+                        return false;
+                    }
+                }
+                return true
+            })
+
+            return <any[]>diffArray
         }),
+        map(response => new TransactionActions.ResolveExternTransactions(response)),
         catchError((error) => of (new TransactionActions.TransactionErrorAction(error.message)))
     );
+
+    @Effect()
+    ResolveExternTransactions$ = this.actions$.pipe(
+        ofType(TransactionActions.EXTERN_TRANSACTIONS_RESOLVE),
+        withLatestFrom(this.store, (action, state) => state.transaction.externalTransactions ),
+        flatMap(externalTransactions => externalTransactions ),
+        map((transaction: Transaction) => new TransactionActions.CreateTransaction(transaction)),
+        tap(() => this.store.dispatch(new TransactionActions.GetExternTransactionsSuccess())),
+        catchError((error) => of (new TransactionActions.TransactionErrorAction(error.message))),
+
+    )
 
     @Effect()
     GetTransactions$ = this.actions$.pipe(

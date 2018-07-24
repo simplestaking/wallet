@@ -1,10 +1,10 @@
 import * as bs58check from 'bs58check'
 import * as bip39 from 'bip39'
-import * as sodium from 'libsodium-wrappers'
+import * as sodium from 'libsodium-wrappers-sumo'
 import * as pbkdf2 from 'pbkdf2'
 import { Buffer } from 'buffer/'
 
-const prefix = {
+export const prefix = {
     tz1: new Uint8Array([6, 161, 159]),
     edpk: new Uint8Array([13, 15, 37, 217]),
     edsk: new Uint8Array([43, 246, 78, 7]),
@@ -41,12 +41,15 @@ export function reducer(state = initialState, action) {
             let keyPair = sodium.crypto_sign_seed_keypair(seed);
             console.log('[keyPair]', keyPair)
             let privateKeyTemp = keyPair.privateKey.slice(0, 32)
-            debugger
+
+            let passwordHash = sodium.crypto_pwhash_str(state.form.passpharse, sodium.crypto_pwhash_OPSLIMIT_INTERACTIVE, sodium.crypto_pwhash_MEMLIMIT_INTERACTIVE)
+
             return Object.assign({}, state, {
                 keys: {
                     secretKey: o(privateKeyTemp, prefix.edsk2),
                     publicKey: o(keyPair.publicKey, prefix.edpk),
                     publicKeyHash: o(sodium.crypto_generichash(20, keyPair.publicKey), prefix.tz1),
+                    passwordHash: passwordHash
                 }
             })
 
@@ -63,9 +66,22 @@ export function reducer(state = initialState, action) {
 }
 
 // helper function for bs58 encode 
-function o(payload, prefix) {
+export function o(payload, prefix) {
     let n = new Uint8Array(prefix.length + payload.length);
     n.set(prefix);
     n.set(payload, prefix.length);
     return bs58check.encode(new Buffer(n, 'hex'));
 }
+
+// function base58CheckEncode(payload, prefix) {
+//     const prefixBytes = getBase58BytesForPrefix(prefix);
+//     const prefixedPayload = Buffer.concat([prefixBytes, payload]);
+//     return base58Check.encode(prefixedPayload);
+// }
+// function base58CheckDecode(s, prefix) {
+//     const prefixBytes = getBase58BytesForPrefix(prefix);
+//     prefixBytes = new Buffer([6, 161, 159]);
+//     const charsToSlice = prefixBytes.length;
+//     const decoded = base58Check.decode(s);
+//     return decoded.slice(charsToSlice);
+// }
