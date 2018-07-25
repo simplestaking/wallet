@@ -74,14 +74,14 @@ export class TezosOriginationComponent implements OnInit {
     // TODO: move logic to effect 
     if (walletType === 'WEB') {
       this.store.dispatch({
-        type: "TEZOS_ORIGINATE",
+        type: "TEZOS_ORIGINATION",
         walletType: walletType
       })
     }
 
     if (walletType === 'TREZOR_T') {
       this.store.dispatch({
-        type: "TEZOS_ORIGINATE_TREZOR",
+        type: "TEZOS_ORIGINATION_TREZOR",
         walletType: walletType
       })
     }

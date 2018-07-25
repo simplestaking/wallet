@@ -24,7 +24,8 @@ export class TrezorDelegationEffects {
             return data.action
         }),
         // triger only for tezos url
-        filter((action: any) => action.payload.event.url.indexOf('tezos/wallet/tz') > 0),
+        filter((action: any) => action.payload.event.url.indexOf('tezos/wallet/tz') > 0 ||
+            action.payload.event.url.indexOf('tezos/wallet/KT') > 0),
         // get account data with publicKeyHash from firebase
         flatMap((action: any) => {
             console.log('[this.currecnyNetwork]', this.currecnyNetwork)
