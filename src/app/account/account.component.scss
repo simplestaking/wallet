@@ -2,3 +2,11 @@ a {
     color: #000000;
     text-decoration: none;
 }
+
+.mat-header-cell.cdk-column-publicKeyHash.mat-column-publicKeyHash {
+    min-width: 310px
+}
+
+.mat-cell.cdk-column-publicKeyHash.mat-column-publicKeyHash {
+    min-width: 310px
+}

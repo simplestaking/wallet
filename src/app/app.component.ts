@@ -44,7 +44,7 @@ export class AppComponent {
 
         popup: false,
         webusb: false,
-        debug: true
+        debug: true,
       });
 
     } catch (error) {

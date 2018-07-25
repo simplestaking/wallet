@@ -10,6 +10,10 @@
   Reload balance
 </button>
 
+<button mat-button (click)="importWalletFromTrezor()">
+  Import wallet from Trezor
+</button>
+  
 <!-- 
 <button mat-button (click)="balance()">
   Recover wallet
@@ -31,21 +35,23 @@
     </ng-container>
 
     <!-- Address Column -->
-    <!-- <ng-container matColumnDef="publicKeyHash">
+    <ng-container matColumnDef="publicKeyHash">
       <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a routerLink="/account/{{element.address}}">{{element.publicKeyHash}}</a></mat-cell>
-    </ng-container> -->
+      <mat-cell *matCellDef="let element">
+          <a routerLink="/tezos/wallet/{{element.id}}">{{element.publicKeyHash}}</a>
+      </mat-cell>
+    </ng-container>
 
     <!-- Balance Column -->
-    <ng-container matColumnDef="balance">
+    <ng-container matColumnDef="balance" stickyEnd>
       <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <a routerLink="/tezos/wallet/{{element.id}}">{{element.balance*0.000001 | number:'1.0-6' }} ꜩ</a>
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="['name','balance']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['name','balance'];"></mat-row>
+    <mat-header-row *matHeaderRowDef="['name','publicKeyHash','balance']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name','publicKeyHash','balance'];"></mat-row>
 
   </mat-table>
 </div>
