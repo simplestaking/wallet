@@ -34,6 +34,8 @@ import * as fromAuthForgot from './auth/forgot/forgot.reducer';
 import * as fromTransaction from './transaction/transaction.reducer';
 import * as fromLoginViaFile from './login-via-file/login-via-file.reducer';
 import * as fromTezosTransaction from './shared/tezos/tezos-transaction/tezos-transaction.reducer';
+import * as fromTezosOrigination from './shared/tezos/tezos-origination/tezos-origination.reducer';
+import * as fromTezosDelegation from './shared/tezos/tezos-delegation/tezos-delegation.reducer';
 
 // meta reducert for dynamic forms
 import * as fromNgrxForm from './shared/ngrx-form.reducer';
@@ -54,6 +56,8 @@ export interface State {
   transaction: any;
   loginViaFile: any;
   tezosTransaction: any;
+  tezosOrigination: any;
+  tezosDelegation: any;
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
@@ -73,6 +77,8 @@ export const reducers: ActionReducerMap<State> = {
   authForgot: fromAuthForgot.reducer,
   transaction: fromTransaction.reducer,
   tezosTransaction: fromTezosTransaction.reducer,
+  tezosOrigination: fromTezosOrigination.reducer,
+  tezosDelegation: fromTezosDelegation.reducer,
   loginViaFile: fromLoginViaFile.reducer,
   routerReducer: fromRouter.routerReducer,
 };

@@ -34,6 +34,9 @@ import { DelegateEffects } from './delegate/delegate.effects'
 import { TrezorEffects } from './trezor/trezor.effects'
 
 import { TrezorTransactionEffects } from './shared/tezos/tezos-transaction/tezos-transaction.effects'
+import { TrezorOriginationEffects } from './shared/tezos/tezos-origination/tezos-origination.effects'
+import { TrezorDelegationEffects } from './shared/tezos/tezos-delegation/tezos-delegation.effects'
+
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -154,7 +157,9 @@ import {LoginViaFileEffects} from "./login-via-file/login-via-file.effects";
       TransactionEffects,
       LoginViaFileEffects,
 
-      TrezorTransactionEffects
+      TrezorTransactionEffects,
+      TrezorOriginationEffects,
+      TrezorDelegationEffects
     ]),
 
     // https://github.com/zalmoxisus/redux-devtools-extension
