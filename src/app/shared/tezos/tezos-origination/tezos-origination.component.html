@@ -22,11 +22,11 @@
   
   <br/>
   
-  <button *ngIf="tezosOrigination.secretKey" mat-raised-button color="warn" (click)="send('WEB')" [disabled]="!tezosOrigination.to || !tezosOrigination.amount ">
+  <button *ngIf="tezosOrigination.secretKey" mat-raised-button color="warn" (click)="originate('WEB')" [disabled]="!tezosOrigination.amount ">
     Originate ꜩ
   </button>
   
-  <button *ngIf="!tezosOrigination.secretKey" mat-raised-button color="warn" (click)="send('TREZOR_T')" [disabled]="!tezosOrigination.to || !tezosOrigination.amount ">
+  <button *ngIf="!tezosOrigination.secretKey" mat-raised-button color="warn" (click)="originate('TREZOR_T')" [disabled]="!tezosOrigination.amount ">
     Originate with Trezor(Connect) and Send ꜩ
   </button>
   

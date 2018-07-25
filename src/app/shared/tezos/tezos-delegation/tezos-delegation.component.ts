@@ -69,4 +69,23 @@ export class TezosDelegationComponent implements OnInit {
 
   }
 
+  delegate(walletType) {
+
+     // TODO: move logic to effect 
+     if (walletType === 'WEB') {
+      this.store.dispatch({
+        type: "TEZOS_DELEGTION",
+        walletType: walletType
+      })
+    }
+
+    if (walletType === 'TREZOR_T') {
+      this.store.dispatch({
+        type: "TEZOS_DELEGATION_TREZOR",
+        walletType: walletType
+      })
+    }
+
+  }
+
 }

@@ -25,33 +25,33 @@ export class TezosOriginationComponent implements OnInit {
 
   ngOnInit() {
 
-      // create form group
-      this.tezosOriginationForm = this.fb.group({
-        name: [{ value: '', disabled: true }],
-        from: [{ value: this.address, disabled: true }],
-        to: '',
-        amount: ''
+    // create form group
+    this.tezosOriginationForm = this.fb.group({
+      name: [{ value: '', disabled: true }],
+      from: [{ value: this.address, disabled: true }],
+      to: '',
+      amount: ''
+    })
+
+    // listen to tezos wallets list
+    this.store.select('account')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        // create tezos wallets list 
+        this.tezosWallets =
+          of(state.ids
+            .filter(id => id !== this.address)
+            .map(id => state.entities[id])
+          )
       })
-  
-      // listen to tezos wallets list
-      this.store.select('account')
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(state => {
-          // create tezos wallets list 
-          this.tezosWallets =
-            of(state.ids
-              .filter(id => id !== this.address)
-              .map(id => state.entities[id])
-            )
-        })
-  
-      // listen to tezos wallet detail 
-      this.store.select('tezosOrigination', 'form')
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(state => {
-          // create tezos wallet detail 
-          this.tezosOrigination = state
-        })
+
+    // listen to tezos wallet detail 
+    this.store.select('tezosOrigination', 'form')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        // create tezos wallet detail 
+        this.tezosOrigination = state
+      })
 
   }
 
@@ -66,6 +66,25 @@ export class TezosOriginationComponent implements OnInit {
       type: 'TEZOS_ORIGINATION_DESTROY',
       payload: '',
     })
+
+  }
+
+  originate(walletType) {
+
+    // TODO: move logic to effect 
+    if (walletType === 'WEB') {
+      this.store.dispatch({
+        type: "TEZOS_ORIGINATE",
+        walletType: walletType
+      })
+    }
+
+    if (walletType === 'TREZOR_T') {
+      this.store.dispatch({
+        type: "TEZOS_ORIGINATE_TREZOR",
+        walletType: walletType
+      })
+    }
 
   }
 
