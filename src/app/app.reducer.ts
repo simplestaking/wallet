@@ -6,6 +6,8 @@ const initialState = {
         currency: 'tezos',
         network: 'zero',
         api: 'https://zeronet.simplestaking.com:3000'
+        // network: 'main',
+        // api: 'https://node2.simplestaking.com:3000'
     },
     user: {
         uid: null,

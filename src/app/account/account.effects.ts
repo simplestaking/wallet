@@ -16,7 +16,7 @@ import { initialize, getWallet } from '../../../tezos-wallet'
 export class AccountEffects {
 
     public api = environment.tezos.betanet
-
+    public currecnyNetwork
     public accountCol: AngularFirestoreCollection<any>;
     public accountDoc: AngularFirestoreDocument<any>;
 
@@ -25,7 +25,12 @@ export class AccountEffects {
     AccountBalance$ = this.actions$.pipe(
         ofType('ACCOUNT_BALANCE'),
         // get state from store
-        withLatestFrom(this.store, (action, state: any) => state.account),
+        withLatestFrom(this.store, (action, state: any) => state),
+        // save state, find better way
+        map((state: any) => {
+            this.currecnyNetwork = state.app.node.currency + '_' + state.app.node.network + '_wallet'
+            return state.account
+        }),
         // get all accounts address
         tap((state: any) => console.log('[balance] ids ', state.ids)),
         flatMap((state: any) => state.ids.map(id => ({ publicKeyHash: state.entities[id].publicKeyHash }))),
@@ -39,7 +44,7 @@ export class AccountEffects {
         })),
         map((data: any) => {
             // update balance on firebase
-            this.accountDoc = this.db.doc('tezos_zero_wallet/' + data.publicKeyHash);
+            this.accountDoc = this.db.doc(this.currecnyNetwork + '/' + data.publicKeyHash);
             this.accountDoc.update({ balance: data.balance })
             return data.balance
         }),
