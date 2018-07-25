@@ -1,4 +1,4 @@
-<!-- <div class="tezos-delegation" [formGroup]="tezosDelegationForm" ngrxForm="tezosDelegation">
+<div class="tezos-delegation" [formGroup]="tezosDelegationForm" ngrxForm="tezosDelegation">
 
     <mat-form-field>
       <input matInput #input1 placeholder="Name" formControlName="name" />
@@ -24,15 +24,15 @@
   
     </mat-form-field>
   
-  </div> -->
-  <!-- <br>
+  </div>
+  <br>
   
   <br/>
-  <button *ngIf="tezosTransaction.secretKey" mat-raised-button color="warn" (click)="send('WEB')" [disabled]="!tezosTransaction.to || !tezosTransaction.amount ">
+  <button *ngIf="tezosDelegation.secretKey" mat-raised-button color="warn" (click)="send('WEB')" [disabled]="!tezosDelegation.to">
     Delegate ꜩ
   </button>
   
-  <button *ngIf="!tezosTransaction.secretKey" mat-raised-button color="warn" (click)="send('TREZOR_T')" [disabled]="!tezosTransaction.to || !tezosTransaction.amount ">
-    Sign with Trezor(Connect) and Send ꜩ
-  </button> -->
+  <button *ngIf="!tezosDelegation.secretKey" mat-raised-button color="warn" (click)="send('TREZOR_T')" [disabled]="!tezosDelegation.to">
+    Delegate with Trezor(Connect) and Send ꜩ
+  </button>
   

@@ -5,16 +5,16 @@
     </app-tezos-transaction>
   </mat-tab>
 
-  <!-- <mat-tab label="Delegation">
-    <app-tezos-delegation>
-    </app-tezos-delegation>
-  </mat-tab> -->
-  
   <mat-tab label="Origination">
-    <app-tezos-origination>
-    </app-tezos-origination>
+      <app-tezos-origination [address]="id" >
+      </app-tezos-origination>
   </mat-tab>
 
+  <mat-tab label="Delegation">
+    <app-tezos-delegation [address]="id">
+    </app-tezos-delegation>
+  </mat-tab>
+  
   <!-- <mat-tab label="Activation">
     <app-tezos-activation>
     </app-tezos-activation>
