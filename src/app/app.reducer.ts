@@ -3,6 +3,9 @@ const initialState = {
         isConnected: false,
         isUpdated: false,
         timestamp: 0,
+        currency: 'tezos',
+        network: 'zero',
+        api: 'https://zeronet.simplestaking.com:3000'
     },
     user: {
         uid: null,
@@ -32,6 +35,7 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 node: {
+                    ...state.node,
                     isConnected: false,
                     isUpdated: false,
                     timestamp: 0,
@@ -42,6 +46,7 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 node: {
+                    ...state.node,
                     isConnected: true,
                     isUpdated: true, // use moment to find difference
                     timestamp: action.payload.timestamp,
@@ -52,6 +57,7 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 node: {
+                    ...state.node,
                     isConnected: false,
                     isUpdated: false,
                 }

@@ -28,8 +28,9 @@ export class AccountNewEffects {
         .ofType('ACCOUNT_ADD')
         .withLatestFrom(this.store, (action: any, state) => ({ action, state }))
         .flatMap(({ action, state }) => {
+            console.log('[ACCOUNT_ADD]', state, action)
             // listen to accounts from FireBase 
-            this.accountCol = this.db.collection('account');
+            this.accountCol = this.db.collection(state.app.node.currency + '_' + state.app.node.network + '_wallet');
             // add value to firestore
             return this.accountCol
                 // set document id as tezos wallet
@@ -38,6 +39,7 @@ export class AccountNewEffects {
                     // save uid to set security 
                     // if user is not logged null will be stored
                     uid: state.app.user.uid,
+                    network: state.app.node.network,
                     ...action.payload,
                     balance: 0,
                 })
@@ -65,8 +67,8 @@ export class AccountNewEffects {
                 // delegate: action.payload.publicKeyHash,
                 amount: 0,
             })),
-            // origination()
-        )
+        // origination()
+    )
         // dispatch action based on result
         .map(response => ({
             type: 'ACCOUNT_CREATE_SUCCESS',

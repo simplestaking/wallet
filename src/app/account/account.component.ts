@@ -30,6 +30,12 @@ export class AccountComponent implements OnInit, OnDestroy {
     // user id 
     public uid
 
+    // network 
+    public network
+
+    // currency
+    public currency
+
     private onDestroy$ = new Subject()
 
     constructor(
@@ -56,6 +62,27 @@ export class AccountComponent implements OnInit, OnDestroy {
                 this.getAccountFirebase()
             })
 
+        // get network 
+        this.store.select('app', 'node', 'network').pipe(
+            takeUntil(this.onDestroy$)
+        )
+            .subscribe(network => {
+                this.network = network
+                // change chain and get all accounts
+                this.getAccountFirebase()
+            })
+
+
+        // get network 
+        this.store.select('app', 'node', 'currency').pipe(
+            takeUntil(this.onDestroy$)
+        )
+            .subscribe(currency => {
+                this.currency = currency
+                // change chain and get all accounts
+                this.getAccountFirebase()
+            })
+
     }
 
     ngOnDestroy() {
@@ -73,53 +100,61 @@ export class AccountComponent implements OnInit, OnDestroy {
             this.accountColUnsubscribe.unsubscribe()
         }
 
-        // TODO: add rules to firebase
-        // listen to accounts from FireBase 
-        this.accountCol = this.db.collection('account', query => query.where('uid', '==', this.uid))
+        
+        if (this.currency !== undefined && this.network !== undefined) {
+            
+            console.log('[wallet] + ', this.currency + '_' + this.network + '_wallet')
 
-        // process all account add actions from firebase
-        this.accountColUnsubscribe = this.accountCol.stateChanges().pipe(
+            // TODO: add rules to firebase
+            // listen to accounts from FireBase 
+            this.accountCol = this.db.collection(this.currency + '_' + this.network + '_wallet', query => query.where('uid', '==', this.uid))
+            //this.accountCol = this.db.collection('account', query => query.where('uid', '==', this.uid))
+
+            // process all account add actions from firebase
+            this.accountColUnsubscribe = this.accountCol.stateChanges().pipe(
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(accounts =>
-                accounts.map(action => {
-                    // dispatch action for each element
-                    switch (action.payload.type) {
+                .subscribe(accounts =>
+                    accounts.map(action => {
+                        // dispatch action for each element
+                        switch (action.payload.type) {
 
-                        case 'added':
-                            // console.log('added', action)
-                            return this.store.dispatch({
-                                type: 'ACCOUNT_ADD_FIREBASE',
-                                payload: {
-                                    id: action.payload.doc.id,
-                                    data: action.payload.doc.data()
-                                }
-                            })
+                            case 'added':
+                                // console.log('added', action)
+                                return this.store.dispatch({
+                                    type: 'ACCOUNT_ADD_FIREBASE',
+                                    payload: {
+                                        id: action.payload.doc.id,
+                                        data: action.payload.doc.data()
+                                    }
+                                })
 
-                        case 'modified':
-                            // console.log('modified', action)
-                            return this.store.dispatch({
-                                type: 'ACCOUNT_MODIFY_FIREBASE',
-                                payload: {
-                                    id: action.payload.doc.id,
-                                    data: action.payload.doc.data()
-                                }
-                            })
+                            case 'modified':
+                                // console.log('modified', action)
+                                return this.store.dispatch({
+                                    type: 'ACCOUNT_MODIFY_FIREBASE',
+                                    payload: {
+                                        id: action.payload.doc.id,
+                                        data: action.payload.doc.data()
+                                    }
+                                })
 
-                        case 'removed':
-                            //console.log('removed', action)
-                            return this.store.dispatch({
-                                type: 'ACCOUNT_REMOVE_FIREBASE',
-                                payload: {
-                                    id: action.payload.doc.id,
-                                    data: action.payload.doc.data()
-                                }
-                            })
+                            case 'removed':
+                                //console.log('removed', action)
+                                return this.store.dispatch({
+                                    type: 'ACCOUNT_REMOVE_FIREBASE',
+                                    payload: {
+                                        id: action.payload.doc.id,
+                                        data: action.payload.doc.data()
+                                    }
+                                })
 
-                    }
+                        }
 
-                })
-            )
+                    })
+                )
+
+        }
 
     }
 
