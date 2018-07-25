@@ -18,7 +18,7 @@ export class TrezorTransactionEffects {
         filter((action: any) => action.payload.event.url.indexOf('tezos/wallet/tz') > 0),
         // get account data with publicKeyHash from firebase
         flatMap((action: any) =>
-            this.db.collection('account').doc(action.payload.routerState.root.firstChild.params.address).valueChanges()
+            this.db.collection('tezos_zero_wallet').doc(action.payload.routerState.root.firstChild.params.address).valueChanges()
         ),
         // dispatch action based on result
         map((data: any) => ({

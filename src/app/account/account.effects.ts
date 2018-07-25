@@ -39,7 +39,7 @@ export class AccountEffects {
         })),
         map((data: any) => {
             // update balance on firebase
-            this.accountDoc = this.db.doc('account/' + data.publicKeyHash);
+            this.accountDoc = this.db.doc('tezos_zero_wallet/' + data.publicKeyHash);
             this.accountDoc.update({ balance: data.balance })
             return data.balance
         }),

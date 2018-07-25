@@ -12,7 +12,8 @@
         <!-- TODO: use reducer instead of local variable -->
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
-      <span *ngIf="app.logo.isVisible" matTooltip="Client is connected to node! {{app.node.timestamp}}" matTooltipPosition="left" style="margin-left:10px">
+      <span *ngIf="app.logo.isVisible" matTooltip="Client is connected to node! {{app.node.timestamp}}" matTooltipPosition="left"
+        style="margin-left:10px">
         simplestaking.com</span>
 
       <!-- 
@@ -32,9 +33,13 @@
 
       <app-auth></app-auth>
 
-      <button *ngIf="!app.user.uid" mat-button routerLink="/login-via-file">
-        Sign in via file
+      <button mat-button>
+        {{app.node.network}}net
       </button>
+
+      <!-- <button *ngIf="!app.user.uid" mat-button routerLink="/login-via-file">
+        Sign in via file
+      </button> -->
 
       <button *ngIf="!app.user.uid" mat-button routerLink="/login">
         Sign in
@@ -75,7 +80,7 @@
         <a mat-list-item routerLink="/accounts">Wallet</a>
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
         <a mat-list-item routerLink="/delegates">Explorer</a>
-        <a mat-list-item routerLink="/trezor">Trezor</a> 
+        <a mat-list-item routerLink="/trezor">Trezor</a>
         <!-- <a mat-list-item routerLink="/settings">Settings</a>  -->
       </mat-nav-list>
 
