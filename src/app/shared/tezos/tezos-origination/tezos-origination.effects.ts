@@ -104,10 +104,10 @@ export class TrezorOriginationEffects {
             type: 'TEZOS_ORIGINATION_TREZOR_SUCCESS',
             payload: { ...data }
         })),
-        // catchError(error => of({
-        //     type: 'TEZOS_ORIGINATION_TREZOR_ERROR',
-        //     payload: error
-        // })),
+        catchError(error => of({
+            type: 'TEZOS_ORIGINATION_TREZOR_ERROR',
+            payload: error
+        })),
     )
 
     //TODO: !!! refactor
@@ -129,7 +129,6 @@ export class TrezorOriginationEffects {
             type: 'ACCOUNT_ADD',
             payload: {
                 name: data.state.tezosOrigination.form.name + '_' + data.action.payload.operations[0].contents[0].metadata.operation_result.originated_contracts[0].slice(-5),
-                secretKey: data.action.payload.secretKey,
                 publicKey: data.action.payload.publicKey,
                 publicKeyHash: data.action.payload.operations[0].contents[0].metadata.operation_result.originated_contracts[0],
             }
