@@ -131,6 +131,8 @@ export class TrezorOriginationEffects {
                 name: data.state.tezosOrigination.form.name + '_' + data.action.payload.operations[0].contents[0].metadata.operation_result.originated_contracts[0].slice(-5),
                 publicKey: data.action.payload.publicKey,
                 publicKeyHash: data.action.payload.operations[0].contents[0].metadata.operation_result.originated_contracts[0],
+                secretKey: data.action.payload.secretKey,
+
             }
         })),
         catchError(error => of({
