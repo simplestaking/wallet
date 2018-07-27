@@ -66,7 +66,6 @@ export class TrezorDelegationEffects {
         tap(state => {
             console.log('[TEZOS_DELEGATION] delegate ', state)
         }),
-
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_DELEGATION_SUCCESS',
@@ -78,6 +77,41 @@ export class TrezorDelegationEffects {
         })),
     )
 
+    @Effect()
+    tezosDelegationTrezor$ = this.actions$.pipe(
+        ofType('TEZOS_DELEGATION_TREZOR'),
+        // add state to effect
+        withLatestFrom(this.store, (action, state) => state.tezosDelegation),
+
+        tap(state => console.log('[TEZOS_DELEGATION] state', state.form)),
+
+        // wait until sodium is ready
+        initialize(),
+
+        // transfer tokens
+        setDelegation(state => ({
+            secretKey: state.form.secretKey,
+            publicKey: state.form.publicKey,
+            publicKeyHash: state.form.publicKeyHash,
+            to: state.form.to, // tz1boot2oCjTjUN6xDNoVmtCLRdh8cc92P1u
+            walletType: 'TREZOR_T',
+        })),
+
+        tap(state => {
+            console.log('[TEZOS_DELEGATION] delegate ', state)
+        }),
+        // dispatch action based on result
+        map((data: any) => ({
+            type: 'TEZOS_DELEGATION_TREZOR_SUCCESS',
+            payload: { ...data }
+        })),
+        catchError(error => of({
+            type: 'TEZOS_DELEGATION_TREZOR_ERROR',
+            payload: error
+        })),
+    )
+
+ 
     constructor(
         private actions$: Actions,
         private http: HttpClient,
