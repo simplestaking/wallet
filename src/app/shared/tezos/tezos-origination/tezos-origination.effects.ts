@@ -104,10 +104,10 @@ export class TrezorOriginationEffects {
             type: 'TEZOS_ORIGINATION_TREZOR_SUCCESS',
             payload: { ...data }
         })),
-        catchError(error => of({
-            type: 'TEZOS_ORIGINATION_TREZOR_ERROR',
-            payload: error
-        })),
+        // catchError(error => of({
+        //     type: 'TEZOS_ORIGINATION_TREZOR_ERROR',
+        //     payload: error
+        // })),
     )
 
     //TODO: !!! refactor

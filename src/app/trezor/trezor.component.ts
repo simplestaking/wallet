@@ -210,7 +210,7 @@ export class TrezorComponent implements OnInit {
   getXTZAddressTrezorConnect(curve) {
 
     //let xtzPath = "m/44'/1729'/0'/0'/0'"
-    let xtzPath = "m/44'/1729'/0'/0'/0'"
+    let xtzPath = "m/44'/1729'/0'/0'/2'"
 
     TrezorConnect.tezosGetAddress({
       'path': xtzPath,
@@ -231,7 +231,7 @@ export class TrezorComponent implements OnInit {
         this.store.dispatch({
           type: "ACCOUNT_ADD",
           payload: {
-            name: "trezor_1_" + (curve+1),
+            name: "trezor_2_" + (curve+1),
             // secretKey: "edsk3AmmrpjY1DpGYepn6J4XmSi2pHYAWLBNTCK9bPt7icJGm9Xhp8",
             publicKey: response.payload.public_key,
             publicKeyHash: address,
