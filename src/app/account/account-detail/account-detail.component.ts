@@ -95,7 +95,7 @@ export class AccountDetailComponent implements OnInit, AfterViewInit {
   }
 
   send(walletType) {
-    console.log('[SEND][TRANSACTION] walletType', walletType)
+    // console.log('[SEND][TRANSACTION] walletType', walletType)
 
     // TODO: move logic to effect 
     if (walletType === 'WEB') {

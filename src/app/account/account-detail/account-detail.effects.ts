@@ -18,7 +18,7 @@ export class AccountDetailEffects {
         ofType('ACCOUNT_TRANSACTION'),
         // add state to effect
         withLatestFrom(this.store, (action, state) => state.tezosTransaction),
-        tap(state=> console.log('[ACCOUNT_TRANSACTION] state' , state.form )),
+        // tap(state=> console.log('[ACCOUNT_TRANSACTION] state' , state.form )),
         // wait until sodium is ready
         initialize(),
         // transfer tokens

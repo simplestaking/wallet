@@ -32,9 +32,9 @@ export class AccountEffects {
             return state.account
         }),
         // get all accounts address
-        tap((state: any) => console.log('[balance] ids ', state.ids)),
+        // tap((state: any) => console.log('[balance] ids ', state.ids)),
         flatMap((state: any) => state.ids.map(id => ({ publicKeyHash: state.entities[id].publicKeyHash }))),
-        tap((state: any) => console.log('[balance] ', state.publicKeyHash)),
+        // tap((state: any) => console.log('[balance] ', state.publicKeyHash)),
         // map((state: any) => ({
         //     'publicKeyHash': state.publicKeyHash,
         // })),

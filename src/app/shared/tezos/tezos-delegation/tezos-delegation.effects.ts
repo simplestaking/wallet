@@ -30,7 +30,7 @@ export class TrezorDelegationEffects {
             action.payload.event.url.indexOf('tezos/wallet/KT') > 0),
         // get account data with publicKeyHash from firebase
         flatMap((action: any) => {
-            console.log('[this.currecnyNetwork]', this.currecnyNetwork)
+            // console.log('[this.currecnyNetwork]', this.currecnyNetwork)
             return this.db.collection(this.currecnyNetwork).doc(action.payload.routerState.root.firstChild.params.address).valueChanges()
         }),
         // dispatch action based on result
@@ -64,7 +64,7 @@ export class TrezorDelegationEffects {
         })),
 
         tap(state => {
-            console.log('[TEZOS_DELEGATION] delegate ', state)
+            // console.log('[TEZOS_DELEGATION] delegate ', state)
         }),
         // dispatch action based on result
         map((data: any) => ({
@@ -98,7 +98,7 @@ export class TrezorDelegationEffects {
         })),
 
         tap(state => {
-            console.log('[TEZOS_DELEGATION] delegate ', state)
+            // console.log('[TEZOS_DELEGATION] delegate ', state)
         }),
         // dispatch action based on result
         map((data: any) => ({

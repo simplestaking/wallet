@@ -80,7 +80,7 @@ export class TrezorComponent implements OnInit {
 
   // sign transaction trezor connect
   signTrezorConnect() {
-    console.log('[trezor] sign')
+    // console.log('[trezor] sign')
 
     let xtzPath = "m/44'/1729'/0'/0'/0'"
 
@@ -225,7 +225,7 @@ export class TrezorComponent implements OnInit {
         'curve': curve,
         'showOnTrezor': false,
       }).then(response => {
-        console.log('[tezosGetPublicKey]', response.payload.public_key)
+        // console.log('[tezosGetPublicKey]', response.payload.public_key)
 
         // save address to redux
         this.store.dispatch({

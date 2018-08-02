@@ -103,7 +103,7 @@ export class AccountComponent implements OnInit, OnDestroy {
         
         if (this.currency !== undefined && this.network !== undefined) {
             
-            console.log('[wallet] + ', this.currency + '_' + this.network + '_wallet')
+            // console.log('[wallet] + ', this.currency + '_' + this.network + '_wallet')
 
             // TODO: add rules to firebase
             // listen to accounts from FireBase 

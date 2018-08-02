@@ -89,19 +89,19 @@ export class DelegateComponent implements OnInit {
     }
 
     reloadDelegates() {
-        console.log('[DELEGATE] list reload')
+        // console.log('[DELEGATE] list reload')
         // get balances for each delegate 
         this.store.dispatch({ type: 'DELEGATE_LIST_RELOAD' })
     }
 
     saveDelegates() {
-        console.log('[DELEGATE] save list')
+        // console.log('[DELEGATE] save list')
         // get balances for each delegate 
         this.store.dispatch({ type: 'DELEGATE_LIST_SAVE' })
     }
 
     sortDelegatesBalance() {
-        console.log('[DELEGATE] sort delegate list')
+        // console.log('[DELEGATE] sort delegate list')
         // sort delegates balances
         this.store.dispatch({ type: 'DELEGATE_LIST_SORT' })
     }

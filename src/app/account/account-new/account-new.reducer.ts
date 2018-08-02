@@ -39,7 +39,7 @@ export function reducer(state = initialState, action) {
             let seed = bip39.mnemonicToSeed(state.form.mnemonic, state.form.passpharse).slice(0, 32);
             // keyType ed25519
             let keyPair = sodium.crypto_sign_seed_keypair(seed);
-            console.log('[keyPair]', keyPair)
+            // console.log('[keyPair]', keyPair)
             let privateKeyTemp = keyPair.privateKey.slice(0, 32)
 
             let passwordHash = sodium.crypto_pwhash_str(state.form.passpharse, sodium.crypto_pwhash_OPSLIMIT_INTERACTIVE, sodium.crypto_pwhash_MEMLIMIT_INTERACTIVE)

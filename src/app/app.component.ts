@@ -25,31 +25,30 @@ export class AppComponent {
     this.app$.subscribe(data => this.app = data)
 
 
-    try {
+    // try {
 
-      const handleTransportEvent = (event) => {
-        console.log("transport event", event)
-        TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
+    //   const handleTransportEvent = (event) => {
+    //     TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
+    //   }
 
-      }
-      TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
+    //   TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
 
-      TrezorConnect.init({
-        connectSrc: 'http://localhost:5500/dist/',
-        frame_src: 'http://localhost:5500/dist/iframe.html',
-        popup_src: 'http://localhost:5500/dist/popup.html',
+    //   TrezorConnect.init({
+    //     connectSrc: 'http://localhost:5500/dist/',
+    //     frame_src: 'http://localhost:5500/dist/iframe.html',
+    //     popup_src: 'http://localhost:5500/dist/popup.html',
 
-        // frame_src: 'https://sisyfos.trezor.io/iframe.html',
-        // popup_src: 'https://sisyfos.trezor.io/popup.html',
+    //     // frame_src: 'https://sisyfos.trezor.io/iframe.html',
+    //     // popup_src: 'https://sisyfos.trezor.io/popup.html',
 
-        popup: false,
-        webusb: false,
-        debug: true,
-      });
+    //     popup: false,
+    //     webusb: false,
+    //     debug: false,
+    //   });
 
-    } catch (error) {
-      throw error;
-    }
+    // } catch (error) {
+    //   throw error;
+    // }
 
   }
 

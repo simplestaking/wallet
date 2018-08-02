@@ -37,7 +37,7 @@ export class DelegateEffects {
         ofType('DELEGATE_LIST_SUCCESS'),
         // .withLatestFrom(this.store, (action, state) => state.account)
         // TODO: get this from state instead of action
-        tap((action) => console.log(action)),
+        // tap((action) => console.log(action)),
         flatMap((action: any) => action.payload),
         // get detail for each contract
         flatMap((publicKeyHash) =>
@@ -68,7 +68,7 @@ export class DelegateEffects {
             // listen to accounts from FireBase
             this.delegateCol = this.db.collection('delegate');
             // debugger
-            console.log(delegate)
+            // console.log(delegate)
             // add value to firestore
             return this.delegateCol.add({ ...delegate })
         }),

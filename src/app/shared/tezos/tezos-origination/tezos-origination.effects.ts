@@ -31,7 +31,7 @@ export class TrezorOriginationEffects {
             action.payload.event.url.indexOf('tezos/wallet/KT') > 0),
         // get account data with publicKeyHash from firebase
         flatMap((action: any) => {
-            console.log('[this.currecnyNetwork]', this.currecnyNetwork)
+            // console.log('[this.currecnyNetwork]', this.currecnyNetwork)
             return this.db.collection(this.currecnyNetwork).doc(action.payload.routerState.root.firstChild.params.address).valueChanges()
         }),
         // dispatch action based on result
@@ -121,9 +121,9 @@ export class TrezorOriginationEffects {
             console.log('[TEZOS_ORIGINATION_SUCCESS] originated contract: ',
                 'http://zeronet.tzscan.io/' + data.action.payload.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
         }),
-        tap((data: any) => {
-            console.log('[TEZOS_ORIGINATION_SUCCESS] data ', data)
-        }),
+        // tap((data: any) => {
+        //     console.log('[TEZOS_ORIGINATION_SUCCESS] data ', data)
+        // }),
         // dispatch action based on result
         map((data: any) => ({
             type: 'ACCOUNT_ADD',

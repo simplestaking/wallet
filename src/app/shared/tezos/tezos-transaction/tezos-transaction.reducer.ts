@@ -17,6 +17,13 @@ export function reducer(state = initialState, action) {
             })
         }
 
+        case 'TEZOS_TRANSACTION_DESTROY': {
+            return {
+                ...state,
+                form: {},
+            }
+        }
+
         default:
             return state;
     }
