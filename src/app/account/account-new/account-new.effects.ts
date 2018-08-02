@@ -17,18 +17,13 @@ export class AccountNewEffects {
     public accountCol: AngularFirestoreCollection<any>;
     public accountDoc: AngularFirestoreDocument<any>;
 
-    // test 1 
-    // soap voice defense run leg bamboo remind dawn gravity start pony develop squeeze october blue
-    // test 2 
-    // dutch tell sudden alpha uniform slide poverty miss amount whale smart often improve student regret
-
     // create new account
     @Effect()
     AccountAdd$ = this.actions$
         .ofType('ACCOUNT_ADD')
         .withLatestFrom(this.store, (action: any, state) => ({ action, state }))
         .flatMap(({ action, state }) => {
-            console.log('[ACCOUNT_ADD]', state, action)
+            // console.log('[ACCOUNT_ADD]', state, action)
             // listen to accounts from FireBase 
             this.accountCol = this.db.collection(state.app.node.currency + '_' + state.app.node.network + '_wallet');
             // add value to firestore

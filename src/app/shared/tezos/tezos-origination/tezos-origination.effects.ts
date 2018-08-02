@@ -51,7 +51,7 @@ export class TrezorOriginationEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => state.tezosOrigination),
 
-        tap(state => console.log('[TEZOS_ORIGINATION] state', state.form)),
+        //tap(state => console.log('[TEZOS_ORIGINATION] state', state.form)),
         // wait until sodium is ready
         initialize(),
 
@@ -63,7 +63,7 @@ export class TrezorOriginationEffects {
             amount: state.form.amount,
         })),
         tap(state => {
-            console.log('[TEZOS_ORIGINATION] originated contract: ',
+            console.log('[+] originated contract: ',
                 'http://zeronet.tzscan.io/' + state.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
         }),
         // dispatch action based on result
@@ -117,10 +117,10 @@ export class TrezorOriginationEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => ({ action, state })),
         //  
-        tap((data: any) => {
-            console.log('[TEZOS_ORIGINATION_SUCCESS] originated contract: ',
-                'http://zeronet.tzscan.io/' + data.action.payload.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
-        }),
+        // tap((data: any) => {
+        //     console.log('[TEZOS_ORIGINATION_SUCCESS] originated contract: ',
+        //         'http://zeronet.tzscan.io/' + data.action.payload.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
+        // }),
         // tap((data: any) => {
         //     console.log('[TEZOS_ORIGINATION_SUCCESS] data ', data)
         // }),
