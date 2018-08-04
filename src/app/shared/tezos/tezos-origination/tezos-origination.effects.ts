@@ -62,7 +62,7 @@ export class TrezorOriginationEffects {
             publicKeyHash: state.form.publicKeyHash,
             amount: state.form.amount,
         })),
-        tap(state => {
+        tap((state:any) => {
             console.log('[+] originated contract: ',
                 'http://zeronet.tzscan.io/' + state.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
         }),
@@ -95,7 +95,7 @@ export class TrezorOriginationEffects {
             amount: state.form.amount,
             walletType: 'TREZOR_T',
         })),
-        tap(state => {
+        tap((state:any) => {
             console.log('[TEZOS_ORIGINATION] originated contract: ',
                 'http://zeronet.tzscan.io/' + state.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
         }),
