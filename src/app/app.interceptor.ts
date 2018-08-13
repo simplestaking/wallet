@@ -8,20 +8,20 @@ import { MatSnackBar } from '@angular/material';
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('request', request.url)
+        // console.log('request', request.url)
         this.store.dispatch({ type: 'PROGRESSBAR_SHOW' })
 
         return next.handle(request).pipe(
 
             filter(response => response.type != 0),
             map((response:any) => {
-                console.log('response', response.url)
+                // console.log('response', response.url)
                 this.store.dispatch({ type: 'PROGRESSBAR_HIDE' })
                 return response
             }),
 
             catchError(error => {
-                console.error('response', error)
+                // console.error('response', error)
                 this.store.dispatch({ type: 'PROGRESSBAR_HIDE' })
 
                 // show error snack bar

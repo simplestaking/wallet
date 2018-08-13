@@ -49,7 +49,12 @@ export class TrezorOriginationEffects {
     tezosOrigination$ = this.actions$.pipe(
         ofType('TEZOS_ORIGINATION'),
         // add state to effect
-        withLatestFrom(this.store, (action, state) => state.tezosOrigination),
+
+        //TODO: add rpc api sate to 
+        withLatestFrom(this.store, (action, state) => {
+            console.log('[tezos][Origination]', state, action)
+            return state.tezosOrigination
+        }),
 
         //tap(state => console.log('[TEZOS_ORIGINATION] state', state.form)),
         // wait until sodium is ready
@@ -62,7 +67,7 @@ export class TrezorOriginationEffects {
             publicKeyHash: state.form.publicKeyHash,
             amount: state.form.amount,
         })),
-        tap((state:any) => {
+        tap((state: any) => {
             console.log('[+] originated contract: ',
                 'http://zeronet.tzscan.io/' + state.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
         }),
@@ -95,7 +100,7 @@ export class TrezorOriginationEffects {
             amount: state.form.amount,
             walletType: 'TREZOR_T',
         })),
-        tap((state:any) => {
+        tap((state: any) => {
             console.log('[TEZOS_ORIGINATION] originated contract: ',
                 'http://zeronet.tzscan.io/' + state.operations[0].contents[0].metadata.operation_result.originated_contracts[0])
         }),
@@ -113,7 +118,7 @@ export class TrezorOriginationEffects {
     //TODO: !!! refactor
     @Effect()
     tezosOriginationSuccess$ = this.actions$.pipe(
-        ofType('TEZOS_ORIGINATION_SUCCESS','TEZOS_ORIGINATION_TREZOR_SUCCESS'),
+        ofType('TEZOS_ORIGINATION_SUCCESS', 'TEZOS_ORIGINATION_TREZOR_SUCCESS'),
         // add state to effect
         withLatestFrom(this.store, (action, state) => ({ action, state })),
         //  

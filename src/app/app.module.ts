@@ -98,6 +98,7 @@ import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezo
 import { NgrxFormDirective } from './shared/ngrx-form.directive';
 import { LoginViaFileComponent } from './login-via-file/login-via-file.component';
 import {LoginViaFileEffects} from "./login-via-file/login-via-file.effects";
+import { TezosNodeComponent } from './shared/tezos/tezos-node/tezos-node.component';
 
 @NgModule({
   declarations: [
@@ -122,6 +123,7 @@ import {LoginViaFileEffects} from "./login-via-file/login-via-file.effects";
     TezosOriginationComponent,
     NgrxFormDirective,
     LoginViaFileComponent,
+    TezosNodeComponent,
   ],
   imports: [
     BrowserModule,

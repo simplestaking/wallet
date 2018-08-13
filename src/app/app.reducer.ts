@@ -92,7 +92,7 @@ export function reducer(state = initialState, action) {
                 }
             }
         }    
-        
+
         case 'PROGRESSBAR_HIDE': {
             return {
                 ...state,

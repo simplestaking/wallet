@@ -1,0 +1,6 @@
+<button mat-button [matMenuTriggerFor]="tezosNodeSelect">{{tezosNode.api.name}}Net</button>
+<mat-menu #tezosNodeSelect="matMenu">
+  <button mat-menu-item *ngFor="let node of tezosNode.nodes" (click)="changeNode(node)">
+    {{ node.name }}Net
+  </button>
+</mat-menu>

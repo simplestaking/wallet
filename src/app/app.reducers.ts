@@ -33,6 +33,7 @@ import * as fromAuthRegistration from './auth/registration/registration.reducer'
 import * as fromAuthForgot from './auth/forgot/forgot.reducer';
 import * as fromTransaction from './transaction/transaction.reducer';
 import * as fromLoginViaFile from './login-via-file/login-via-file.reducer';
+import * as fromTezosNode from './shared/tezos/tezos-node/tezos-node.reducer';
 import * as fromTezosTransaction from './shared/tezos/tezos-transaction/tezos-transaction.reducer';
 import * as fromTezosOrigination from './shared/tezos/tezos-origination/tezos-origination.reducer';
 import * as fromTezosDelegation from './shared/tezos/tezos-delegation/tezos-delegation.reducer';
@@ -55,6 +56,7 @@ export interface State {
   delegate: any;
   transaction: any;
   loginViaFile: any;
+  tezosNode: any;
   tezosTransaction: any;
   tezosOrigination: any;
   tezosDelegation: any;
@@ -76,6 +78,7 @@ export const reducers: ActionReducerMap<State> = {
   authRegistration: fromAuthRegistration.reducer,
   authForgot: fromAuthForgot.reducer,
   transaction: fromTransaction.reducer,
+  tezosNode: fromTezosNode.reducer,
   tezosTransaction: fromTezosTransaction.reducer,
   tezosOrigination: fromTezosOrigination.reducer,
   tezosDelegation: fromTezosDelegation.reducer,
