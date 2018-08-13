@@ -4,7 +4,7 @@ import {AngularFirestore} from "angularfire2/firestore";
 import {HttpClient} from "@angular/common/http";
 import * as sodium from 'libsodium-wrappers-sumo'
 import * as reducer from '../account/account-new/account-new.reducer'
-import { Buffer } from 'buffer/'
+import { Buffer } from 'buffer'
 import * as TransactionActions from "../transaction/transaction.actions";
 import * as LoginViaFileActions from './login-via-file.actions';
 import {Store} from "@ngrx/store";

@@ -2,7 +2,7 @@ import * as bs58check from 'bs58check'
 import * as bip39 from 'bip39'
 import * as sodium from 'libsodium-wrappers-sumo'
 import * as pbkdf2 from 'pbkdf2'
-import { Buffer } from 'buffer/'
+import { Buffer } from 'buffer'
 
 export const prefix = {
     tz1: new Uint8Array([6, 161, 159]),
@@ -67,7 +67,8 @@ export function reducer(state = initialState, action) {
 
 // helper function for bs58 encode 
 export function o(payload, prefix) {
-    let n = new Uint8Array(prefix.length + payload.length);
+    let n: any
+    n = new Uint8Array(prefix.length + payload.length);
     n.set(prefix);
     n.set(payload, prefix.length);
     return bs58check.encode(new Buffer(n, 'hex'));
