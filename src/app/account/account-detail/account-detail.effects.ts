@@ -6,7 +6,7 @@ import { Action, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { map, tap, withLatestFrom, flatMap, catchError, defaultIfEmpty } from 'rxjs/operators';
 
-import { initialize, transfer } from '../../../../tezos-wallet'
+import { initializeWallet, transfer } from '../../../../tezos-wallet'
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -20,7 +20,9 @@ export class AccountDetailEffects {
         withLatestFrom(this.store, (action, state) => state.tezosTransaction),
         // tap(state=> console.log('[ACCOUNT_TRANSACTION] state' , state.form )),
         // wait until sodium is ready
-        initialize(),
+        initializeWallet(state => ({
+            node: state.tezosNode.api,
+        })),
         // transfer tokens
         transfer(state => ({
             secretKey: state.form.secretKey,
@@ -48,15 +50,18 @@ export class AccountDetailEffects {
     AccountTransactionTrezor$ = this.actions$.pipe(
         ofType('ACCOUNT_TRANSACTION_TREZOR'),
         // add state to effect
-        withLatestFrom(this.store, (action, state) => state.tezosTransaction),
+        withLatestFrom(this.store, (action, state) => state),
         // wait until sodium is ready
-        initialize(),
+        initializeWallet(state => ({
+            api: state.tezosNode.api,
+        })),
+
         // transfer tokens
         transfer(state => ({
-            publicKey: state.form.publicKey,
-            publicKeyHash: state.form.publicKeyHash,
-            to: state.form.to,
-            amount: state.form.amount,
+            publicKey: state.tezosTransaction.form.publicKey,
+            publicKeyHash: state.tezosTransaction.form.publicKeyHash,
+            to: state.tezosTransaction.form.to,
+            amount: state.tezosTransaction.form.amount,
             walletType: 'TREZOR_T',
         })),
 

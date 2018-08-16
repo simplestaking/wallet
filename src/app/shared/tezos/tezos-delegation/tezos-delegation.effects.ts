@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { withLatestFrom, flatMap, filter, map, tap, catchError } from 'rxjs/operators';
 
-import { initialize, setDelegation } from '../../../../../tezos-wallet'
+import { initializeWallet, setDelegation } from '../../../../../tezos-wallet'
 
 import { AngularFirestore } from 'angularfire2/firestore';
 
@@ -53,7 +53,9 @@ export class TrezorDelegationEffects {
         tap(state => console.log('[TEZOS_DELEGATION] state', state.form)),
 
         // wait until sodium is ready
-        initialize(),
+        initializeWallet(state => ({
+            node: state.tezosNode.api,
+        })),
 
         // transfer tokens
         setDelegation(state => ({
@@ -86,7 +88,9 @@ export class TrezorDelegationEffects {
         tap(state => console.log('[TEZOS_DELEGATION] state', state.form)),
 
         // wait until sodium is ready
-        initialize(),
+        initializeWallet(state => ({
+            node: state.tezosNode.api,
+        })),
 
         // transfer tokens
         setDelegation(state => ({
@@ -111,7 +115,7 @@ export class TrezorDelegationEffects {
         })),
     )
 
- 
+
     constructor(
         private actions$: Actions,
         private http: HttpClient,
