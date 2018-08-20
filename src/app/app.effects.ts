@@ -9,7 +9,8 @@ import { environment } from '../environments/environment';
 @Injectable()
 export class AllEffects {
 
-    public api = environment.tezos.betanet
+   // public api = environment.tezos.betanet
+   public api = environment.tezos.zeronet
 
     @Effect()
     HeartbeatEffects$ = this.actions$
