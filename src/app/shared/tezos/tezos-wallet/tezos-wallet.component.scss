@@ -1,0 +1,9 @@
+.tezos-wallet {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 0px 0px 0px;
+}
+  
+.tezos-wallet > * {
+    width: 100%;
+}

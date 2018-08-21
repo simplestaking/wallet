@@ -99,6 +99,7 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
 import { LoginViaFileComponent } from './login-via-file/login-via-file.component';
 import {LoginViaFileEffects} from "./login-via-file/login-via-file.effects";
 import { TezosNodeComponent } from './shared/tezos/tezos-node/tezos-node.component';
+import { TezosWalletComponent } from './shared/tezos/tezos-wallet/tezos-wallet.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +125,7 @@ import { TezosNodeComponent } from './shared/tezos/tezos-node/tezos-node.compone
     NgrxFormDirective,
     LoginViaFileComponent,
     TezosNodeComponent,
+    TezosWalletComponent,
   ],
   imports: [
     BrowserModule,
