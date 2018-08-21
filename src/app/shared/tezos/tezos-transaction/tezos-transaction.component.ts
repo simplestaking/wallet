@@ -74,14 +74,14 @@ export class TezosTransactionComponent implements OnInit, OnDestroy {
     // TODO: move logic to effect 
     if (walletType === 'WEB') {
       this.store.dispatch({
-        type: "ACCOUNT_TRANSACTION",
+        type: "TEZOS_TRANSACTION",
         walletType: walletType
       })
     }
 
     if (walletType === 'TREZOR_T') {
       this.store.dispatch({
-        type: "ACCOUNT_TRANSACTION_TREZOR",
+        type: "TEZOS_TRANSACTION_TREZOR",
         walletType: walletType
       })
     }

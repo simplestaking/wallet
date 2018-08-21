@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { withLatestFrom, flatMap, filter, map, tap, catchError } from 'rxjs/operators';
@@ -46,7 +47,7 @@ export class TrezorTransactionEffects {
 
 
     @Effect()
-    tezosOrigination$ = this.actions$.pipe(
+    tezosTransaction$ = this.actions$.pipe(
         ofType('TEZOS_TRANSACTION'),
 
         // add state to effect
@@ -57,9 +58,9 @@ export class TrezorTransactionEffects {
 
             // wait until sodium is ready
             initializeWallet(stateWallet => ({
-                secretKey: state.tezosOrigination.form.secretKey,
-                publicKey: state.tezosOrigination.form.publicKey,
-                publicKeyHash: state.tezosOrigination.form.publicKeyHash,
+                secretKey: state.tezosTransaction.form.secretKey,
+                publicKey: state.tezosTransaction.form.publicKey,
+                publicKeyHash: state.tezosTransaction.form.publicKeyHash,
                 // set tezos node
                 node: state.tezosNode.api,
             })),
@@ -68,24 +69,27 @@ export class TrezorTransactionEffects {
             transaction(stateWallet => {
                 console.warn('[transaction]', state, stateWallet)
                 return {
-                    amount: state.tezosOrigination.form.amount,
+                    to: state.tezosTransaction.form.to,
+                    amount: state.tezosTransaction.form.amount,
                 }
             }),
         )),
-
-        tap((state: any) => {
-            console.log('[+] originated contract: ',
-                'http://zeronet.tzscan.io/' + state.preapply[0].contents[0].metadata.operation_result.originated_contracts[0])
-        }),
         // dispatch action based on result
         map((data: any) => ({
-            type: 'TEZOS_ORIGINATION_SUCCESS',
+            type: 'TEZOS_TRANSACTION_SUCCESS',
             payload: { ...data }
         })),
-        // catchError(error => of({
-        //     type: 'TEZOS_ORIGINATION_ERROR',
-        //     payload: error
-        // })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TRANSACTION_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
+        // redirect back to accounts list
+        tap(() => this.router.navigate(['/tezos/wallet']))
     )
 
     constructor(
@@ -93,6 +97,7 @@ export class TrezorTransactionEffects {
         private http: HttpClient,
         private store: Store<any>,
         private db: AngularFirestore,
+        private router: Router
     ) { }
 
 }

@@ -159,8 +159,9 @@ export class AccountComponent implements OnInit, OnDestroy {
     }
 
     balance() {
+        console.log('[balance] wtf')
         // get balance in periodic intervals
-        this.store.dispatch({ type: 'ACCOUNT_BALANCE' })
+        this.store.dispatch({ type: 'TEZOS_BALANCE' })
     }
 
 }

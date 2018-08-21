@@ -82,10 +82,16 @@ export class TrezorOriginationEffects {
             type: 'TEZOS_ORIGINATION_SUCCESS',
             payload: { ...data }
         })),
-        // catchError(error => of({
-        //     type: 'TEZOS_ORIGINATION_ERROR',
-        //     payload: error
-        // })),
+
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_ORIGINATION_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
     )
 
     @Effect()

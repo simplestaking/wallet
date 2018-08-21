@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 export class AllEffects {
 
    // public api = environment.tezos.betanet
-   public api = environment.tezos.zeronet
+   public api = environment.tezos.zeronet   
 
     @Effect()
     HeartbeatEffects$ = this.actions$
@@ -33,13 +33,6 @@ export class AllEffects {
                 ),
             ),
     )
-
-    // get account balance    
-    // @Effect()
-    // HeartbeatBalanceEffects$ = this.actions$
-    //     .ofType('HEARTBEAT_SUCCESS', 'ACCOUNT_TRANSACTION_SUCCESS').pipe(
-    //         map(response => ({ type: 'ACCOUNT_BALANCE' }))
-    //     )
 
     @Effect()
     Init$ = defer(() => of({ type: 'HEARTBEAT' })

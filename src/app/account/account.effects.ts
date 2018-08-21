@@ -23,7 +23,7 @@ export class AccountEffects {
     // check balance for each account
     @Effect()
     AccountBalance$ = this.actions$.pipe(
-        ofType('ACCOUNT_BALANCE'),
+        ofType('TEZOS_BALANCE'),
         // get state from store
         withLatestFrom(this.store, (action, state: any) => state),
 
@@ -40,7 +40,7 @@ export class AccountEffects {
         }))),
 
         //     
-        flatMap((state:any) => of([]).pipe(
+        flatMap((state: any) => of([]).pipe(
 
             // initialie 
             initializeWallet(stateWallet => ({
@@ -60,17 +60,24 @@ export class AccountEffects {
             return state.getWallet.balance
         }),
 
-        map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
+        map(action => ({ type: 'TEZOS_BALANCE_SUCCESS', payload: action })),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
-                type: 'ACCOUNT_BALANCE_ERROR',
+                type: 'TEZOS_BALANCE_ERROR',
                 payload: error.message,
             });
             return caught;
         }),
 
     )
+
+    // get wallet balance    
+    @Effect()
+    HeartbeatBalanceEffects$ = this.actions$
+        .ofType('TEZOS_TRANSACTION_SUCCESS', 'TEZOS_ORIGINATION_SUCCESS').pipe(
+            map(response => ({ type: 'TEZOS_BALANCE' }))
+        )
 
     constructor(
         private actions$: Actions,

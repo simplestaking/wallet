@@ -51,6 +51,7 @@ export class TrezorDelegationEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
         tap(state => console.log('[TEZOS_DELEGATION] state', state)),
+        
         flatMap(state => of([]).pipe(
 
             // walletInitialize
