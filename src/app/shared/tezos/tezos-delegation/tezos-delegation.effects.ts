@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { withLatestFrom, flatMap, filter, map, tap, catchError } from 'rxjs/operators';
@@ -48,35 +49,42 @@ export class TrezorDelegationEffects {
     tezosDelegation$ = this.actions$.pipe(
         ofType('TEZOS_DELEGATION'),
         // add state to effect
-        withLatestFrom(this.store, (action, state) => state.tezosDelegation),
+        withLatestFrom(this.store, (action, state) => state),
+        tap(state => console.log('[TEZOS_DELEGATION] state', state)),
+        flatMap(state => of([]).pipe(
 
-        tap(state => console.log('[TEZOS_DELEGATION] state', state.form)),
+            // walletInitialize
+            // wait until sodium is ready
+            initializeWallet(stateWallet => ({
+                secretKey: state.tezosDelegation.form.secretKey,
+                publicKey: state.tezosDelegation.form.publicKey,
+                publicKeyHash: state.tezosDelegation.form.publicKeyHash,
+                node: state.tezosNode.api,
+            })),
 
-        // wait until sodium is ready
-        initializeWallet(state => ({
-            node: state.tezosNode.api,
-        })),
+            // walletDelegationSet
+            setDelegation(stateWallet => ({
+                to: state.tezosDelegation.form.to, // tz1boot2oCjTjUN6xDNoVmtCLRdh8cc92P1u
+            })),
 
-        // transfer tokens
-        setDelegation(state => ({
-            secretKey: state.form.secretKey,
-            publicKey: state.form.publicKey,
-            publicKeyHash: state.form.publicKeyHash,
-            to: state.form.to, // tz1boot2oCjTjUN6xDNoVmtCLRdh8cc92P1u
-        })),
-
-        tap(state => {
-            // console.log('[TEZOS_DELEGATION] delegate ', state)
-        }),
+        )),
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_DELEGATION_SUCCESS',
             payload: { ...data }
         })),
-        catchError(error => of({
-            type: 'TEZOS_DELEGATION_ERROR',
-            payload: error
-        })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_DELEGATION_ERROR',
+                payload: error.message,
+
+            });
+            return caught;
+        }),
+
+        // redirect back to accounts list
+        tap(() => this.router.navigate(['/tezos/wallet']))
     )
 
     @Effect()
@@ -119,6 +127,7 @@ export class TrezorDelegationEffects {
     constructor(
         private actions$: Actions,
         private http: HttpClient,
+        private router: Router,
         private store: Store<any>,
         private db: AngularFirestore,
     ) { }
