@@ -61,8 +61,15 @@ export class AccountEffects {
         }),
 
         map(action => ({ type: 'ACCOUNT_BALANCE_SUCCESS', payload: action })),
-        catchError(error => of({ type: 'ACCOUNT_BALANCE_ERROR' })),
-   
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'ACCOUNT_BALANCE_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
     )
 
     constructor(

@@ -78,7 +78,6 @@ export class TrezorDelegationEffects {
             this.store.dispatch({
                 type: 'TEZOS_DELEGATION_ERROR',
                 payload: error.message,
-
             });
             return caught;
         }),
