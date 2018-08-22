@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AngularFirestore} from "angularfire2/firestore";
 import {HttpClient} from "@angular/common/http";
-import * as sodium from 'libsodium-wrappers-sumo'
+// import * as sodium from 'libsodium-wrappers-sumo'
 import * as reducer from '../account/account-new/account-new.reducer'
 import { Buffer } from 'buffer'
 import * as TransactionActions from "../transaction/transaction.actions";

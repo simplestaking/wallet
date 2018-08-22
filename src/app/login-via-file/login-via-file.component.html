@@ -22,7 +22,7 @@
         <br>
 
         <mat-form-field>
-          <input matInput #input placeholder="Password" formControlName="password" type="password" (keyup.enter)="signIn()" />
+          <input matInput #input placeholder="Password" formControlName="password" type="password" />
           <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
           <mat-error>
             Password is required

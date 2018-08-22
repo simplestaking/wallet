@@ -12,27 +12,27 @@ export class AllEffects {
    // public api = environment.tezos.betanet
    public api = environment.tezos.zeronet   
 
-    @Effect()
-    HeartbeatEffects$ = this.actions$
-        .ofType('HEARTBEAT').pipe(
-            switchMap(() =>
-                // run heart beat each second
-                timer(0, 60000).pipe(
-                    switchMap(() =>
-                        this.http.get(this.api + 'chains/main/blocks/head/header').pipe(
-                            map(response => ({
-                                type: 'HEARTBEAT_SUCCESS',
-                                payload: response
-                            })),
-                            catchError(error => of({
-                                type: 'HEARTBEAT_ERROR',
-                                payload: error
-                            })),
-                        )
-                    ),
-                ),
-            ),
-    )
+    // @Effect()
+    // HeartbeatEffects$ = this.actions$
+    //     .ofType('HEARTBEAT').pipe(
+    //         switchMap(() =>
+    //             // run heart beat each second
+    //             timer(0, 60000).pipe(
+    //                 switchMap(() =>
+    //                     this.http.get(this.api + 'chains/main/blocks/head/header').pipe(
+    //                         map(response => ({
+    //                             type: 'HEARTBEAT_SUCCESS',
+    //                             payload: response
+    //                         })),
+    //                         catchError(error => of({
+    //                             type: 'HEARTBEAT_ERROR',
+    //                             payload: error
+    //                         })),
+    //                     )
+    //                 ),
+    //             ),
+    //         ),
+    // )
 
     @Effect()
     Init$ = defer(() => of({ type: 'HEARTBEAT' })

@@ -5,14 +5,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
-    "deploy": "ng build --prod & firebase deploy",
+    "build": "ng build --prod --aot --build-optimizer",
+    "deploy": "ng build --prod --build-optimizer & firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "be": "node ./be/deploy.js",
     "postinstall": "node ./patch.js",
-    "bundle-report": "webpack-bundle-analyzer dist/stats.json"
+    "bundle-report": "ng build --prod --aot --build-optimizer --stats-json & webpack-bundle-analyzer dist/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -33,18 +33,10 @@
     "@ngrx/router-store": "^6.0.1",
     "@ngrx/store": "^6.0.0-beta.3",
     "@ngrx/store-devtools": "^6.0.0-beta.3",
-    "angularfire2": "5.0.0-rc.6.0",
     "babel-polyfill": "^6.26.0",
-    "bip39": "^2.4.0",
-    "bs58check": "^2.0.2",
-    "buffer": "^5.2.0",
     "core-js": "^2.5.6",
-    "firebase": "4.12.1",
-    "libsodium": "^0.7.3",
-    "libsodium-wrappers": "^0.7.3",
     "ngrx-store-freeze": "^0.2.1",
-    "start": "^5.1.0",
-    "trezor-link": "^1.5.2"
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.8",
@@ -64,7 +56,6 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "^1.1.2",
     "karma-jasmine-html-reporter": "^1.1.0",
-    "libsodium-wrappers-sumo": "^0.7.3",
     "protractor": "^5.3.2",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.2.2",

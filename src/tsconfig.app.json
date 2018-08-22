@@ -8,6 +8,20 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "app/shared/**/*.ts",
+    "app/shared/ngrx-form.directive.ts",
+    "app/auth/*.ts",
+    "app/auth/**/*.ts",
+    "app/trezor/**/*.ts",
+    "app/account/**/*.ts",
+    "app/account/account-new/account-new.reducer.ts",
+    "app/account/account.component.ts",
+    "app/transaction/**/*.ts",
+    "app/delegate/**/*.ts",
+    "app/day-chart/**/*.ts",
+    "app/login-via-file/**/*.ts",
+    "app/service/**/*.ts",
+    "../../tezos-wallet/**"
   ]
 }
