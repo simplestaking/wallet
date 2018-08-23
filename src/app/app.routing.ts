@@ -15,6 +15,7 @@ import { RouterStateSerializer } from '@ngrx/router-store';
 
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
+import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/tezos-hardware-wallet.component';
 // import { LoginViaFileComponent } from "./login-via-file/login-via-file.component";
 
 export const AppRouting: Routes = [
@@ -34,8 +35,9 @@ export const AppRouting: Routes = [
   // landing pages
   { path: 'tezos-baking', component: TezosBakingComponent },
   { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
+  { path: '', component: TezosHardwareWalletComponent },
   
-  { path: '', redirectTo: '/tezos/wallet', pathMatch: 'full' },
+  //{ path: '', redirectTo: '/tezos/wallet', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }
 
 ];

@@ -10,9 +10,9 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 
-// import { AngularFireModule } from 'angularfire2';
-// import { AngularFireAuthModule } from 'angularfire2/auth';
-// import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { environment } from '../environments/environment';
 
@@ -39,6 +39,8 @@ import { AllEffects } from './app.effects'
 
 // import { LoginViaFileEffects } from "./login-via-file/login-via-file.effects";
 // import { TransactionEffects } from "./transaction/transaction.effects";
+
+import { TezosHardwareWalletEffects } from "./landing/tezos-hardware-wallet/tezos-hardware-wallet.effects";
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -91,6 +93,7 @@ import {
 import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
+import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/tezos-hardware-wallet.component';
 
 // import { TezosDelegationComponent } from './shared/tezos/tezos-delegation/tezos-delegation.component';
 // import { TezosTransactionComponent } from './shared/tezos/tezos-transaction/tezos-transaction.component';
@@ -99,7 +102,7 @@ import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.compon
 // import { TezosNodeComponent } from './shared/tezos/tezos-node/tezos-node.component';
 // import { TezosWalletComponent } from './shared/tezos/tezos-wallet/tezos-wallet.component';
 
-// import { NgrxFormDirective } from './shared/ngrx-form.directive';
+import { NgrxFormDirective } from './shared/ngrx-form.directive';
 
 // import { LoginViaFileComponent } from './login-via-file/login-via-file.component';
 // import { TransactionComponent } from './transaction/transaction.component';
@@ -128,6 +131,7 @@ import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.compon
     LandingComponent,
     TezosPaperWalletComponent,
     TezosBakingComponent,
+    TezosHardwareWalletComponent,
     
     // TezosDelegationComponent,
     // TezosTransactionComponent,
@@ -135,7 +139,7 @@ import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.compon
     // TezosOriginationComponent,
     // TezosNodeComponent,
     // TezosWalletComponent,
-    // NgrxFormDirective,
+    NgrxFormDirective,
 
     //TransactionComponent,
     //DayChartComponent,
@@ -178,16 +182,18 @@ import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.compon
       // TrezorTransactionEffects,
       // TrezorOriginationEffects,
       // TrezorDelegationEffects
+
+      TezosHardwareWalletEffects
     ]),
 
     // https://github.com/zalmoxisus/redux-devtools-extension
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 20 }) : [],
 
     // Cloud firestore
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFirestoreModule,
-    // AngularFireAuthModule,
-    // AngularFirestoreModule.enablePersistence(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule.enablePersistence(),
 
     MatAutocompleteModule,
     MatButtonModule,

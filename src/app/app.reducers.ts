@@ -37,6 +37,7 @@ import * as fromTezosNode from './shared/tezos/tezos-node/tezos-node.reducer';
 import * as fromTezosTransaction from './shared/tezos/tezos-transaction/tezos-transaction.reducer';
 import * as fromTezosOrigination from './shared/tezos/tezos-origination/tezos-origination.reducer';
 import * as fromTezosDelegation from './shared/tezos/tezos-delegation/tezos-delegation.reducer';
+import * as fromLandingTezosHardwareWallet from './landing/tezos-hardware-wallet/tezos-hardware-wallet.reducer';
 
 // meta reducert for dynamic forms
 import * as fromNgrxForm from './shared/ngrx-form.reducer';
@@ -60,6 +61,7 @@ export interface State {
   tezosTransaction: any;
   tezosOrigination: any;
   tezosDelegation: any;
+  landingTezosHardwareWallet: any;
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
@@ -82,6 +84,7 @@ export const reducers: ActionReducerMap<State> = {
   tezosTransaction: fromTezosTransaction.reducer,
   tezosOrigination: fromTezosOrigination.reducer,
   tezosDelegation: fromTezosDelegation.reducer,
+  landingTezosHardwareWallet: fromLandingTezosHardwareWallet.reducer,
   loginViaFile: fromLoginViaFile.reducer,
   routerReducer: fromRouter.routerReducer,
 };

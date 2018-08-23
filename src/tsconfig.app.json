@@ -10,7 +10,6 @@
     "test.ts",
     "**/*.spec.ts",
     "app/shared/**/*.ts",
-    "app/shared/ngrx-form.directive.ts",
     "app/auth/*.ts",
     "app/auth/**/*.ts",
     "app/trezor/**/*.ts",
