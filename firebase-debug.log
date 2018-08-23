@@ -1,0 +1,54 @@
+[debug] [2018-08-23T23:37:54.878Z] ----------------------------------------------------------------------
+[debug] [2018-08-23T23:37:54.882Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\juchuchu\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-08-23T23:37:54.883Z] CLI Version:   4.2.0
+[debug] [2018-08-23T23:37:54.884Z] Platform:      win32
+[debug] [2018-08-23T23:37:54.884Z] Node Version:  v10.8.0
+[debug] [2018-08-23T23:37:54.887Z] Time:          Fri Aug 24 2018 01:37:54 GMT+0200 (Central European Summer Time)
+[debug] [2018-08-23T23:37:54.887Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-08-23T23:37:54.927Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-08-23T23:37:54.929Z] > authorizing via signed-in user
+[debug] [2018-08-23T23:37:54.934Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-08-23T23:37:54.935Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-08-23T23:37:55.203Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-23T23:37:55.216Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/simplestakingcom-58d45  
+ 
+[debug] [2018-08-23T23:37:55.964Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'simplestakingcom-58d45'...
+[info] 
+[info] i  deploying firestore, functions, hosting
+[info] i  firestore: checking firestore.rules for compilation errors...
+[debug] [2018-08-23T23:38:02.470Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/simplestakingcom-58d45:test  
+
+[debug] [2018-08-23T23:38:02.728Z] <<< HTTP RESPONSE 200
+[info] +  firestore: rules file firestore.rules compiled successfully
+[debug] [2018-08-23T23:38:02.733Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "env": "firebase functions:config:set sendgrid.key='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'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "firebase-admin": "^6.0.0",
+    "firebase-functions": "^2.0.5",
+    "mandrill-api": "^1.0.45"
+  }
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2018-08-23T23:38:02.736Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/simplestakingcom-58d45?view=CONSUMER_VIEW  
+ 
+[debug] [2018-08-23T23:38:02.737Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/simplestakingcom-58d45?view=CONSUMER_VIEW  
+ 
+[debug] [2018-08-23T23:38:04.128Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-23T23:38:04.136Z] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] [2018-08-23T23:38:04.137Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/simplestakingcom-58d45  
+ 

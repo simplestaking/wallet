@@ -42,7 +42,9 @@ import { AllEffects } from './app.effects'
 
 import { TezosHardwareWalletEffects } from "./landing/tezos-hardware-wallet/tezos-hardware-wallet.effects";
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+// import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -149,7 +151,10 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
     BrowserModule,
     HttpModule,
     HttpClientModule,
-    NoopAnimationsModule,
+
+    // NoopAnimationsModule,
+    BrowserAnimationsModule,
+    
     ReactiveFormsModule,
 
     RouterModule.forRoot(AppRouting, {
