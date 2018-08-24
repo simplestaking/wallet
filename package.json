@@ -33,8 +33,10 @@
     "@ngrx/router-store": "^6.0.1",
     "@ngrx/store": "^6.0.0-beta.3",
     "@ngrx/store-devtools": "^6.0.0-beta.3",
+    "angularfire2": "^5.0.0-rc.12",
     "babel-polyfill": "^6.26.0",
     "core-js": "^2.5.6",
+    "firebase": "^5.4.1",
     "ngrx-store-freeze": "^0.2.1",
     "start": "^5.1.0"
   },

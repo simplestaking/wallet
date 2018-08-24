@@ -9,6 +9,7 @@ export function form(reducer: Function) {
             case 'FORM_VALUE_CHANGES': {
                 return Object.assign({}, nextState, {
                     [action.payload.path]: {
+                        ...nextState[action.payload.path],
                         form: {
                             ...nextState[action.payload.path].form,
                             ...action.payload.value

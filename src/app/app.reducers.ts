@@ -105,8 +105,8 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, fromNgrxForm.form, storeFreeze]
-  : [];
+  ? [fromNgrxForm.form, logger, storeFreeze]
+  : [fromNgrxForm.form];
 
 
 
