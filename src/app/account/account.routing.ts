@@ -5,11 +5,11 @@ import { Routes } from '@angular/router'
 // import { RegistrationComponent } from './auth/registration/registration.component';
 // import { ForgotComponent } from './auth/forgot/forgot.component';
 
-import { AccountLazyComponent } from './account-lazy/account-lazy.component';
+//import { AccountLazyComponent } from './account-lazy/account-lazy.component';
 
-// import { AccountComponent } from 'app/account/account.component';
+import { AccountComponent } from 'app/account/account.component';
 // import { AccountNewComponent } from './account/account-new/account-new.component';
-// import { AccountDetailComponent } from './account/account-detail/account-detail.component';
+// import { AccountDetailComponent } from 'app/account/account-detail/account-detail.component';
 
 // import { DelegateComponent } from './delegate/delegate.component';
 // import { TrezorComponent } from './trezor/trezor.component';
@@ -28,7 +28,7 @@ export const AccountRouting: Routes = [
   // { path: 'forgot', component: ForgotComponent },
 
     
-  { path: '', component: AccountLazyComponent }
+  { path: '', component: AccountComponent }
   //{ path: '**', component: PageNotFoundComponent }
 
 ];
