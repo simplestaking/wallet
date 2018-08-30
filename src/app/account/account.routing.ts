@@ -9,10 +9,10 @@ import { Routes } from '@angular/router'
 
 import { AccountComponent } from 'app/account/account.component';
 // import { AccountNewComponent } from './account/account-new/account-new.component';
-// import { AccountDetailComponent } from 'app/account/account-detail/account-detail.component';
+import { AccountDetailComponent } from 'app/account/account-detail/account-detail.component';
 
-// import { DelegateComponent } from './delegate/delegate.component';
-// import { TrezorComponent } from './trezor/trezor.component';
+// import { DelegateComponent } from 'app/delegate/delegate.component';
+// import { TrezorComponent } from 'app/trezor/trezor.component';
 
 
 export const AccountRouting: Routes = [
@@ -28,7 +28,8 @@ export const AccountRouting: Routes = [
   // { path: 'forgot', component: ForgotComponent },
 
     
-  { path: '', component: AccountComponent }
+  { path: '', component: AccountComponent },
+  { path: ':address', component: AccountDetailComponent },
   //{ path: '**', component: PageNotFoundComponent }
 
 ];
