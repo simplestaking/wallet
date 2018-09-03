@@ -1,7 +1,8 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store'
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms'
 
@@ -34,9 +35,9 @@ export class AccountDetailComponent implements OnInit, AfterViewInit {
     this.id = this.route.snapshot.params['address'];
   }
 
-    ngAfterViewInit() {
-        this.cd.detectChanges();
-    }
+  ngAfterViewInit() {
+    this.cd.detectChanges();
+  }
 
   ngOnInit() {
 
@@ -69,10 +70,10 @@ export class AccountDetailComponent implements OnInit, AfterViewInit {
     this.account$.subscribe(state => {
       this.account = state
       // create account list 
-      this.accountDetailTo = Observable
-        .of(this.account.ids
-          .filter(id => id !== this.id)
-          .map(id => this.account.entities[id])
+      this.accountDetailTo =
+        of(this.account.ids).pipe(
+          filter(id => id !== this.id),
+          map(id => this.account.entities[id]),
         )
     })
 
