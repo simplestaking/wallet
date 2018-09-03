@@ -31,11 +31,6 @@ import { AllEffects } from './app.effects'
 // import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 
 // import { DelegateEffects } from './delegate/delegate.effects'
-// import { TrezorEffects } from './trezor/trezor.effects'
-
-// import { TrezorTransactionEffects } from './shared/tezos/tezos-transaction/tezos-transaction.effects'
-// import { TrezorOriginationEffects } from './shared/tezos/tezos-origination/tezos-origination.effects'
-// import { TrezorDelegationEffects } from './shared/tezos/tezos-delegation/tezos-delegation.effects'
 
 // import { LoginViaFileEffects } from "./login-via-file/login-via-file.effects";
 // import { TransactionEffects } from "./transaction/transaction.effects";
@@ -141,7 +136,8 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
     // TezosOriginationComponent,
     // TezosNodeComponent,
     // TezosWalletComponent,
-    NgrxFormDirective,
+    
+    // NgrxFormDirective,
 
     //TransactionComponent,
     //DayChartComponent,

@@ -23,6 +23,8 @@ export class NgrxFormDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    console.log('[ngrxForm]', this.path)
+
     // listen & dispatch action when input value changes  
     this.formGroupDirective.valueChanges
       .pipe(takeUntil(this.destroy$))

@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 import { AccountRouting } from './account.routing';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+
+import { NgrxFormDirective } from 'app/shared/ngrx-form.directive';
 
 import { AccountComponent } from 'app/account/account.component';
 import { AccountNewComponent } from 'app/account/account-new/account-new.component';
 import { AccountDetailComponent } from 'app/account/account-detail/account-detail.component';
-
 
 import { TezosDelegationComponent } from 'app/shared/tezos/tezos-delegation/tezos-delegation.component';
 import { TezosTransactionComponent } from 'app/shared/tezos/tezos-transaction/tezos-transaction.component';
@@ -16,6 +18,12 @@ import { TezosActivationComponent } from 'app/shared/tezos/tezos-activation/tezo
 import { TezosOriginationComponent } from 'app/shared/tezos/tezos-origination/tezos-origination.component';
 import { TezosNodeComponent } from 'app/shared/tezos/tezos-node/tezos-node.component';
 import { TezosWalletComponent } from 'app/shared/tezos/tezos-wallet/tezos-wallet.component';
+
+//import { TrezorEffects } from 'app/trezor/trezor.effects'
+
+import { TrezorTransactionEffects } from 'app/shared/tezos/tezos-transaction/tezos-transaction.effects'
+import { TrezorOriginationEffects } from 'app/shared/tezos/tezos-origination/tezos-origination.effects'
+import { TrezorDelegationEffects } from 'app/shared/tezos/tezos-delegation/tezos-delegation.effects'
 
 
 import {
@@ -55,6 +63,12 @@ import {
   imports: [
     CommonModule,
     RouterModule.forChild(AccountRouting),
+
+    EffectsModule.forFeature([
+      TrezorTransactionEffects,
+      TrezorOriginationEffects,
+      TrezorDelegationEffects
+    ]),
 
     ReactiveFormsModule,
 
@@ -122,8 +136,12 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
+
   ],
   declarations: [
+
+    NgrxFormDirective,
+
     AccountComponent,
     AccountNewComponent,
     AccountDetailComponent,

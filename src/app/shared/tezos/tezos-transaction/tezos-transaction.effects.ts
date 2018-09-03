@@ -31,18 +31,23 @@ export class TrezorTransactionEffects {
             action.payload.event.url.indexOf('tezos/wallet/KT') > 0),
         // get account data with publicKeyHash from firebase
         flatMap((action: any) => {
-            // console.log('[this.currecnyNetwork]', this.currecnyNetwork)
-            return this.db.collection(this.currecnyNetwork).doc(action.payload.routerState.root.firstChild.params.address).valueChanges()
+            console.log('[this.currecnyNetwork]', this.currecnyNetwork, action.payload)
+            return this.db.collection(this.currecnyNetwork).doc(action.payload.routerState.root.children[0].firstChild.params.address).valueChanges()
         }),
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_TRANSACTION_INIT_SUCCESS',
             payload: { ...data }
         })),
-        catchError(error => of({
-            type: 'TEZOS_TRANSACTION_INIT_ERROR',
-            payload: error
-        })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TRANSACTION_INIT_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
     )
 
 
