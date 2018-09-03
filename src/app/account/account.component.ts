@@ -47,10 +47,14 @@ export class AccountComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         // listen to changes from redux
-        this.account$ = this.store.select('account')
-
-        // set data source for table  
-        this.accountTableDataSource = new AccountDataSource(this.account$);
+        // get data for table 
+        this.store.select('account').pipe(
+            takeUntil(this.onDestroy$)
+        )
+            .subscribe(data => {
+                this.accountTableDataSource =
+                    data.ids.map(id => ({ id, ...data.entities[id] }))
+            })
 
         // get user uid
         this.store.select('app', 'user', 'uid').pipe(
@@ -100,9 +104,9 @@ export class AccountComponent implements OnInit, OnDestroy {
             this.accountColUnsubscribe.unsubscribe()
         }
 
-        
+
         if (this.currency !== undefined && this.network !== undefined) {
-            
+
             // console.log('[wallet] + ', this.currency + '_' + this.network + '_wallet')
 
             // TODO: add rules to firebase
@@ -159,25 +163,8 @@ export class AccountComponent implements OnInit, OnDestroy {
     }
 
     balance() {
-        console.log('[balance] wtf')
         // get balance in periodic intervals
         this.store.dispatch({ type: 'TEZOS_BALANCE' })
     }
 
-}
-
-// define data source for account table
-export class AccountDataSource extends DataSource<any> {
-
-    constructor(public data) {
-        super();
-    }
-
-    connect() {
-        return this.data.map(data =>
-            data.ids.map(id => ({ id, ...data.entities[id] }))
-        )
-    }
-
-    disconnect() { }
 }

@@ -2,56 +2,41 @@
   New wallet
 </button>
 
-<!-- <button mat-raised-button color="warn" routerLink="/accounts/new">
-  Activate wallet
-</button> -->
-
 <button mat-button (click)="balance()">
   Reload balance
 </button>
-
-<!-- <button mat-button (click)="importWalletFromTrezor()">
-  Import wallet from Trezor
-</button> -->
-
-<!-- 
-<button mat-button (click)="balance()">
-  Recover wallet
-</button> -->
-
 
 <br>
 <br>
 
 <div>
-  <mat-table #table [dataSource]="accountTableDataSource">
+  
+  <table mat-table [dataSource]="accountTableDataSource">
 
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element">
         <a routerLink="/tezos/wallet/{{element.id}}">{{element.name}}</a>
-      </mat-cell>
+      </td>
     </ng-container>
 
-    <!-- Address Column -->
     <ng-container matColumnDef="publicKeyHash">
-      <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
-      <mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef> Address </th>
+      <td mat-cell *matCellDef="let element">
           <a routerLink="/tezos/wallet/{{element.id}}">{{element.publicKeyHash}}</a>
-      </mat-cell>
+      </td>
     </ng-container>
 
-    <!-- Balance Column -->
     <ng-container matColumnDef="balance" stickyEnd>
-      <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
-      <mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef> Balance </th>
+      <td mat-cell *matCellDef="let element">
         <a routerLink="/tezos/wallet/{{element.id}}">{{element.balance*0.000001 | number:'1.0-6' }} ꜩ</a>
-      </mat-cell>
+      </td>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="['name','publicKeyHash','balance']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['name','publicKeyHash','balance'];"></mat-row>
+    <tr mat-header-row *matHeaderRowDef="['name','publicKeyHash','balance']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name','publicKeyHash','balance'];"></tr>
 
-  </mat-table>
+  </table>
+
 </div>
