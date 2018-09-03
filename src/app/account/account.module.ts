@@ -4,7 +4,11 @@ import { RouterModule } from '@angular/router';
 import { AccountRouting } from './account.routing';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+
+import { reducers } from 'app/account/account.reducers';
+
 import { SharedModule } from 'app/shared/shared.module'
 
 import { AccountComponent } from 'app/account/account.component';
@@ -62,16 +66,17 @@ import {
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
 
     RouterModule.forChild(AccountRouting),
+
+    // StoreModule.forFeature('tezos',reducers),
 
     EffectsModule.forFeature([
       TrezorTransactionEffects,
       TrezorOriginationEffects,
       TrezorDelegationEffects
     ]),
-
-    ReactiveFormsModule,
 
     MatAutocompleteModule,
     MatButtonModule,
