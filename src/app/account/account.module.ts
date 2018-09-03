@@ -5,8 +5,7 @@ import { AccountRouting } from './account.routing';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
-
-import { NgrxFormDirective } from 'app/shared/ngrx-form.directive';
+import { SharedModule } from 'app/shared/shared.module'
 
 import { AccountComponent } from 'app/account/account.component';
 import { AccountNewComponent } from 'app/account/account-new/account-new.component';
@@ -62,6 +61,8 @@ import {
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
+
     RouterModule.forChild(AccountRouting),
 
     EffectsModule.forFeature([
@@ -139,8 +140,6 @@ import {
 
   ],
   declarations: [
-
-    NgrxFormDirective,
 
     AccountComponent,
     AccountNewComponent,

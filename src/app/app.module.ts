@@ -16,6 +16,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { environment } from '../environments/environment';
 
+import { SharedModule } from 'app/shared/shared.module'
+
 import { AppComponent } from './app.component'
 import { AppRouting } from './app.routing'
 import { AppInterceptor } from './app.interceptor'
@@ -99,8 +101,6 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
 // import { TezosNodeComponent } from './shared/tezos/tezos-node/tezos-node.component';
 // import { TezosWalletComponent } from './shared/tezos/tezos-wallet/tezos-wallet.component';
 
-import { NgrxFormDirective } from './shared/ngrx-form.directive';
-
 // import { LoginViaFileComponent } from './login-via-file/login-via-file.component';
 // import { TransactionComponent } from './transaction/transaction.component';
 // import { DayChartComponent } from "./day-chart/day-chart.component";
@@ -137,8 +137,6 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
     // TezosNodeComponent,
     // TezosWalletComponent,
     
-    // NgrxFormDirective,
-
     //TransactionComponent,
     //DayChartComponent,
     //LoginViaFileComponent,
@@ -147,6 +145,7 @@ import { NgrxFormDirective } from './shared/ngrx-form.directive';
     BrowserModule,
     HttpModule,
     HttpClientModule,
+    SharedModule,
 
     // NoopAnimationsModule,
     BrowserAnimationsModule,
