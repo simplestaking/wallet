@@ -37,7 +37,7 @@ export const AppRouting: Routes = [
   { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
   { path: '', component: TezosHardwareWalletComponent },
   
-  { path: 'tezos/wallet', loadChildren: 'app/account/account.module#AccountModule' },
+  { path: 'tezos', loadChildren: 'app/account/account.module#AccountModule' },
   
   //{ path: '', redirectTo: '/tezos/wallet', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }

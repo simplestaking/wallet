@@ -31,7 +31,6 @@ export class TrezorTransactionEffects {
             action.payload.event.url.indexOf('tezos/wallet/KT') > 0),
         // get account data with publicKeyHash from firebase
         flatMap((action: any) => {
-            console.log('[this.currecnyNetwork]', this.currecnyNetwork, action.payload)
             return this.db.collection(this.currecnyNetwork).doc(action.payload.routerState.root.children[0].firstChild.params.address).valueChanges()
         }),
         // dispatch action based on result
@@ -72,7 +71,6 @@ export class TrezorTransactionEffects {
 
             // originate contract
             transaction(stateWallet => {
-                console.warn('[transaction]', state, stateWallet)
                 return {
                     to: state.tezosTransaction.form.to,
                     amount: state.tezosTransaction.form.amount,

@@ -87,8 +87,6 @@ import {
 // import { AuthService } from './auth/auth.service';
 // import { ForgotComponent } from './auth/forgot/forgot.component';
 
-// import { TrezorComponent } from './trezor/trezor.component';
-
 import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';

@@ -12,7 +12,7 @@ import { AccountComponent } from 'app/account/account.component';
 import { AccountDetailComponent } from 'app/account/account-detail/account-detail.component';
 
 // import { DelegateComponent } from 'app/delegate/delegate.component';
-// import { TrezorComponent } from 'app/trezor/trezor.component';
+import { TrezorComponent } from 'app/trezor/trezor.component';
 
 
 export const AccountRouting: Routes = [
@@ -28,8 +28,9 @@ export const AccountRouting: Routes = [
   // { path: 'forgot', component: ForgotComponent },
 
     
-  { path: '', component: AccountComponent },
-  { path: ':address', component: AccountDetailComponent },
+  { path: 'wallet', component: AccountComponent },
+  { path: 'wallet/:address', component: AccountDetailComponent },
+  { path: 'trezor', component: TrezorComponent },
   //{ path: '**', component: PageNotFoundComponent }
 
 ];

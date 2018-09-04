@@ -22,7 +22,8 @@ import { TezosOriginationComponent } from 'app/shared/tezos/tezos-origination/te
 import { TezosNodeComponent } from 'app/shared/tezos/tezos-node/tezos-node.component';
 import { TezosWalletComponent } from 'app/shared/tezos/tezos-wallet/tezos-wallet.component';
 
-//import { TrezorEffects } from 'app/trezor/trezor.effects'
+import { TrezorComponent } from 'app/trezor/trezor.component';
+import { TrezorEffects } from 'app/trezor/trezor.effects'
 
 import { TrezorTransactionEffects } from 'app/shared/tezos/tezos-transaction/tezos-transaction.effects'
 import { TrezorOriginationEffects } from 'app/shared/tezos/tezos-origination/tezos-origination.effects'
@@ -73,6 +74,7 @@ import {
     // StoreModule.forFeature('tezos',reducers),
 
     EffectsModule.forFeature([
+      TrezorEffects,
       TrezorTransactionEffects,
       TrezorOriginationEffects,
       TrezorDelegationEffects
@@ -107,10 +109,10 @@ import {
     // MatStepperModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
-
+    MatTooltipModule
 
   ],
+  
   exports: [
     MatAutocompleteModule,
     MatButtonModule,
@@ -156,6 +158,8 @@ import {
     TezosOriginationComponent,
     TezosNodeComponent,
     TezosWalletComponent,
+    
+    TrezorComponent
   ]
 })
 export class AccountModule { }

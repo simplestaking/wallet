@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 
-// import TrezorConnect from 'trezor-connect';
+//import TrezorConnect from 'trezor-connect';
 
 @Component({
   selector: 'app-root',
