@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import { tap, map, flatMap } from 'rxjs/operators';
 
-// import TrezorConnect from 'trezor-connect';
+import TrezorConnect from 'trezor-connect';
 
 @Component({
   selector: 'app-trezor',
@@ -212,35 +212,35 @@ export class TrezorComponent implements OnInit {
     //let xtzPath = "m/44'/1729'/0'/0'/0'"
     let xtzPath = "m/44'/1729'/0'/0'/2'"
 
-    // TrezorConnect.tezosGetAddress({
-    //   'path': xtzPath,
-    //   'curve': curve,
-    //   'showOnTrezor': false,
-    // }).then(response => {
-    //   console.warn('[tezosGetAddress]', response.payload.address)
-    //   let address = response.payload.address;
+    TrezorConnect.tezosGetAddress({
+      'path': xtzPath,
+      'curve': curve,
+      'showOnTrezor': false,
+    }).then(response => {
+      console.log('[tezosGetAddress]', response.payload.address)
+      let address = response.payload.address;
 
-    //   TrezorConnect.tezosGetPublicKey({
-    //     'path': xtzPath,
-    //     'curve': curve,
-    //     'showOnTrezor': false,
-    //   }).then(response => {
-    //     // console.log('[tezosGetPublicKey]', response.payload.public_key)
+      TrezorConnect.tezosGetPublicKey({
+        'path': xtzPath,
+        'curve': curve,
+        'showOnTrezor': false,
+      }).then(response => {
+        console.log('[tezosGetPublicKey]', response.payload.publicKey)
 
-    //     // save address to redux
-    //     this.store.dispatch({
-    //       type: "ACCOUNT_ADD",
-    //       payload: {
-    //         name: "trezor_2_" + (curve+1),
-    //         // secretKey: "edsk3AmmrpjY1DpGYepn6J4XmSi2pHYAWLBNTCK9bPt7icJGm9Xhp8",
-    //         publicKey: response.payload.public_key,
-    //         publicKeyHash: address,
-    //       }
-    //     })
+        // save address to redux
+        this.store.dispatch({
+          type: "ACCOUNT_ADD",
+          payload: {
+            name: "trezor_2_" + (curve+1),
+            // secretKey: "edsk3AmmrpjY1DpGYepn6J4XmSi2pHYAWLBNTCK9bPt7icJGm9Xhp8",
+            publicKey: response.payload.public_key,
+            publicKeyHash: address,
+          }
+        })
 
-    //   })
+      })
 
-    // })
+    })
 
 
 

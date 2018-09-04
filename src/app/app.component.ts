@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 
-//import TrezorConnect from 'trezor-connect';
+import TrezorConnect from 'trezor-connect';
 
 @Component({
   selector: 'app-root',
@@ -24,31 +24,35 @@ export class AppComponent {
     this.app$ = this.store.select('app')
     this.app$.subscribe(data => this.app = data)
 
+    this.store.dispatch({
+      type: 'TREZOR_INIT'
+    });
 
-    // try {
+    (<any>window).TrezorConnect = TrezorConnect
+    try {
 
-    //   const handleTransportEvent = (event) => {
-    //     TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
-    //   }
+      const handleTransportEvent = (event) => {
+        (<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
+      }
 
-    //   TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
+      (<any>window).TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
 
-    //   TrezorConnect.init({
-    //     connectSrc: 'http://localhost:5500/dist/',
-    //     frame_src: 'http://localhost:5500/dist/iframe.html',
-    //     popup_src: 'http://localhost:5500/dist/popup.html',
+      (<any>window).TrezorConnect.init({
+        connectSrc: 'http://localhost:5500/dist/',
+        frame_src: 'http://localhost:5500/dist/iframe.html',
+        popup_src: 'http://localhost:5500/dist/popup.html',
 
-    //     // frame_src: 'https://sisyfos.trezor.io/iframe.html',
-    //     // popup_src: 'https://sisyfos.trezor.io/popup.html',
+        // frame_src: 'https://sisyfos.trezor.io/iframe.html',
+        // popup_src: 'https://sisyfos.trezor.io/popup.html',
 
-    //     popup: false,
-    //     webusb: false,
-    //     debug: false,
-    //   });
+        popup: false,
+        webusb: false,
+        debug: true,
+      });
 
-    // } catch (error) {
-    //   throw error;
-    // }
+    } catch (error) {
+      throw error;
+    }
 
   }
 

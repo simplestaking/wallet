@@ -46,6 +46,20 @@ export class AccountComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
         // listen to changes from redux
         // get data for table 
         this.store.select('account').pipe(

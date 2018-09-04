@@ -4,6 +4,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
+import { TrezorConnect } from 'trezor-connect'
+
 if (environment.production) {
 
   // add Google Analytics script to <head>
