@@ -30,7 +30,6 @@ export class TezosDelegationComponent implements OnInit {
         name: [{ value: '', disabled: true }],
         from: [{ value: this.address, disabled: true }],
         to: '',
-        amount: ''
       })
   
       // listen to tezos wallets list

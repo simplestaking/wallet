@@ -62,6 +62,8 @@ export class TrezorOriginationEffects {
                 publicKeyHash: state.tezosOrigination.form.publicKeyHash,
                 // set tezos node
                 node: state.tezosNode.api,
+                // set wallet type: web, Trezor One, Trezor T
+                type: 'WEB',
             })),
 
             // originate contract
@@ -95,28 +97,36 @@ export class TrezorOriginationEffects {
     )
 
     @Effect()
-    tezosOriginationTrezorc$ = this.actions$.pipe(
+    tezosOriginationTrezor$ = this.actions$.pipe(
         ofType('TEZOS_ORIGINATION_TREZOR'),
+
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
 
-        tap(state => console.log('[TEZOS_ORIGINATION] state', state.form)),
+        //
+        flatMap(state => of([]).pipe(
 
-        // wait until sodium is ready
-        initializeWallet(state => ({
-            node: state.tezosNode.api,
-        })),
+            // wait until sodium is ready
+            initializeWallet(stateWallet => ({
+                publicKey: state.tezosOrigination.form.publicKey,
+                publicKeyHash: state.tezosOrigination.form.publicKeyHash,
+                // set tezos node
+                node: state.tezosNode.api,
+                // set wallet type: web, Trezor One, Trezor T
+                type: 'TREZOR_T',
+            })),
 
-        // transfer tokens
-        originateContract(state => ({
-            secretKey: state.tezosOrigination.form.secretKey,
-            publicKey: state.tezosOrigination.form.publicKey,
-            publicKeyHash: state.tezosOrigination.form.publicKeyHash,
-            amount: state.tezosOrigination.form.amount,
-            walletType: 'TREZOR_T',
-        })),
+            // originate contract
+            originateContract(stateWallet => {
+                console.warn('[originateContract]', state, stateWallet)
+                return {
+                    amount: state.tezosOrigination.form.amount,
+                }
+            }),
+        )),
+
         tap((state: any) => {
-            console.log('[TEZOS_ORIGINATION] originated contract: ',
+            console.log('[+] originated contract: ',
                 'http://zeronet.tzscan.io/' + state.preapply[0].contents[0].metadata.operation_result.originated_contracts[0])
         }),
         // dispatch action based on result
@@ -124,11 +134,18 @@ export class TrezorOriginationEffects {
             type: 'TEZOS_ORIGINATION_TREZOR_SUCCESS',
             payload: { ...data }
         })),
-        // catchError(error => of({
-        //     type: 'TEZOS_ORIGINATION_TREZOR_ERROR',
-        //     payload: error
-        // })),
+
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_ORIGINATION_TREZOR_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
     )
+
 
     //TODO: !!! refactor
     @Effect()
@@ -136,11 +153,11 @@ export class TrezorOriginationEffects {
         ofType('TEZOS_ORIGINATION_SUCCESS', 'TEZOS_ORIGINATION_TREZOR_SUCCESS'),
         // add state to effect
         withLatestFrom(this.store, (action, state) => ({ action, state })),
-        //  
-        // tap((data: any) => {
-        //     console.log('[TEZOS_ORIGINATION_SUCCESS] originated contract: ',
-        //         'http://zeronet.tzscan.io/' + data.action.payload.preapply[0].contents[0].metadata.operation_result.originated_contracts[0])
-        // }),
+         
+        tap((data: any) => {
+            console.log('[TEZOS_ORIGINATION_SUCCESS] originated contract: ',
+                'http://zeronet.tzscan.io/' + data.action.payload.preapply[0].contents[0].metadata.operation_result.originated_contracts[0])
+        }),
         // dispatch action based on result
         map((data: any) => {
             return {

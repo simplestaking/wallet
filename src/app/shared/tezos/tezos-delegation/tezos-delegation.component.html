@@ -28,11 +28,11 @@
   <br>
   
   <br/>
-  <button *ngIf="tezosDelegation.secretKey" mat-raised-button color="warn" (click)="delegate('WEB')" [disabled]="!tezosDelegation.to">
+  <button *ngIf="tezosDelegation.secretKey" mat-raised-button color="warn" (click)="delegate('WEB')">
     Delegate ꜩ
   </button>
   
-  <button *ngIf="!tezosDelegation.secretKey" mat-raised-button color="warn" (click)="delegate('TREZOR_T')" [disabled]="!tezosDelegation.to">
+  <button *ngIf="!tezosDelegation.secretKey" mat-raised-button color="warn" (click)="delegate('TREZOR_T')">
     Delegate with Trezor(Connect) and Send ꜩ
   </button>
   

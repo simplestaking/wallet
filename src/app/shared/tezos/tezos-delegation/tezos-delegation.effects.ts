@@ -60,7 +60,10 @@ export class TrezorDelegationEffects {
                 secretKey: state.tezosDelegation.form.secretKey,
                 publicKey: state.tezosDelegation.form.publicKey,
                 publicKeyHash: state.tezosDelegation.form.publicKeyHash,
+                // set tezos node
                 node: state.tezosNode.api,
+                // set wallet type: web, Trezor One, Trezor T
+                type: 'WEB',
             })),
 
             // walletDelegationSet
@@ -91,36 +94,43 @@ export class TrezorDelegationEffects {
     tezosDelegationTrezor$ = this.actions$.pipe(
         ofType('TEZOS_DELEGATION_TREZOR'),
         // add state to effect
-        withLatestFrom(this.store, (action, state) => state.tezosDelegation),
+        withLatestFrom(this.store, (action, state) => state),
 
-        tap(state => console.log('[TEZOS_DELEGATION] state', state.form)),
+        tap(state => console.log('[TEZOS_DELEGATION_TREZOR] state', state)),
 
-        // wait until sodium is ready
-        initializeWallet(state => ({
-            node: state.tezosNode.api,
-        })),
+        flatMap(state => of([]).pipe(
 
-        // transfer tokens
-        setDelegation(state => ({
-            secretKey: state.form.secretKey,
-            publicKey: state.form.publicKey,
-            publicKeyHash: state.form.publicKeyHash,
-            to: state.form.to, // tz1boot2oCjTjUN6xDNoVmtCLRdh8cc92P1u
-            walletType: 'TREZOR_T',
-        })),
+            // walletInitialize
+            // wait until sodium is ready
+            initializeWallet(stateWallet => ({
+                publicKey: state.tezosDelegation.form.publicKey,
+                publicKeyHash: state.tezosDelegation.form.publicKeyHash,
+                // set tezos node
+                node: state.tezosNode.api,
+                // set wallet type: web, Trezor One, Trezor T
+                type: 'TREZOR_T',
+            })),
 
-        tap(state => {
-            // console.log('[TEZOS_DELEGATION] delegate ', state)
-        }),
+            // walletDelegationSet
+            setDelegation(stateWallet => ({
+                to: state.tezosDelegation.form.to, // tz1boot2oCjTjUN6xDNoVmtCLRdh8cc92P1u
+            })),
+
+        )),
+
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_DELEGATION_TREZOR_SUCCESS',
             payload: { ...data }
         })),
-        catchError(error => of({
-            type: 'TEZOS_DELEGATION_TREZOR_ERROR',
-            payload: error
-        })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_DELEGATION_TREZOR_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
 
