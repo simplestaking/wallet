@@ -210,7 +210,7 @@ export class TrezorComponent implements OnInit {
   getXTZAddressTrezorConnect(curve) {
 
     //let xtzPath = "m/44'/1729'/0'/0'/0'"
-    let xtzPath = "m/44'/1729'/0'/0'/2'"
+    let xtzPath = "m/44'/1729'/0'"
 
     TrezorConnect.tezosGetAddress({
       'path': xtzPath,
