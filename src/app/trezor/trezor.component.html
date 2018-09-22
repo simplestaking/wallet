@@ -73,4 +73,33 @@
   https://github.com/tezos/tezos/blob/afd5a9e45f2348fe4cea524f0359836347d4b48c/docs/introduction/alphanet.rst
   https://github.com/tezos/tezos/commit/afd5a9e45f2348fe4cea524f0359836347d4b48c#diff-b070ef146f6128bf697eaafda73cc7a7
 
+
+  
+
+  = test
+  curl http://127.0.0.1:5000/authorized_keys
+
+  // potencialne zmenit na 127.0.0.1
+  -- connect to client open port 5000 on client and connect back to 0.0.0.6732
+  ssh -f -N -T -R 5000:0.0.0.0:6732 tezos@46.101.236.136
+
+  -- forwar local host to interrnet
+  nc -l -p 6000 -c "nc 127.0.0.1 5000"
+
+
+  - ssh tunel
+  https://gist.github.com/drmalex07/c0f9304deea566842490
+  https://github.com/renxida/labtunnel
+
+  - passwordless ssh
+  https://unix.stackexchange.com/questions/23291/how-to-ssh-to-remote-server-using-a-private-key
+
+  - launch remote signer
+  nohup ./tezos-signer launch http signer -a 0.0.0.0 &
+
+  ./zeronet.sh client import secret key remote_baker http://46.101.236.136:6000/tz1Wet1q9mKCGgYrgibVWTQrUwYcAmssiVHw
+
+  
+
+
 -->
