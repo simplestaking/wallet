@@ -4,6 +4,8 @@ const initialState: any = {
         display: 'Zeronet',
         name: 'zero',
         url: 'https://zeronet.simplestaking.com:3000'
+        // name: 'beta',
+        // url: 'https://node2.simplestaking.com:3000'
     },
     nodes: [{
         display: 'Zeronet',

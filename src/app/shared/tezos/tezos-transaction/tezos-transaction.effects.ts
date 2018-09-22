@@ -80,6 +80,7 @@ export class TrezorTransactionEffects {
                     amount: state.tezosTransaction.form.amount,
                 }
             }),
+            
         )),
         // dispatch action based on result
         map((data: any) => ({

@@ -25,7 +25,7 @@ import { reducers, metaReducers } from './app.reducers';
 
 import { AllEffects } from './app.effects'
 // import { AccountEffects } from './account/account.effects'
-// import { AccountNewEffects } from './account/account-new/account-new.effects'
+import { AccountNewEffects } from './account/account-new/account-new.effects'
 // import { AccountDetailEffects } from './account/account-detail/account-detail.effects'
 
 // import { AuthLoginEffects } from './auth/login/login.effects'
@@ -164,7 +164,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     EffectsModule.forRoot([
       AllEffects,
       // AccountEffects,
-      // AccountNewEffects,
+      AccountNewEffects,
       // AccountDetailEffects,
 
       // AuthLoginEffects,
@@ -191,7 +191,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFirestoreModule.enablePersistence(),
+    // AngularFirestoreModule.enablePersistence(),
 
     MatAutocompleteModule,
     MatButtonModule,

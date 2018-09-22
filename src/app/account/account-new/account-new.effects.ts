@@ -19,10 +19,10 @@ export class AccountNewEffects {
 
     // create new account
     @Effect()
-    AccountAdd$ = this.actions$
-        .ofType('ACCOUNT_ADD')
-        .withLatestFrom(this.store, (action: any, state) => ({ action, state }))
-        .flatMap(({ action, state }) => {
+    AccountAdd$ = this.actions$.pipe(
+        ofType('ACCOUNT_ADD'),
+        withLatestFrom(this.store, (action: any, state) => ({ action, state })),
+        flatMap(({ action, state }) => {
             // console.log('[ACCOUNT_ADD]', state, action)
             // listen to accounts from FireBase 
             this.accountCol = this.db.collection(state.app.node.currency + '_' + state.app.node.network + '_wallet');
@@ -38,43 +38,43 @@ export class AccountNewEffects {
                     ...action.payload,
                     balance: 0,
                 })
-        })
+        }),
         // dispatch action
-        .map(response => ({ type: 'ACCOUNT_ADD_SUCCESS' }))
-        .catch(error => of({ type: 'ACCOUNT_ADD_ERROR' }))
+        map(response => ({ type: 'ACCOUNT_ADD_SUCCESS' })),
+        // catch(error => of({ type: 'ACCOUNT_ADD_ERROR' })),
         // redirect back to accounts list
-        .do(() => this.router.navigate(['/tezos/wallet']))
-
-
-    // originate account from changed account
-    @Effect()
-    AccountCreate$ = this.actions$
-        .ofType('ACCOUNT_CREATE_', 'ACCOUNT_ADD_').pipe(
-            map((action: any) => ({
-                from: 'tz1RqHhotnSmmWYnFcZSHg7YVVGAf1c9qxPN',
-                publicKey: 'edpkvM9kSwTAqbmjdB92bK2Yy6QJ1SUMuAbjkE5KypTJvQfh4ph7NC',
-                secretKey: 'edskS78gNedycQ86BUba3M3zXrVNUCmdeLVe38MCugVmmTcFpKuknYd3YLJUEtc2rYHwxcH6VR9uKRzy7bZuvCQKPu7iXS4Xu9',
-                delegate: 'tz1RqHhotnSmmWYnFcZSHg7YVVGAf1c9qxPN',
-
-                // from: action.payload.publicKeyHash,
-                // publicKey: action.payload.publicKey,
-                // secretKey: action.payload.secretKey,
-                // delegate: action.payload.publicKeyHash,
-                amount: 0,
-            })),
-        // origination()
+        tap(() => this.router.navigate(['/tezos/wallet']))
     )
-        // dispatch action based on result
-        .map(response => ({
-            type: 'ACCOUNT_CREATE_SUCCESS',
-            payload: response
-        }))
-        .catch(error => of({
-            type: 'ACCOUNT_CREATE_ERROR',
-            payload: error
-        }))
-    // redirect back to accounts list
-    //.do(() => this.router.navigate(['/accounts']))
+
+    // // originate account from changed account
+    // @Effect()
+    // AccountCreate$ = this.actions$
+    //     .ofType('ACCOUNT_CREATE_', 'ACCOUNT_ADD_').pipe(
+    //         map((action: any) => ({
+    //             from: 'tz1RqHhotnSmmWYnFcZSHg7YVVGAf1c9qxPN',
+    //             publicKey: 'edpkvM9kSwTAqbmjdB92bK2Yy6QJ1SUMuAbjkE5KypTJvQfh4ph7NC',
+    //             secretKey: 'edskS78gNedycQ86BUba3M3zXrVNUCmdeLVe38MCugVmmTcFpKuknYd3YLJUEtc2rYHwxcH6VR9uKRzy7bZuvCQKPu7iXS4Xu9',
+    //             delegate: 'tz1RqHhotnSmmWYnFcZSHg7YVVGAf1c9qxPN',
+
+    //             // from: action.payload.publicKeyHash,
+    //             // publicKey: action.payload.publicKey,
+    //             // secretKey: action.payload.secretKey,
+    //             // delegate: action.payload.publicKeyHash,
+    //             amount: 0,
+    //         })),
+    //     // origination()
+    // )
+    //     // dispatch action based on result
+    //     .map(response => ({
+    //         type: 'ACCOUNT_CREATE_SUCCESS',
+    //         payload: response
+    //     }))
+    //     .catch(error => of({
+    //         type: 'ACCOUNT_CREATE_ERROR',
+    //         payload: error
+    //     }))
+    // // redirect back to accounts list
+    // //.do(() => this.router.navigate(['/accounts']))
 
     constructor(
         private actions$: Actions,

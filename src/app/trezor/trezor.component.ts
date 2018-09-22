@@ -29,7 +29,7 @@ export class TrezorComponent implements OnInit {
   // connect to trezor and export address from trezor 
   getAddressTrezorConnect() {
 
-    let xtzPath = "m/44'/1729'/0'/0'/0'"
+    let xtzPath = "m/44'/1729'/0'"
 
     try {
 
@@ -82,7 +82,7 @@ export class TrezorComponent implements OnInit {
   signTrezorConnect() {
     // console.log('[trezor] sign')
 
-    let xtzPath = "m/44'/1729'/0'/0'/0'"
+    let xtzPath = "m/44'/1729'/0'"
 
     // transaction parameters 
     let to = "tz1NTCekGUtixDbPgxGhiMUr8yQLkyPm8Vik"
@@ -214,31 +214,31 @@ export class TrezorComponent implements OnInit {
 
     TrezorConnect.tezosGetAddress({
       'path': xtzPath,
-      'curve': curve,
-      'showOnTrezor': false,
+      // 'curve': curve,
+      'showOnTrezor': true,
     }).then(response => {
-      console.log('[tezosGetAddress]', response.payload.address)
+      console.warn('[tezosGetAddress]', response.payload.address)
       let address = response.payload.address;
 
-      TrezorConnect.tezosGetPublicKey({
-        'path': xtzPath,
-        'curve': curve,
-        'showOnTrezor': false,
-      }).then(response => {
-        console.log('[tezosGetPublicKey]', response.payload.publicKey)
+      // TrezorConnect.tezosGetPublicKey({
+      //   'path': xtzPath,
+      //   // 'curve': curve,
+      //   'showOnTrezor': false,
+      // }).then(response => {
+      //   console.warn('[tezosGetPublicKey]', response.payload.publicKey)
 
-        // save address to redux
-        this.store.dispatch({
-          type: "ACCOUNT_ADD",
-          payload: {
-            name: "trezor_2_" + (curve+1),
-            // secretKey: "edsk3AmmrpjY1DpGYepn6J4XmSi2pHYAWLBNTCK9bPt7icJGm9Xhp8",
-            publicKey: response.payload.public_key,
-            publicKeyHash: address,
-          }
-        })
+      //   // // save address to redux
+      //   // this.store.dispatch({
+      //   //   type: "ACCOUNT_ADD",
+      //   //   payload: {
+      //   //     name: "trezor_2_" + (curve+1),
+      //   //     // secretKey: "edsk3AmmrpjY1DpGYepn6J4XmSi2pHYAWLBNTCK9bPt7icJGm9Xhp8",
+      //   //     publicKey: response.payload.public_key,
+      //   //     publicKeyHash: address,
+      //   //   }
+      //   // })
 
-      })
+      // })
 
     })
 
