@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountLazyComponent } from './account-lazy.component';
+import { TezosNodeComponent } from './tezos-node.component';
 
-describe('AccountLazyComponent', () => {
-  let component: AccountLazyComponent;
-  let fixture: ComponentFixture<AccountLazyComponent>;
+describe('TezosNodeComponent', () => {
+  let component: TezosNodeComponent;
+  let fixture: ComponentFixture<TezosNodeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountLazyComponent ]
+      declarations: [ TezosNodeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccountLazyComponent);
+    fixture = TestBed.createComponent(TezosNodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

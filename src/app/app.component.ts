@@ -28,31 +28,32 @@ export class AppComponent {
       type: 'TREZOR_INIT'
     });
 
-    (<any>window).TrezorConnect = TrezorConnect
-    try {
+    // TEMP 
+    // (<any>window).TrezorConnect = TrezorConnect
+    // try {
 
-      const handleTransportEvent = (event) => {
-        (<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
-      }
+    //   const handleTransportEvent = (event) => {
+    //     (<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
+    //   }
 
-      (<any>window).TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
+    //   (<any>window).TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
 
-      (<any>window).TrezorConnect.init({
-        connectSrc: 'http://localhost:5500/dist/',
-        frame_src: 'http://localhost:5500/dist/iframe.html',
-        popup_src: 'http://localhost:5500/dist/popup.html',
+    //   (<any>window).TrezorConnect.init({
+    //     connectSrc: 'http://localhost:5500/dist/',
+    //     frame_src: 'http://localhost:5500/dist/iframe.html',
+    //     popup_src: 'http://localhost:5500/dist/popup.html',
 
-        // frame_src: 'https://sisyfos.trezor.io/iframe.html',
-        // popup_src: 'https://sisyfos.trezor.io/popup.html',
+    //     // frame_src: 'https://sisyfos.trezor.io/iframe.html',
+    //     // popup_src: 'https://sisyfos.trezor.io/popup.html',
 
-        popup: false,
-        webusb: false,
-        debug: false,
-      });
+    //     popup: false,
+    //     webusb: false,
+    //     debug: false,
+    //   });
 
-    } catch (error) {
-      throw error;
-    }
+    // } catch (error) {
+    //   throw error;
+    // }
 
   }
 

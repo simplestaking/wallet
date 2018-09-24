@@ -70,20 +70,21 @@ export interface State {
  */
 export const reducers: ActionReducerMap<State> = {
   app: fromApp.reducer,
+  
   account: fromAccount.reducer,
   accountNew: fromAccountNew.reducer,
   accountDetail: fromAccountDetail.reducer,
-  //delegate: fromDelegate.reducer,
+  
   authLogin: fromAuthLogin.reducer,
   authRegistration: fromAuthRegistration.reducer,
   authForgot: fromAuthForgot.reducer,
-  //transaction: fromTransaction.reducer,
+
   tezosNode: fromTezosNode.reducer,
   tezosTransaction: fromTezosTransaction.reducer,
   tezosOrigination: fromTezosOrigination.reducer,
   tezosDelegation: fromTezosDelegation.reducer,
+  
   landingTezosHardwareWallet: fromLandingTezosHardwareWallet.reducer,
-  //loginViaFile: fromLoginViaFile.reducer,
   routerReducer: fromRouter.routerReducer,
 };
 
