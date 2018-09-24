@@ -77,7 +77,7 @@
   
 
   = test
-  curl http://127.0.0.1:5000/authorized_keys
+  curl http://127.0.0.1:6000/authorized_keys
 
   // potencialne zmenit na 127.0.0.1
   -- connect to client open port 5000 on client and connect back to 0.0.0.6732
@@ -99,7 +99,11 @@
 
   ./zeronet.sh client import secret key remote_baker http://46.101.236.136:6000/tz1Wet1q9mKCGgYrgibVWTQrUwYcAmssiVHw
 
-  
+  __________________________________________________________
+  1. hw wallet: nohup ./tezos-signer launch http signer -a 0.0.0.0 &
+  2. hw wallet: ssh -f -N -T -R 6000:0.0.0.0:6732 tezos@46.101.164.28
+  3. hw wallet: sudo tcpdump -i lo -A -s 0 'tcp port 6732' 
+  4. server: ./tezos-client import secret key remote_baker http://127.0.0.1:5000/tz1V7Vmvq2PbcKyL3sJZ8LYKDaFHRGPWCGqu
 
 
 -->
