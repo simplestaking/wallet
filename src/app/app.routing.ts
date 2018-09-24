@@ -18,13 +18,12 @@ export const AppRouting: Routes = [
   // { path: 'forgot', component: ForgotComponent },
 
   // landing pages
-  { path: 'tezos-baking', component: TezosBakingComponent },
-  { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
-  { path: '', component: TezosHardwareWalletComponent },
+  // { path: 'tezos-baking', component: TezosBakingComponent },
+  // { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
+  // { path: '', component: TezosHardwareWalletComponent },
   
-  { path: 'tezos', loadChildren: 'app/account/account.module#AccountModule' },
-  
-  { path: 't', loadChildren: 'app/tezos/tezos.module#TezosModule' },
+  { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
+  { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
   
   //{ path: '', redirectTo: '/tezos/wallet', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }

@@ -46,19 +46,20 @@ import * as fromNgrxForm from './shared/ngrx-form.reducer';
  */
 export interface State {
   app: any;
+
   account: any;
   accountNew: any;
   accountDetail: any;
+
   authLogin: any;
   authRegistration: any;
   authForgot: any;
-  // delegate: any;
-  // transaction: any;
-  // loginViaFile: any;
+
   tezosNode: any;
   tezosTransaction: any;
   tezosOrigination: any;
   tezosDelegation: any;
+
   landingTezosHardwareWallet: any;
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
 }

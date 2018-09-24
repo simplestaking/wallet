@@ -16,7 +16,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { environment } from '../environments/environment';
 
-import { SharedModule } from 'app/shared/shared.module'
+import { SharedModule } from './shared/shared.module'
 
 import { AppComponent } from './app.component'
 import { AppRouting } from './app.routing'
