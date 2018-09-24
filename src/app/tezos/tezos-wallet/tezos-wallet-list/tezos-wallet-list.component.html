@@ -1,5 +1,28 @@
-<p>
-  tezos-wallet-list works!
-</p>
+<table mat-table [dataSource]="tezosWalletList">
 
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element">
+      <a routerLink="/tezos/wallet/{{element.id}}">{{element.name}}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="publicKeyHash">
+    <th mat-header-cell *matHeaderCellDef> Address </th>
+    <td mat-cell *matCellDef="let element">
+        <a routerLink="/tezos/wallet/{{element.id}}">{{element.publicKeyHash}}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="balance" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef> Balance </th>
+    <td mat-cell *matCellDef="let element">
+      <a routerLink="/tezos/wallet/{{element.id}}">{{element.balance*0.000001 | number:'1.0-6' }} ꜩ</a>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['name','publicKeyHash','balance']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['name','publicKeyHash','balance'];"></tr>
+
+</table>
 
