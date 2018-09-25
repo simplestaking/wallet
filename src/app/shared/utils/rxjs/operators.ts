@@ -13,8 +13,9 @@ export function ofRoute(route: string | string[]): OperatorFunction<Action, Acti
         // process only ROUTER_NAVIGATION actions
         if (action.type === 'ROUTER_NAVIGATION') {
 
-            // console.log('[ofRoute]', action.payload, route, action.payload.event.url, action.payload.event.url.indexOf(route) > 0)
-            if (action.payload.event.url.indexOf(route) > 0) {
+            // console.log('[ofRoute]', action.payload, route, action.payload.event.url, action.payload.event.url.indexOf(route) >= 0)
+           
+            if (action.payload.event.url.indexOf(route) >= 0) {
                 return true
             }
 
@@ -23,3 +24,5 @@ export function ofRoute(route: string | string[]): OperatorFunction<Action, Acti
 
     });
 }
+
+
