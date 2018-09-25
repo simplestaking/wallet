@@ -9,7 +9,6 @@ export function reducer(state = initialState, action) {
         case 'TEZOS_WALLET_LIST_LOAD_SUCCESS': {
             return {
                 ids: [
-                    ...state.ids,
                     ...action.payload.map(wallet => wallet.publicKeyHash)
                 ],
                 entities: action.payload.reduce((accumulator, wallet) => ({

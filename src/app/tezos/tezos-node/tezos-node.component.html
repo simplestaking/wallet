@@ -1,3 +1,6 @@
-<p>
-  tezos-node works!
-</p>
+<button mat-button [matMenuTriggerFor]="tezosNodeSelect" class="tezos-node-select">{{tezosNode.api.display}}</button>
+<mat-menu #tezosNodeSelect="matMenu">
+  <button mat-menu-item *ngFor="let node of tezosNode.nodes" (click)="changeNode(node)">
+    {{ node.display }}
+  </button>
+</mat-menu>

@@ -42,7 +42,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './tezos.reducers';
 
 import { TezosEffects } from './tezos.effects'
-import { TezosWalletListEffects } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.effect'
+import { TezosNodeEffects } from './tezos-node/tezos-node.effects'
+import { TezosWalletListEffects } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.effects'
 
 import { TezosNodeComponent } from './tezos-node/tezos-node.component';
 import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
@@ -60,6 +61,7 @@ import { IdenticonHashDirective } from '../shared/identicon-hash.directive'
 
     EffectsModule.forFeature([
       TezosEffects,
+      TezosNodeEffects,
       TezosWalletListEffects,
     ]),
 
@@ -94,6 +96,9 @@ import { IdenticonHashDirective } from '../shared/identicon-hash.directive'
     // MatSortModule,
     // MatStepperModule,
 
+  ],
+  exports: [
+    TezosNodeComponent,
   ],
   declarations: [
     TezosNodeComponent,

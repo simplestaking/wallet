@@ -23,10 +23,13 @@ export class TezosWalletListEffects {
     @Effect()
     TezosWalletListLoad$ = this.actions$.pipe(
         ofType('TEZOS_WALLET_LIST_LOAD'),
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => state),
 
         // get data from firebase 
-        flatMap(action =>
-            this.db.collection('tezos_zero_wallet', query => query.where('uid', '==', null)).valueChanges()
+        // TODO: move to custom rxjs operator
+        flatMap(state =>
+            this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet', query => query.where('uid', '==', null)).valueChanges()
         ),
 
         map(response => ({ type: 'TEZOS_WALLET_LIST_LOAD_SUCCESS', payload: response })),

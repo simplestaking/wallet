@@ -4,7 +4,7 @@ const initialState: any = {
         display: 'Zeronet',
         name: 'zero',
         url: 'https://zeronet.simplestaking.com:3000'
-        // name: 'beta',
+        // name: 'main',
         // url: 'https://node2.simplestaking.com:3000'
     },
     nodes: [{
@@ -12,8 +12,8 @@ const initialState: any = {
         name: 'zero',
         url: 'https://zeronet.simplestaking.com:3000'
     }, {
-        display: 'Betanet',
-        name: 'beta',
+        display: 'Mainnet',
+        name: 'main',
         url: 'https://node2.simplestaking.com:3000'
     }],
     form: {},
