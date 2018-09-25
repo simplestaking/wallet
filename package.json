@@ -39,6 +39,7 @@
     "bs58check": "^2.1.2",
     "core-js": "^2.5.6",
     "firebase": "5.5.1",
+    "jdenticon": "^2.1.0",
     "libsodium-wrappers": "^0.7.3",
     "ngrx-store-freeze": "0.2.4",
     "start": "^5.1.0"

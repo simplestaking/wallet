@@ -2,6 +2,10 @@ table {
     width: 100%;
 }
 
+.mat-cell.cdk-column-name.mat-column-identicon  {
+    width: 50px
+}
+
 .mat-cell.cdk-column-name.mat-column-name  {
     width: 270px
 }

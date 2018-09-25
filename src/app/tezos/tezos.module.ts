@@ -48,6 +48,7 @@ import { TezosNodeComponent } from './tezos-node/tezos-node.component';
 import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
 import { TezosWalletListComponent } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.component';
 
+import { IdenticonHashDirective } from '../shared/identicon-hash.directive'
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import { TezosWalletListComponent } from './tezos-wallet/tezos-wallet-list/tezos
   declarations: [
     TezosNodeComponent,
     TezosWalletComponent,
-    TezosWalletListComponent
+    TezosWalletListComponent,
+    IdenticonHashDirective
   ]
 })
 export class TezosModule { }

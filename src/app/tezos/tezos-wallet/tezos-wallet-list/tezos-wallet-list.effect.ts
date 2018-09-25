@@ -12,7 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 @Injectable()
 export class TezosWalletListEffects {
 
-    // triger data load based on navigation change  
+    // trigger data load based on navigation change  
     @Effect()
     TezosWalletList$ = this.actions$.pipe(
         ofRoute('/tezos/wallet'),
@@ -25,7 +25,9 @@ export class TezosWalletListEffects {
         ofType('TEZOS_WALLET_LIST_LOAD'),
 
         // get data from firebase 
-        flatMap(action => this.db.collection('tezos_zero_wallet', query => query.where('uid', '==', null)).valueChanges()),
+        flatMap(action =>
+            this.db.collection('tezos_zero_wallet', query => query.where('uid', '==', null)).valueChanges()
+        ),
 
         map(response => ({ type: 'TEZOS_WALLET_LIST_LOAD_SUCCESS', payload: response })),
         onErrorResumeNext(of({ type: 'TEZOS_WALLET_LIST_LOAD_ERROR' }))
