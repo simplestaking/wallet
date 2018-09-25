@@ -155,8 +155,10 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     }),
 
     // Connects RouterModule with StoreModule
-    StoreRouterConnectingModule.forRoot({}),
-
+    StoreRouterConnectingModule.forRoot({
+      
+    }),
+    
     // Set reducers  
     StoreModule.forRoot(reducers, { metaReducers }),
 
