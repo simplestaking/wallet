@@ -17,8 +17,6 @@ export function ofRoute(path: string | string[]): OperatorFunction<Action, Actio
             let parts = (<string>path).split('/');
             let segments = (<string>action.payload.event.url).split('/');
 
-            console.log('[ROUTER_NAVIGATION]', parts, segments)
-
             if (parts.length !== segments.length) {
                 // The actual URL is shorter/longer than the segment, no match
                 return false;
@@ -31,14 +29,11 @@ export function ofRoute(path: string | string[]): OperatorFunction<Action, Actio
                 var isParameter = part.startsWith(':');
                 //console.log('[ofRoute] part: ', part, segment, part !== segment, isParameter)
                 if (!isParameter && (part !== segment)) {
-                    console.log('[ofRoute] false ', path)
 
                     // The actual URL part does not match the config, no match
                     return false
                 }
             }
-
-            console.log('[ofRoute] true ', path)
 
             // The actual URL match path
             return true

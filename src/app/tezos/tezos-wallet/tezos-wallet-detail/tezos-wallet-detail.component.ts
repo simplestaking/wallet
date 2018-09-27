@@ -17,7 +17,7 @@ export class TezosWalletDetailComponent implements OnInit {
 
   constructor(
     public store: Store<any>,
-  ) {}
+  ) { }
 
   ngOnInit() {
 
@@ -26,7 +26,17 @@ export class TezosWalletDetailComponent implements OnInit {
       .subscribe(state => {
         this.tezosWalletDetail = state
       })
-    
-    }
+
+  }
+  
+
+  ngOnDestroy() {
+
+    // close all observables
+    this.destroy$.next();
+    this.destroy$.complete();
+
+  }
+
 
 }

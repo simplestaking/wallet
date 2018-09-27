@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { of, Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators'
   templateUrl: './tezos-wallet-list.component.html',
   styleUrls: ['./tezos-wallet-list.component.scss']
 })
-export class TezosWalletListComponent implements OnInit {
+export class TezosWalletListComponent implements OnInit, OnDestroy {
 
   private tezosWalletList
   private onDestroy$ = new Subject()
@@ -25,6 +25,15 @@ export class TezosWalletListComponent implements OnInit {
       .subscribe(data => {
         this.tezosWalletList = data.ids.map(id => ({ id, ...data.entities[id] }))
       })
+
+  }
+
+  ngOnDestroy() {
+
+    // close all observables
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+
   }
 
 }
