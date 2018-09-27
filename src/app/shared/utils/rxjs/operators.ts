@@ -1,25 +1,50 @@
 import { OperatorFunction } from 'rxjs/interfaces';
 import { Action } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
+import { } from '@angular/router';
 
 interface ActionWithPayload extends Action {
     payload?: object;
 }
 
 // return true only if url match route
-export function ofRoute(route: string | string[]): OperatorFunction<Action, Action> {
+export function ofRoute(path: string | string[]): OperatorFunction<Action, Action> {
     return filter((action: any) => {
 
         // process only ROUTER_NAVIGATION actions
         if (action.type === 'ROUTER_NAVIGATION') {
 
-            // console.log('[ofRoute]', action.payload, route, action.payload.event.url, action.payload.event.url.indexOf(route) >= 0)
-           
-            if (action.payload.event.url.indexOf(route) >= 0) {
-                return true
+            let parts = (<string>path).split('/');
+            let segments = (<string>action.payload.event.url).split('/');
+
+            console.log('[ROUTER_NAVIGATION]', parts, segments)
+
+            if (parts.length !== segments.length) {
+                // The actual URL is shorter/longer than the segment, no match
+                return false;
             }
 
+            // Check each config part against the actual URL
+            for (var index = 0; index < parts.length; index++) {
+                var part = parts[index];
+                var segment = segments[index];
+                var isParameter = part.startsWith(':');
+                //console.log('[ofRoute] part: ', part, segment, part !== segment, isParameter)
+                if (!isParameter && (part !== segment)) {
+                    console.log('[ofRoute] false ', path)
+
+                    // The actual URL part does not match the config, no match
+                    return false
+                }
+            }
+
+            console.log('[ofRoute] true ', path)
+
+            // The actual URL match path
+            return true
+
         }
+
         return false
 
     });

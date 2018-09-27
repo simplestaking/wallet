@@ -1,0 +1,23 @@
+.panel {
+    display: flex;
+}
+
+.address {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 20px;
+}
+
+.amount {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.reset {
+    margin:0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+}

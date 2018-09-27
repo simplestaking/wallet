@@ -1,0 +1,30 @@
+<div class="panel">
+
+  <svg width="120" height="120" identiconHash="{{address}}">
+    Fallback text for browsers not supporting inline svg
+  </svg>
+
+  <div class="address">
+
+    <span class="mat-display-2 reset">
+      {{tezosWalletDetail.name}}
+    </span>
+    <span class="mat-h1 reset">
+      {{tezosWalletDetail.publicKeyHash}}
+    </span>
+
+  </div>
+
+  <div class="amount">
+
+    <span class="mat-display-2 reset">
+      {{tezosWalletDetail.balance*0.000001 | number:'1.0-6'}}&nbsp;ꜩ
+    </span>
+
+    <span class="mat-h1 reset">
+      {{tezosWalletDetail.balance*0.000001 | number:'1.0-6'}}&nbsp;€
+    </span>
+
+  </div>
+
+</div>
