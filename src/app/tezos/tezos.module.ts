@@ -51,7 +51,11 @@ import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
 import { TezosWalletListComponent } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.component';
 
 import { IdenticonHashDirective } from '../shared/identicon-hash.directive';
-import { TezosWalletDetailComponent } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.component'
+import { TezosWalletDetailComponent } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.component';
+import { TezosOperationTransactionComponent } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.component';
+import { TezosOperationOriginationComponent } from './tezos-operation/tezos-operation-origination/tezos-operation-origination.component';
+import { TezosOperationDelegationComponent } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.component';
+import { TezosOperationActivationComponent } from './tezos-operation/tezos-operation-activation/tezos-operation-activation.component'
 
 @NgModule({
   imports: [
@@ -108,7 +112,11 @@ import { TezosWalletDetailComponent } from './tezos-wallet/tezos-wallet-detail/t
     TezosWalletComponent,
     TezosWalletListComponent,
     IdenticonHashDirective,
-    TezosWalletDetailComponent
+    TezosWalletDetailComponent,
+    TezosOperationTransactionComponent,
+    TezosOperationOriginationComponent,
+    TezosOperationDelegationComponent,
+    TezosOperationActivationComponent
   ]
 })
 export class TezosModule { }

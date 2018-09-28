@@ -1,5 +1,6 @@
 .panel {
     display: flex;
+    margin-bottom: 40px;
 }
 
 .address {
@@ -20,4 +21,18 @@
 .reset {
     margin:0px 0px 0px 0px !important;
     padding: 0px 0px 0px 0px !important;
+}
+
+//TODO: move to separete component 
+.filler-content {
+    flex: auto;
+}
+
+.tezos-wallet {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.mat-stroked-button {
+    border: 1.2px solid;
 }

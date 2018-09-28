@@ -1,3 +1,22 @@
+<!-- create panel and refactor -->
+<div class="tezos-wallet">
+
+  <!-- <button mat-stroked-button>
+    New wallet
+  </button> -->
+
+  <!-- <button mat-button>
+      Reload balance
+    </button> -->
+
+  <span class="filler-content"></span>
+
+  <app-tezos-node>
+  </app-tezos-node>
+
+</div>
+
+
 <div class="panel">
 
   <svg width="120" height="120" identiconHash="{{address}}">
@@ -28,3 +47,28 @@
   </div>
 
 </div>
+
+
+<mat-tab-group>
+
+  <mat-tab label="Transaction">
+    <app-tezos-operation-transaction>
+    </app-tezos-operation-transaction>
+  </mat-tab>
+
+  <mat-tab label="Origination">
+    <app-tezos-operation-origination>
+    </app-tezos-operation-origination>
+  </mat-tab>
+
+  <mat-tab label="Delegation">
+    <app-tezos-operation-delegation>
+    </app-tezos-operation-delegation>
+  </mat-tab>
+
+  <mat-tab label="Activation">
+    <app-tezos-operation-activation>
+    </app-tezos-operation-activation>
+  </mat-tab>
+
+</mat-tab-group>

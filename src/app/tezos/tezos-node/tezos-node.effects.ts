@@ -12,9 +12,12 @@ export class TezosNodeEffects {
 
     // load wallet data after tezos node change 
     @Effect()
-    TezosNodeLoad$ = this.actions$.pipe(
+    TezosNodeListLoad$ = this.actions$.pipe(
         ofType('TEZOS_NODE_CHANGE'),
-        map(() => ({ type: 'TEZOS_WALLET_LIST_LOAD' })),
+        flatMap(() => [
+            { type: 'TEZOS_WALLET_LIST_LOAD' },
+            { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+        ]),
     )
 
     constructor(
