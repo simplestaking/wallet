@@ -1,3 +1,27 @@
-<p>
-  tezos-operation-delegation works!
-</p>
+<div class="tezos-operation-delegation" [formGroup]="tezosOperationDelegationForm" ngrxForm="tezos.tezosOperationDelegation">
+
+    <mat-form-field>
+      <input matInput #address placeholder="To Address" formControlName="to" [matAutocomplete]="auto" />
+      <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>
+  
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let to of tezosWalletList | async" [value]="to.publicKeyHash">
+          <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ</small>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  
+  </div>
+  
+  <br/>
+  <br/>
+  
+  <button *ngIf="tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('WEB')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
+    Send ꜩ
+  </button>
+  
+  <button *ngIf="!tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('TREZOR_T')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
+    Sign with Trezor(Connect) and Send ꜩ
+  </button>
+  
+  

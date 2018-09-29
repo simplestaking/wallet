@@ -33,7 +33,7 @@ export class TezosOperationTransactionComponent implements OnInit {
       fee: '',
     })
 
-    // listen to tezos wallets list
+    // listen to tezos wallets detail
     this.store.select('tezos', 'tezosWalletDetail')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
@@ -64,7 +64,7 @@ export class TezosOperationTransactionComponent implements OnInit {
 
   ngOnDestroy() {
 
-    // close all open directives
+    // close all open observables
     this.destroy$.next();
     this.destroy$.complete();
 

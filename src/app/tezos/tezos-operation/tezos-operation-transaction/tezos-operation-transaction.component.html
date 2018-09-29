@@ -1,8 +1,8 @@
 <div class="tezos-operation-transaction" [formGroup]="tezosOperationTransactionForm" ngrxForm="tezos.tezosOperationTransaction">
 
   <mat-form-field>
-    <input matInput #input3 placeholder="To Address" formControlName="to" [matAutocomplete]="auto" />
-    <mat-hint align="end">{{input3.value?.length || 0}}/36</mat-hint>
+    <input matInput #address placeholder="To Address" formControlName="to" [matAutocomplete]="auto" />
+    <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let to of tezosWalletList | async" [value]="to.publicKeyHash">
@@ -12,8 +12,8 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput #input4 type="number" placeholder="Amount" formControlName="amount" />
-    <mat-hint align="end">{{input4.value?.length || 0}}/8</mat-hint>
+    <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
+    <mat-hint align="end">{{amount.value?.length || 0}}/8</mat-hint>
   </mat-form-field>
 
 </div>

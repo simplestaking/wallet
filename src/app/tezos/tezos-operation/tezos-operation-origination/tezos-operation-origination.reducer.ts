@@ -6,7 +6,7 @@ const initialState: any = {
 export function reducer(state = initialState, action) {
     switch (action.type) {
 
-        case 'TEZOS_OPERATION_TRANSACTION_DESTROY': {
+        case 'TEZOS_OPERATION_ORIGINATON_DESTROY': {
             return {
                 ...state,
                 form: {},

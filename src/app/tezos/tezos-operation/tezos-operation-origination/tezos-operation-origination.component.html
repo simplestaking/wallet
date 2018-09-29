@@ -1,3 +1,19 @@
-<p>
-  tezos-operation-origination works!
-</p>
+<div class="tezos-operation-origination" [formGroup]="tezosOperationOriginationForm" ngrxForm="tezos.tezosOperationOrigination">
+
+  <mat-form-field>
+    <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
+    <mat-hint align="end">{{amount.value?.length || 0}}/8</mat-hint>
+  </mat-form-field>
+
+</div>
+
+<br />
+<br />
+
+<button *ngIf="tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('WEB')" [disabled]="!tezosOperationOrigination?.to || !tezosOperationorigination?.amount ">
+  Send ꜩ
+</button>
+
+<button *ngIf="!tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('TREZOR_T')" [disabled]="!tezosOperationOrigination?.to || !tezosOperationorigination?.amount ">
+  Sign with Trezor(Connect) and Send ꜩ
+</button>
