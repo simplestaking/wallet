@@ -79,7 +79,7 @@ export class NgrxFormDirective implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
 
-    //TODO: clean and desgtroy form
+    //TODO: clean and destroy form
 
   }
 

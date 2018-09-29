@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder } from '@angular/forms'
+import { Store } from '@ngrx/store'
+import { Subject, of } from 'rxjs';
+import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tezos-operation-transaction',
@@ -7,9 +11,88 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TezosOperationTransactionComponent implements OnInit {
 
-  constructor() { }
+  public tezosWalletList
+  public tezosWalletDetail
+  public tezosOperationTransaction
+  public tezosOperationTransactionForm
+  public destroy$ = new Subject<null>();
+
+  constructor(
+    public store: Store<any>,
+    public fb: FormBuilder,
+  ) { }
 
   ngOnInit() {
+
+    // create form group
+    this.tezosOperationTransactionForm = this.fb.group({
+      name: [{ value: '', disabled: true }],
+      from: [{ value: '', disabled: true }],
+      to: '',
+      amount: '',
+      fee: '',
+    })
+
+    // listen to tezos wallets list
+    this.store.select('tezos', 'tezosWalletDetail')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        // create tezos wallet detail 
+        this.tezosWalletDetail = state
+      })
+
+    // listen to tezos wallets list
+    this.store.select('tezos', 'tezosWalletList')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        // create tezos wallet list 
+        this.tezosWalletList =
+          of(state.ids
+            .filter(id => id !== this.tezosWalletDetail.publicKeyHash)
+            .map(id => state.entities[id])
+          )
+      })
+
+    // listen to tezos wallet detail 
+    this.store.select('tezos', 'tezosOperationTransaction', 'form')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        // create tezos wallet detail 
+        this.tezosOperationTransaction = state
+      })
+  }
+
+  ngOnDestroy() {
+
+    // close all open directives
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    // destroy tezos transaction component
+    this.store.dispatch({
+      type: 'TEZOS_OPERATION_TRANSACTION_DESTROY',
+      payload: '',
+    })
+
+  }
+
+  send(walletType) {
+    // console.log('[SEND][TRANSACTION] walletType', walletType)
+
+    // TODO: move logic to effect 
+    if (walletType === 'WEB') {
+      this.store.dispatch({
+        type: "TEZOS_OPERATION_TRANSACTION",
+        walletType: walletType
+      })
+    }
+
+    if (walletType === 'TREZOR_T') {
+      this.store.dispatch({
+        type: "TEZOS_OPERATION_TRANSACTION_TREZOR",
+        walletType: walletType
+      })
+    }
   }
 
 }

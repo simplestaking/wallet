@@ -105,5 +105,11 @@
   3. hw wallet: sudo tcpdump -i lo -A -s 0 'tcp port 6732' 
   4. server: ./tezos-client import secret key remote_baker http://127.0.0.1:5000/tz1V7Vmvq2PbcKyL3sJZ8LYKDaFHRGPWCGqu
 
+  __________________________________________________________
+  // Bitfinex tezos price 
+    https://docs.bitfinex.com/v2/reference#rest-calc-market-average-price
+
+curl --request POST \
+  --url 'https://api.bitfinex.com/v2/calc/trade/avg?symbol=tXTZUSD&amount=1'
 
 -->

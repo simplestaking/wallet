@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'app/shared/shared.module'
 
 import {
   MatAutocompleteModule,
@@ -46,6 +48,8 @@ import { TezosNodeEffects } from './tezos-node/tezos-node.effects'
 import { TezosWalletListEffects } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.effects'
 import { TezosWalletDetailEffects } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.effects'
 
+import { TezosOperationTransactionEffects } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.effects'
+
 import { TezosNodeComponent } from './tezos-node/tezos-node.component';
 import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
 import { TezosWalletListComponent } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.component';
@@ -60,6 +64,8 @@ import { TezosOperationActivationComponent } from './tezos-operation/tezos-opera
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
+    ReactiveFormsModule,
 
     RouterModule.forChild(TezosRouting),
 
@@ -70,6 +76,9 @@ import { TezosOperationActivationComponent } from './tezos-operation/tezos-opera
       TezosNodeEffects,
       TezosWalletListEffects,
       TezosWalletDetailEffects,
+
+      TezosOperationTransactionEffects,
+
     ]),
 
     MatAutocompleteModule,

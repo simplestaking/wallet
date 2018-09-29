@@ -1,3 +1,31 @@
-<p>
-  tezos-operation-transaction works!
-</p>
+<div class="tezos-operation-transaction" [formGroup]="tezosOperationTransactionForm" ngrxForm="tezos.tezosOperationTransaction">
+
+  <mat-form-field>
+    <input matInput #input3 placeholder="To Address" formControlName="to" [matAutocomplete]="auto" />
+    <mat-hint align="end">{{input3.value?.length || 0}}/36</mat-hint>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let to of tezosWalletList | async" [value]="to.publicKeyHash">
+        <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ</small>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput #input4 type="number" placeholder="Amount" formControlName="amount" />
+    <mat-hint align="end">{{input4.value?.length || 0}}/8</mat-hint>
+  </mat-form-field>
+
+</div>
+
+<br/>
+<br/>
+
+<button *ngIf="tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('WEB')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
+  Send ꜩ
+</button>
+
+<button *ngIf="!tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('TREZOR_T')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
+  Sign with Trezor(Connect) and Send ꜩ
+</button>
+
