@@ -41,7 +41,7 @@
     </span>
 
     <span class="mat-h1 reset">
-      {{tezosWalletDetail.balance*0.000001 | number:'1.0-6'}}&nbsp;€
+      {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.0-6'}}&nbsp;$
     </span>
 
   </div>
