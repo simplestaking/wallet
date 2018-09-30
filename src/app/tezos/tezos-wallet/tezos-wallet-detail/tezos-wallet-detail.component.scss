@@ -36,3 +36,12 @@
 .mat-stroked-button {
     border: 1.2px solid;
 }
+
+.chart {
+    display:flex;
+    flex-direction: column;
+}
+
+.ngx-charts-line-chart{
+    display:flex;
+}

@@ -1,3 +1,17 @@
+<div class="chart">
+  <ngx-charts-line-chart 
+    [results]="data" 
+    [customColors]="colorScheme"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis" 
+    tooltipDisabled="true"
+    autoScale="true" 
+    (select)="onSelect($event)">
+  </ngx-charts-line-chart>
+</div>
+
+<br/>
+
 <!-- create panel and refactor -->
 <div class="tezos-wallet">
 
