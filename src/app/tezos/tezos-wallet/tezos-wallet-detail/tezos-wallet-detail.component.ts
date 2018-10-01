@@ -26,10 +26,10 @@ export class TezosWalletDetailComponent implements OnInit {
   showXAxisLabel = false;
   showYAxisLabel = false;
 
-  autoScale = true
+  autoScale = false
   tooltipDisabled = false;
   animations = false;
-  
+
 
   public data: any[] = [
     {
@@ -37,7 +37,7 @@ export class TezosWalletDetailComponent implements OnInit {
       series: [
         {
           name: "2016-09-18T18:12:46.615Z",
-          value: 650
+          value: 10650
         },
         {
           name: "2016-09-19T18:12:46.615Z",
@@ -56,25 +56,40 @@ export class TezosWalletDetailComponent implements OnInit {
           value: 2600
         },
         {
-           name: "2016-09-23T18:12:46.615Z",
-           value: 3200
-         },
+          name: "2016-09-23T18:12:46.615Z",
+          value: 3200
+        },
         {
           name: "2016-09-24T18:12:46.615Z",
           value: 5600
         }
-        
+
       ]
     }
   ];
-  
+
   dateAxisTickFormatting(date: string) {
     // used moment.js to format output date 
     return moment(date).format('MMM DD')
   }
 
+  amountAxisTickFormatting(amount) {
 
+    let exp, suffixes = ['k', 'm', 'b', 't'];
 
+    if (Number.isNaN(amount)) {
+      return amount;
+    }
+
+    if (amount < 1000) {
+      return amount;
+    }
+
+    exp = Math.floor(Math.log(amount) / Math.log(1000));
+
+    return (amount / Math.pow(1000, exp)).toFixed(0) + suffixes[exp - 1];
+
+  }
 
   constructor(
     public store: Store<any>,
