@@ -42,6 +42,23 @@
     flex-direction: column;
 }
 
-.ngx-charts-line-chart{
-    display:flex;
+
+::ng-deep .ngx-charts { 
+
+    path { 
+        stroke: #6495ed;
+        stroke-width: 3;
+    }
+
+    .axis path,
+    .axis line {
+        opacity: 0.8;
+        stroke-dasharray: 5 5; 
+        shape-rendering: crispEdges;
+    }
+
+    text {
+        opacity: 0.6;
+    }
+    
 }

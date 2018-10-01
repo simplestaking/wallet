@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import * as moment from 'moment/moment';
+
 @Component({
   selector: 'app-tezos-wallet-detail',
   templateUrl: './tezos-wallet-detail.component.html',
@@ -14,18 +16,24 @@ export class TezosWalletDetailComponent implements OnInit {
   public address
   public destroy$ = new Subject<null>();
 
-
-  public view: any[] = [700, 400];
-  public showXAxis = false;
-  public showYAxis = true;
-  
-  public colorScheme = {
-    domain: ['#0000ff', '#0000ff', '#0000ff', '#0000ff']
+  colorScheme = {
+    domain: ['#6495ed', '#6495ed', '#6495ed', '#6495ed']
   };
+
+  showXAxis = true;
+  showYAxis = true;
+
+  showXAxisLabel = false;
+  showYAxisLabel = false;
+
+  autoScale = true
+  tooltipDisabled = false;
+  animations = false;
+  
 
   public data: any[] = [
     {
-      name: 'cisla',
+      name: 'amount',
       series: [
         {
           name: "2016-09-18T18:12:46.615Z",
@@ -37,7 +45,7 @@ export class TezosWalletDetailComponent implements OnInit {
         },
         {
           name: "2016-09-20T18:12:46.615Z",
-          value: 3200
+          value: 8200
         },
         {
           name: "2016-09-21T18:12:46.615Z",
@@ -46,33 +54,50 @@ export class TezosWalletDetailComponent implements OnInit {
         {
           name: "2016-09-22T18:12:46.615Z",
           value: 2600
+        },
+        {
+           name: "2016-09-23T18:12:46.615Z",
+           value: 3200
+         },
+        {
+          name: "2016-09-24T18:12:46.615Z",
+          value: 5600
         }
+        
       ]
     }
   ];
-
-constructor(
-  public store: Store < any >,
-) { }
-
-ngOnInit() {
-
-  this.store.select('tezos', 'tezosWalletDetail')
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(state => {
-      this.tezosWalletDetail = state
-    })
-
-}
+  
+  dateAxisTickFormatting(date: string) {
+    // used moment.js to format output date 
+    return moment(date).format('MMM DD')
+  }
 
 
-ngOnDestroy() {
 
-  // close all observables
-  this.destroy$.next();
-  this.destroy$.complete();
 
-}
+  constructor(
+    public store: Store<any>,
+  ) { }
+
+  ngOnInit() {
+
+    this.store.select('tezos', 'tezosWalletDetail')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosWalletDetail = state
+      })
+
+  }
+
+
+  ngOnDestroy() {
+
+    // close all observables
+    this.destroy$.next();
+    this.destroy$.complete();
+
+  }
 
 
 }

@@ -21,7 +21,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatMenuModule,
-  // MatCardModule,
+  MatCardModule,
   // MatCheckboxModule,
   // MatChipsModule,
   // MatDatepickerModule,
@@ -72,7 +72,7 @@ import { TezosOperationActivationComponent } from './tezos-operation/tezos-opera
     ReactiveFormsModule,
     HttpClientModule,
     NgxChartsModule,
-    
+
     RouterModule.forChild(TezosRouting),
 
     StoreModule.forFeature('tezos', reducers),
@@ -100,8 +100,8 @@ import { TezosOperationActivationComponent } from './tezos-operation/tezos-opera
     MatSidenavModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule
-    // MatCardModule,
+    MatTooltipModule,
+    MatCardModule,
     // MatCheckboxModule,
     // MatChipsModule,
     // MatDatepickerModule,
