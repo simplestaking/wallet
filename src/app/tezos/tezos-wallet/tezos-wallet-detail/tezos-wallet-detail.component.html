@@ -1,35 +1,17 @@
 <mat-card>
-  <mat-card-header>
-    <!-- <mat-card-title>
+  <!-- <mat-card-header>
+    <mat-card-title>
       <h1>
         USD 254 254
       </h1>
     </mat-card-title>
-    <mat-card-subtitle>Total balance</mat-card-subtitle> -->
-  </mat-card-header>
+    <mat-card-subtitle>Total balance</mat-card-subtitle>
+  </mat-card-header> -->
   <mat-card-content>
-    <div class="chart">
-      <ngx-charts-line-chart
 
-        [results]="data"
-        [scheme]="colorScheme"
-        
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        
-        [xAxisTickFormatting]="dateAxisTickFormatting"
-        [yAxisTickFormatting]="amountAxisTickFormatting"
-        
-        [autoScale]="autoScale"
-        [tooltipDisabled]="tooltipDisabled"
-        [animations]="animations"
+    <app-chart-line>
+    </app-chart-line>
 
-        >
-      </ngx-charts-line-chart>
-    </div>
   </mat-card-content>
 </mat-card>
 <br />

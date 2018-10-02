@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'app/shared/shared.module'
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import {
   MatAutocompleteModule,
@@ -71,7 +70,6 @@ import { TezosOperationActivationComponent } from './tezos-operation/tezos-opera
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxChartsModule,
 
     RouterModule.forChild(TezosRouting),
 

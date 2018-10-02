@@ -46,7 +46,8 @@
     "libsodium-wrappers": "^0.7.3",
     "moment": "^2.22.2",
     "ngrx-store-freeze": "0.2.4",
-    "start": "^5.1.0"
+    "start": "^5.1.0",
+    "trezor-connect": "^5.0.33"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.8",

@@ -1,20 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store'
-import { Subject, of } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import * as moment from 'moment/moment';
 
 @Component({
-  selector: 'app-tezos-wallet-detail',
-  templateUrl: './tezos-wallet-detail.component.html',
-  styleUrls: ['./tezos-wallet-detail.component.scss']
+  selector: 'app-chart-line',
+  templateUrl: './chart-line.component.html',
+  styleUrls: ['./chart-line.component.scss']
 })
-export class TezosWalletDetailComponent implements OnInit {
+export class ChartLineComponent implements OnInit {
 
-  public tezosWalletDetail
-  public address
-  public destroy$ = new Subject<null>();
 
   colorScheme = {
     domain: ['#6495ed', '#ffffff', '#ffffff', '#ffffff']
@@ -70,8 +64,10 @@ export class TezosWalletDetailComponent implements OnInit {
   ];
 
   dateAxisTickFormatting(date: string) {
+
     // used moment.js to format output date 
     return moment(date).format('MMM DD')
+  
   }
 
   amountAxisTickFormatting(amount) {
@@ -92,28 +88,10 @@ export class TezosWalletDetailComponent implements OnInit {
 
   }
 
-  constructor(
-    public store: Store<any>,
-  ) { }
+  constructor() {
+  }
 
   ngOnInit() {
-
-    this.store.select('tezos', 'tezosWalletDetail')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(state => {
-        this.tezosWalletDetail = state
-      })
-
   }
-
-
-  ngOnDestroy() {
-
-    // close all observables
-    this.destroy$.next();
-    this.destroy$.complete();
-
-  }
-
 
 }

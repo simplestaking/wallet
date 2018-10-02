@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NgrxFormDirective } from 'app/shared/ngrx-form.directive';
+import { NgrxFormDirective } from './ngrx-form.directive';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+import { ChartLineComponent } from './charts/chart-line/chart-line.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    NgxChartsModule
   ],
   exports: [
-    NgrxFormDirective
+    NgrxFormDirective,
+    ChartLineComponent
   ],
   declarations: [
-    NgrxFormDirective
+    NgrxFormDirective,
+    ChartLineComponent
   ]
 })
 export class SharedModule { }
