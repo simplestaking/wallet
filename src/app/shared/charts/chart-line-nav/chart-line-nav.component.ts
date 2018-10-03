@@ -65,7 +65,7 @@ export class ChartLineNavComponent implements OnInit {
   ];
 
   dateAxisTickFormatting(date: string) {
-
+    // console.log('[dateAxisTickFormatting]', moment(date).format('MMM DD'))
     // used moment.js to format output date 
     return moment(date).format('MMM DD')
 

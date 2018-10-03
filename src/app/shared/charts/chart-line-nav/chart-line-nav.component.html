@@ -11,6 +11,7 @@
     [showXAxisLabel]="showXAxisLabel"
     [showYAxisLabel]="showYAxisLabel"
     
+    [xAxisTickFormatting]="dateAxisTickFormatting" 
     [yAxisTickFormatting]="amountAxisTickFormatting"
     
     [autoScale]="autoScale"
@@ -21,10 +22,12 @@
     [roundDomains]="roundDomains"
     
     [legend]="legend"
-
     >
-
+   
+    <ng-template #seriesTooltipTemplate let-model="model">
+      <pre>{{model[0].name}}</pre>
+      <pre>{{model[0].value}}</pre>
+    </ng-template>
   </ngx-charts-line-chart-nav>
-  <!-- [xAxisTickFormatting]="dateAxisTickFormatting" -->
 
 </div>

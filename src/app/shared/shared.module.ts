@@ -15,6 +15,8 @@ import { XAxisTicksNavComponent } from './charts/chart-line-nav/x-axis-ticks-nav
 import { YAxisNavComponent } from './charts/chart-line-nav/y-axis-nav.component';
 import { YAxisTicksNavComponent } from './charts/chart-line-nav/y-axis-ticks-nav.component';
 
+import { CircleSeriesNavComponent } from './charts/chart-line-nav/circle-series-nav.component';
+import { TooltipAreaNavComponent } from './charts/chart-line-nav/tooltip-area-nav.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,8 @@ import { YAxisTicksNavComponent } from './charts/chart-line-nav/y-axis-ticks-nav
     XAxisTicksNavComponent,
     YAxisNavComponent,
     YAxisTicksNavComponent,
+    CircleSeriesNavComponent,
+    TooltipAreaNavComponent,
   ]
 })
 export class SharedModule { }

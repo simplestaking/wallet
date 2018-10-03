@@ -87,7 +87,7 @@ import {
             </svg:g>
   
             <svg:g *ngIf="!tooltipDisabled" (mouseleave)="hideCircles()">
-              <svg:g ngx-charts-tooltip-area
+              <svg:g ngx-charts-tooltip-area-nav
                 [dims]="dims"
                 [xSet]="xSet"
                 [xScale]="xScale"
@@ -97,24 +97,24 @@ import {
                 [tooltipDisabled]="tooltipDisabled"
                 [tooltipTemplate]="seriesTooltipTemplate"
                 (hover)="updateHoveredVertical($event)"
-              />
+                />
   
               <svg:g *ngFor="let series of results">
-                <svg:g ngx-charts-circle-series
+                <svg:g ngx-charts-circle-series-nav
                   [xScale]="xScale"
                   [yScale]="yScale"
                   [colors]="colors"
                   [data]="series"
                   [scaleType]="scaleType"
                   [visibleValue]="hoveredVertical"
+                  />
+                  </svg:g>
                   [activeEntries]="activeEntries"
                   [tooltipDisabled]="tooltipDisabled"
                   [tooltipTemplate]="tooltipTemplate"
                   (select)="onClick($event, series)"
                   (activate)="onActivate($event)"
                   (deactivate)="onDeactivate($event)"
-                />
-              </svg:g>
             </svg:g>
           </svg:g>
         </svg:g>
