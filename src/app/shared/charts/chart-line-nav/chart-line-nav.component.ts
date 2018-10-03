@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
 import * as moment from 'moment/moment';
 
 @Component({
-  selector: 'app-chart-line',
-  templateUrl: './chart-line.component.html',
-  styleUrls: ['./chart-line.component.scss']
+  selector: 'app-chart-line-nav',
+  templateUrl: './chart-line-nav.component.html',
+  styleUrls: ['./chart-line-nav.component.scss']
 })
-export class ChartLineComponent implements OnInit {
+export class ChartLineNavComponent implements OnInit {
 
 
   colorScheme = {
@@ -25,38 +24,40 @@ export class ChartLineComponent implements OnInit {
 
   animations = false;
   gradient = true;
+  roundDomains = true;
+  legend = false;
 
   public data: any[] = [
     {
       name: 'amount',
       series: [
         {
-          name: "2016-09-18T18:12:46.615Z",
-          value: 106500
+          name: new Date("2016-09-18"),
+          value: 10650
         },
         {
-          name: "2016-09-19T18:12:46.615Z",
+          name: new Date("2016-09-19"),
           value: 28000
         },
         {
-          name: "2016-09-20T18:12:46.615Z",
-          value: 82000
+          name: new Date("2016-09-20"),
+          value: 12200
         },
         {
-          name: "2016-09-21T18:12:46.615Z",
-          value: 1600
+          name: new Date("2016-09-21"),
+          value: 16000
         },
         {
-          name: "2016-09-22T18:12:46.615Z",
+          name: new Date("2016-09-22"),
           value: 26000
         },
         {
-          name: "2016-09-23T18:12:46.615Z",
+          name: new Date("2016-09-23"),
           value: 32000
         },
         {
-          name: "2016-09-24T18:12:46.615Z",
-          value: 66000
+          name: new Date("2016-09-24"),
+          value: 56000
         }
 
       ]
@@ -67,7 +68,7 @@ export class ChartLineComponent implements OnInit {
 
     // used moment.js to format output date 
     return moment(date).format('MMM DD')
-  
+
   }
 
   amountAxisTickFormatting(amount) {
@@ -88,8 +89,7 @@ export class ChartLineComponent implements OnInit {
 
   }
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
   }

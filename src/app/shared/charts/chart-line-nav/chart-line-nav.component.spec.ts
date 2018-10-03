@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChartLineComponent } from './chart-line.component';
+import { ChartLineNavComponent } from './chart-line-nav.component';
 
-describe('ChartLineComponent', () => {
-  let component: ChartLineComponent;
-  let fixture: ComponentFixture<ChartLineComponent>;
+describe('ChartLineNavComponent', () => {
+  let component: ChartLineNavComponent;
+  let fixture: ComponentFixture<ChartLineNavComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartLineComponent ]
+      declarations: [ ChartLineNavComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChartLineComponent);
+    fixture = TestBed.createComponent(ChartLineNavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
