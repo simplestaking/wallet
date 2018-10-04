@@ -41,7 +41,7 @@ export class ChartLineNavComponent implements OnInit {
         },
         {
           name: new Date("2016-09-20"),
-          value: 12200
+          value: 101200
         },
         {
           name: new Date("2016-09-21"),

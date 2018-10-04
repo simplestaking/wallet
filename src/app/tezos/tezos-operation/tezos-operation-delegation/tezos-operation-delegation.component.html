@@ -1,6 +1,7 @@
 <div class="tezos-operation-delegation" [formGroup]="tezosOperationDelegationForm" ngrxForm="tezos.tezosOperationDelegation">
 
-    <mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Address</mat-label>
       <input matInput #address placeholder="To Address" formControlName="to" [matAutocomplete]="auto" />
       <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>
   

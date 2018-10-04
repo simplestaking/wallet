@@ -1,6 +1,7 @@
 <div class="tezos-operation-origination" [formGroup]="tezosOperationOriginationForm" ngrxForm="tezos.tezosOperationOrigination">
 
-  <mat-form-field>
+  <mat-form-field  appearance="outline">
+    <mat-label>Amount</mat-label>
     <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
     <mat-hint align="end">{{amount.value?.length || 0}}/8</mat-hint>
   </mat-form-field>
