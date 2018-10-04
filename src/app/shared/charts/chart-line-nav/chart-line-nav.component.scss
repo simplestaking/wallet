@@ -44,118 +44,23 @@
 
     // set 
     .tooltip-anchor {
-        stroke: #ddd;
         stroke-width: 0.5;
         fill: #ddd;
     }
  
 }
 
-::ng-deep .ngx-charts {
-    // float: left;
-    // overflow: visible;
-  
-    // .circle,
-    // .bar,
-    // .arc {
-    //   cursor: pointer;
-    // }
-  
-    // .bar,
-    // .cell,
-    // .arc,
-    // .card {
-    //   &.active,
-    //   &:hover {
-    //     opacity: 0.8;
-    //     transition: opacity 100ms ease-in-out;
-    //   }
-  
-    //   &:focus {
-    //     outline: none;
-    //   }
-    // }
-  
-    g {
-      &:focus {
-        outline: none;
-      }
-    }
-  
-    // .line-series,
-    // .line-series-range,
-    // .polar-series-path,
-    // .polar-series-area,
-    // .area-series {
-    //   &.inactive {
-    //     transition: opacity 100ms ease-in-out;
-    //     opacity: .2
-    //   }
-    // }
-  
-    // .line-highlight {
-    //   display: none;
-  
-    //   &.active {
-    //     display: block;
-    //   }
-    // }
-  
-    // .area {
-    //   opacity: 0.6;
-    // }
-  
-    // .circle {
-    //   &:hover {
-    //     cursor: pointer;
-    //   }
-    // }
-  
-    // .label {
-    //   font-size: 12px;
-    //   font-weight: normal;
-    // }
-  
-    // .tooltip-anchor {
-    //   fill: rgb(0,0,0);
-    // }
-  
-  
-    // .refline-path {
-    //   stroke: #a8b2c7;
-    //   stroke-width: 1;
-    //   stroke-dasharray: 5;
-    //   stroke-dashoffset: 5;
-    // }
-  
-    // .refline-label {
-    //   font-size: 9px;
-    // }
-  
-    // .reference-area {
-    //   fill-opacity: 0.05;
-    //   fill: #000;
-    // }
-  
-    // .gridline-path-dotted {
-    //   stroke: #ddd;
-    //   stroke-width: 1;
-    //   fill: none;
-    //   stroke-dasharray: 1, 20;
-    //   stroke-dashoffset: 3;
-    // }
-  
-    // .grid-panel {
-    //   rect {
-    //     fill: none;
-    //   }
-  
-    //   &.odd {
-    //     rect {
-    //       fill: rgba(0,0,0,0.05);
-    //     }
-    //   }
-    // }
-  
-  }
-  
+// chart tooltip style 
+ ::ng-deep .ngx-charts-tooltip-content.type-tooltip {
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    color: #000000 !important;
+    background: #ffffff !important;
+    transition: opacity 0.1s, transform 0.1s, -webkit-transform 0.1s !important;
+    // transition: opacity 0s, transform 0s, -webkit-transform 0s !important;
+    transform: translate3d(0, 15px, 0) !important;
+    // -webkit-transition: none !important;
+    // transform: none !important;
+    // box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
+    box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
+}
+

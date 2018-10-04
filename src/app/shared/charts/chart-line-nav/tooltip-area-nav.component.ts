@@ -45,7 +45,7 @@ import {
         </xhtml:ng-template>
         <svg:rect
           #tooltipAnchor
-          [@animationState]="anchorOpacity !== 0 ? 'active' : 'inactive'"
+          [@animationState]="'active'"
           class="tooltip-anchor"
           [attr.x]="anchorPos"
           y="0"
@@ -55,30 +55,33 @@ import {
           [style.pointer-events]="'none'"
           ngx-tooltip
           [tooltipDisabled]="tooltipDisabled"
-          [tooltipPlacement]="'right'"
+          [tooltipPlacement]="'top'"
           [tooltipType]="'tooltip'"
           [tooltipSpacing]="15"
           [tooltipTemplate]="tooltipTemplate ? tooltipTemplate: defaultTooltipTemplate"
           [tooltipContext]="anchorValues"
           [tooltipImmediateExit]="true"
+          [tooltipShowCaret]="false"
+          [tooltipHideTimeout]="0"
+          [tooltipShowTimeout]="0"
         />
       </svg:g>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
       trigger('animationState', [
-        transition('inactive => active', [
-          style({
-            opacity: 0,
-          }),
-          animate(250, style({opacity: 0.7}))
-        ]),
-        transition('active => inactive', [
-          style({
-            opacity: 0.7,
-          }),
-          animate(250, style({opacity: 0}))
-        ])
+        // transition('inactive => active', [
+        //   style({
+        //     opacity: 0,
+        //   }),
+        //   animate(250, style({opacity: 0.7}))
+        // ]),
+        // transition('active => inactive', [
+        //   style({
+        //     opacity: 0.7,
+        //   }),
+        //   animate(250, style({opacity: 0}))
+        // ])
       ])
     ]
   })

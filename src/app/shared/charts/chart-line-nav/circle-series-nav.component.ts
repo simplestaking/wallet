@@ -38,12 +38,12 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
       trigger('animationState', [
-        transition(':enter', [
-          style({
-            opacity: 0,
-          }),
-          animate(0, style({opacity: 1}))
-        ])
+        // transition(':enter', [
+        //   style({
+        //     opacity: 0,
+        //   }),
+        //   animate(250, style({opacity: 1}))
+        // ])
       ])
     ]
   })

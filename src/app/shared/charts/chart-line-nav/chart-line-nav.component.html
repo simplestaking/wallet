@@ -25,8 +25,20 @@
     >
    
     <ng-template #seriesTooltipTemplate let-model="model">
-      <pre>{{model[0].name}}</pre>
-      <pre>{{model[0].value}}</pre>
+      <div style="padding: 10px">
+        <span style="font-size: 16px">
+          EUR {{ model[0].value | number:'1.0-6' }} 
+        </span>
+        <br/>
+        <span style="opacity:0.5">
+          XTZ {{ model[0].value | number:'1.0-6' }} 
+        </span>
+        <br/>
+        <br/>
+        <span style="opacity:0.5">
+          {{ model[0].name | date: 'MMMM dd, yyyy' }}
+        </span>
+      </div>
     </ng-template>
   </ngx-charts-line-chart-nav>
 

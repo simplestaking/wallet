@@ -38,7 +38,7 @@ export class TezosWalletDetailComponent implements OnInit {
       series: [
         {
           name: "2016-09-18T18:12:46.615Z",
-          value: 106500
+          value: 10650
         },
         {
           name: "2016-09-19T18:12:46.615Z",
@@ -46,11 +46,11 @@ export class TezosWalletDetailComponent implements OnInit {
         },
         {
           name: "2016-09-20T18:12:46.615Z",
-          value: 82000
+          value: 92000
         },
         {
           name: "2016-09-21T18:12:46.615Z",
-          value: 1600
+          value: 16000
         },
         {
           name: "2016-09-22T18:12:46.615Z",
