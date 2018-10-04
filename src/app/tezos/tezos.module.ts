@@ -52,6 +52,7 @@ import { TezosWalletDetailEffects } from './tezos-wallet/tezos-wallet-detail/tez
 import { TezosOperationTransactionEffects } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.effects'
 import { TezosOperationOriginationEffects } from './tezos-operation/tezos-operation-origination/tezos-operation-origination.effects'
 import { TezosOperationDelegationEffects } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.effects'
+import { TezosOperationHistoryEffects } from './tezos-operation/tezos-operation-history/tezos-operation-history.effects'
 
 import { TezosNodeComponent } from './tezos-node/tezos-node.component';
 import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
@@ -62,7 +63,8 @@ import { TezosWalletDetailComponent } from './tezos-wallet/tezos-wallet-detail/t
 import { TezosOperationTransactionComponent } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.component';
 import { TezosOperationOriginationComponent } from './tezos-operation/tezos-operation-origination/tezos-operation-origination.component';
 import { TezosOperationDelegationComponent } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.component';
-import { TezosOperationActivationComponent } from './tezos-operation/tezos-operation-activation/tezos-operation-activation.component'
+import { TezosOperationActivationComponent } from './tezos-operation/tezos-operation-activation/tezos-operation-activation.component';
+import { TezosOperationHistoryComponent } from './tezos-operation/tezos-operation-history/tezos-operation-history.component'
 
 @NgModule({
   imports: [
@@ -82,7 +84,8 @@ import { TezosOperationActivationComponent } from './tezos-operation/tezos-opera
       TezosWalletDetailEffects,
 
       TezosOperationTransactionEffects,
-
+      TezosOperationHistoryEffects,
+      
     ]),
 
     MatAutocompleteModule,
@@ -129,7 +132,8 @@ import { TezosOperationActivationComponent } from './tezos-operation/tezos-opera
     TezosOperationTransactionComponent,
     TezosOperationOriginationComponent,
     TezosOperationDelegationComponent,
-    TezosOperationActivationComponent
+    TezosOperationActivationComponent,
+    TezosOperationHistoryComponent
   ]
 })
 export class TezosModule { }

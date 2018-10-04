@@ -1,3 +1,77 @@
+<!-- create panel and refactor -->
+<!-- <div style="padding-bottom:10px;display: flex;">
+
+  <span class="filler-content"></span>
+
+  <app-tezos-node>
+  </app-tezos-node>
+
+</div> -->
+
+<!-- 
+<div style="padding:10px;display: flex;">
+
+  <button mat-button>
+    USD
+  </button>
+
+  <span class="filler-content"></span>
+
+  <button mat-button>
+    Day
+  </button>
+
+  <button mat-button>
+    Month
+  </button>
+
+  <button mat-button>
+    Year
+  </button>
+
+</div> -->
+
+<mat-card>
+  <mat-card-content>
+    <div class="panel">
+  
+      <!-- <svg width="70" height="70" style="opacity:0.5;display:flex;margin-right:10px" identiconHash="{{tezosWalletDetail.publicKeyHash}}">
+        Fallback text for browsers not supporting inline svg
+      </svg> -->
+
+      <div class="address">
+
+        <span class="mat-h1 reset">
+          {{tezosWalletDetail.name}}
+        </span>
+        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;">
+          {{tezosWalletDetail.publicKeyHash}}
+        </span>
+
+      </div>
+
+
+
+      <div class="amount">
+
+        <span class="reset" style="opacity:0.85">
+          XTZ {{tezosWalletDetail.balance*0.000001 | number:'1.0-6'}}
+          <!-- &nbsp;ꜩ -->
+        </span>
+        <!-- 
+        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;">
+          {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.0-6'}}&nbsp;$
+        </span> -->
+
+      </div>
+
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+<br />
+
 <mat-card>
   <mat-card-header>
     <mat-card-title>
@@ -20,55 +94,16 @@
 </mat-card>
 <br />
 
-<!-- create panel and refactor -->
-<div class="tezos-wallet">
+<mat-card>
+  <mat-card-content>
 
-  <!-- <button mat-stroked-button>
-    New wallet
-  </button> -->
+    <app-tezos-operation-history>
+    </app-tezos-operation-history>
 
-  <!-- <button mat-button>
-      Reload balance
-    </button> -->
+  </mat-card-content>
+</mat-card>
 
-  <span class="filler-content"></span>
-
-  <app-tezos-node>
-  </app-tezos-node>
-
-</div>
-
-
-<!-- <div class="panel">
-
-  <svg width="120" height="120" identiconHash="{{address}}">
-    Fallback text for browsers not supporting inline svg
-  </svg>
-
-  <div class="address">
-
-    <span class="mat-display-2 reset">
-      {{tezosWalletDetail.name}}
-    </span>
-    <span class="mat-h1 reset">
-      {{tezosWalletDetail.publicKeyHash}}
-    </span>
-
-  </div>
-
-  <div class="amount">
-
-    <span class="mat-display-2 reset">
-      {{tezosWalletDetail.balance*0.000001 | number:'1.0-6'}}&nbsp;ꜩ
-    </span>
-
-    <span class="mat-h1 reset">
-      {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.0-6'}}&nbsp;$
-    </span>
-
-  </div>
-
-</div> -->
+<br />
 
 <mat-card>
   <mat-card-content>

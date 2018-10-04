@@ -7,6 +7,8 @@ import * as fromTezosWalletDetail from './tezos-wallet/tezos-wallet-detail/tezos
 import * as fromTezosOperationTransaction from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.reducer';
 import * as fromTezosOperationOrigination from './tezos-operation/tezos-operation-origination/tezos-operation-origination.reducer';
 import * as fromTezosOperationDelegation from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.reducer';
+import * as fromTezosOperationHistory from './tezos-operation/tezos-operation-history/tezos-operation-history.reducer';
+
 
 export interface State {
     tezosNode: any;
@@ -15,6 +17,7 @@ export interface State {
     tezosOperationTransaction: any;
     tezosOperationOrigination: any;
     tezosOperationDelegation: any;
+    tezosOperationHistory: any;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -23,5 +26,6 @@ export const reducers: ActionReducerMap<State> = {
     tezosWalletDetail: fromTezosWalletDetail.reducer,
     tezosOperationTransaction: fromTezosOperationTransaction.reducer,
     tezosOperationOrigination: fromTezosOperationOrigination.reducer,
-    tezosOperationDelegation: fromTezosOperationDelegation.reducer
+    tezosOperationDelegation: fromTezosOperationDelegation.reducer,
+    tezosOperationHistory: fromTezosOperationHistory.reducer
 };

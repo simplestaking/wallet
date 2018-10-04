@@ -13,7 +13,8 @@
 
 /* card */
 .mat-card:not([class*=mat-elevation-z]) {
-    box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 0px 0px 0 rgba(0,0,0,.09) !important;
+    box-shadow: 0 0px 0px -1px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important
+    // box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 0px 0px 0 rgba(0,0,0,.09) !important;
 }
 
 /* table */
