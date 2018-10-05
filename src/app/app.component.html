@@ -12,8 +12,8 @@
         <!-- TODO: use reducer instead of local variable -->
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
-      <span *ngIf="app.logo.isVisible" matTooltip="Client is connected to node! {{app.node.timestamp}}" matTooltipPosition="left"
-        style="margin-left:10px">
+      <span *ngIf="app.logo.isVisible" matTooltip="Client is connected to node! {{app.node.timestamp}}"
+        matTooltipPosition="left" style="margin-left:10px">
         simplestaking.com</span>
 
       <!-- 
@@ -33,7 +33,7 @@
 
       <!-- <app-auth></app-auth> -->
 
-      <!-- tezos node switcher -->  
+      <!-- tezos node switcher -->
 
       <!-- <app-tezos-node>
       </app-tezos-node> -->
@@ -60,13 +60,19 @@
 
   <!-- Sidebar -->
   <mat-sidenav-container>
-    <mat-sidenav #start mode="side" [opened]="app.sidenav.isVisible" [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom">
+    <mat-sidenav #start mode="side" style="background-color: whitesmoke;padding:10px" [opened]="app.sidenav.isVisible"
+      [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom">
       <mat-nav-list>
         <!-- <a mat-list-item routerLink="/balance">Balance</a> -->
-        <a mat-list-item routerLink="/accounts">Wallet</a>
+        <a mat-list-item routerLink="/tezos/wallet">Dashboard</a>
+        <a mat-list-item routerLink="/tezos/wallet">Send funds</a>
+        <a mat-list-item routerLink="/tezos/wallet">Receive funds</a>
+        <a mat-list-item routerLink="/tezos/wallet">Origination</a>
+        <a mat-list-item routerLink="/tezos/wallet">Delegation</a>
+
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
-        <a mat-list-item routerLink="/delegates">Explorer</a>
-        <a mat-list-item routerLink="/trezor">Trezor</a>
+        <!-- <a mat-list-item routerLink="/delegates">Explorer</a>
+        <a mat-list-item routerLink="/trezor">Trezor</a> -->
         <!-- <a mat-list-item routerLink="/settings">Settings</a>  -->
       </mat-nav-list>
 
