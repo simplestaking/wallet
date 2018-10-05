@@ -36,32 +36,39 @@
     <div class="panel">
 
       <!-- <svg width="70" height="70" style="opacity:0.5;display:flex;margin-right:10px" identiconHash="{{tezosWalletDetail.publicKeyHash}}">
-        Fallback text for browsers not supporting inline svg
-      </svg> -->
+            Fallback text for browsers not supporting inline svg
+          </svg> -->
 
       <div class="address">
+        <span class="mat-h1 reset">
+          {{tezosWalletDetail.name}}
+        </span>
+        <span class="mat-h1 reset" style="opacity:0.65;font-size: 14px;">
+          wallet name
+        </span>
+      </div>
 
+      <div class="address">
         <span class="mat-h1 reset">
           {{tezosWalletDetail.publicKeyHash}}
         </span>
         <span class="mat-h1 reset" style="opacity:0.65;font-size: 14px;">
-          {{tezosWalletDetail.name}}
+          wallet address
         </span>
-
       </div>
-
 
 
       <div class="amount">
 
-        <span class="reset" style="opacity:0.85">
+        <span class="mat-h1 reset" style="opacity:0.85">
           XTZ {{tezosWalletDetail.balance*0.000001 | number:'1.0-6'}}
           <!-- &nbsp;ꜩ -->
         </span>
-        <!-- 
+
         <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;">
-          {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.0-6'}}&nbsp;$
-        </span> -->
+          total balance
+          <!-- {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.0-6'}}&nbsp;$ -->
+        </span>
 
       </div>
 
@@ -71,6 +78,7 @@
 </mat-card>
 
 <br />
+
 
 <mat-card>
   <mat-card-header>
