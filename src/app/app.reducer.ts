@@ -20,7 +20,7 @@ const initialState = {
     },
     // menu in sidebar/sideNav
     sidenav: {
-        isVisible: true,
+        isVisible: false,
         toggleButton: {
             isVisible: true,
         },

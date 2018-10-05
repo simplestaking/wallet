@@ -29,8 +29,10 @@ export class TezosOperationHistoryComponent implements OnInit {
 
 
   ngOnInit() {
-    this.data = new MatTableDataSource<any>(this.dataSource);
 
+    this.data = new MatTableDataSource<any>(this.dataSource);
     this.data.paginator = this.paginator;
+
   }
+
 }
