@@ -30,25 +30,60 @@ export class TezosOperationHistoryEffects {
             // get public key hash from url 
             of([publicKeyHash]).pipe(
 
+                // get number of  operation transactions
+                flatMap(() =>
+                    this.http.get('https://api3.tzscan.io/v2/number_operations/' + publicKeyHash + '?type=Transaction')
+                ),
+
                 // get operation transactions
                 flatMap(operationsCount =>
                     this.http.get('https://api3.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=50')
                 ),
 
-                // // get number of  operation transactions
-                // flatMap(() =>
-                //     this.http.get('https://api3.tzscan.io/v2/number_operations/' + publicKeyHash).pipe(
-                //     )
-                // ),
-
                 // // page, number
                 // tap(operationsCount => console.log('[operationsCount]', operationsCount, Math.ceil(operationsCount[0] / 10))),
 
-
             )
         ),
-        tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+    )
+
+    // get historical operation data  
+    @Effect()
+    TezosWalletOperationHistoryTimpeLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD_SUCCESS'),
+
+        // create applycation    
+        flatMap((action: any) => {
+            console.log(action.payload)
+            return action.payload;// action.payload.operations
+        }),
+
+        // 
+        flatMap((operations: any) =>
+            // get public key hash from url 
+            of([operations]).pipe(
+                // tap((operations) => console.log('[operations]', operations[0].block_hash)),
+                // get block timestamp
+                flatMap(() =>
+                    this.http.get('https://api5.tzscan.io/v1/timestamp/' + operations.block_hash)
+                ),
+                map(response => {
+                    // console.log('[operations]', operations)
+                    return {
+                        timestamp: response[0],
+                        hash: operations.hash,
+                        block_hash: operations.block_hash,
+                    }
+                })
+            )
+        ),
+        
+        //
+        tap((response) => console.log('[operations] response', response)),
+        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS', payload: response })),
+
     )
 
     constructor(

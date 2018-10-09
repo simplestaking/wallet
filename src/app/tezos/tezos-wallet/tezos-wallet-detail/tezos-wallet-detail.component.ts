@@ -13,7 +13,6 @@ import * as moment from 'moment/moment';
 export class TezosWalletDetailComponent implements OnInit {
 
   public tezosWalletDetail
-  public address
   public destroy$ = new Subject<null>();
 
   constructor(
