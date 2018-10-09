@@ -30,22 +30,25 @@ export class TezosOperationHistoryEffects {
             // get public key hash from url 
             of([publicKeyHash]).pipe(
 
-                // get number of  operation transactions
-                flatMap(() =>
-                    this.http.get('https://api3.tzscan.io/v2/number_operations/' + publicKeyHash + '?type=Transaction')
-                ),
+                // // get number of  operation transactions
+                // flatMap(() =>
+                //     this.http.get('https://api3.tzscan.io/v2/number_operations/' + publicKeyHash + '?type=Transaction')
+                // ),
 
                 // get operation transactions
-                flatMap(operationsCount =>
-                    this.http.get('https://api3.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=50')
+                flatMap(() =>
+                    this.http.get('https://api3.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=10')
                 ),
 
-                // // page, number
-                // tap(operationsCount => console.log('[operationsCount]', operationsCount, Math.ceil(operationsCount[0] / 10))),
+                // add publicKeyHash
+                map(operations => ({
+                    publicKeyHash: publicKeyHash,
+                    operations: operations,
+                }))
 
             )
         ),
-        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
     )
 
@@ -54,10 +57,9 @@ export class TezosOperationHistoryEffects {
     TezosWalletOperationHistoryTimpeLoad$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_HISTORY_LOAD_SUCCESS'),
 
-        // create applycation    
+        // create observable for each operation
         flatMap((action: any) => {
-            console.log(action.payload)
-            return action.payload;// action.payload.operations
+            return action.payload.operations
         }),
 
         // 
@@ -79,9 +81,9 @@ export class TezosOperationHistoryEffects {
                 })
             )
         ),
-        
+
         //
-        tap((response) => console.log('[operations] response', response)),
+        // tap((response) => console.log('[operations] response', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS', payload: response })),
 
     )

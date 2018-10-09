@@ -1,11 +1,12 @@
 
 const initialState: any = {
     api: {
-        display: 'Zeronet',
-        name: 'zero',
-        url: 'https://zeronet.simplestaking.com:3000'
-        // name: 'main',
-        // url: 'https://node2.simplestaking.com:3000'
+        // display: 'Zeronet',
+        // name: 'zero',
+        // url: 'https://zeronet.simplestaking.com:3000'
+        display: 'Mainnet',
+        name: 'main',
+        url: 'https://node2.simplestaking.com:3000'
     },
     nodes: [{
         display: 'Zeronet',
@@ -16,7 +17,6 @@ const initialState: any = {
         name: 'main',
         url: 'https://node2.simplestaking.com:3000'
     }],
-    form: {},
 }
 
 export function reducer(state = initialState, action) {
@@ -24,7 +24,6 @@ export function reducer(state = initialState, action) {
 
         // update state with form data
         case 'TEZOS_NODE_INIT_SUCCESS': {
-            console.warn('[TEZOS_NODE_INIT_SUCCESS] ', action.payload, state.form)
             return Object.assign({}, state, {
                 form: {
                     ...state.form,

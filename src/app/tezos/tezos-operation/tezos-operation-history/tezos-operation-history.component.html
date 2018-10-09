@@ -9,37 +9,34 @@
   <!-- From Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Operation </th>
-    <td mat-cell *matCellDef="let element"> {{element?.type?.operations[0]?.kind}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.operation}} </td>
   </ng-container>
 
   <!-- To Column -->
   <ng-container matColumnDef="weight">
     <th mat-header-cell *matHeaderCellDef>Address</th>
     <td mat-cell *matCellDef="let element">
-      <!-- <svg width="25" height="25" style="opacity:0.8;" identiconHash="{{element.type?.operations[0]?.destination.tz}}">
-      </svg> -->
-      {{element.type?.operations[0]?.destination.tz}}
+      <span style="display: flex; align-items: center;">
+        <svg width="25" height="25" style="opacity:0.8;" identiconHash="{{element.address}}">
+        </svg>&nbsp;
+        {{element.address}}
+      </span>
     </td>
   </ng-container>
 
   <!-- Amount Column -->
   <ng-container matColumnDef="symbol">
     <th mat-header-cell *matHeaderCellDef> Amount </th>
-    <td mat-cell *matCellDef="let element"> {{element?.type?.operations[0]?.amount}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.amount * 0.000001 | number:'1.0-6' }}</td>
   </ng-container>
 
   <!-- Fee Column -->
   <ng-container matColumnDef="fee">
     <th mat-header-cell *matHeaderCellDef> Fee </th>
-    <td mat-cell *matCellDef="let element"> {{element?.type?.operations[0]?.fee}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.fee * 0.000001 | number:'1.0-6' }}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="[10,20]" hidePageSize></mat-paginator>
-
-<!-- {{dataSource[0]?.type?.operations[0]?.kind | json}}
-{{dataSource[0]?.type?.operations[0]?.destination.tz | json}}
-{{dataSource[0]?.type?.operations[0]?.amount | json}}
-{{dataSource[0]?.type?.operations[0]?.fee | json}} -->
+<mat-paginator [pageSizeOptions]="[10, 20]" hidePageSize></mat-paginator>

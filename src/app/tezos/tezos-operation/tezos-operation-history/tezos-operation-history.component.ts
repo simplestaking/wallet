@@ -42,7 +42,6 @@ export class TezosOperationHistoryComponent implements OnInit {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
 
-        console.error('[tezosOperationHistory]', data)
         //
         this.dataSource = data.ids.map(id => ({ id, ...data.entities[id] }))
 
