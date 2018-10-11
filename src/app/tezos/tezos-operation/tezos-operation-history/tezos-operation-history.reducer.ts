@@ -58,7 +58,8 @@ export function reducer(state = initialState, action) {
                     ...state.entities,
                     [action.payload.hash]: {
                         ...state.entities[action.payload.hash],
-                        timestamp:
+                        timestamp: action.payload.timestamp,
+                        datetime:
                             // us timestamp
                             // moment(action.payload.timestamp).format('MMM DD YYYY, h:mm:ss a'),
                             // eu timestamp
@@ -71,6 +72,25 @@ export function reducer(state = initialState, action) {
         case 'TEZOS_OPERATION_HISTORY_DESTROY': {
             return {
                 ...state,
+            }
+        }
+
+        case 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_SUCCESS': {
+
+            return {
+                ...state,
+                historicalPrice: {
+                    ids: [
+                        ...action.payload.Data.map(price => price.time)
+                    ],
+                    entities: action.payload.Data.reduce((accumulator, price) => ({
+                        ...accumulator,
+                        [price.time]: {
+                            ...price,
+                        }
+                    }), {})
+
+                }
             }
         }
 

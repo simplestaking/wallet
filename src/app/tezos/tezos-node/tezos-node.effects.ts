@@ -21,9 +21,7 @@ export class TezosNodeEffects {
         ]),
     )
 
-    // get historical data     
-    // https://min-api.cryptocompare.com/data/histoday?fsym=XTZ&tsym=USD&limit=600    
-    
+
     // TODO: fix feature effect auto trigger 
     // get actual tezos price    
     @Effect()
@@ -44,6 +42,24 @@ export class TezosNodeEffects {
                             })),
                         )
                     ),
+                ),
+            ),
+        )
+
+    // get historical data     
+    @Effect()
+    TezosNodeHistoricalPriceUpdate$ = this.actions$
+        .ofType('TEZOS_WALLET_DETAIL_LOAD').pipe(
+            flatMap(() =>
+                this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym=XTZ&tsym=USD&limit=70').pipe(
+                    map(response => ({
+                        type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_SUCCESS',
+                        payload: response
+                    })),
+                    catchError(error => of({
+                        type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_ERROR',
+                        payload: error
+                    })),
                 ),
             ),
         )

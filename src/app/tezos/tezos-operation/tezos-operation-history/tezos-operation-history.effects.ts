@@ -4,7 +4,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { withLatestFrom, flatMap, filter, map, tap, catchError } from 'rxjs/operators';
+import { withLatestFrom, flatMap, filter, map, tap, reduce, catchError } from 'rxjs/operators';
 
 import { ofRoute } from './../../../shared/utils/rxjs/operators';
 

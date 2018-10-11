@@ -1,12 +1,12 @@
 <!-- create panel and refactor -->
-<div style="padding-bottom:10px;display: flex;">
+<!-- <div style="padding-bottom:10px;display: flex;">
 
   <span class="filler-content"></span>
 
   <app-tezos-node>
   </app-tezos-node>
 
-</div>
+</div> -->
 
 <!-- 
 <div style="padding:10px;display: flex;">
@@ -84,7 +84,7 @@
   <mat-card-header>
     <mat-card-title>
       <span class="mat-h1 reset">
-        USD 56,000
+        USD {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.0-6'}}
       </span>
     </mat-card-title>
     <mat-card-subtitle>total balance</mat-card-subtitle>
@@ -95,7 +95,7 @@
     <!-- <br/>
     <br/> -->
 
-    <app-chart-line-nav>
+    <app-chart-line-nav [data]="chartLineNavData" >
     </app-chart-line-nav>
 
   </mat-card-content>

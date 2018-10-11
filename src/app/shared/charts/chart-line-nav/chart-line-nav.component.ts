@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment/moment';
 
 @Component({
@@ -8,6 +8,16 @@ import * as moment from 'moment/moment';
 })
 export class ChartLineNavComponent implements OnInit {
 
+  // get data for graph
+  @Input() data: any[] = [
+    {
+      name: 'default',
+      series: [{
+        name: 0,
+        value: 0
+      }]
+    }
+  ]
 
   colorScheme = {
     domain: ['#6495ed', '#ffffff', '#ffffff', '#ffffff']
@@ -26,43 +36,6 @@ export class ChartLineNavComponent implements OnInit {
   gradient = true;
   roundDomains = true;
   legend = false;
-
-  public data: any[] = [
-    {
-      name: 'amount',
-      series: [
-        {
-          name: new Date("2016-09-18"),
-          value: 10650
-        },
-        {
-          name: new Date("2016-09-19"),
-          value: 28000
-        },
-        {
-          name: new Date("2016-09-20"),
-          value: 101200
-        },
-        {
-          name: new Date("2016-09-21"),
-          value: 16000
-        },
-        {
-          name: new Date("2016-09-22"),
-          value: 26000
-        },
-        {
-          name: new Date("2016-09-23"),
-          value: 32000
-        },
-        {
-          name: new Date("2016-09-24"),
-          value: 56000
-        }
-
-      ]
-    }
-  ];
 
   dateAxisTickFormatting(date: string) {
     // console.log('[dateAxisTickFormatting]', moment(date).format('MMM DD'))
