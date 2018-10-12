@@ -15,7 +15,7 @@ export class TezosWalletDetailEffects {
     // trigger data load based on navigation change  
     @Effect()
     TezosWalletList$ = this.actions$.pipe(
-        ofRoute('/tezos/wallet/:address'),
+        ofRoute('/tezos/wallet/detail/:address'),
         map(() => ({ type: 'TEZOS_WALLET_DETAIL_LOAD' })),
     )
 

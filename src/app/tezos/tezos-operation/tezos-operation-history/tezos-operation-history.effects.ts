@@ -13,7 +13,7 @@ export class TezosOperationHistoryEffects {
 
     @Effect()
     TezosWalletOperationHistory$ = this.actions$.pipe(
-        ofRoute('/tezos/wallet/:address'),
+        ofRoute('/tezos/wallet/detail/:address'),
         map(() => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD' }))
     )
 

@@ -5,7 +5,7 @@
       <ng-container matColumnDef="identicon">
         <th mat-header-cell *matHeaderCellDef>&nbsp;Icon </th>
         <td mat-cell *matCellDef="let element">
-          <a routerLink="/tezos/wallet/{{element.id}}">
+          <a routerLink="/tezos/wallet/detail/{{element.id}}">
             <svg width="40" height="40" identiconHash="{{element.publicKeyHash}}">
               Fallback text for browsers not supporting inline svg
             </svg>
@@ -16,14 +16,14 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let element">
-          <a routerLink="/tezos/wallet/{{element.id}}">{{element.name}}</a>
+          <a routerLink="/tezos/wallet/detail/{{element.id}}">{{element.name}}</a>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="publicKeyHash">
         <th mat-header-cell *matHeaderCellDef> Address </th>
         <td mat-cell *matCellDef="let element">
-          <a routerLink="/tezos/wallet/{{element.id}}">{{element.publicKeyHash}}</a>
+          <a routerLink="/tezos/wallet/detail/{{element.id}}">{{element.publicKeyHash}}</a>
         </td>
       </ng-container>
 

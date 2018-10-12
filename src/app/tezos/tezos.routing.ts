@@ -8,6 +8,6 @@ import { TezosWalletDetailComponent } from './tezos-wallet/tezos-wallet-detail/t
 export const TezosRouting: Routes = [
 
   { path: 'wallet', component: TezosWalletComponent },
-  { path: 'wallet/:address', component: TezosWalletDetailComponent },
+  { path: 'wallet/detail/:address', component: TezosWalletDetailComponent },
 
 ];

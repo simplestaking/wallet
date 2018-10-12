@@ -51,7 +51,7 @@ export class TezosNodeEffects {
     TezosNodeHistoricalPriceUpdate$ = this.actions$
         .ofType('TEZOS_WALLET_DETAIL_LOAD').pipe(
             flatMap(() =>
-                this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym=XTZ&tsym=USD&limit=70').pipe(
+                this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym=XTZ&tsym=USD&limit=100').pipe(
                     map(response => ({
                         type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_SUCCESS',
                         payload: response

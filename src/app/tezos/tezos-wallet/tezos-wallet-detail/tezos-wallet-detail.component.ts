@@ -65,7 +65,7 @@ export class TezosWalletDetailComponent implements OnInit {
           this.lastPrice = 0
         } else {
 
-          console.log('[historicalPrice]', this.historicalPrice, this.operationHistory)
+          // console.log('[historicalPrice]', this.historicalPrice, this.operationHistory)
 
           let amountSumByDay = {}
 
@@ -81,8 +81,7 @@ export class TezosWalletDetailComponent implements OnInit {
               // sum ammount for every transaction day 
               amountSumByDay[timeStamp] = !amountSumByDay[timeStamp] ? this.operationHistory.entities[id].amount : amountSumByDay[timeStamp] + this.operationHistory.entities[id].amount
 
-              // console.log('[operationHistory]', state.entities[id].timestamp, state.entities[id].amount, state.historicalPrice.entities[timeStamp].close)
-              console.log('[amountSumByDay]', timeStamp, amountSumByDay[timeStamp])
+              // console.log('[amountSumByDay]', timeStamp, amountSumByDay[timeStamp])
 
             })
 
@@ -91,12 +90,12 @@ export class TezosWalletDetailComponent implements OnInit {
 
             if (amountSumByDay[this.historicalPrice.entities[id].time]) {
 
-              console.warn('[netAssetValue]',
-                new Date(this.historicalPrice.entities[id].time),
-                amountSumByDay[this.historicalPrice.entities[id].time],
-                this.lastBalance,
-                +this.tezosWalletDetail.balance - +amountSumByDay[this.historicalPrice.entities[id].time]
-              )
+              // console.warn('[netAssetValue]',
+              //   new Date(this.historicalPrice.entities[id].time),
+              //   amountSumByDay[this.historicalPrice.entities[id].time],
+              //   this.lastBalance,
+              //   +this.tezosWalletDetail.balance - +amountSumByDay[this.historicalPrice.entities[id].time]
+              // )
 
               this.lastBalance = +this.tezosWalletDetail.balance - +amountSumByDay[this.historicalPrice.entities[id].time]
             }
@@ -110,8 +109,8 @@ export class TezosWalletDetailComponent implements OnInit {
 
           })
 
-          console.log('[nav][historicalPrice]', this.netAssetValue)
-
+          // console.log('[nav][historicalPrice]', this.netAssetValue)
+ 
         }
 
         //   
