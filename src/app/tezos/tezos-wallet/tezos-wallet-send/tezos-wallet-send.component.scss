@@ -1,0 +1,23 @@
+mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-not-touched {
+    background-color: rgba(0,0,0,0.15);
+    color: #fff;
+}
+
+::ng-deep .mat-step-header .mat-step-label.mat-step-label-active {
+    color: rgba(0,0,0,.6);
+}
+
+::ng-deep  .mat-step-header .mat-step-icon {
+    background-color: rgb(115, 160, 239);
+    color: #fff;
+}
+
+::ng-deep .mat-step-header:hover {
+    background-color: initial;
+}

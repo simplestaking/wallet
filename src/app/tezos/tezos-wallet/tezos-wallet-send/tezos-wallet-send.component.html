@@ -1,3 +1,71 @@
-<p>
-  tezos-wallet-send works!
-</p>
+<mat-card>
+  <mat-card-content>
+
+    <br/>
+    <mat-card-header>
+      <h2 class="mat-h1">
+        Send funds
+      </h2>
+    </mat-card-header>
+
+    <mat-horizontal-stepper [linear]="false">
+
+      <mat-step [editable]="false" label="Information">
+        <div>
+          <app-tezos-operation-transaction>
+          </app-tezos-operation-transaction>
+
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+
+      <mat-step [editable]="false" label="Verification">
+        <div>
+
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+
+      <mat-step [editable]="false" label="Confirmation">
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+        </div>
+      </mat-step>
+
+
+    </mat-horizontal-stepper>
+
+
+
+
+  </mat-card-content>
+</mat-card>
+
+<!-- 
+<mat-card>
+  <mat-card-content>
+
+    <mat-tab-group>
+
+      <mat-tab label="Transaction">
+        <app-tezos-operation-transaction>
+        </app-tezos-operation-transaction>
+      </mat-tab>
+
+      <mat-tab label="Origination">
+        <app-tezos-operation-origination>
+        </app-tezos-operation-origination>
+      </mat-tab>
+
+      <mat-tab label="Delegation">
+        <app-tezos-operation-delegation>
+        </app-tezos-operation-delegation>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </mat-card-content>
+
+</mat-card>
+-->

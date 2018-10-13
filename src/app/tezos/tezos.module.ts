@@ -22,6 +22,7 @@ import {
   MatMenuModule,
   MatCardModule,
   MatPaginatorModule,
+  MatStepperModule,
   // MatCheckboxModule,
   // MatChipsModule,
   // MatDatepickerModule,
@@ -34,7 +35,6 @@ import {
   // MatSlideToggleModule,
   // MatSnackBarModule,
   // MatSortModule,
-  // MatStepperModule,
 } from '@angular/material';
 
 import { RouterModule } from '@angular/router';
@@ -106,6 +106,7 @@ import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive
     MatTooltipModule,
     MatCardModule,
     MatPaginatorModule,
+    MatStepperModule,
     // MatCheckboxModule,
     // MatChipsModule,
     // MatDatepickerModule,
@@ -119,7 +120,6 @@ import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive
     // MatSliderModule,
     // MatSnackBarModule,
     // MatSortModule,
-    // MatStepperModule,
 
   ],
   exports: [
