@@ -26,11 +26,11 @@ export class TezosOperationTransactionComponent implements OnInit {
 
     // create form group
     this.tezosOperationTransactionForm = this.fb.group({
-      name: [{ value: '', disabled: true }],
-      from: [{ value: '', disabled: true }],
-      to: '',
-      amount: '',
-      fee: '',
+      name: [{ value: '', disabled: false }],
+      from: [{ value: '', disabled: false }],
+      to: [{ value: '', disabled: false }],
+      amount: [{ value: '', disabled: true }],
+      fee: [{ value: '', disabled: true }],
     })
 
     // listen to tezos wallets detail
@@ -57,6 +57,15 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.store.select('tezos', 'tezosOperationTransaction', 'form')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
+
+        // dispatch action when sendred addres change  
+        if (this.tezosOperationTransaction && this.tezosOperationTransaction.from !== state.from) {
+          this.store.dispatch({
+            type: 'TEZOS_OPERATION_TRANSACTION_FROM_CHANGE',
+            payload: state.from
+          })
+        }
+
         // create tezos wallet detail 
         this.tezosOperationTransaction = state
       })

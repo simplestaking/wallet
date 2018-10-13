@@ -1,25 +1,27 @@
+
+
 <mat-card>
   <mat-card-content>
 
-    <br/>
+    <!-- <br />
     <mat-card-header>
       <h2 class="mat-h1">
         Send funds
       </h2>
-    </mat-card-header>
+    </mat-card-header> -->
 
     <mat-horizontal-stepper [linear]="false">
 
-      <mat-step [editable]="false" label="Information">
+      <mat-step [editable]="false" optional="false" label="Prepare information to send funds">
         <div>
           <app-tezos-operation-transaction>
           </app-tezos-operation-transaction>
 
-          <button mat-button matStepperNext>Next</button>
+          <!-- <button mat-button matStepperNext>Next</button> -->
         </div>
       </mat-step>
 
-      <mat-step [editable]="false" label="Verification">
+      <mat-step [editable]="false" optional="false" label="Verification">
         <div>
 
           <button mat-button matStepperPrevious>Back</button>
@@ -27,17 +29,13 @@
         </div>
       </mat-step>
 
-      <mat-step [editable]="false" label="Confirmation">
+      <mat-step [editable]="false" optional="false" label="Confirmation">
         <div>
           <button mat-button matStepperPrevious>Back</button>
         </div>
       </mat-step>
-
 
     </mat-horizontal-stepper>
-
-
-
 
   </mat-card-content>
 </mat-card>

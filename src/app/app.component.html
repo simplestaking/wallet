@@ -63,13 +63,31 @@
     <mat-sidenav #start mode="side" style="background-color: whitesmoke;padding:10px" [opened]="app.sidenav.isVisible"
       [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom">
       <mat-nav-list>
-        <!-- <a mat-list-item routerLink="/balance">Balance</a> -->
-        <a mat-list-item routerLink="/tezos/wallet">Dashboard</a>
-        <a mat-list-item routerLink="/tezos/wallet/send">Send funds</a>
+
+        <!-- <span class="mat-body-2" style="padding-left:16px">General</span> -->
+        <!-- <br /> -->
+        <a mat-list-item routerLink="/tezos/wallet">
+          <!-- <mat-icon>dashboard</mat-icon> -->
+          Dashboard
+        </a>
+        
+        <br />
+        <!-- <span class="mat-body-2" style="padding-left:16px">Wallet</span> -->
+
+        <a mat-list-item routerLink="/tezos/wallet/send">
+          <!-- <mat-icon>vertical_align_bottom</mat-icon> -->
+          Send funds
+        </a>
         <a mat-list-item routerLink="/tezos/wallet/receive">Receive funds</a>
         <a mat-list-item routerLink="/tezos/wallet/delegate">Delegate funds</a>
-        <a mat-list-item routerLink="/tezos/wallet/originate">Origination</a>
+        <a mat-list-item routerLink="/tezos/wallet/originate">Originate</a>
 
+        <!-- <br/>
+        <span class="mat-body-1">Network</span> -->
+
+        <br />
+        <a mat-list-item routerLink="/tezos/wallet">New wallet</a>
+       
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
         <!-- <a mat-list-item routerLink="/delegates">Explorer</a>
         <a mat-list-item routerLink="/trezor">Trezor</a> -->

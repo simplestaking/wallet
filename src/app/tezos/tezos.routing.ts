@@ -11,5 +11,6 @@ export const TezosRouting: Routes = [
   { path: 'wallet', component: TezosWalletComponent },
   { path: 'wallet/detail/:address', component: TezosWalletDetailComponent },
   { path: 'wallet/send', component: TezosWalletSendComponent },
+  { path: 'wallet/send/:address', component: TezosWalletSendComponent },
 
 ];

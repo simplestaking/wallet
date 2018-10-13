@@ -49,6 +49,8 @@ import { TezosNodeEffects } from './tezos-node/tezos-node.effects'
 import { TezosWalletListEffects } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.effects'
 import { TezosWalletDetailEffects } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.effects'
 
+import { TezosWalletSendEffects } from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.effects'
+
 import { TezosOperationTransactionEffects } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.effects'
 import { TezosOperationOriginationEffects } from './tezos-operation/tezos-operation-origination/tezos-operation-origination.effects'
 import { TezosOperationDelegationEffects } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.effects'
@@ -84,6 +86,7 @@ import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive
       TezosNodeEffects,
       TezosWalletListEffects,
       TezosWalletDetailEffects,
+      TezosWalletSendEffects,
 
       TezosOperationTransactionEffects,
       TezosOperationHistoryEffects,
@@ -107,6 +110,7 @@ import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive
     MatCardModule,
     MatPaginatorModule,
     MatStepperModule,
+    MatSelectModule,
     // MatCheckboxModule,
     // MatChipsModule,
     // MatDatepickerModule,
@@ -115,7 +119,6 @@ import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive
     // MatGridListModule,
     // MatProgressSpinnerModule,
     // MatRadioModule,
-    // MatSelectModule,
     // MatSlideToggleModule,
     // MatSliderModule,
     // MatSnackBarModule,
