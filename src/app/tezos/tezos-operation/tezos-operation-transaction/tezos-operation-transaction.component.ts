@@ -68,6 +68,11 @@ export class TezosOperationTransactionComponent implements OnInit {
 
         // create tezos wallet detail 
         this.tezosOperationTransaction = state
+
+        // set redux data to form 
+        this.tezosOperationTransactionForm
+          .patchValue(this.tezosOperationTransaction, { emitEvent: false })
+
       })
   }
 

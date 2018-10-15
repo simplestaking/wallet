@@ -20,6 +20,17 @@ export class TezosWalletSendEffects {
         map(() => ({ type: 'TEZOS_WALLET_LIST_LOAD' })),
     )
 
+    // trigger data load based on navigation change  
+    @Effect()
+    TezosWalletSendAddress$ = this.actions$.pipe(
+        ofRoute('/tezos/wallet/send/:address'),
+        flatMap(() => [
+            { type: 'TEZOS_WALLET_LIST_LOAD' },
+            { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+        ]),
+    )
+
+    // redicert to url with tezos public address
     @Effect()
     TezosWalletSendRedirect$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_TRANSACTION_FROM_CHANGE'),
