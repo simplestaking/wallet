@@ -4,13 +4,12 @@
 
     <mat-label>From</mat-label>
     <mat-select placeholder="From" formControlName="from">
-      <mat-option *ngFor="let from of tezosWalletList | async" [value]="from.publicKeyHash">
-        {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ 
+      <mat-option *ngFor="let from of tezosWalletListFrom | async" [value]="from.publicKeyHash">
+        {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ  
       </mat-option>
     </mat-select>
 
   </mat-form-field>
-
 
   <mat-form-field appearance="outline">
 

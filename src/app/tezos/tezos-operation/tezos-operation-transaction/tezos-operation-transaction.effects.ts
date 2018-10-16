@@ -4,7 +4,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { withLatestFrom, flatMap, filter, map, tap, catchError } from 'rxjs/operators';
+import { withLatestFrom, flatMap, filter, map, tap, catchError, delay } from 'rxjs/operators';
 
 import { initializeWallet, transaction } from '../../../../../tezos-wallet'
 
@@ -17,9 +17,9 @@ export class TezosOperationTransactionEffects {
 
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
-        
+
         // tap((state) => {  console.log(state); debugger } ),
-       
+
         //
         flatMap(state => of([]).pipe(
 
@@ -43,6 +43,11 @@ export class TezosOperationTransactionEffects {
             }),
 
         )),
+        
+        //TODO: remove 
+        // wait for tzscan to porcess prevalidated operation
+        delay(5000),
+        
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_OPERATION_TRANSACTION_SUCCESS',
@@ -57,8 +62,10 @@ export class TezosOperationTransactionEffects {
             return caught;
         }),
 
-        // redirect back to accounts list
-        // tap(() => this.router.navigate(['/tezos/wallet/']))
+        // redirect to wallet detail
+        tap((action) => {
+            this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
+        })
     )
 
     constructor(

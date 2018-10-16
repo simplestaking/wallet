@@ -26,21 +26,23 @@ export function reducer(state = initialState, action) {
                         operationTransformed = {
                             operation: 'debit',
                             address: operation.type.operations[0].destination.tz,
-                            amount: operation.type.operations[0].amount,
+                            amount: operation.type.operations[0].amount * -1,
                             fee: operation.type.operations[0].fee,
                         }
                     } else {
                         operationTransformed = {
                             operation: 'credit',
                             address: operation.type.operations[0].src.tz,
-                            amount: operation.type.operations[0].amount * -1,
+                            amount: operation.type.operations[0].amount * +1,
                             fee: operation.type.operations[0].fee,
                         }
                     }
-
+                    
                     return {
                         ...accumulator,
                         [operation.hash]: {
+                            hash: operation.hash, 
+                            datetime: '... pending',
                             ...operationTransformed,
                         }
                     }

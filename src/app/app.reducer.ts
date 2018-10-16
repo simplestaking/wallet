@@ -11,7 +11,7 @@ const initialState = {
     },
     user: {
         uid: null,
-        email: null, 
+        email: null,
         displayName: null,
     },
     progressbar: {
@@ -75,25 +75,27 @@ export function reducer(state = initialState, action) {
                 }
             }
         }
-        
+
         case 'AUTH_LOGOUT_SUCCESS': {
             return {
                 ...state,
                 user: initialState.user
             }
         }
-        
-        case 'PROGRESSBAR_SHOW': {
+
+        case 'PROGRESSBAR_SHOW':
+        case 'TEZOS_OPERATION_TRANSACTION': {
             return {
                 ...state,
                 progressbar: {
-                    isVisible: state.progressbar.counter >= 0 ? true : false ,
+                    isVisible: state.progressbar.counter >= 0 ? true : false,
                     counter: state.progressbar.counter + 1
                 }
             }
-        }    
+        }
 
-        case 'PROGRESSBAR_HIDE': {
+        case 'PROGRESSBAR_HIDE':
+        case 'TEZOS_OPERATION_TRANSACTION_SUCCESS': {
             return {
                 ...state,
                 progressbar: {
@@ -102,7 +104,7 @@ export function reducer(state = initialState, action) {
                 }
             }
         }
-      
+
         default:
             return state;
     }

@@ -12,6 +12,7 @@ import { takeUntil, filter } from 'rxjs/operators';
 export class TezosOperationTransactionComponent implements OnInit {
 
   public tezosWalletList
+  public tezosWalletListFrom
   public tezosWalletDetail
   public tezosOperationTransaction
   public tezosOperationTransactionForm
@@ -45,12 +46,18 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.store.select('tezos', 'tezosWalletList')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
+       
         // create tezos wallet list 
         this.tezosWalletList =
           of(state.ids
             .filter(id => id !== this.tezosWalletDetail.publicKeyHash)
             .map(id => state.entities[id])
           )
+
+        // create tezos wallet list from 
+        this.tezosWalletListFrom = of(state.ids
+          .map(id => state.entities[id])
+        )
       })
 
     // listen to tezos wallet detail 
@@ -97,7 +104,7 @@ export class TezosOperationTransactionComponent implements OnInit {
     if (walletType === 'WEB') {
       this.store.dispatch({
         type: "TEZOS_OPERATION_TRANSACTION",
-        walletType: walletType
+        walletType: walletType,
       })
     }
 

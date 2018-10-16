@@ -16,12 +16,12 @@ export class TezosWalletDetailComponent implements OnInit {
   public tezosWalletDetail
 
   public historicalPrice
-  public operationHistory
+  public operationHistory 
   public netAssetValue
 
   public lastBalance
   public lastPrice
-  
+
   public destroy$ = new Subject<null>();
 
   constructor(
@@ -63,9 +63,9 @@ export class TezosWalletDetailComponent implements OnInit {
 
         if (!this.lastPrice) {
           this.lastPrice = 0
-        } else {
+        } else if (this.operationHistory) {
 
-          // console.log('[historicalPrice]', this.historicalPrice, this.operationHistory)
+          console.log('[historicalPrice]', this.historicalPrice, this.operationHistory)
 
           let amountSumByDay = {}
 
@@ -110,7 +110,7 @@ export class TezosWalletDetailComponent implements OnInit {
           })
 
           // console.log('[nav][historicalPrice]', this.netAssetValue)
- 
+
         }
 
         //   

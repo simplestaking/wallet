@@ -51,15 +51,16 @@ export class TezosWalletListEffects {
         // get all accounts address
         flatMap((state: any) => state.tezos.tezosWalletList.ids.map(id => ({
             node: state.tezos.tezosNode.api,
-            publicKeyHash: state.tezos.tezosWalletList.entities[id].publicKeyHash
+            detail: state.tezos.tezosWalletList.entities[id],
         }))),
 
         flatMap((state: any) => of([]).pipe(
 
             // initialie 
             initializeWallet(stateWallet => ({
-                publicKeyHash: state.publicKeyHash,
+                publicKeyHash: state.detail.publicKeyHash,
                 node: state.node,
+                detail: state.detail,
             })),
 
             // get wallet info
@@ -69,14 +70,19 @@ export class TezosWalletListEffects {
 
         tap((state: any) => {
 
-            // update balance on firebase
-            // TODO: move to custom rxjs operator
-            this.accountDoc = this.db.doc('tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash);
-            this.accountDoc
-                .update({ balance: state.getWallet.balance })
-                .catch(err => {
-                    console.error('[firebase] tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash, err);
-                });
+            // save only if balance changed 
+            if (state.wallet.detail.balance !== state.getWallet.balance) {
+
+                // TODO: move to custom rxjs operator
+                // update balance on firebase
+                this.accountDoc = this.db.doc('tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash);
+                this.accountDoc
+                    .update({ balance: state.getWallet.balance })
+                    .catch(err => {
+                        console.error('[firebase] tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash, err);
+                    });
+            }
+
             return state
         }),
 
