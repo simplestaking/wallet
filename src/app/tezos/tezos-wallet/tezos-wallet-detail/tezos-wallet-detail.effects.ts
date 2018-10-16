@@ -33,7 +33,7 @@ export class TezosWalletDetailEffects {
         ),
 
         map(response => ({ type: 'TEZOS_WALLET_DETAIL_LOAD_SUCCESS', payload: response })),
-        onErrorResumeNext(of({ type: 'TEZOS_WALLET_DETAIL_LOAD_ERROR' }))
+        // onErrorResumeNext(of({ type: 'TEZOS_WALLET_DETAIL_LOAD_ERROR' }))
     )
 
     constructor(

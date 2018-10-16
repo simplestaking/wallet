@@ -1,12 +1,12 @@
 
 const initialState: any = {
     api: {
-        // display: 'Zeronet',
-        // name: 'zero',
-        // url: 'https://zeronet.simplestaking.com:3000'
-        display: 'Mainnet',
-        name: 'main',
-        url: 'https://node2.simplestaking.com:3000'
+        display: 'Zeronet',
+        name: 'zero',
+        url: 'https://zeronet.simplestaking.com:3000'
+        // display: 'Mainnet',
+        // name: 'main',
+        // url: 'https://node2.simplestaking.com:3000'
     },
     nodes: [{
         display: 'Zeronet',

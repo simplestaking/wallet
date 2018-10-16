@@ -17,7 +17,8 @@ export class TezosNodeEffects {
         ofType('TEZOS_NODE_CHANGE'),
         flatMap(() => [
             { type: 'TEZOS_WALLET_LIST_LOAD' },
-            { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+            // can be loaded only for pages with detail on page
+            // { type: 'TEZOS_WALLET_DETAIL_LOAD' },
         ]),
     )
 

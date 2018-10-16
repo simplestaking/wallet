@@ -15,14 +15,14 @@ export class TezosWalletSendEffects {
 
     // trigger data load based on navigation change  
     @Effect()
-    TezosWalletSend$ = this.actions$.pipe(
+    TezosWalletSendLoad = this.actions$.pipe(
         ofRoute('/tezos/wallet/send'),
         map(() => ({ type: 'TEZOS_WALLET_LIST_LOAD' })),
     )
 
     // trigger data load based on navigation change  
     @Effect()
-    TezosWalletSendAddress$ = this.actions$.pipe(
+    TezosWalletSendAddressLoad$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/send/:address'),
         flatMap(() => [
             { type: 'TEZOS_WALLET_LIST_LOAD' },

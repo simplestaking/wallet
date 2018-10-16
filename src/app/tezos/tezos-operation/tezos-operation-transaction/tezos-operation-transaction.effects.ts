@@ -18,7 +18,7 @@ export class TezosOperationTransactionEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
         
-        tap((state) => {  console.log(state); debugger } ),
+        // tap((state) => {  console.log(state); debugger } ),
        
         //
         flatMap(state => of([]).pipe(
@@ -48,14 +48,14 @@ export class TezosOperationTransactionEffects {
             type: 'TEZOS_OPERATION_TRANSACTION_SUCCESS',
             payload: { ...data }
         })),
-        // catchError((error, caught) => {
-        //     console.error(error.message)
-        //     this.store.dispatch({
-        //         type: 'TEZOS_OPERATION_TRANSACTION_ERROR',
-        //         payload: error.message,
-        //     });
-        //     return caught;
-        // }),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_TRANSACTION_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
 
         // redirect back to accounts list
         // tap(() => this.router.navigate(['/tezos/wallet/']))
