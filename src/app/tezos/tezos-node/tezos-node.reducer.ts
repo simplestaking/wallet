@@ -6,7 +6,7 @@ const initialState: any = {
         url: 'https://zeronet.simplestaking.com:3000'
         // display: 'Mainnet',
         // name: 'main',
-        // url: 'https://node2.simplestaking.com:3000'
+        // url: 'https://mainnet.simplestaking.com:3000'
     },
     nodes: [{
         display: 'Zeronet',
@@ -15,7 +15,7 @@ const initialState: any = {
     }, {
         display: 'Mainnet',
         name: 'main',
-        url: 'https://node2.simplestaking.com:3000'
+        url: 'https://mainnet.simplestaking.com:3000'
     }],
 }
 

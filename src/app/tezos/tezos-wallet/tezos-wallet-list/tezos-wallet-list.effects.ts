@@ -6,11 +6,15 @@ import { Observable, of } from 'rxjs';
 import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
 
 import { ofRoute } from 'app/shared/utils/rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+
+import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
 
 
 @Injectable()
 export class TezosWalletListEffects {
+
+    public accountDoc: AngularFirestoreDocument<any>;
 
     // trigger data load based on navigation change  
     @Effect()
@@ -33,7 +37,61 @@ export class TezosWalletListEffects {
         ),
 
         map(response => ({ type: 'TEZOS_WALLET_LIST_LOAD_SUCCESS', payload: response })),
-        onErrorResumeNext(of({ type: 'TEZOS_WALLET_LIST_LOAD_ERROR' }))
+        // onErrorResumeNext(of({ type: 'TEZOS_WALLET_LIST_LOAD_ERROR' }))
+    )
+
+    // get wallet balance 
+    @Effect()
+    TezosWalletListBalanceUpdate$ = this.actions$.pipe(
+        ofType('TEZOS_WALLET_LIST_LOAD_SUCCESS'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => state),
+
+        // get all accounts address
+        flatMap((state: any) => state.tezos.tezosWalletList.ids.map(id => ({
+            node: state.tezos.tezosNode.api,
+            publicKeyHash: state.tezos.tezosWalletList.entities[id].publicKeyHash
+        }))),
+
+        flatMap((state: any) => of([]).pipe(
+
+            // initialie 
+            initializeWallet(stateWallet => ({
+                publicKeyHash: state.publicKeyHash,
+                node: state.node,
+            })),
+
+            // get wallet info
+            getWallet(),
+
+        )),
+
+        tap((state: any) => {
+
+            // update balance on firebase
+            // TODO: move to custom rxjs operator
+            this.accountDoc = this.db.doc('tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash);
+            this.accountDoc
+                .update({ balance: state.getWallet.balance })
+                .catch(err => {
+                    console.error('[firebase] tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash, err);
+                });
+            return state
+        }),
+
+        map(action => ({ type: 'TEZOS_WALLET_LIST_NODE_DETAIL_SUCCESS', payload: action })),
+
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_LIST_NODE_DETAIL_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
+
     )
 
     constructor(

@@ -20,6 +20,20 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_WALLET_LIST_NODE_DETAIL_SUCCESS': {
+
+            return {
+                ...state,
+                entities: {
+                    ...state.entities,
+                    [action.payload.wallet.publicKeyHash]: {
+                        ...state.entities[action.payload.wallet.publicKeyHash],
+                        ...action.payload.getWallet,
+                    }
+                }
+            }
+
+        }
 
         default:
             return state;
