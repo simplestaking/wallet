@@ -37,8 +37,9 @@ export class TezosOperationHistoryEffects {
 
                 // get operation transactions
                 flatMap(() =>
-                    this.http.get('https://api3.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=10')
-                ),
+                    // this.http.get('https://api3.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=10')
+                    this.http.get('https://zeronet-api.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=10')
+                    ),
 
                 // add publicKeyHash
                 map(operations => ({
@@ -69,7 +70,8 @@ export class TezosOperationHistoryEffects {
                 // tap((operations) => console.log('[operations]', operations[0].block_hash)),
                 // get block timestamp
                 flatMap(() =>
-                    this.http.get('https://api5.tzscan.io/v1/timestamp/' + operations.block_hash)
+                    // this.http.get('https://api5.tzscan.io/v1/timestamp/' + operations.block_hash)
+                    this.http.get('https://zeronet-api.tzscan.io/v1/timestamp/' + operations.block_hash)
                 ),
                 map(response => {
                     // console.log('[operations]', operations)
