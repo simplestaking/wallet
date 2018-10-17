@@ -6,7 +6,7 @@ export function reducer(state = initialState, action) {
 
         case 'TEZOS_WALLET_DETAIL_LOAD_SUCCESS': {
             return {
-                ...state,
+                //...state,
                 ...action.payload
             }
         }
