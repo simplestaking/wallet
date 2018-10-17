@@ -20,9 +20,9 @@ const initialState = {
     },
     // menu in sidebar/sideNav
     sidenav: {
-        isVisible: false,
+        isVisible: true,
         toggleButton: {
-            isVisible: false,
+            isVisible: true,
         },
     },
     logo: {

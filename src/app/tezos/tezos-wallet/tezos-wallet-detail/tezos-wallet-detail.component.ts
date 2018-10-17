@@ -16,7 +16,7 @@ export class TezosWalletDetailComponent implements OnInit {
   public tezosWalletDetail
 
   public historicalPrice
-  public operationHistory 
+  public operationHistory
   public netAssetValue
 
   public lastBalance
@@ -36,10 +36,14 @@ export class TezosWalletDetailComponent implements OnInit {
 
         if (state.ids.length > 0) {
           this.operationHistory = state
+        } else {
+          this.operationHistory = undefined
         }
 
         if (state.historicalPrice && state.historicalPrice.ids.length > 0) {
           this.historicalPrice = state.historicalPrice
+        } else {
+          this.historicalPrice = undefined  
         }
 
       })
@@ -50,24 +54,21 @@ export class TezosWalletDetailComponent implements OnInit {
 
         this.tezosWalletDetail = state
 
-        // last price in chart 
-        this.lastPrice = this.tezosWalletDetail.balance * this.tezosWalletDetail.price * 0.000001
-        this.lastBalance = this.tezosWalletDetail.balance
-
-        // save last price in chart
-        this.netAssetValue = [{
-          name: new Date(),
-          balance: +this.lastBalance,
-          value: +this.lastPrice
-        }]
-
-        if (!this.lastPrice) {
+        // last price point in chart 
+        if (this.tezosWalletDetail.balance && this.tezosWalletDetail.price) {
+          this.lastBalance = this.tezosWalletDetail.balance
+          this.lastPrice = this.tezosWalletDetail.price
+        } else {
+          this.lastBalance = 0
           this.lastPrice = 0
-        } else if (this.operationHistory) {
+        }
 
-          console.log('[historicalPrice]', this.historicalPrice, this.operationHistory)
+        // save last value to agregation
+        let amountSumByDay = {}
+        this.netAssetValue = []
+        let size = -100
 
-          let amountSumByDay = {}
+        if (this.operationHistory && this.historicalPrice) {
 
           // sum transaction per day 
           this.operationHistory.ids
@@ -79,41 +80,40 @@ export class TezosWalletDetailComponent implements OnInit {
               timeStamp = (timeStamp - (timeStamp % (24 * 60 * 60 * 1000))) / 1000
 
               // sum ammount for every transaction day 
-              amountSumByDay[timeStamp] = !amountSumByDay[timeStamp] ? this.operationHistory.entities[id].amount : amountSumByDay[timeStamp] + this.operationHistory.entities[id].amount
-
-              // console.log('[amountSumByDay]', timeStamp, amountSumByDay[timeStamp])
+              amountSumByDay[timeStamp] = !amountSumByDay[timeStamp] ? this.operationHistory.entities[id].amount : amountSumByDay[timeStamp] + (this.operationHistory.entities[id].amount)
 
             })
 
-
-          this.historicalPrice.ids.map(id => id).reverse().map(id => {
+          this.historicalPrice.ids.slice(size).map(id => id).reverse().map(id => {
 
             if (amountSumByDay[this.historicalPrice.entities[id].time]) {
-
-              // console.warn('[netAssetValue]',
-              //   new Date(this.historicalPrice.entities[id].time),
-              //   amountSumByDay[this.historicalPrice.entities[id].time],
-              //   this.lastBalance,
-              //   +this.tezosWalletDetail.balance - +amountSumByDay[this.historicalPrice.entities[id].time]
-              // )
-
-              this.lastBalance = +this.tezosWalletDetail.balance - +amountSumByDay[this.historicalPrice.entities[id].time]
+              this.lastBalance -= amountSumByDay[this.historicalPrice.entities[id].time]
             }
 
             this.netAssetValue.push({
               name: new Date(this.historicalPrice.entities[id].time * 1000),
-              balance: +this.lastBalance,
-              value: this.lastBalance * this.historicalPrice.entities[id].close * 0.000001
+              balance: this.lastBalance / 1000000,
+              value: this.lastBalance / 1000000 * this.historicalPrice.entities[id].close
             })
-
 
           })
 
-          // console.log('[nav][historicalPrice]', this.netAssetValue)
-
         }
 
-        //   
+        if (this.netAssetValue.length === 0) {
+          this.netAssetValue = [{
+            name: new Date(),
+            balance: this.lastBalance,
+            value: this.lastBalance / 1000000 * this.lastPrice
+          }]
+        } else {
+          // save last price point in chart
+          if (this.tezosWalletDetail.balance && this.tezosWalletDetail.price) {
+            this.netAssetValue[0].balance = this.tezosWalletDetail.balance / 1000000
+            this.netAssetValue[0].value = this.tezosWalletDetail.balance / 1000000 * this.lastPrice
+          }
+        }
+
         this.chartLineNavData = [
           {
             name: 'xtz',

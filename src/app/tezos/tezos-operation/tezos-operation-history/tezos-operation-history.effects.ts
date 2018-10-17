@@ -38,7 +38,7 @@ export class TezosOperationHistoryEffects {
                 // get operation transactions
                 flatMap(() =>
                     // this.http.get('https://api3.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=10')
-                    this.http.get('https://zeronet-api.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=10')
+                    this.http.get('https://zeronet-api.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=50')
                     ),
 
                 // add publicKeyHash

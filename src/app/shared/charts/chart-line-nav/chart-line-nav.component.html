@@ -27,12 +27,12 @@
     <ng-template #seriesTooltipTemplate let-model="model">
       <div style="padding: 10px">
         <span style="font-size: 16px">
-          EUR {{ model[0].value | number:'1.0-6' }} 
+          USD {{ model[0].value | number:'1.0-6' }} 
         </span>
         <br/>
-        <span style="opacity:0.5">
-          XTZ {{ model[0].value | number:'1.0-6' }} 
-        </span>
+        <!-- <span style="opacity:0.5">
+          XTZ {{ model[0].balance | number:'1.0-6' }} 
+        </span> -->
         <br/>
         <br/>
         <span style="opacity:0.5">

@@ -17,10 +17,6 @@ export class TezosWalletComponent implements OnInit, AfterViewChecked {
   
   ngAfterViewChecked() {
  
-    this.store.dispatch({
-      type: 'SHOW_MENU'
-    })
-
   }
 
 }
