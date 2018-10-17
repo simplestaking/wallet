@@ -10,7 +10,6 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 
 import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
 
-
 @Injectable()
 export class TezosWalletListEffects {
 
@@ -96,7 +95,6 @@ export class TezosWalletListEffects {
             });
             return caught;
         }),
-
 
     )
 

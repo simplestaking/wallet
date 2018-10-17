@@ -18,6 +18,13 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_WALLET_DETAIL_NODE_DETAIL_SUCCESS': {
+            return {
+                ...state,
+                ...action.payload.getWallet,
+            }
+        }
+
         default:
             return state;
     }

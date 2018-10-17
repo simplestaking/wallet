@@ -8,6 +8,7 @@ import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from
 import { ofRoute } from './../../../shared/utils/rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
+import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
 
 @Injectable()
 export class TezosWalletDetailEffects {
@@ -34,6 +35,41 @@ export class TezosWalletDetailEffects {
 
         map(response => ({ type: 'TEZOS_WALLET_DETAIL_LOAD_SUCCESS', payload: response })),
         // onErrorResumeNext(of({ type: 'TEZOS_WALLET_DETAIL_LOAD_ERROR' }))
+    )
+
+    // get wallet balance 
+    @Effect()
+    TezosWalletListBalanceUpdate$ = this.actions$.pipe(
+        ofType('TEZOS_WALLET_DETAIL_LOAD_SUCCESS'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => state),
+
+
+        flatMap((state: any) => of([]).pipe(
+
+            // initialie 
+            initializeWallet(stateWallet => ({
+                publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash,
+                node: state.tezos.tezosNode.api,
+            })),
+
+            // get wallet info
+            getWallet(),
+
+        )),
+
+        map(action => ({ type: 'TEZOS_WALLET_DETAIL_NODE_DETAIL_SUCCESS', payload: action })),
+
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_DETAIL_NODE_DETAIL_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
     )
 
     constructor(
