@@ -20,9 +20,9 @@ export const AppRouting: Routes = [
   // landing pages
   // { path: 'tezos-baking', component: TezosBakingComponent },
   // { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
-  // { path: '', component: TezosHardwareWalletComponent },
+  { path: '', component: TezosHardwareWalletComponent },
   
-  { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
+  // { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
   { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
   
   //{ path: '', redirectTo: '/tezos/wallet', pathMatch: 'full' },

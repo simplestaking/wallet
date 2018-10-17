@@ -20,9 +20,9 @@ const initialState = {
     },
     // menu in sidebar/sideNav
     sidenav: {
-        isVisible: true,
+        isVisible: false,
         toggleButton: {
-            isVisible: true,
+            isVisible: false,
         },
     },
     logo: {
@@ -102,6 +102,18 @@ export function reducer(state = initialState, action) {
                     counter: state.progressbar.counter - 1,
                     isVisible: state.progressbar.counter === 1 ? false : true,
                 }
+            }
+        }
+
+        case 'SHOW_MENU': {
+            return {
+                ...state,
+                sidenav: {
+                    isVisible: true,
+                    toggleButton: {
+                        isVisible: true,
+                    },
+                },
             }
         }
 
