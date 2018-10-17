@@ -1,0 +1,69 @@
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepper mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepper mat-card {
+    width: 800px;
+}
+
+.stepper .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: initial !important;
+}
+
+.stepper .mat-h1 {
+    font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
+}
+
+// stepper font 
+.stepper ::ng-deep .mat-step-label {
+    font-weight: 400;
+}
+
+// selected stepper font 
+.stepper ::ng-deep .mat-step-label-selected {
+    font-weight: 500;
+}
+
+.stepper ::ng-deep .mat-step-header .mat-step-icon-not-touched {
+    background-color: rgba(0,0,0,0.15);
+    color: #fff;
+}
+
+// stepper button color 
+.stepper ::ng-deep .mat-step-header .mat-step-label.mat-step-label-active {
+    // color: rgba(0,0,0,.6);
+}
+
+.stepper ::ng-deep .mat-step-header .mat-step-icon {
+    background-color: rgb(115, 160, 239);
+    color: #fff;
+}
+
+.stepper ::ng-deep .mat-step-header:hover {
+    background-color: initial;
+}
+
+.close {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close button {
+    font-weight: 400;
+    padding-left: 8px;
+}
+
+.close button mat-icon {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+

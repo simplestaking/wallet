@@ -1,0 +1,47 @@
+<div class="close">
+  <button mat-button routerLink="/tezos/wallet">
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</div>
+
+<div class="stepper">
+
+  <mat-card>
+    <mat-card-content>
+
+      <br />
+      <mat-card-header>
+        <h2 class="mat-h1 reset">
+          Get started with Trezor
+        </h2>
+      </mat-card-header>
+
+      <mat-horizontal-stepper [linear]="false">
+
+        <mat-step [editable]="false" optional="false" label="Connect Trezor">
+          <div>
+
+            <!-- <button mat-button matStepperNext>Next</button> -->
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Select Address">
+          <div>
+
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Add Name">
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+          </div>
+        </mat-step>
+
+      </mat-horizontal-stepper>
+
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -7,7 +7,7 @@
     <mat-progress-bar *ngIf="app.progressbar.isVisible" mode="indeterminate">
     </mat-progress-bar>
 
-    <mat-toolbar *ngIf="showHeader && !coverHeader">
+    <mat-toolbar *ngIf="showHeader && !coverHeader && app.toolbar.isVisible" [style.background-color]="app.toolbar.color">
       <button mat-icon-button *ngIf="app.sidenav.toggleButton.isVisible">
         <!-- TODO: use reducer instead of local variable -->
         <mat-icon (click)="start.toggle()">menu</mat-icon>
@@ -54,13 +54,12 @@
         Sign out
       </button> -->
 
-
     </mat-toolbar>
   </div>
 
   <!-- Sidebar -->
   <mat-sidenav-container>
-    <mat-sidenav #start mode="side" style="background-color: whitesmoke;padding:10px" [opened]="app.sidenav.isVisible"
+    <mat-sidenav #start mode="side" style="padding:10px" [style.background-color]="app.sidenav.color" [opened]="app.sidenav.isVisible"
       [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom">
       <mat-nav-list>
 
@@ -86,7 +85,7 @@
         <span class="mat-body-1">Network</span> -->
 
         <br />
-        <a mat-list-item routerLink="/tezos/wallet">New wallet</a>
+        <a mat-list-item routerLink="/tezos/wallet/new/trezor">New wallet</a>
        
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
         <!-- <a mat-list-item routerLink="/delegates">Explorer</a>
@@ -97,7 +96,7 @@
     </mat-sidenav>
 
     <!-- Content -->
-    <mat-sidenav-content>
+    <mat-sidenav-content [style.background-color]="app.sidenav.color">
       <mat-toolbar *ngIf="showHeader && coverHeader">Header</mat-toolbar>
       <div class="sidenav-content">
 

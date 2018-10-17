@@ -20,10 +20,15 @@ const initialState = {
     },
     // menu in sidebar/sideNav
     sidenav: {
-        isVisible: true,
+        isVisible: false,
+        color: 'whitesmoke',
         toggleButton: {
-            isVisible: true,
+            isVisible: false,
         },
+    },
+    toolbar: {
+        isVisible: true,
+        color: 'whitesmoke',
     },
     logo: {
         isVisible: false,
@@ -105,15 +110,41 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'SHOW_MENU': {
+        case 'TEZOS_WALLET_SHOW': {
             return {
                 ...state,
                 sidenav: {
                     isVisible: true,
+                    color: 'whitesmoke',
                     toggleButton: {
                         isVisible: true,
                     },
                 },
+                toolbar: {
+                    isVisible: true,
+                    color: 'whitesmoke',
+                }
+            }
+        }
+
+        case 'TEZOS_WALLET_NEW_TREZOR_SHOW': {
+            return {
+                ...state,
+                sidenav: {
+                    isVisible: false,
+                    color: 'white',
+                    // isVisible: true,
+                    // color: 'whitesmoke',
+                    toggleButton: {
+                        isVisible: false,
+                    },
+                },
+                toolbar: {
+                    isVisible: false,
+                    color: 'white',
+                    // isVisible: true,
+                    // color: 'whitesmoke',
+                }
             }
         }
 

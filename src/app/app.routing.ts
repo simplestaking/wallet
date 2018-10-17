@@ -22,7 +22,7 @@ export const AppRouting: Routes = [
   // { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
   { path: '', component: TezosHardwareWalletComponent },
   
-  // { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
+  { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
   { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
   
   //{ path: '', redirectTo: '/tezos/wallet', pathMatch: 'full' },
