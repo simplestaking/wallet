@@ -5,18 +5,20 @@ import { of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-tezos-operation-history',
-  templateUrl: './tezos-operation-history.component.html',
-  styleUrls: ['./tezos-operation-history.component.scss']
+  selector: 'app-tezos-trezor-new',
+  templateUrl: './tezos-trezor-new.component.html',
+  styleUrls: ['./tezos-trezor-new.component.scss']
 })
-export class TezosOperationHistoryComponent implements OnInit {
+export class TezosTrezorNewComponent implements OnInit {
 
-  public displayedColumns: string[] = ['position', 'name', 'address', 'symbol', 'fee'];
+  public displayedColumns: string[] = ['address', 'path', 'amount', 'operations'];
 
   private onDestroy$ = new Subject()
 
   private data
-  private dataSource
+  private dataSource = [
+    { address: "tz1Kef7BSg6fo75jk37WkKRYSnJDs69KVqt9", path: "44'/1729'/0'", amount: "123123", operations: "123123" },
+  ]
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -28,7 +30,7 @@ export class TezosOperationHistoryComponent implements OnInit {
   ngOnInit() {
 
     // wait for data changes from redux    
-    this.store.select('tezos', 'tezosOperationHistory')
+    this.store.select('tezos', 'tezosTrezorNew')
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
 
@@ -41,6 +43,12 @@ export class TezosOperationHistoryComponent implements OnInit {
 
       })
 
+  }
+
+  getAddress() {
+    this.store.dispatch({
+      type: 'TEZOS_TREZOR_NEW'
+    })
   }
 
 }

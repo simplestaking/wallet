@@ -19,18 +19,22 @@
 
       <mat-horizontal-stepper [linear]="false">
 
-        <mat-step [editable]="false" optional="false" label="Connect Trezor">
+        <mat-step [editable]="false" [optional]="false" [completed]="true" label="Connect Trezor">
           <div>
 
-            <!-- <button mat-button matStepperNext>Next</button> -->
+            <app-tezos-trezor-connect>
+            </app-tezos-trezor-connect>
+
+            <button mat-flat-button matStepperNext>Continue</button>
           </div>
         </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Select Address">
+        <mat-step [editable]="false" [optional]="false" label="Select Address">
           <div>
-
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <app-tezos-trezor-new>
+            </app-tezos-trezor-new>
+            <!-- <button mat-button matStepperPrevious>Back</button> -->
+            <button mat-flat-button matStepperNext>Continue</button>
           </div>
         </mat-step>
 

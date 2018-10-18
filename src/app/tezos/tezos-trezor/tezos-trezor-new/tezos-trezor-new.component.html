@@ -1,0 +1,42 @@
+<button mat-flat-button (click)="getAddress()">
+  getAddress
+</button>
+
+<table mat-table [dataSource]="data">
+
+  <!-- To Column -->
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef>Address</th>
+    <td mat-cell *matCellDef="let element">
+      <span style="display: flex; align-items: center;">
+        <svg width="25" height="25" style="opacity:0.8;" identiconHash="{{element.address}}">
+        </svg>&nbsp;
+        {{element.address}}
+      </span>
+    </td>
+  </ng-container>
+
+  <!-- Path Column -->
+  <ng-container matColumnDef="path">
+    <th mat-header-cell *matHeaderCellDef> Path </th>
+    <td mat-cell *matCellDef="let element"> {{element.path}}</td>
+  </ng-container>
+
+  <!-- Amount Column -->
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef> Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.amount * 0.000001 | number:'1.0-6' }}</td>
+  </ng-container>
+
+  <!-- Operations Column -->
+  <ng-container matColumnDef="operations">
+    <th mat-header-cell *matHeaderCellDef> Operations </th>
+    <td mat-cell *matCellDef="let element"> {{element.operations}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<!-- <mat-paginator [pageSizeOptions]="[10, 20]" hidePageSize></mat-paginator> -->
+<br />
+<br />

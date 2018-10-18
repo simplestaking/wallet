@@ -46,21 +46,23 @@ import { reducers } from './tezos.reducers';
 
 import { TezosEffects } from './tezos.effects'
 import { TezosNodeEffects } from './tezos-node/tezos-node.effects'
+
 import { TezosWalletListEffects } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.effects'
 import { TezosWalletDetailEffects } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.effects'
-
 import { TezosWalletSendEffects } from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.effects'
+import { TezosWalletNewTrezorEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.effects';
 
 import { TezosOperationTransactionEffects } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.effects'
 import { TezosOperationOriginationEffects } from './tezos-operation/tezos-operation-origination/tezos-operation-origination.effects'
 import { TezosOperationDelegationEffects } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.effects'
 import { TezosOperationHistoryEffects } from './tezos-operation/tezos-operation-history/tezos-operation-history.effects'
-import { TezosWalletNewTrezorEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.effects';
+
+import { TezosTrezorConnectEffects } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.effects'
+import { TezosTrezorNewEffects } from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.effects'
 
 import { TezosNodeComponent } from './tezos-node/tezos-node.component';
 import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
 import { TezosWalletListComponent } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.component';
-
 
 import { IdenticonHashDirective } from '../shared/identicon-hash.directive';
 import { TezosWalletDetailComponent } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.component';
@@ -72,7 +74,9 @@ import { TezosOperationHistoryComponent } from './tezos-operation/tezos-operatio
 import { TezosWalletSendComponent } from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.component';
 import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive/tezos-wallet-receive.component';
 import { TezosWalletNewTrezorComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.component';
-import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new.component'
+import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new.component';
+import { TezosTrezorNewComponent } from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.component';
+import { TezosTrezorConnectComponent } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.component'
 
 @NgModule({
   imports: [
@@ -88,15 +92,18 @@ import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-w
     EffectsModule.forFeature([
       TezosEffects,
       TezosNodeEffects,
+      
       TezosWalletListEffects,
       TezosWalletDetailEffects,
       TezosWalletSendEffects,
-      
       TezosWalletNewTrezorEffects,
 
       TezosOperationTransactionEffects,
       TezosOperationHistoryEffects,
       
+      TezosTrezorConnectEffects,
+      TezosTrezorNewEffects,
+            
     ]),
 
     MatAutocompleteModule,
@@ -148,7 +155,9 @@ import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-w
     TezosWalletSendComponent,
     TezosWalletReceiveComponent,
     TezosWalletNewTrezorComponent,
-    TezosWalletNewComponent
+    TezosWalletNewComponent,
+    TezosTrezorNewComponent,
+    TezosTrezorConnectComponent
   ]
 })
 export class TezosModule { }
