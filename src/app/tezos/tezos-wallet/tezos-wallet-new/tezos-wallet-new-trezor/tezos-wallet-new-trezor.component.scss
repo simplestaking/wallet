@@ -33,8 +33,10 @@
 }
 
 .stepper ::ng-deep .mat-step-header .mat-step-icon-not-touched {
-    background-color: rgba(0,0,0,0.15);
-    color: #fff;
+    // background-color: rgba(0,0,0,0.15);
+    // color: #fff;
+    background-color:whitesmoke;
+    color: gray
 }
 
 // stepper button color 

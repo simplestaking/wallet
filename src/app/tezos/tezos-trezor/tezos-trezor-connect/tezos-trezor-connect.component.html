@@ -1,7 +1,15 @@
-<p>
-  tezos-trezor-connect works!
-</p>
+<div class="trezor-connect">
 
-{{ tezosTrezorConnect.device.status | json }}
+  <div class="trezor-connected" *ngIf="tezosTrezorConnect.device.connected">
+    <img src="/assets/trezor_connected.svg" alt="Trezor Connected">
+    <br />
+    Trezor Connected
+  </div>
 
-<br/>
+  <div class="trezor-disconnected" *ngIf="!tezosTrezorConnect.device.connected">
+    <img src="/assets/trezor_disconnected.svg" alt="Connect your Trezor to Continue...">
+    <br />
+    Connect your Trezor to Continue...
+  </div>
+
+</div>

@@ -1,7 +1,9 @@
 const initialState: any = {
     core: {},
     transport: {},
-    device: {},
+    device: {
+        connected: false,
+    },
     response: {},
     ui: {},
 }
@@ -9,7 +11,7 @@ const initialState: any = {
 export function reducer(state = initialState, action) {
     switch (action.type) {
 
-        case 'TEZOS_TREZOR_CONNECT_TRANSPORT': {
+        case 'TEZOS_TREZOR_CONNECT_TRANSPORT_START': {
             return {
                 ...state,
                 transport: {
@@ -18,10 +20,21 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'TEZOS_TREZOR_CONNECT_DEVICE': {
+        case 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT': {
             return {
                 ...state,
                 device: {
+                    connected: true,
+                    ...action.payload.payload,
+                }
+            }
+        }
+
+        case 'TEZOS_TREZOR_CONNECT_DEVICE_DISCONNECT': {
+            return {
+                ...state,
+                device: {
+                    connected: false,
                     ...action.payload.payload,
                 }
             }

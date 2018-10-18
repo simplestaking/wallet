@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ofRoute } from '../../../shared/utils/rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import TrezorConnect from 'trezor-connect';
+import TrezorConnect, { DEVICE, TRANSPORT } from 'trezor-connect';
 
 @Injectable()
 export class TezosTrezorConnectEffects {
@@ -30,31 +30,52 @@ export class TezosTrezorConnectEffects {
             try {
 
                 (<any>window).TrezorConnect.on('TRANSPORT_EVENT', (event) => {
-                    // console.log('[TrezorConnect][TRANSPORT_EVENT]', event);
-                    this.store.dispatch({
-                        type: 'TEZOS_TREZOR_CONNECT_TRANSPORT',
-                        payload: event,
-                    })
+                    console.log('[TrezorConnect][TRANSPORT_EVENT]', event);
+                    
+                    if (event.type === TRANSPORT.START) {
+                        this.store.dispatch({
+                            type: 'TEZOS_TREZOR_CONNECT_TRANSPORT_START',
+                            payload: event,
+                        })
+                    }
+
+                    if (event.type === TRANSPORT.ERROR) {
+                        this.store.dispatch({
+                            type: 'TEZOS_TREZOR_CONNECT_TRANSPORT_ERROR',
+                            payload: event,
+                        })
+                    }
+
                     //(<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
                 });
 
                 (<any>window).TrezorConnect.on('DEVICE_EVENT', (event) => {
-                    // console.log('[TrezorConnect][DEVICE_EVENT]', event);
-                    this.store.dispatch({
-                        type: 'TEZOS_TREZOR_CONNECT_DEVICE',
-                        payload: event,
-                    })
+                    console.log('[TrezorConnect][DEVICE_EVENT]', event);
+
+                    if (event.type === DEVICE.CONNECT || event.type === DEVICE.CONNECT_UNACQUIRED ) {
+                        this.store.dispatch({
+                            type: 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT',
+                            payload: event,
+                        })
+                    }
+
+                    if (event.type === DEVICE.DISCONNECT) {
+                        this.store.dispatch({
+                            type: 'TEZOS_TREZOR_CONNECT_DEVICE_DISCONNECT',
+                            payload: event,
+                        })
+                    }
                     //(<any>window).TrezorConnect.off('DEVICE_EVENT', handleDeviceEvent);
                 });
 
-                // (<any>window).TrezorConnect.on('UI_EVENT', (event) => {
-                //     // console.log('[TrezorConnect][UI_EVENT]', event);
-                //     this.store.dispatch({
-                //         type: 'TEZOS_TREZOR_CONNECT_UI',
-                //         payload: event,
-                //     })
-                //     //(<any>window).TrezorConnect.off('UI_EVENT', handleUiEvent);
-                // });
+                (<any>window).TrezorConnect.on('UI_EVENT', (event) => {
+                     console.log('[TrezorConnect][UI_EVENT]', event);
+                    // this.store.dispatch({
+                    //     type: 'TEZOS_TREZOR_CONNECT_UI',
+                    //     payload: event,
+                    // })
+                    //(<any>window).TrezorConnect.off('UI_EVENT', handleUiEvent);
+                });
 
                 // (<any>window).TrezorConnect.on('RESPONSE_EVENT', (event) => {
                 //     console.log('[TrezorConnect][RESPONSE_EVENT]', event);

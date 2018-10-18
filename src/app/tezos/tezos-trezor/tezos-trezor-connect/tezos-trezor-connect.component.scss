@@ -1,0 +1,25 @@
+.trezor-connect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    // font-weight: 300;
+    font-size: 18px;
+}
+
+.trezor-connected, .trezor-disconnected {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.trezor-connected img, .trezor-disconnected img {
+    width: 140px;
+}
+
+/* preload images */ 
+body:after{
+ display:none;
+ content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg');
+}
