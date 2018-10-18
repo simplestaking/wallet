@@ -31,3 +31,10 @@
 .mat-drawer-container {
     background-color: #f5f5f5;
 }
+
+
+/* preload images */ 
+body:after{
+    display:none;
+    content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg');
+   }

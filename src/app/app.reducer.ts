@@ -31,7 +31,7 @@ const initialState = {
         color: 'whitesmoke',
     },
     logo: {
-        isVisible: false,
+        isVisible: true,
     }
 
 };
@@ -117,12 +117,15 @@ export function reducer(state = initialState, action) {
                     isVisible: true,
                     color: 'whitesmoke',
                     toggleButton: {
-                        isVisible: true,
+                        isVisible: false,
                     },
                 },
                 toolbar: {
                     isVisible: true,
                     color: 'whitesmoke',
+                },
+                logo: {
+                    isVisible: true,
                 }
             }
         }
@@ -144,6 +147,9 @@ export function reducer(state = initialState, action) {
                     color: 'white',
                     // isVisible: true,
                     // color: 'whitesmoke',
+                },
+                logo: {
+                    isVisible: false,
                 }
             }
         }

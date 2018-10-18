@@ -12,9 +12,13 @@
         <!-- TODO: use reducer instead of local variable -->
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
-      <span *ngIf="app.logo.isVisible" matTooltip="Client is connected to node! {{app.node.timestamp}}"
-        matTooltipPosition="left" style="margin-left:10px">
-        simplestaking.com</span>
+      <span *ngIf="app.logo.isVisible" style="margin-left:10px; font-weight: 400;font-size: 15px;display: flex;align-items: center;justify-content: center;">
+        <img src="/assets/simple_wallet_logo_blue.svg" alt="" style="width:20px; margin: -8px 3px 0px 0px;">
+        <span>
+          Simple<span style="color:#2c71f4">Wallet</span>
+        </span>
+      </span>
+      <!-- matTooltip="Client is connected to node {{app.node.timestamp}}" matTooltipPosition="left" -->
 
       <!-- 
       <mat-icon 
@@ -69,7 +73,7 @@
           <!-- <mat-icon>dashboard</mat-icon> -->
           Dashboard
         </a>
-        
+
         <br />
         <!-- <span class="mat-body-2" style="padding-left:16px">Wallet</span> -->
 
@@ -79,14 +83,14 @@
         </a>
         <a mat-list-item routerLink="/tezos/wallet/receive">Receive funds</a>
         <a mat-list-item routerLink="/tezos/wallet/delegate">Delegate funds</a>
-        <a mat-list-item routerLink="/tezos/wallet/originate">Originate</a>
+        <!-- <a mat-list-item routerLink="/tezos/wallet/originate">Originate</a> -->
 
         <!-- <br/>
         <span class="mat-body-1">Network</span> -->
 
         <br />
         <a mat-list-item routerLink="/tezos/wallet/new/trezor">New wallet</a>
-       
+
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
         <!-- <a mat-list-item routerLink="/delegates">Explorer</a>
         <a mat-list-item routerLink="/trezor">Trezor</a> -->

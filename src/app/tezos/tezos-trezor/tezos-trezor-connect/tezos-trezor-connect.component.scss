@@ -10,16 +10,16 @@
 .trezor-connected, .trezor-disconnected {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    height: 390px;
 }
 
 .trezor-connected img, .trezor-disconnected img {
+    display: flex;
     width: 140px;
 }
 
-/* preload images */ 
-body:after{
- display:none;
- content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg');
-}
+.action {
+    display: flex;
+    font-size: 18px;
+    margin-top: auto}
