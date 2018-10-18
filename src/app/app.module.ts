@@ -14,6 +14,13 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
+// added font awesome pro icons
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fal } from '@fortawesome/pro-light-svg-icons'
+import { far } from '@fortawesome/pro-regular-svg-icons'
+library.add(fal, far);
+
 import { environment } from '../environments/environment';
 
 import { SharedModule } from './shared/shared.module'
@@ -144,7 +151,8 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     HttpModule,
     HttpClientModule,
     SharedModule,
-
+    
+    FontAwesomeModule,
     // NoopAnimationsModule,
     BrowserAnimationsModule,
     

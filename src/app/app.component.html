@@ -12,8 +12,8 @@
         <!-- TODO: use reducer instead of local variable -->
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
-      <span *ngIf="app.logo.isVisible" style="margin-left:10px; font-weight: 400;font-size: 15px;display: flex;align-items: center;justify-content: center;">
-        <img src="/assets/simple_wallet_logo_blue.svg" alt="" style="width:20px; margin: -8px 3px 0px 0px;">
+      <span *ngIf="app.logo.isVisible" style="margin-left:10px; font-weight: 400;font-size: 14px;display: flex;align-items: center;justify-content: center;">
+        <img src="/assets/simple_wallet_logo_blue.svg" alt="" style="width:20px; margin: -7px 6px 0px 0px;">
         <span>
           Simple<span style="color:#2c71f4">Wallet</span>
         </span>
@@ -67,29 +67,33 @@
       [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom">
       <mat-nav-list>
 
-        <!-- <span class="mat-body-2" style="padding-left:16px">General</span> -->
-        <!-- <br /> -->
         <a mat-list-item routerLink="/tezos/wallet">
-          <!-- <mat-icon>dashboard</mat-icon> -->
+          <fa-icon [icon]="['fal', 'chart-line']" [fixedWidth]="true"></fa-icon>&nbsp;
           Dashboard
         </a>
 
-        <br />
-        <!-- <span class="mat-body-2" style="padding-left:16px">Wallet</span> -->
+        <hr/>
 
         <a mat-list-item routerLink="/tezos/wallet/send">
-          <!-- <mat-icon>vertical_align_bottom</mat-icon> -->
+          <fa-icon [icon]="['fal', 'arrow-from-bottom']" [fixedWidth]="true"></fa-icon>&nbsp;
           Send funds
         </a>
-        <a mat-list-item routerLink="/tezos/wallet/receive">Receive funds</a>
-        <a mat-list-item routerLink="/tezos/wallet/delegate">Delegate funds</a>
+        <a mat-list-item routerLink="/tezos/wallet/receive">
+          <fa-icon [icon]="['fal', 'arrow-from-top']" [fixedWidth]="true"></fa-icon>&nbsp;
+          Receive funds
+        </a>
+        <a mat-list-item routerLink="/tezos/wallet/delegate">
+          <fa-icon [icon]="['fal', 'retweet']" [fixedWidth]="true"></fa-icon>&nbsp;
+          Delegate funds
+        </a>
         <!-- <a mat-list-item routerLink="/tezos/wallet/originate">Originate</a> -->
 
-        <!-- <br/>
-        <span class="mat-body-1">Network</span> -->
+        <hr/>
 
-        <br />
-        <a mat-list-item routerLink="/tezos/wallet/new/trezor">New wallet</a>
+        <a mat-list-item routerLink="/tezos/wallet/new/trezor">
+          <fa-icon [icon]="['fal', 'plus']" [fixedWidth]="true"></fa-icon>&nbsp;
+          New wallet
+        </a>
 
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
         <!-- <a mat-list-item routerLink="/delegates">Explorer</a>

@@ -38,10 +38,9 @@
   
   }
   
-  md-sidenav {
-    width: 200px;
+  mat-sidenav {
+    // width: 100px;
   }
-
 
   .mat-list, .mat-nav-list, .mat-selection-list {
     padding-top: 0px;
@@ -56,9 +55,29 @@
 
 .mat-nav-list .mat-list-item {
   font-size: 14px;
-  opacity: 0.9;
 }
 
 .mat-nav-list .mat-list-item {
   height: 44px !important;
+}
+
+.mat-list-item-content fa-icon {
+  font-size: 16px;
+}
+
+// menu hover 
+mat-nav-list a.mat-list-item:hover {
+  // font-weight: 500;
+}
+
+mat-nav-list a.mat-list-item:hover fa-icon:not(:hover) {
+  color:#2c71f4;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0px;
+  background-color: #eaeaea;
+  margin: 16px;
 }
