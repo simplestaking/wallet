@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+
 import { Store } from '@ngrx/store'
 import { of, Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
@@ -11,7 +13,10 @@ import { takeUntil } from 'rxjs/operators'
 export class TezosWalletListComponent implements OnInit, OnDestroy {
 
   private tezosWalletList
+  private tableDataSource
   private onDestroy$ = new Subject()
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     public store: Store<any>,
@@ -24,6 +29,9 @@ export class TezosWalletListComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
         this.tezosWalletList = data.ids.map(id => ({ id, ...data.entities[id] }))
+
+        this.tableDataSource = new MatTableDataSource<any>(this.tezosWalletList);
+        this.tableDataSource.paginator = this.paginator;
       })
 
   }

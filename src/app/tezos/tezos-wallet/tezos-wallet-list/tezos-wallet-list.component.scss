@@ -2,19 +2,49 @@ table {
     width: 100%;
 }
 
-.mat-cell.cdk-column-name.mat-column-identicon  {
-    width: 50px
-}
-
 .mat-cell.cdk-column-name.mat-column-name  {
     width: 270px
 }
 
+.mat-cell.cdk-column-identicon.mat-column-identicon {
+    width: 100px
+}
+
 .mat-cell.cdk-column-publicKeyHash.mat-column-publicKeyHash {
-    width: 350px
+    width: 300px
+}
+
+.mat-cell.cdk-column-balance.mat-column-balance {
+    width: 200px;
+    text-align: right;
+}
+
+.mat-header-cell.cdk-column-balance.mat-column-balance {
+    text-align: right;
 }
 
 a {
     color: #000000;
     text-decoration: none;
+}
+
+
+.dashboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard mat-card {
+    width: 700px;
+}
+
+.dashboard .mat-h1 {
+    font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
 }

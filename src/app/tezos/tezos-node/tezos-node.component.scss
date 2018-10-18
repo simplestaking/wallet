@@ -1,0 +1,12 @@
+button {
+    font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
+    padding: 0px;
+}
+
+::ng-deep .mat-menu-content:not(:empty) {
+    padding: 0px;
+}
+
+::ng-deep .mat-menu-content button {
+    padding-left: 15px
+}

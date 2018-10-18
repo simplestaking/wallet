@@ -42,3 +42,13 @@
     border: 1.2px solid;
 }
 
+.wallet-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.wallet-detail mat-card {
+    min-width: 700px;
+}
