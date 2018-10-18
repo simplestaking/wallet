@@ -1,59 +1,69 @@
-mat-card-header {
+.stepper {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-::ng-deep .mat-step-header .mat-step-icon-not-touched {
-    background-color: rgba(0,0,0,0.15);
-    color: #fff;
+.stepper mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-::ng-deep .mat-step-header .mat-step-label.mat-step-label-active {
-    color: rgba(0,0,0,.6);
+.stepper mat-card {
+    width: 650px;
 }
 
-::ng-deep  .mat-step-header .mat-step-icon {
+.stepper .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: initial !important;
+}
+
+.stepper .mat-h1 {
+    font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
+}
+
+// stepper font 
+.stepper ::ng-deep .mat-step-label {
+    font-weight: 400;
+}
+
+// selected stepper font 
+.stepper ::ng-deep .mat-step-label-selected {
+    font-weight: 500;
+}
+
+.stepper ::ng-deep .mat-step-header .mat-step-icon-not-touched {
+    // background-color: rgba(0,0,0,0.15);
+    // color: #fff;
+    background-color:whitesmoke;
+    color: gray
+}
+
+// stepper button color 
+.stepper ::ng-deep .mat-step-header .mat-step-label.mat-step-label-active {
+    // color: rgba(0,0,0,.6);
+}
+
+.stepper ::ng-deep .mat-step-header .mat-step-icon {
     background-color: rgb(115, 160, 239);
     color: #fff;
 }
 
-::ng-deep .mat-step-header:hover {
+.stepper ::ng-deep .mat-step-header:hover {
     background-color: initial;
 }
 
-
-
-/* TODO: remove temporary: remove after component is created  */
-
-.panel {
+.close {
     display: flex;
-    // margin-bottom: 10px;
-    // margin-right: 5px;
-    // padding-left: 12px;
-    // padding-right: 12px;
+    justify-content: flex-end;
 }
 
-.address {
-    display: flex;
-    flex: auto;
-    flex-direction: column;
-    justify-content: space-between;
-    //padding-left: 20px;
+.close button {
+    font-weight: 400;
+    padding-left: 8px;
 }
 
-.amount {
-    display: flex;
-    flex-direction: column;
-    // font: 300 50px Roboto,"Helvetica Neue",sans-serif;
-    //justify-content: space-between;
-    justify-content: center;
-    align-items: flex-end;
+.close button mat-icon {
+    margin-top: 8px;
+    font-size: 14px;
 }
-
-.reset {
-    margin:0px 0px 0px 0px !important;
-    padding: 0px 0px 0px 0px !important;
-}
-
-/* TODO: end remove */

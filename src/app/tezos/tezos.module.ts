@@ -50,6 +50,9 @@ import { TezosNodeEffects } from './tezos-node/tezos-node.effects'
 import { TezosWalletListEffects } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.effects'
 import { TezosWalletDetailEffects } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.effects'
 import { TezosWalletSendEffects } from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.effects'
+import { TezosWalletReceiveEffects } from './tezos-wallet/tezos-wallet-receive/tezos-wallet-receive.effects'
+import { TezosWalletDelegateEffects } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.effects'
+
 import { TezosWalletNewTrezorEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.effects';
 
 import { TezosOperationTransactionEffects } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.effects'
@@ -76,7 +79,8 @@ import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive
 import { TezosWalletNewTrezorComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.component';
 import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new.component';
 import { TezosTrezorNewComponent } from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.component';
-import { TezosTrezorConnectComponent } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.component'
+import { TezosTrezorConnectComponent } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.component';
+import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.component'
 
 @NgModule({
   imports: [
@@ -96,6 +100,9 @@ import { TezosTrezorConnectComponent } from './tezos-trezor/tezos-trezor-connect
       TezosWalletListEffects,
       TezosWalletDetailEffects,
       TezosWalletSendEffects,
+      TezosWalletReceiveEffects,
+      TezosWalletDelegateEffects,
+
       TezosWalletNewTrezorEffects,
 
       TezosOperationTransactionEffects,
@@ -157,7 +164,8 @@ import { TezosTrezorConnectComponent } from './tezos-trezor/tezos-trezor-connect
     TezosWalletNewTrezorComponent,
     TezosWalletNewComponent,
     TezosTrezorNewComponent,
-    TezosTrezorConnectComponent
+    TezosTrezorConnectComponent,
+    TezosWalletDelegateComponent
   ]
 })
 export class TezosModule { }

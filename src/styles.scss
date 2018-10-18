@@ -34,7 +34,7 @@
 
 
 /* preload images */ 
-body:after{
+body:after {
     display:none;
     content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg');
-   }
+}
