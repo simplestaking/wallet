@@ -46,7 +46,7 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.store.select('tezos', 'tezosWalletList')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
-       
+
         // create tezos wallet list 
         this.tezosWalletList =
           of(state.ids
@@ -98,22 +98,15 @@ export class TezosOperationTransactionComponent implements OnInit {
   }
 
   send(walletType) {
-    // console.log('[SEND][TRANSACTION] walletType', walletType)
 
-    // TODO: move logic to effect 
-    if (walletType === 'WEB') {
+      // console.log('[SEND][TRANSACTION] walletType', walletType)
       this.store.dispatch({
         type: "TEZOS_OPERATION_TRANSACTION",
-        walletType: walletType,
+        payload: {
+          walletType: walletType,
+        }
       })
-    }
 
-    if (walletType === 'TREZOR_T') {
-      this.store.dispatch({
-        type: "TEZOS_OPERATION_TRANSACTION_TREZOR",
-        walletType: walletType
-      })
-    }
   }
 
 }

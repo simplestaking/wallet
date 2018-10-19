@@ -16,12 +16,12 @@ export class TezosOperationTransactionEffects {
         ofType('TEZOS_OPERATION_TRANSACTION'),
 
         // add state to effect
-        withLatestFrom(this.store, (action, state) => state),
+        withLatestFrom(this.store, (action: any, state) => ({ action, state })),
 
         // tap((state) => {  console.log(state); debugger } ),
 
         //
-        flatMap(state => of([]).pipe(
+        flatMap(({ action, state }) => of([]).pipe(
 
             // wait until sodium is ready
             initializeWallet(stateWallet => ({
@@ -30,8 +30,8 @@ export class TezosOperationTransactionEffects {
                 publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash,
                 // set tezos node
                 node: state.tezos.tezosNode.api,
-                // set wallet type: web, Trezor One, Trezor T
-                type: 'WEB',
+                // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+                type: action.payload.walletType, 
             })),
 
             // originate contract
@@ -43,30 +43,36 @@ export class TezosOperationTransactionEffects {
             }),
 
         )),
-        
+
         //TODO: remove 
         // wait for tzscan to porcess prevalidated operation
         delay(5000),
-        
+
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_OPERATION_TRANSACTION_SUCCESS',
             payload: { ...data }
         })),
-        catchError((error, caught) => {
-            console.error(error.message)
-            this.store.dispatch({
-                type: 'TEZOS_OPERATION_TRANSACTION_ERROR',
-                payload: error.message,
-            });
-            return caught;
-        }),
+        // catchError((error, caught) => {
+        //     console.error(error.message)
+        //     this.store.dispatch({
+        //         type: 'TEZOS_OPERATION_TRANSACTION_ERROR',
+        //         payload: error.message,
+        //     });
+        //     return caught;
+        // }),
 
         // redirect to wallet detail
         tap((action) => {
             this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
         })
     )
+
+
+
+
+
+
 
     constructor(
         private actions$: Actions,

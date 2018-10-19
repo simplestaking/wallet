@@ -5,7 +5,7 @@
     <mat-label>From</mat-label>
     <mat-select placeholder="From" formControlName="from">
       <mat-option *ngFor="let from of tezosWalletListFrom | async" [value]="from.publicKeyHash">
-        {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ  
+        {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ
       </mat-option>
     </mat-select>
 
@@ -46,10 +46,12 @@
 <br />
 <br />
 
-<button *ngIf="tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('WEB')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
+<button *ngIf="tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount"
+  mat-flat-button (click)="send('WEB')">
   Send ꜩ
 </button>
 
-<button *ngIf="!tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('TREZOR_T')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
-  Sign with Trezor(Connect) and Send ꜩ
+<button *ngIf="!tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount"
+  mat-flat-button (click)="send('TREZOR_T')">
+  Sign with Trezor and Send ꜩ
 </button>
