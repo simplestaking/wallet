@@ -41,7 +41,7 @@
         <ng-container matColumnDef="balance" stickyEnd>
           <th mat-header-cell *matHeaderCellDef> Balance </th>
           <td mat-cell *matCellDef="let element">
-            <a routerLink="/tezos/wallet/{{element.id}}">{{element.balance*0.000001 | number:'1.3-6' }} ꜩ</a>
+            <a routerLink="/tezos/wallet/detail/{{element.id}}">{{element.balance*0.000001 | number:'1.3-6' }} ꜩ</a>
           </td>
         </ng-container>
 

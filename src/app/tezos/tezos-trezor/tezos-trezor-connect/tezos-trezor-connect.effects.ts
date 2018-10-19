@@ -90,7 +90,7 @@ export class TezosTrezorConnectEffects {
 
                 // transaport initialized do not init 
                 if (!state.tezos.tezosTrezorConnect.transport.type &&
-                    !state.tezos.tezosTrezorConnect.device.status) {
+                    !state.tezos.tezosTrezorConnect.device.connected) {
 
                     // initialize TrezorConnect 
                     (<any>window).TrezorConnect.init({
@@ -105,7 +105,7 @@ export class TezosTrezorConnectEffects {
                         popup: false,
                         webusb: false,
                         debug: false,
-                    });
+                    }).then(response => console.error('[TrezorConnect][init]', response )) ;
 
                 }
 

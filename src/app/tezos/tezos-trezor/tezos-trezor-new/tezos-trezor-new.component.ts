@@ -11,7 +11,9 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TezosTrezorNewComponent implements OnInit {
 
-  public displayedColumns: string[] = ['address', 'path', 'amount', 'operations'];
+  public selectedRow
+  // public displayedColumns: string[] = ['address', 'path', 'amount', 'operations'];
+  public displayedColumns: string[] = ['select', 'address'];
 
   private onDestroy$ = new Subject()
 
@@ -43,6 +45,23 @@ export class TezosTrezorNewComponent implements OnInit {
 
       })
 
+  }
+
+  // dispatch action with selected row 
+  selectRow(row) {
+
+    this.selectedRow = row;
+
+    this.store.dispatch({
+      type: 'TEZOS_TREZOR_NEW_SELECT',
+      payload: this.selectedRow
+    })
+
+  }
+
+  // check if row is selected
+  isRowSelected(row) {
+    return this.selectedRow && this.selectedRow.id === row.id
   }
 
   getAddress() {

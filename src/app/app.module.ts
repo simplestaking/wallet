@@ -18,8 +18,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fal } from '@fortawesome/pro-light-svg-icons'
-import { far } from '@fortawesome/pro-regular-svg-icons'
-library.add(fal, far);
+library.add(fal);
 
 import { environment } from '../environments/environment';
 

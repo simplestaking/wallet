@@ -20,21 +20,37 @@
       <mat-horizontal-stepper [linear]="false">
 
         <mat-step [editable]="false" [optional]="false" [completed]="true" label="Connect Trezor">
-          <div>
+          <div class="tezos-trezor-connect">
 
             <app-tezos-trezor-connect>
             </app-tezos-trezor-connect>
 
-            <!-- <button mat-flat-button matStepperNext>Continue</button> -->
+            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected">
+              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              Continue to Select address&nbsp;
+            </button>
           </div>
         </mat-step>
 
         <mat-step [editable]="false" [optional]="false" label="Select Address">
-          <div>
+          <div class="tezos-trezor-new">
+
+            <!-- <span class="mat-h2">
+              Select address
+            </span> -->
+            
+            <br/>
+
             <app-tezos-trezor-new>
             </app-tezos-trezor-new>
-            <!-- <button mat-button matStepperPrevious>Back</button> -->
-            <button mat-flat-button matStepperNext>Continue</button>
+
+            <div class="tezos-trezor-new-next">
+              <button mat-flat-button matStepperNext *ngIf="tezosTrezorNewSelected">
+                <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+                Continue to Add Name&nbsp;
+              </button>
+            </div>
+
           </div>
         </mat-step>
 

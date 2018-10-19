@@ -45,13 +45,44 @@
 }
 
 .stepper ::ng-deep .mat-step-header .mat-step-icon {
-    background-color: rgb(115, 160, 239);
+    background-color: #2c71f4; // rgb(115, 160, 239);
     color: #fff;
 }
 
+// remove focus from stepper
+.stepper ::ng-deep .mat-step-header.cdk-program-focused { 
+    background-color: initial;
+}
+
+// remove shadow from stepper
 .stepper ::ng-deep .mat-step-header:hover {
     background-color: initial;
 }
+
+// center trezor icon and next button
+.stepper .tezos-trezor-connect {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+// center addres table and next button
+.stepper .tezos-trezor-new {
+    display: flex;
+    flex-direction: column;
+}
+
+.stepper .tezos-trezor-new-next {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+// stretch table to card size 
+.stepper .tezos-trezor-new table {
+    width: 100%
+}
+
 
 .close {
     display: flex;
@@ -67,5 +98,6 @@
     margin-top: 8px;
     font-size: 14px;
 }
+
 
 

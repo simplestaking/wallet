@@ -38,3 +38,19 @@ body:after {
     display:none;
     content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg');
 }
+
+/* button flat primary */
+.mat-flat-button.mat-primary {
+    background-color: #2c71f4 !important;
+}
+
+/* checbox remove animation and change border */
+.mat-checkbox-frame {
+    border-width: 1px !important;
+    border-color: #00000075;
+}
+
+/* change checbox color */
+.mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
+    background-color: #2c71f4 !important;
+}

@@ -4,6 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'app/shared/shared.module'
 
+// added font awesome pro icons
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fal } from '@fortawesome/pro-light-svg-icons'
+library.add(fal);
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -23,7 +29,7 @@ import {
   MatCardModule,
   MatPaginatorModule,
   MatStepperModule,
-  // MatCheckboxModule,
+  MatCheckboxModule,
   // MatChipsModule,
   // MatDatepickerModule,
   // MatDialogModule,
@@ -88,6 +94,8 @@ import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delega
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
+    
+    FontAwesomeModule,
 
     RouterModule.forChild(TezosRouting),
 
@@ -131,7 +139,7 @@ import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delega
     MatPaginatorModule,
     MatStepperModule,
     MatSelectModule,
-    // MatCheckboxModule,
+    MatCheckboxModule,
     // MatChipsModule,
     // MatDatepickerModule,
     // MatDialogModule,
