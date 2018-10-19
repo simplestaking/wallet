@@ -31,7 +31,7 @@ export class TezosTrezorConnectEffects {
 
                 (<any>window).TrezorConnect.on('TRANSPORT_EVENT', (event) => {
                     console.log('[TrezorConnect][TRANSPORT_EVENT]', event);
-                    
+
                     if (event.type === TRANSPORT.START) {
                         this.store.dispatch({
                             type: 'TEZOS_TREZOR_CONNECT_TRANSPORT_START',
@@ -49,27 +49,10 @@ export class TezosTrezorConnectEffects {
                     //(<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
                 });
 
-                (<any>window).TrezorConnect.on('DEVICE_EVENT', (event) => {
-                    console.log('[TrezorConnect][DEVICE_EVENT]', event);
 
-                    if (event.type === DEVICE.CONNECT || event.type === DEVICE.CONNECT_UNACQUIRED ) {
-                        this.store.dispatch({
-                            type: 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT',
-                            payload: event,
-                        })
-                    }
-
-                    if (event.type === DEVICE.DISCONNECT) {
-                        this.store.dispatch({
-                            type: 'TEZOS_TREZOR_CONNECT_DEVICE_DISCONNECT',
-                            payload: event,
-                        })
-                    }
-                    //(<any>window).TrezorConnect.off('DEVICE_EVENT', handleDeviceEvent);
-                });
 
                 (<any>window).TrezorConnect.on('UI_EVENT', (event) => {
-                     console.log('[TrezorConnect][UI_EVENT]', event);
+                    console.log('[TrezorConnect][UI_EVENT]', event);
                     // this.store.dispatch({
                     //     type: 'TEZOS_TREZOR_CONNECT_UI',
                     //     payload: event,
@@ -92,6 +75,33 @@ export class TezosTrezorConnectEffects {
                 if (!state.tezos.tezosTrezorConnect.transport.type &&
                     !state.tezos.tezosTrezorConnect.device.connected) {
 
+                    (<any>window).TrezorConnect.on('DEVICE_EVENT', (event) => {
+                        console.log('[TrezorConnect][DEVICE_EVENT]', event);
+
+                        if (event.type === DEVICE.CONNECT || event.type === DEVICE.CONNECT_UNACQUIRED) {
+                            this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT',
+                                payload: event,
+                            })
+                        }
+
+                        if (event.type === DEVICE.DISCONNECT) {
+                            this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_DEVICE_DISCONNECT',
+                                payload: event,
+                            })
+                        }
+
+                        if (event.type === DEVICE.BUTTON) {
+                            this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON',
+                                payload: event,
+                            })
+                        }
+
+                        //(<any>window).TrezorConnect.off('DEVICE_EVENT', handleDeviceEvent);
+                    });
+                    
                     // initialize TrezorConnect 
                     (<any>window).TrezorConnect.init({
                         connectSrc: 'http://localhost:5500/dist/',
@@ -105,7 +115,7 @@ export class TezosTrezorConnectEffects {
                         popup: false,
                         webusb: false,
                         debug: false,
-                    }).then(response => console.error('[TrezorConnect][init]', response )) ;
+                    }).then(response => console.error('[TrezorConnect][init]', response));
 
                 }
 

@@ -13,6 +13,8 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
   public tezosWalletDetail
   public tezosOperationTransaction
   public tezosTrezorConnectConnected
+  public tezosTrezorConnectButton
+  public tezosTrezorConnectButtonStart
 
   public destroy$ = new Subject<null>();
 
@@ -26,6 +28,12 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.tezosTrezorConnectConnected = state
+      })
+
+    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'button')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosTrezorConnectButton = state
       })
 
     this.store.select('tezos', 'tezosWalletDetail')
@@ -45,6 +53,10 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
 
   tezosTrezorPreparation() {
 
+    console.error('[tezosTrezorPreparation][buttons]',this.tezosTrezorConnectButtonStart, this.tezosTrezorConnectButton  )
+    // save button state
+    this.tezosTrezorConnectButtonStart = this.tezosTrezorConnectButton
+    
     // create transaction if it is not Trezor
     if (this.tezosWalletDetail.type !== 'TREZOR_T') {
       this.tezosTrezorSendFunds()

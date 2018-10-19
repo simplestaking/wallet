@@ -44,10 +44,12 @@
           </div>
         </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'" >
+        <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
 
           <div style="display:flex;align-items:center;flex-direction: column;">
-            <div style="display:flex;justify-content: center;flex-direction: row; padding:30px">
+
+            <div *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart || tezosTrezorConnectButton === tezosTrezorConnectButtonStart + 1"
+              style="display:flex;justify-content: center;flex-direction: row; padding:30px">
 
               <img src="/assets/trezor_verify_detail.svg" alt="Trezor Verification">
 
@@ -69,7 +71,7 @@
                       to (receiving address)
                     </span>
                     <span class="mat-body-1" class="tezos-verify-input" style="font-weight:500">
-                        {{tezosOperationTransaction.form.to}} 
+                      {{tezosOperationTransaction.form.to}}
                     </span>
                   </mat-card-content>
                 </mat-card>
@@ -83,6 +85,12 @@
 
             </div>
 
+            <div *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+2" style="display:flex;justify-content: center;flex-direction: row; padding:30px">
+
+              <img src="/assets/trezor_confirm_transaction.svg" alt="Trezor Verification">
+
+            </div>
+
             <div style="font-size:18px;">
               Confirm transaction detail on your device
             </div>
@@ -91,6 +99,37 @@
 
         <mat-step [editable]="false" optional="false" label="Confirmation">
           <div>
+
+            <div style="display:flex;align-items:center;flex-direction: column;">
+
+              <div style="display:flex;justify-content: center;flex-direction: row; padding:30px">
+
+
+                <div style="display:flex;align-items: center;flex-direction: column;width: 390px; border-radius:5px">
+
+                  <mat-card style="background-color: #f5f6f8; width:314px ; height: 130px; padding:20px">
+                    <mat-card-header>
+                      <h2 class="mat-h2">
+                        Transaction Sent
+                      </h2>
+                    </mat-card-header>
+                    <mat-card-content>
+                      
+                      <span class="mat-body-1">
+                        The transaction has been signed and sent to the network.
+                        Your account balance will update once the blockchain has confirmed the transaction.
+                      </span>
+
+                      <br />
+                    </mat-card-content>
+                  </mat-card>
+
+
+                </div>
+
+              </div>
+
+            </div>
 
           </div>
         </mat-step>
