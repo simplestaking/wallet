@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TezosWalletSendComponent implements OnInit, OnDestroy {
 
   public tezosWalletDetail
+  public tezosOperationTransaction
   public tezosTrezorConnectConnected
 
   public destroy$ = new Subject<null>();
@@ -31,7 +32,12 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.tezosWalletDetail = state
-        console.log('[tezosWalletDetail]', this.tezosWalletDetail)
+      })
+
+    this.store.select('tezos', 'tezosOperationTransaction')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosOperationTransaction = state
       })
 
   }

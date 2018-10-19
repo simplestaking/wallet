@@ -23,7 +23,7 @@
           <div>
             <app-tezos-operation-transaction>
             </app-tezos-operation-transaction>
-            
+
             <button mat-flat-button matStepperNext>
               <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
               Continue&nbsp;
@@ -32,6 +32,7 @@
           </div>
         </mat-step>
 
+        <!-- 
         <mat-step [editable]="false" optional="false" label="Connect Trezor">
           <div class="tezos-trezor-connect">
 
@@ -43,12 +44,50 @@
               Continue to Verification&nbsp;
             </button>
           </div>
-        </mat-step>
+        </mat-step> -->
 
         <mat-step [editable]="false" optional="false" label="Verification">
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+
+          <div style="display:flex;align-items:center;flex-direction: column;">
+            <div style="display:flex;justify-content: center;flex-direction: row; padding:30px">
+
+              <img src="/assets/trezor_verify_detail.svg" alt="Trezor Verification">
+
+              <div style="display:flex;align-items: center;flex-direction: column;width: 390px; border-radius:5px">
+
+                <mat-card style="background-color: #f5f6f8; width:314px ; height: 160px; padding:20px">
+                  <mat-card-content>
+
+                    <span class="mat-body-1">
+                      Amount
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input" style="font-weight:500">
+                      {{tezosOperationTransaction.form.amount}} XTZ
+                    </span>
+
+                    <br />
+
+                    <span class="mat-body-1">
+                      to (receiving address)
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input" style="font-weight:500">
+                        {{tezosOperationTransaction.form.to}} 
+                    </span>
+                  </mat-card-content>
+                </mat-card>
+
+                <div style="padding:15px;font-weight: 300">
+                  As malaware can replace address shown on computer, you should always check the authenticity of
+                  receiving address when sending funds from Trezor
+                </div>
+
+              </div>
+
+            </div>
+
+            <div style="font-size:18px;">
+              Confirm transaction detail on your device
+            </div>
           </div>
         </mat-step>
 
