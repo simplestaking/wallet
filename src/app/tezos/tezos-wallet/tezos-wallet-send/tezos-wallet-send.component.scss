@@ -53,6 +53,18 @@
     background-color: initial;
 }
 
+// remove focus from stepper
+.stepper ::ng-deep .mat-step-header.cdk-program-focused { 
+    background-color: initial;
+}
+
+// center trezor icon and next button
+.stepper .tezos-trezor-connect {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .close {
     display: flex;
     justify-content: flex-end;

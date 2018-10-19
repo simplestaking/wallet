@@ -43,6 +43,15 @@ export class TezosWalletNewTrezorComponent implements OnInit, OnDestroy {
 
   }
 
+  // get tezos address from trezor 
+  tezosTrezosSelectAddress() {
+
+    this.store.dispatch({
+      type: 'TEZOS_TREZOR_NEW',
+    })
+
+  }
+
   tezosTrezosNewSave() {
 
     // mark input 
@@ -59,7 +68,7 @@ export class TezosWalletNewTrezorComponent implements OnInit, OnDestroy {
         type: 'TEZOS_WALLET_NEW_TREZOR_SAVE',
         payload: this.tezosTrezorNewForm.controls.name.value
       })
-    
+
     }
   }
 

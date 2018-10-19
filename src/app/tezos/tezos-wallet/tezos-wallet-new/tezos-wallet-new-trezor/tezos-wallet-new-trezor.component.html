@@ -25,7 +25,7 @@
             <app-tezos-trezor-connect>
             </app-tezos-trezor-connect>
 
-            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected">
+            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorSelectAddress()">
               <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
               Continue to Select address&nbsp;
             </button>
@@ -89,7 +89,7 @@
             <br />
 
             <div class="tezos-trezor-new-next">
-              <button mat-flat-button matStepperNext (click)="tezosTrezosNewSave()" >
+              <button mat-flat-button matStepperNext (click)="tezosTrezorNewSave()" >
                 <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
                 Finish&nbsp;
               </button>

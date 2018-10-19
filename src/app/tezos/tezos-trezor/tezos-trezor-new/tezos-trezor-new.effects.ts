@@ -18,9 +18,9 @@ export class TezosTrezorNewEffects {
     @Effect()
     TezosTrezorNew = this.actions$.pipe(
         // ofRoute('/tezos/wallet/new/trezor'),
-
-        ofType('TEZOS_TREZOR_CONNECT_TRANSPORT_START'),
-
+        // ofType('TEZOS_TREZOR_CONNECT_TRANSPORT_START'),
+        ofType('TEZOS_TREZOR_NEW'),
+        
         // TODO: find action for connect initialization
         delay(2000),
 

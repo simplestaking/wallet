@@ -10,6 +10,12 @@
     justify-content: center;
 }
 
+// remove focus from stepper
+.stepper ::ng-deep .mat-step-header.cdk-program-focused { 
+    background-color: initial;
+}
+
+
 .stepper mat-card {
     width: 700px;
 }

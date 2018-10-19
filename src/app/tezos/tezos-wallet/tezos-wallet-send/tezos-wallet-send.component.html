@@ -9,13 +9,13 @@
 
   <mat-card>
     <mat-card-content>
-    
-      <br/>  
-    <mat-card-header>
-      <h2 class="mat-h1 reset">
-        Send funds
-      </h2>
-    </mat-card-header> 
+
+      <br />
+      <mat-card-header>
+        <h2 class="mat-h1 reset">
+          Send funds
+        </h2>
+      </mat-card-header>
 
       <mat-horizontal-stepper [linear]="false">
 
@@ -23,13 +23,25 @@
           <div>
             <app-tezos-operation-transaction>
             </app-tezos-operation-transaction>
+            
+            <button mat-flat-button matStepperNext>
+              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              Continue&nbsp;
+            </button>
+
           </div>
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Connect Trezor">
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="tezos-trezor-connect">
+
+            <app-tezos-trezor-connect>
+            </app-tezos-trezor-connect>
+
+            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorSendFunds()">
+              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              Continue to Verification&nbsp;
+            </button>
           </div>
         </mat-step>
 

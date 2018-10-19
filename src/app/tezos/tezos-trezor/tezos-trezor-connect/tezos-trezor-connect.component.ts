@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import TrezorConnect from 'trezor-connect';
   templateUrl: './tezos-trezor-connect.component.html',
   styleUrls: ['./tezos-trezor-connect.component.scss']
 })
-export class TezosTrezorConnectComponent implements OnInit, OnDestroy {
+export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public tezosTrezorConnect
   public destroy$ = new Subject<null>();
@@ -20,10 +20,6 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
-    // this.store.dispatch({
-    //   type: 'TEZOS_TREZOR_CONNECT',
-    // })
 
     // listen to tezos trezor connect
     this.store.select('tezos', 'tezosTrezorConnect')
@@ -36,6 +32,14 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy {
       })
 
   }
+
+  ngAfterViewInit() {
+
+    this.store.dispatch({
+      type: 'TEZOS_TREZOR_CONNECT',
+    })
+    
+  } 
 
   ngOnDestroy() {
 

@@ -17,8 +17,8 @@ export class TezosTrezorConnectEffects {
     // connect trezor and and listen to trezor events   
     @Effect()
     TezosTrezorConnect = this.actions$.pipe(
-        // ofType('TEZOS_TREZOR_CONNECT'),
-        ofRoute('/tezos/wallet/new/trezor'),
+        ofType('TEZOS_TREZOR_CONNECT'),
+        // ofRoute('/tezos/wallet/new/trezor'),
 
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
