@@ -12,7 +12,7 @@ export function reducer(state = initialState, action) {
 
         case 'TEZOS_TREZOR_NEW_SUCCESS': {
 
-            // console.log('[TEZOS_TREZOR_NEW_SUCCESS]', action.payload)
+            console.log('[TEZOS_TREZOR_NEW_SUCCESS]', action.payload)
 
             return {
                 ...state,
@@ -24,9 +24,22 @@ export function reducer(state = initialState, action) {
                     ...state.entities,
                     [action.payload.address]: {
                         address: action.payload.address,
-                        path: '',
+                        path: 'm/' + action.payload.serializedPath,
                         amount: '',
                         operations: '',
+                    }
+                },
+            }
+        }
+
+        case 'TEZOS_TREZOR_NEW_PUBLICKEY_SAVE': {
+            return {
+                ...state,
+                entities: {
+                    ...state.entities,
+                    [action.payload.address]: {
+                        ...state.entities[action.payload.address],
+                        publicKey: action.payload.publicKey
                     }
                 },
             }
@@ -36,6 +49,14 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 selected: action.payload.id,
+            }
+        }
+
+
+        case 'TEZOS_TREZOR_NEW_DESTROY': {
+            return {
+                ...state,
+                selected: '',
             }
         }
 

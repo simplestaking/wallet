@@ -31,7 +31,7 @@ export class TezosOperationTransactionComponent implements OnInit {
       from: [{ value: '', disabled: false }],
       to: [{ value: '', disabled: false }],
       amount: [{ value: '', disabled: false }],
-      fee: [{ value: '', disabled: false }],
+      fee: [{ value: '0', disabled: true }],
     })
 
     // listen to tezos wallets detail

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { of, Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './tezos-trezor-new.component.html',
   styleUrls: ['./tezos-trezor-new.component.scss']
 })
-export class TezosTrezorNewComponent implements OnInit {
+export class TezosTrezorNewComponent implements OnInit, OnDestroy {
 
   public selectedRow
   // public displayedColumns: string[] = ['address', 'path', 'amount', 'operations'];
@@ -64,10 +64,16 @@ export class TezosTrezorNewComponent implements OnInit {
     return this.selectedRow && this.selectedRow.id === row.id
   }
 
-  getAddress() {
+  ngOnDestroy() {
+
+    // close all open observables
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+    
     this.store.dispatch({
-      type: 'TEZOS_TREZOR_NEW'
+      type: 'TEZOS_TREZOR_NEW_DESTROY',
     })
+
   }
 
 }

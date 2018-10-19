@@ -51,6 +51,38 @@ export class TezosTrezorNewEffects {
             payload: response.payload,
         })),
     )
+    
+    // TODO: !!! triger after click on continue, potential race condition when user select address during loading 
+    // get tezos public key  from trezor   
+    @Effect()
+    TezosTrezorNewPublicKey = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_NEW_SELECT'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action: any, state) => ({ action, state })),
+
+        // tap(({ action, state }) => console.log('[TEZOS_TREZOR_NEW_SELECT] path',
+        //     state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path)),
+        // get state and action 
+
+        flatMap(({ action, state }) => of([]).pipe(
+            flatMap(() =>
+                TrezorConnect.tezosGetPublicKey({
+                    'path': state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path,
+                    'showOnTrezor': false,
+                })
+            ),
+            // add address to response
+            map((response: any) => ({ ...response.payload, address: action.payload.address })),
+        )),
+
+        map((response: any) => ({
+            type: 'TEZOS_TREZOR_NEW_PUBLICKEY_SAVE',
+            payload: response,
+        })),
+
+    )
+
 
 
     constructor(

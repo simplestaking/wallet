@@ -32,7 +32,10 @@ export class TezosWalletListEffects {
         // get data from firebase 
         // TODO: move to custom rxjs operator
         flatMap(state =>
-            this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet', query => query.where('uid', '==', null)).valueChanges()
+            this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet',
+                query => query.where('uid', '==', null)
+                .orderBy('name', 'asc')
+            ).valueChanges()
         ),
 
         map(response => ({ type: 'TEZOS_WALLET_LIST_LOAD_SUCCESS', payload: response })),

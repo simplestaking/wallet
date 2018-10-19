@@ -38,8 +38,8 @@
             <!-- <span class="mat-h2">
               Select address
             </span> -->
-            
-            <br/>
+
+            <br />
 
             <app-tezos-trezor-new>
             </app-tezos-trezor-new>
@@ -55,8 +55,46 @@
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Add Name">
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
+          <div class="tezos-trezor-new">
+
+            <br />
+
+            <mat-card style="background-color:whitesmoke; width:604px;">
+              <mat-card-content>
+                <span class="mat-body-1">
+                  Giving a human name to your address <span style="font-weight: 500">{{ tezosTrezorNewSelected }}</span>
+                  <br /> helps you to recognize it anytime later
+                </span>
+              </mat-card-content>
+            </mat-card>
+
+            <br />
+            <br />
+
+            <div [formGroup]="tezosTrezorNewForm">
+
+              <mat-form-field appearance="outline" [floatLabel]="always" style="display:flex">
+                <mat-label>Name your address</mat-label>
+
+                <input #name matInput formControlName="name">
+
+                <mat-error>
+                  Name is required
+                </mat-error>
+              </mat-form-field>
+
+            </div>
+
+            <br />
+            <br />
+
+            <div class="tezos-trezor-new-next">
+              <button mat-flat-button matStepperNext (click)="tezosTrezosNewSave()" >
+                <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+                Finish&nbsp;
+              </button>
+            </div>
+
           </div>
         </mat-step>
 
