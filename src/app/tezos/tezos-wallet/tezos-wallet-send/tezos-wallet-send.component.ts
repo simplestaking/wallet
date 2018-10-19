@@ -42,6 +42,16 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
 
   }
 
+
+  tezosTrezorPreparation() {
+
+    // create transaction if it is not Trezor
+    if (this.tezosWalletDetail.type !== 'TREZOR_T') {
+      this.tezosTrezorSendFunds()
+    }
+
+  }
+
   // send funds with Trezor
   tezosTrezorSendFunds() {
 

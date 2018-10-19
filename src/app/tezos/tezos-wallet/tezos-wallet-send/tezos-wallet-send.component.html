@@ -16,7 +16,6 @@
           Send funds
         </h2>
       </mat-card-header>
-
       <mat-horizontal-stepper [linear]="false">
 
         <mat-step [editable]="false" optional="false" label="Preparation">
@@ -24,7 +23,7 @@
             <app-tezos-operation-transaction>
             </app-tezos-operation-transaction>
 
-            <button mat-flat-button matStepperNext>
+            <button mat-flat-button matStepperNext (click)="tezosTrezorPreparation()">
               <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
               Continue&nbsp;
             </button>
@@ -32,8 +31,7 @@
           </div>
         </mat-step>
 
-        <!-- 
-        <mat-step [editable]="false" optional="false" label="Connect Trezor">
+        <mat-step [editable]="false" optional="false" label="Connect Trezor" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
           <div class="tezos-trezor-connect">
 
             <app-tezos-trezor-connect>
@@ -44,9 +42,9 @@
               Continue to Verification&nbsp;
             </button>
           </div>
-        </mat-step> -->
+        </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Verification">
+        <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'" >
 
           <div style="display:flex;align-items:center;flex-direction: column;">
             <div style="display:flex;justify-content: center;flex-direction: row; padding:30px">
@@ -93,7 +91,7 @@
 
         <mat-step [editable]="false" optional="false" label="Confirmation">
           <div>
-            <button mat-button matStepperPrevious>Back</button>
+
           </div>
         </mat-step>
 
