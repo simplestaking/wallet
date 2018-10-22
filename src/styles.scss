@@ -1,48 +1,132 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
 
-/* button */
+@include mat-core();
+
+// available color palettes: https://material.io/design/color/
+$simple-primary: mat-palette($mat-blue, A400);
+$simple-accent:  mat-palette($mat-pink, A200, A100, A400);
+$simple-warn:    mat-palette($mat-red);
+
+// create the theme object (a Sass map containing all of the palettes)
+$simple-theme: mat-light-theme($simple-primary, $simple-accent, $simple-warn);
+
+
+
+// button 
 .mat-raised-button:not([class*=mat-elevation-z]) {    
     box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09) !important;
 }
 
-/* raised button */
+// raised button
 .mat-raised-button:not([disabled]):active:not([class*=mat-elevation-z]) {
     box-shadow: 0 3px 3px -1px rgba(0,0,0,.2), 0 5px 7px 1px rgba(0,0,0,.14), 0 0px 11px 0px rgba(0,0,0,.12) !important;
 }
 
-/* card */
+// card
 .mat-card:not([class*=mat-elevation-z]) {
     box-shadow: 0 0px 0px -1px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important
     // box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 0px 0px 0 rgba(0,0,0,.09) !important;
 }
 
-/* table */
+// table
 .mat-table:not([class*=mat-elevation-z]) {
     box-shadow: none;
     // box-shadow:  0 0px 1px -1px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09) !important
 }
-/* menu */
+
+// menu
 .mat-menu-panel {
     box-shadow:  0 0px 5px -1px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09) !important
 }
 
-/* backgorund */
+// backgorund 
 .mat-drawer-container {
     background-color: #f5f5f5;
 }
 
 
-/* preload images */ 
+// preload images 
 body:after {
     display:none;
     content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg');
 }
 
-/* button flat primary */
-.mat-flat-button.mat-primary {
-    background-color: #2c71f4 !important;
+
+
+
+// stepper 
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.stepper mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepper mat-card {
+    width: 700px;
+}    
+
+.stepper .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09)
+}
+
+.stepper .mat-h1 {
+    font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
+}
+
+// center trezor icon and next button
+.stepper .tezos-trezor-connect {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+// close button for stepper 
+.close {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close button {
+    font-weight: 400;
+    padding-left: 8px;
+}
+
+.close button mat-icon {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+// selected stepper font 
+.mat-step-label-selected {
+    font-weight: 500;
+}
+
+mat-horizontal-stepper .mat-step-header .mat-step-icon-not-touched {
+    background-color:whitesmoke;
+    color: gray
+}
+
+// stepper button text color 
+mat-horizontal-stepper .mat-step-header .mat-step-label.mat-step-label-active {
+    color: rgba(0,0,0,.6);
+}
+
+// remove focus from stepper
+mat-horizontal-stepper .mat-step-header.cdk-program-focused { 
+    background-color: initial;
+}
+
+// remove hover background 
+mat-horizontal-stepper .mat-step-header:hover {
+    background-color: initial;
+}
+
 
 /* checbox remove animation and change border */
 .mat-checkbox-frame {
@@ -50,7 +134,5 @@ body:after {
     border-color: #00000075;
 }
 
-/* change checbox color */
-.mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
-    background-color: #2c71f4 !important;
-}
+
+@include angular-material-theme($simple-theme);
