@@ -20,6 +20,25 @@ export class TezosWalletDelegateEffects {
         map(() => ({ type: 'TEZOS_WALLET_DELEGATE_SHOW' })),
     )
 
+    // trigger data load based on navigation change  
+    @Effect()
+    TezosWalletDelegateAddressLoad$ = this.actions$.pipe(
+        ofRoute('/tezos/wallet/delegate/:address'),
+        flatMap(() => [
+            { type: 'TEZOS_WALLET_SEND_SHOW' },
+            { type: 'TEZOS_WALLET_LIST_LOAD' },
+            { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+        ]),
+    )
+    
+    // redicert to url with tezos public address
+    @Effect()
+    TezosWalletSendRedirect$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_DELEGATION_FROM_CHANGE'),
+        tap((action: any) => this.router.navigate(['/tezos/wallet/delegate/' + action.payload])),
+        map(() => ({ type: 'TEZOS_WALLET_DELEGATE_REDIRECT' })),
+    )
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

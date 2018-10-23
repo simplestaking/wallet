@@ -12,4 +12,10 @@ export class TezosWalletDelegateComponent implements OnInit {
   ngOnInit() {
   }
 
+  tezosDelegateFunds() {
+
+    console.log('[tezosDelegateFunds] tezos delegate funds')
+    
+  }
+
 }

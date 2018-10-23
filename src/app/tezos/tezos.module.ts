@@ -110,10 +110,10 @@ import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delega
       TezosWalletSendEffects,
       TezosWalletReceiveEffects,
       TezosWalletDelegateEffects,
-
       TezosWalletNewTrezorEffects,
-
+      
       TezosOperationTransactionEffects,
+      TezosOperationDelegationEffects,
       TezosOperationHistoryEffects,
       
       TezosTrezorConnectEffects,

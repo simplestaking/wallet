@@ -22,6 +22,12 @@
           <div>
             <app-tezos-operation-delegation>
             </app-tezos-operation-delegation>
+            
+            <button mat-flat-button matStepperNext (click)="tezosTrezorFunds()">
+              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              Continue &nbsp;
+            </button>
+          
           </div>
         </mat-step>
 

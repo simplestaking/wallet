@@ -11,10 +11,11 @@ import { takeUntil, filter } from 'rxjs/operators';
 })
 export class TezosOperationDelegationComponent implements OnInit {
 
+  public tezosWalletList
+  public tezosWalletListFrom
+  public tezosWalletDetail
   public tezosOperationDelegation
   public tezosOperationDelegationForm
-  public tezosWalletDetail
-  public tezosWalletList
   public destroy$ = new Subject<null>();
 
   constructor(
@@ -27,7 +28,7 @@ export class TezosOperationDelegationComponent implements OnInit {
     // create form group
     this.tezosOperationDelegationForm = this.fb.group({
       name: [{ value: '', disabled: true }],
-      from: [{ value: '', disabled: true }],
+      from: [{ value: '', disabled: false }],
       to: ''
     })
 
@@ -49,14 +50,34 @@ export class TezosOperationDelegationComponent implements OnInit {
             .filter(id => id !== this.tezosWalletDetail.publicKeyHash)
             .map(id => state.entities[id])
           )
+
+        // create tezos wallet list from 
+        this.tezosWalletListFrom = of(state.ids
+          .map(id => state.entities[id])
+        )
+
       })
 
     // listen to tezos operation origination 
     this.store.select('tezos', 'tezosOperationDelegation', 'form')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
+
+        // dispatch action when from delegate address change  
+        if (this.tezosOperationDelegation && this.tezosOperationDelegation.from !== state.from) {
+          this.store.dispatch({
+            type: 'TEZOS_OPERATION_DELEGATION_FROM_CHANGE',
+            payload: state.from
+          })
+        }
+
         // create OperationOrigination 
         this.tezosOperationDelegation = state
+
+        // set redux data to form 
+        this.tezosOperationDelegationForm
+          .patchValue(this.tezosOperationDelegation, { emitEvent: false })
+
       })
 
   }
