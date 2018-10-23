@@ -34,7 +34,7 @@ export class TezosWalletListEffects {
         flatMap(state =>
             this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet',
                 query => query.where('uid', '==', null)
-                .orderBy('name', 'asc')
+                    .orderBy('name', 'asc')
             ).valueChanges()
         ),
 
@@ -51,10 +51,16 @@ export class TezosWalletListEffects {
         withLatestFrom(this.store, (action, state: any) => state),
 
         // get all accounts address
-        flatMap((state: any) => state.tezos.tezosWalletList.ids.map(id => ({
-            node: state.tezos.tezosNode.api,
-            detail: state.tezos.tezosWalletList.entities[id],
-        }))),
+        flatMap((state: any) => state.tezos.tezosWalletList.ids
+            .filter(id => 
+                // get balnce only if last downlaod is older than 3 mins
+                (new Date().getTime() - state.tezos.tezosWalletList.entities[id].timestamp) < (5*60*1000) ? false : true
+            )
+            .map(id => ({
+                node: state.tezos.tezosNode.api,
+                detail: state.tezos.tezosWalletList.entities[id],
+            }))
+        ),
 
         flatMap((state: any) => of([]).pipe(
 

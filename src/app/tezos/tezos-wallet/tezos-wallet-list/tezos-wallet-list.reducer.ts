@@ -14,6 +14,7 @@ export function reducer(state = initialState, action) {
                 entities: action.payload.reduce((accumulator, wallet) => ({
                     ...accumulator,
                     [wallet.publicKeyHash]: {
+                        ...state.entities[wallet.publicKeyHash],
                         ...wallet
                     }
                 }), {}),
@@ -29,6 +30,7 @@ export function reducer(state = initialState, action) {
                     [action.payload.wallet.publicKeyHash]: {
                         ...state.entities[action.payload.wallet.publicKeyHash],
                         ...action.payload.getWallet,
+                        timestamp: new Date().getTime(),
                     }
                 }
             }

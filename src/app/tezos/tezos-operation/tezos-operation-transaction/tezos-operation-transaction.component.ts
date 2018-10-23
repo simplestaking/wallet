@@ -1,5 +1,5 @@
 import { Input, Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms'
+import { FormBuilder, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
@@ -27,11 +27,10 @@ export class TezosOperationTransactionComponent implements OnInit {
 
     // create form group
     this.tezosOperationTransactionForm = this.fb.group({
-      name: [{ value: '', disabled: false }],
-      from: [{ value: '', disabled: false }],
-      to: [{ value: '', disabled: false }],
-      amount: [{ value: '', disabled: false }],
-      fee: [{ value: '0', disabled: true }],
+      from: ['', [Validators.required]],
+      to: ['', [Validators.required]],
+      amount: ['', [Validators.required]],
+      fee: [{ value: '0', disabled: true }, [Validators.required]],
     })
 
     // listen to tezos wallets detail
@@ -99,13 +98,28 @@ export class TezosOperationTransactionComponent implements OnInit {
 
   send(walletType) {
 
-      // console.log('[SEND][TRANSACTION] walletType', walletType)
-      this.store.dispatch({
-        type: "TEZOS_OPERATION_TRANSACTION",
-        payload: {
-          walletType: walletType,
-        }
-      })
+    // mark input 
+    this.tezosOperationTransactionForm.controls.from.markAsTouched()
+    this.tezosOperationTransactionForm.controls.to.markAsTouched()
+    this.tezosOperationTransactionForm.controls.amount.markAsTouched()
+    this.tezosOperationTransactionForm.controls.fee.markAsTouched()
+
+    // check validity
+    this.tezosOperationTransactionForm.updateValueAndValidity()
+
+    // dispatch only if valid
+    if (this.tezosOperationTransactionForm.valid) {
+
+      console.log('[SEND][TRANSACTION] walletType', walletType)
+
+      // this.store.dispatch({
+      //   type: "TEZOS_OPERATION_TRANSACTION",
+      //   payload: {
+      //     walletType: walletType,
+      //   }
+      // })
+
+    }
 
   }
 

@@ -29,48 +29,6 @@ export class TezosTrezorConnectEffects {
             (<any>window).TrezorConnect = TrezorConnect
             try {
 
-                (<any>window).TrezorConnect.on('TRANSPORT_EVENT', (event) => {
-                    console.log('[TrezorConnect][TRANSPORT_EVENT]', event);
-
-                    if (event.type === TRANSPORT.START) {
-                        this.store.dispatch({
-                            type: 'TEZOS_TREZOR_CONNECT_TRANSPORT_START',
-                            payload: event,
-                        })
-                    }
-
-                    if (event.type === TRANSPORT.ERROR) {
-                        this.store.dispatch({
-                            type: 'TEZOS_TREZOR_CONNECT_TRANSPORT_ERROR',
-                            payload: event,
-                        })
-                    }
-
-                    //(<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
-                });
-
-
-
-                (<any>window).TrezorConnect.on('UI_EVENT', (event) => {
-                    console.log('[TrezorConnect][UI_EVENT]', event);
-                    // this.store.dispatch({
-                    //     type: 'TEZOS_TREZOR_CONNECT_UI',
-                    //     payload: event,
-                    // })
-                    //(<any>window).TrezorConnect.off('UI_EVENT', handleUiEvent);
-                });
-
-                // (<any>window).TrezorConnect.on('RESPONSE_EVENT', (event) => {
-                //     console.log('[TrezorConnect][RESPONSE_EVENT]', event);
-                //     //(<any>window).TrezorConnect.off('RESPONSE_EVENT', handleResponseEvent);
-                // });
-
-                // (<any>window).TrezorConnect.on('CORE_EVENT', (event) => {
-                //     console.log('[TrezorConnect][CORE_EVENT]', event);
-                //     // (<any>window).TrezorConnect.off('CORE_EVENT', handleCoreEvent);
-                // });
-
-
                 // transaport initialized do not init 
                 if (!state.tezos.tezosTrezorConnect.transport.type &&
                     !state.tezos.tezosTrezorConnect.device.connected) {
@@ -101,7 +59,46 @@ export class TezosTrezorConnectEffects {
 
                         //(<any>window).TrezorConnect.off('DEVICE_EVENT', handleDeviceEvent);
                     });
-                    
+
+                    (<any>window).TrezorConnect.on('TRANSPORT_EVENT', (event) => {
+                        console.log('[TrezorConnect][TRANSPORT_EVENT]', event);
+
+                        if (event.type === TRANSPORT.START) {
+                            this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_TRANSPORT_START',
+                                payload: event,
+                            })
+                        }
+
+                        if (event.type === TRANSPORT.ERROR) {
+                            this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_TRANSPORT_ERROR',
+                                payload: event,
+                            })
+                        }
+
+                        //(<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
+                    });
+
+                    (<any>window).TrezorConnect.on('UI_EVENT', (event) => {
+                        console.log('[TrezorConnect][UI_EVENT]', event);
+                        // this.store.dispatch({
+                        //     type: 'TEZOS_TREZOR_CONNECT_UI',
+                        //     payload: event,
+                        // })
+                        //(<any>window).TrezorConnect.off('UI_EVENT', handleUiEvent);
+                    });
+
+                    // (<any>window).TrezorConnect.on('RESPONSE_EVENT', (event) => {
+                    //     console.log('[TrezorConnect][RESPONSE_EVENT]', event);
+                    //     //(<any>window).TrezorConnect.off('RESPONSE_EVENT', handleResponseEvent);
+                    // });
+
+                    // (<any>window).TrezorConnect.on('CORE_EVENT', (event) => {
+                    //     console.log('[TrezorConnect][CORE_EVENT]', event);
+                    //     // (<any>window).TrezorConnect.off('CORE_EVENT', handleCoreEvent);
+                    // });
+
                     // initialize TrezorConnect 
                     (<any>window).TrezorConnect.init({
                         connectSrc: 'http://localhost:5500/dist/',
@@ -115,7 +112,7 @@ export class TezosTrezorConnectEffects {
                         popup: false,
                         webusb: false,
                         debug: false,
-                    }).then(response => console.error('[TrezorConnect][init]', response));
+                    }).then(response => console.warn('[TrezorConnect][init]', response));
 
                 }
 

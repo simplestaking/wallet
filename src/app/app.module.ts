@@ -193,7 +193,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     ]),
 
     // https://github.com/zalmoxisus/redux-devtools-extension
-    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 10 }) : [],
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 25 }) : [],
 
     // Cloud firestore
     AngularFireModule.initializeApp(environment.firebase),

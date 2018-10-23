@@ -29,7 +29,7 @@ export class TezosWalletSendEffects {
         ofRoute('/tezos/wallet/send/:address'),
         flatMap(() => [
             { type: 'TEZOS_WALLET_SEND_SHOW' },
-           //  { type: 'TEZOS_WALLET_LIST_LOAD' },
+            { type: 'TEZOS_WALLET_LIST_LOAD' },
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
         ]),
     )

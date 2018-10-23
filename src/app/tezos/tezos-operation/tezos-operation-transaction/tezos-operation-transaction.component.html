@@ -4,11 +4,15 @@
 
     <mat-label>From</mat-label>
     <mat-select placeholder="From" formControlName="from">
+
       <mat-option *ngFor="let from of tezosWalletListFrom | async" [value]="from.publicKeyHash">
         {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ
       </mat-option>
-    </mat-select>
 
+    </mat-select>
+    <mat-error>
+      Please choose address
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -22,7 +26,9 @@
         <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ</small>
       </mat-option>
     </mat-autocomplete>
-
+    <mat-error>
+      Please enter valid address
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -30,15 +36,19 @@
     <mat-label>Amount</mat-label>
     <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
     <mat-hint align="end">{{amount.value?.length || 0}}/8</mat-hint>
-
+    <mat-error>
+      Please enter amount
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
 
     <mat-label>Fee</mat-label>
-    <input matInput #fee type="number" placeholder="Fee" formControlName="fee" />
+    <input matInput #fee type="number" placeholder="Fee" formControlName="fee"/>
     <mat-hint align="end">{{fee.value?.length || 0}}/8</mat-hint>
-
+    <mat-error>
+      Please enter fee
+    </mat-error>
   </mat-form-field>
 
 </div>
@@ -46,12 +56,21 @@
 <br />
 <br />
 
-<!-- <button mat-flat-button (click)="send('WEB')" *ngIf="tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount">
+<button mat-flat-button (click)="send('WEB')">
+  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  Check&nbsp;
+</button>
+
+<br/>
+
+<button mat-flat-button (click)="send('WEB')" *ngIf="tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount">
   <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
   Continue&nbsp;
-</button> -->
+</button>
 
-<!-- <button *ngIf="!tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount"
+<button *ngIf="!tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount"
   mat-flat-button (click)="send('TREZOR_T')">
   Sign with Trezor and Send ꜩ
-</button> -->
+</button>
+
+<br/>
