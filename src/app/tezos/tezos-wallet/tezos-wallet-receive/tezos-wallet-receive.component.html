@@ -21,11 +21,33 @@
 
         <mat-step [editable]="false" optional="false" label="Preparation">
           <div>
+              <div class="tezos-wallet-receive" [formGroup]="tezosWalletReceiveForm" ngrxForm="tezos.tezosWalletReceive">
+                <mat-form-field appearance="outline">
+                  <mat-label>Select wallet to receive funds</mat-label>
+                    <mat-select placeholder="Receive address" formControlName="receiveTo">
+                      <mat-option *ngFor="let from of tezosWalletList | async" [value]="from.publicKeyHash">
+                        {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </div>
+              <br />
+              <button mat-flat-button matStepperNext>
+                <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+                Continue&nbsp;
+              </button>
           </div>
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Connect Trezor">
-          <div>
+          <div class="tezos-trezor-connect">
+            <app-tezos-trezor-connect>
+            </app-tezos-trezor-connect>
+
+            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected">
+              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              Continue to Select address&nbsp;
+            </button>
           </div>
         </mat-step>
 

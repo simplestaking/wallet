@@ -32,6 +32,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.6",
     "@fortawesome/free-regular-svg-icons": "^5.4.1",
     "@fortawesome/pro-light-svg-icons": "^5.4.1",
+    "@fortawesome/pro-regular-svg-icons": "^5.4.1",
     "@ngrx/effects": "6.1.0",
     "@ngrx/entity": "6.1.0",
     "@ngrx/router-store": "6.1.0",
