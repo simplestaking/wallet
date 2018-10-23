@@ -35,6 +35,7 @@ export class TezosWalletSendEffects {
     )
 
     // redicert to url with tezos public address
+    // TODO explain - whre it redirect? and why?
     @Effect()
     TezosWalletSendRedirect$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_TRANSACTION_FROM_CHANGE'),
