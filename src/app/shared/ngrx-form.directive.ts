@@ -33,7 +33,10 @@ export class NgrxFormDirective implements OnInit, OnDestroy {
           type: "FORM_VALUE_CHANGES",
           payload: {
             path: this.path,
-            value: value,
+            value: {
+              ...value,
+              // amount: 1.0,
+            },
             // dirty: this.formGroupDirective.dirty,
             // errors: this.formGroupDirective.errors,
           }

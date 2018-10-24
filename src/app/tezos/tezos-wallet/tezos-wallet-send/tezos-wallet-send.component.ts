@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -17,6 +17,8 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
   public tezosTrezorConnectButtonStart
 
   public destroy$ = new Subject<null>();
+
+  @ViewChild('matHorizontalStepper') stepper
 
   constructor(
     public store: Store<any>,
@@ -51,16 +53,15 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
   }
 
 
-  tezosTrezorPreparation() {
+  tezosTrezorPreparation(event) {
 
-    console.error('[tezosTrezorPreparation][buttons]',this.tezosTrezorConnectButtonStart, this.tezosTrezorConnectButton  )
-    // save button state
+    console.error('[tezosTrezorPreparation][buttons]', event, this.tezosTrezorConnectButtonStart, this.tezosTrezorConnectButton  )
+    
+    // save trezor button state
     this.tezosTrezorConnectButtonStart = this.tezosTrezorConnectButton
     
-    // create transaction if it is not Trezor
-    if (this.tezosWalletDetail.type !== 'TREZOR_T') {
-      this.tezosTrezorSendFunds()
-    }
+    // move stepper to next page
+    this.stepper.next();
 
   }
 

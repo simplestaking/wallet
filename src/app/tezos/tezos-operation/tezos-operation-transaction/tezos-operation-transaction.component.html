@@ -56,21 +56,15 @@
 <br />
 <br />
 
-<button mat-flat-button (click)="send('WEB')">
+<button mat-flat-button (click)="send('WEB')" *ngIf="tezosWalletDetail?.type !== 'TREZOR_T'">
   <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-  Check&nbsp;
+  Send funds 
 </button>
 
-<br/>
-
-<button mat-flat-button (click)="send('WEB')" *ngIf="tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount">
-  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-  Continue&nbsp;
-</button>
-
-<button *ngIf="!tezosWalletDetail?.secretKey && tezosOperationTransaction?.to && tezosOperationTransaction?.amount"
+<button *ngIf="tezosWalletDetail?.type === 'TREZOR_T'"
   mat-flat-button (click)="send('TREZOR_T')">
-  Sign with Trezor and Send ꜩ
+  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  Continue to Connect Trezor
 </button>
 
 <br/>

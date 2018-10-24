@@ -15,18 +15,13 @@
           Send funds
         </h2>
       </mat-card-header>
-      <mat-horizontal-stepper [linear]="false">
+
+      <mat-horizontal-stepper [linear]="false" #matHorizontalStepper>
 
         <mat-step [editable]="false" optional="false" label="Preparation">
           <div>
-            <app-tezos-operation-transaction>
+            <app-tezos-operation-transaction (transaction)="tezosTrezorPreparation($event)" >
             </app-tezos-operation-transaction>
-
-            <button mat-flat-button matStepperNext (click)="tezosTrezorPreparation()">
-              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-              Continue&nbsp;
-            </button>
-
           </div>
         </mat-step>
 

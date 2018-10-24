@@ -1,5 +1,5 @@
-import { Input, Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms'
+import { Input, Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
@@ -18,6 +18,8 @@ export class TezosOperationTransactionComponent implements OnInit {
   public tezosOperationTransactionForm
   public destroy$ = new Subject<null>();
 
+  @Output() transaction = new EventEmitter();
+
   constructor(
     public store: Store<any>,
     public fb: FormBuilder,
@@ -29,7 +31,10 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.tezosOperationTransactionForm = this.fb.group({
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
-      amount: ['', [Validators.required]],
+      amount:  new FormControl('', {
+        validators: Validators.required,
+        updateOn: 'blur'
+      }),
       fee: [{ value: '0', disabled: true }, [Validators.required]],
     })
 
@@ -112,12 +117,22 @@ export class TezosOperationTransactionComponent implements OnInit {
 
       console.log('[SEND][TRANSACTION] walletType', walletType)
 
-      // this.store.dispatch({
-      //   type: "TEZOS_OPERATION_TRANSACTION",
-      //   payload: {
-      //     walletType: walletType,
-      //   }
-      // })
+      // emit transaction
+      this.transaction.emit({
+        walletType: walletType,
+      })
+
+      // send funds for web based wallet
+      if (walletType === 'WEB') {
+
+        this.store.dispatch({
+          type: "TEZOS_OPERATION_TRANSACTION",
+          payload: {
+            walletType: walletType,
+          }
+        })
+
+      }
 
     }
 
