@@ -32,6 +32,8 @@ export class TezosOperationDelegationEffects {
                 node: state.tezos.tezosNode.api,
                 // set wallet type: WEB, TREZOR_ONE, TREZOR_T
                 type: action.payload.walletType,
+                // set HD path for HW wallet
+                path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
             // delegate funds
@@ -49,7 +51,7 @@ export class TezosOperationDelegationEffects {
                 }
             }),
 
-            
+
 
         )),
 

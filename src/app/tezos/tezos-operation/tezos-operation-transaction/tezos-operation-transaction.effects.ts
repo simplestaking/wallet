@@ -31,16 +31,16 @@ export class TezosOperationTransactionEffects {
                 // set tezos node
                 node: state.tezos.tezosNode.api,
                 // set wallet type: WEB, TREZOR_ONE, TREZOR_T
-                type: action.payload.walletType, 
+                type: action.payload.walletType,
+                // set HD path for HW wallet
+                path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
             // originate contract
-            transaction(stateWallet => {
-                return {
-                    to: state.tezos.tezosOperationTransaction.form.to,
-                    amount: state.tezos.tezosOperationTransaction.form.amount,
-                }
-            }),
+            transaction(stateWallet => ({
+                to: state.tezos.tezosOperationTransaction.form.to,
+                amount: state.tezos.tezosOperationTransaction.form.amount,
+            })),
 
         )),
 

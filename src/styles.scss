@@ -134,5 +134,9 @@ mat-horizontal-stepper .mat-step-header:hover {
     border-color: #00000075;
 }
 
+/* remove white like next to menu */
+.mat-drawer-container {
+    background-color: whitesmoke;
+}
 
 @include angular-material-theme($simple-theme);
