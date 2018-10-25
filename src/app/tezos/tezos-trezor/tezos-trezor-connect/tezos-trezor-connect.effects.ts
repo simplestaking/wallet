@@ -105,6 +105,10 @@ export class TezosTrezorConnectEffects {
                         frame_src: 'http://localhost:5500/dist/iframe.html',
                         popup_src: 'http://localhost:5500/dist/popup.html',
 
+                        // connectSrc: 'file:///C:/Users/juchuchu/Projects/test/connect/dist/',
+                        // frame_src: 'file:///C:/Users/juchuchu/Projects/test/connect/dist/iframe.html',
+                        // popup_src: 'file:///C:/Users/juchuchu/Projects/test/connect/dist/popup.html',
+
                         // connectSrc: 'https://tezoswalletapp-3057a.firebaseapp.com/',
                         // frame_src: 'https://tezoswalletapp-3057a.firebaseapp.com/iframe.html',
                         // popup_src: 'https://tezoswalletapp-3057a.firebaseapp.com/popup.html',

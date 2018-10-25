@@ -1,15 +1,15 @@
-import { Input, Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms'
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, FormControl } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil, } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tezos-operation-delegation',
   templateUrl: './tezos-operation-delegation.component.html',
   styleUrls: ['./tezos-operation-delegation.component.scss']
 })
-export class TezosOperationDelegationComponent implements OnInit {
+export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
 
   public tezosWalletList
   public tezosWalletListFrom
@@ -17,8 +17,6 @@ export class TezosOperationDelegationComponent implements OnInit {
   public tezosOperationDelegation
   public tezosOperationDelegationForm
   public destroy$ = new Subject<null>();
-
-  @Output() delegation = new EventEmitter();
 
   constructor(
     public store: Store<any>,
@@ -30,8 +28,13 @@ export class TezosOperationDelegationComponent implements OnInit {
     // create form group
     this.tezosOperationDelegationForm = this.fb.group({
       from: ['', [Validators.required]],
-      to: ['', [Validators.required]],
-      // fee: [{ value: '0', disabled: true }, [Validators.required]],
+      to: ['tz1eopTNAL3RXU8wQQdgzoanbZesyb3BFzfM', [Validators.required]],
+      fee: [{ value: '0', disabled: true }, [Validators.required]],
+      // name: ['',[Validators.required]],
+      amount: new FormControl('', {
+        validators: Validators.required,
+        updateOn: 'blur'
+      }),
     })
 
     // listen to tezos wallets detail
@@ -93,7 +96,6 @@ export class TezosOperationDelegationComponent implements OnInit {
     // destroy tezos delegation component
     this.store.dispatch({
       type: 'TEZOS_OPERATION_DELEGATION_DESTROY',
-      payload: '',
     })
 
   }
@@ -103,7 +105,14 @@ export class TezosOperationDelegationComponent implements OnInit {
     // mark input 
     this.tezosOperationDelegationForm.controls.from.markAsTouched()
     this.tezosOperationDelegationForm.controls.to.markAsTouched()
-    // this.tezosOperationDelegationForm.controls.fee.markAsTouched()
+
+    if (!this.tezosWalletDetail.delegate || this.tezosWalletDetail.delegate.setable !== true) {
+      this.tezosOperationDelegationForm.controls.amount.setValidators([Validators.required])
+      this.tezosOperationDelegationForm.controls.amount.markAsTouched()
+    } else {
+      this.tezosOperationDelegationForm.controls.amount.setValidators([])
+      this.tezosOperationDelegationForm.controls.amount.markAsTouched()
+    }
 
     // check validity
     this.tezosOperationDelegationForm.updateValueAndValidity()
@@ -111,20 +120,30 @@ export class TezosOperationDelegationComponent implements OnInit {
     // dispatch only if valid
     if (this.tezosOperationDelegationForm.valid) {
 
-      console.log('[SEND][DELEGATION] walletType', walletType)
+      console.log('[TEZOS_OPERATION_DELEGATION]');
 
-      // emit delegation 
-      this.delegation.emit({
-        walletType: walletType,
-      })
+      // TODO: remove after WEB wallet verification page is added   
+      if (walletType === 'WEB') {
 
-      // dispatch form submit event
-      this.store.dispatch({
-        type: "TEZOS_OPERATION_DELEGATION_FORM_SUBMIT",
-        payload: {
-          walletType: walletType,
-        }
-      })
+        // delegate funds 
+        this.store.dispatch({
+          type: "TEZOS_OPERATION_DELEGATION",
+          payload: {
+            walletType: walletType,
+          }
+        })
+
+      } else {
+
+        // dispatch delegate funds form event 
+        this.store.dispatch({
+          type: "TEZOS_OPERATION_DELEGATION_FORM_SUBMIT",
+          payload: {
+            walletType: walletType,
+          }
+        })
+
+      }
 
     }
 

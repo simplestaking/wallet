@@ -87,5 +87,9 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
 
+    this.store.dispatch({
+      type: "TEZOS_WALLET_SEND_DESTROY",
+    })
+
   }
 }

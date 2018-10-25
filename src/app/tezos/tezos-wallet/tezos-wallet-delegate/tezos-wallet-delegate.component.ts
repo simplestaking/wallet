@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
 
   public tezosWalletDetail
+  public tezosWalletDelegateStepper
   public tezosTrezorConnectConnected
   public destroy$ = new Subject<null>();
 
@@ -34,19 +35,24 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
         this.tezosTrezorConnectConnected = state
       })
 
+    this.store.select('tezos', 'tezosWalletDelegate', 'stepper')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        
+        // only move stepper for page >0 and change
+        if (state !== 0 && this.tezosWalletDelegateStepper !== state) {
+          // move stepper to next page
+          this.stepper.next();
+        }
+        this.tezosWalletDelegateStepper = state
+      })
   }
 
-  tezosTrezorPreparation(event) {
-
-    // move stepper to next page
-    this.stepper.next();
-
-  }
 
   // delegate funds 
   tezosTrezorDelegateFunds() {
 
-    console.log('[tezosTrezorDelegateFunds]',this.tezosWalletDetail)
+    console.log('[tezosTrezorDelegateFunds]', this.tezosWalletDetail)
 
     this.store.dispatch({
       type: "TEZOS_OPERATION_DELEGATION",
@@ -63,6 +69,9 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
 
+    this.store.dispatch({
+      type: "TEZOS_WALLET_DELEGATE_DESTROY",
+    })
   }
 
 }

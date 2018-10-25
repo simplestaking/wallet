@@ -5,14 +5,15 @@ const initialState: any = {
 export function reducer(state = initialState, action) {
     switch (action.type) {
 
-        case 'TEZOS_WALLET_SEND_SHOW': {
+        case 'TEZOS_WALLET_SEND_DESTROY': {
             return {
                 ...state,
                 stepper: 0,
             }
         }
+
         // move stepper to next page 
-        case 'TEZOS_OPERATION_TRANSACTION_FORM_SUBMIT': 
+        case 'TEZOS_OPERATION_TRANSACTION_FORM_SUBMIT':
         case 'TEZOS_OPERATION_TRANSACTION_SUCCESS': {
             return {
                 ...state,

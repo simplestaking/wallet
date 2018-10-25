@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { withLatestFrom, flatMap, filter, map, tap, delay, catchError } from 'rxjs/operators';
+import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/operators';
 
-import { initializeWallet, setDelegation, originateContract } from '../../../../../tezos-wallet'
+import { initializeWallet, setDelegation, originateContract, confirmOperation } from '../../../../../tezos-wallet'
 
 @Injectable()
 export class TezosOperationDelegationEffects {
@@ -55,10 +55,6 @@ export class TezosOperationDelegationEffects {
 
         )),
 
-        //TODO: remove 
-        // wait for tzscan to porcess prevalidated operation
-        delay(3000),
-
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_OPERATION_DELEGATION_SUCCESS',
@@ -73,10 +69,10 @@ export class TezosOperationDelegationEffects {
             return caught;
         }),
 
-        // redirect to wallet detail
-        tap((action) => {
-            this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
-        })
+        // // redirect to wallet detail
+        // tap((action) => {
+        //     this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
+        // })
     )
 
     constructor(

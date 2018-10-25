@@ -1,6 +1,5 @@
 <div class="tezos-operation-delegation" [formGroup]="tezosOperationDelegationForm" ngrxForm="tezos.tezosOperationDelegation">
 
-
   <mat-form-field appearance="outline">
 
     <mat-label>From</mat-label>
@@ -16,18 +15,42 @@
 
   <mat-form-field appearance="outline">
     <mat-label>To</mat-label>
-    <input matInput #address placeholder="To" formControlName="to" [matAutocomplete]="auto" />
+    <input matInput #address placeholder="To" formControlName="to">
     <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>
-
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let to of tezosWalletList | async" [value]="to.publicKeyHash">
-        <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ</small>
-      </mat-option>
-    </mat-autocomplete>
     <mat-error>
       Please choose address
     </mat-error>
   </mat-form-field>
+
+  <mat-form-field appearance="outline" *ngIf="tezosWalletDetail?.delegate?.setable!==true">
+
+    <mat-label>Amount</mat-label>
+    <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
+    <mat-hint align="end">{{amount.value?.length || 0}}/8</mat-hint>
+    <mat-error>
+      Please enter amount
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Fee</mat-label>
+    <input matInput #fee type="number" placeholder="Fee" formControlName="fee" />
+    <mat-hint align="end">{{fee.value?.length || 0}}/8</mat-hint>
+    <mat-error>
+      Please enter fee
+    </mat-error>
+  </mat-form-field>
+
+  <!-- 
+  <mat-form-field appearance="outline" *ngIf="tezosWalletDetail?.delegate?.setable!==true">
+    <mat-label>Name</mat-label>
+    <input matInput #address placeholder="Name" formControlName="name" />
+    <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>
+    <mat-error>
+      Please choose new address name
+    </mat-error>
+  </mat-form-field> -->
 
 </div>
 
