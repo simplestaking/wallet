@@ -64,14 +64,14 @@ export class TezosOperationDelegationEffects {
             type: 'TEZOS_OPERATION_DELEGATION_SUCCESS',
             payload: { ...data }
         })),
-        // catchError((error, caught) => {
-        //     console.error(error.message)
-        //     this.store.dispatch({
-        //         type: 'TEZOS_OPERATION_DELEGATION_ERROR',
-        //         payload: error.message,
-        //     });
-        //     return caught;
-        // }),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_DELEGATION_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
 
         // redirect to wallet detail
         tap((action) => {

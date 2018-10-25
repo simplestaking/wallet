@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TezosWalletSendComponent implements OnInit, OnDestroy {
 
   public tezosWalletDetail
+  public tezosWalletSendStepper
   public tezosOperationTransaction
   public tezosTrezorConnectConnected
   public tezosTrezorConnectButton
@@ -50,24 +51,25 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
         this.tezosOperationTransaction = state
       })
 
-  }
-
-
-  tezosTrezorPreparation(event) {
-
-    console.error('[tezosTrezorPreparation][buttons]', event, this.tezosTrezorConnectButtonStart, this.tezosTrezorConnectButton  )
-    
-    // save trezor button state
-    this.tezosTrezorConnectButtonStart = this.tezosTrezorConnectButton
-    
-    // move stepper to next page
-    this.stepper.next();
+    this.store.select('tezos', 'tezosWalletSend', 'stepper')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        // only move stepper for page >0 and change
+        if (state !== 0 && this.tezosWalletSendStepper !== state) {
+          // move stepper to next page
+          this.stepper.next();
+        }
+        this.tezosWalletSendStepper = state
+      })
 
   }
 
   // send funds with Trezor
   tezosTrezorSendFunds() {
 
+    // save trezor button state
+    this.tezosTrezorConnectButtonStart = this.tezosTrezorConnectButton
+   
     console.log('[tezosTrezorSendFunds]', this.tezosWalletDetail)
 
     this.store.dispatch({

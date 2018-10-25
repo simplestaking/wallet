@@ -118,17 +118,13 @@ export class TezosOperationDelegationComponent implements OnInit {
         walletType: walletType,
       })
 
-      // send funds for web based wallet
-      if (walletType === 'WEB') {
-
-        this.store.dispatch({
-          type: "TEZOS_OPERATION_DELEGATION",
-          payload: {
-            walletType: walletType,
-          }
-        })
-
-      }
+      // dispatch form submit event
+      this.store.dispatch({
+        type: "TEZOS_OPERATION_DELEGATION_FORM_SUBMIT",
+        payload: {
+          walletType: walletType,
+        }
+      })
 
     }
 

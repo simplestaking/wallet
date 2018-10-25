@@ -1,8 +1,8 @@
-import { Input, Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tezos-operation-transaction',
@@ -18,8 +18,6 @@ export class TezosOperationTransactionComponent implements OnInit {
   public tezosOperationTransactionForm
   public destroy$ = new Subject<null>();
 
-  @Output() transaction = new EventEmitter();
-
   constructor(
     public store: Store<any>,
     public fb: FormBuilder,
@@ -32,7 +30,7 @@ export class TezosOperationTransactionComponent implements OnInit {
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
       fee: [{ value: '0', disabled: true }, [Validators.required]],
-      amount:  new FormControl('', {
+      amount: new FormControl('', {
         validators: Validators.required,
         updateOn: 'blur'
       }),
@@ -69,8 +67,8 @@ export class TezosOperationTransactionComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
 
-        // dispatch action when sendred addres change  
-        if (this.tezosOperationTransaction && this.tezosOperationTransaction.from !== state.from) {
+        // dispatch action when from address change  
+        if (this.tezosOperationTransaction && state.from && (this.tezosOperationTransaction.from !== state.from)) {
           this.store.dispatch({
             type: 'TEZOS_OPERATION_TRANSACTION_FROM_CHANGE',
             payload: state.from
@@ -96,7 +94,6 @@ export class TezosOperationTransactionComponent implements OnInit {
     // destroy tezos transaction component
     this.store.dispatch({
       type: 'TEZOS_OPERATION_TRANSACTION_DESTROY',
-      payload: '',
     })
 
   }
@@ -115,16 +112,10 @@ export class TezosOperationTransactionComponent implements OnInit {
     // dispatch only if valid
     if (this.tezosOperationTransactionForm.valid) {
 
-      console.log('[SEND][TRANSACTION] walletType', walletType)
-
-      // emit transaction
-      this.transaction.emit({
-        walletType: walletType,
-      })
-
-      // send funds for web based wallet
+      // TODO: remove after WEB wallet verification page is added   
       if (walletType === 'WEB') {
 
+        // send fund 
         this.store.dispatch({
           type: "TEZOS_OPERATION_TRANSACTION",
           payload: {
@@ -132,7 +123,17 @@ export class TezosOperationTransactionComponent implements OnInit {
           }
         })
 
-      }
+      } else {
+
+        // dispatch send funds form event 
+        this.store.dispatch({
+          type: "TEZOS_OPERATION_TRANSACTION_FORM_SUBMIT",
+          payload: {
+            walletType: walletType,
+          }
+        })
+     
+     }
 
     }
 

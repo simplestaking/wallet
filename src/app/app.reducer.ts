@@ -89,7 +89,7 @@ export function reducer(state = initialState, action) {
         }
 
         case 'PROGRESSBAR_SHOW':
-        case 'TEZOS_OPERATION_TRANSACTION': {
+        case 'TEZOS_OPERATION_TRANSACTION_SUCCESS': {
             return {
                 ...state,
                 progressbar: {
@@ -100,7 +100,7 @@ export function reducer(state = initialState, action) {
         }
 
         case 'PROGRESSBAR_HIDE':
-        case 'TEZOS_OPERATION_TRANSACTION_SUCCESS': {
+        case 'TEZOS_OPERATION_TRANSACTION_PENDING_SUCCESS': {
             return {
                 ...state,
                 progressbar: {
