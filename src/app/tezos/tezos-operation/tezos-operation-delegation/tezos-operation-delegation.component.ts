@@ -1,5 +1,5 @@
-import { Input, Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms'
+import { Input, Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
@@ -18,6 +18,8 @@ export class TezosOperationDelegationComponent implements OnInit {
   public tezosOperationDelegationForm
   public destroy$ = new Subject<null>();
 
+  @Output() delegation = new EventEmitter();
+
   constructor(
     public store: Store<any>,
     public fb: FormBuilder,
@@ -27,9 +29,9 @@ export class TezosOperationDelegationComponent implements OnInit {
 
     // create form group
     this.tezosOperationDelegationForm = this.fb.group({
-      name: [{ value: '', disabled: true }],
-      from: [{ value: '', disabled: false }],
-      to: ''
+      from: ['', [Validators.required]],
+      to: ['', [Validators.required]],
+      // fee: [{ value: '0', disabled: true }, [Validators.required]],
     })
 
     // listen to tezos wallets detail
@@ -96,21 +98,38 @@ export class TezosOperationDelegationComponent implements OnInit {
 
   }
 
-  originate(walletType) {
+  delegate(walletType) {
 
-    // TODO: move logic to effect 
-    if (walletType === 'WEB') {
-      this.store.dispatch({
-        type: "TEZOS_OPERATION_DELEGATION",
-        walletType: walletType
-      })
-    }
+    // mark input 
+    this.tezosOperationDelegationForm.controls.from.markAsTouched()
+    this.tezosOperationDelegationForm.controls.to.markAsTouched()
+    // this.tezosOperationDelegationForm.controls.fee.markAsTouched()
 
-    if (walletType === 'TREZOR_T') {
-      this.store.dispatch({
-        type: "TEZOS_OPERATION_DELEGATION_TREZOR",
-        walletType: walletType
+    // check validity
+    this.tezosOperationDelegationForm.updateValueAndValidity()
+
+    // dispatch only if valid
+    if (this.tezosOperationDelegationForm.valid) {
+
+      console.log('[SEND][DELEGATION] walletType', walletType)
+
+      // emit delegation 
+      this.delegation.emit({
+        walletType: walletType,
       })
+
+      // send funds for web based wallet
+      if (walletType === 'WEB') {
+
+        this.store.dispatch({
+          type: "TEZOS_OPERATION_DELEGATION",
+          payload: {
+            walletType: walletType,
+          }
+        })
+
+      }
+
     }
 
   }

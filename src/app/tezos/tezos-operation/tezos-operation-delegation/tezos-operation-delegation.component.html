@@ -9,7 +9,9 @@
         {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ
       </mat-option>
     </mat-select>
-
+    <mat-error>
+      Please choose address
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -22,14 +24,22 @@
         <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ</small>
       </mat-option>
     </mat-autocomplete>
+    <mat-error>
+      Please choose address
+    </mat-error>
   </mat-form-field>
 
 </div>
 
-<!-- <button *ngIf="tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('WEB')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
-  Send ꜩ
+<br />
+<br />
+
+<button *ngIf="tezosWalletDetail?.type !== 'TREZOR_T'" mat-flat-button (click)="delegate('WEB')">
+  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  Delegate Funds
 </button>
 
-<button *ngIf="!tezosWalletDetail?.secretKey" mat-stroked-button (click)="send('TREZOR_T')" [disabled]="!tezosOperationTransaction?.to || !tezosOperationTransaction?.amount ">
-  Sign with Trezor(Connect) and Send ꜩ
-</button> -->
+<button *ngIf="tezosWalletDetail?.type === 'TREZOR_T'" mat-flat-button (click)="delegate('TREZOR_T')">
+  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  Continue to Connect Trezor
+</button>

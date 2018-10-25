@@ -46,7 +46,7 @@ export class TezosOperationTransactionEffects {
 
         //TODO: remove 
         // wait for tzscan to porcess prevalidated operation
-        delay(5000),
+        delay(3000),
 
         // dispatch action based on result
         map((data: any) => ({
@@ -67,11 +67,6 @@ export class TezosOperationTransactionEffects {
             this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
         })
     )
-
-
-
-
-
 
 
     constructor(

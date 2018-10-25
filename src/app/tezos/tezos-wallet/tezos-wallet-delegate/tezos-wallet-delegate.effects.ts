@@ -17,7 +17,10 @@ export class TezosWalletDelegateEffects {
     @Effect()
     TezosWalletDelegate = this.actions$.pipe(
         ofRoute('/tezos/wallet/delegate'),
-        map(() => ({ type: 'TEZOS_WALLET_DELEGATE_SHOW' })),
+        flatMap(() => [
+            { type: 'TEZOS_WALLET_DELEGATE_SHOW' },
+            { type: 'TEZOS_WALLET_LIST_LOAD' },
+        ]),
     )
 
     // trigger data load based on navigation change  

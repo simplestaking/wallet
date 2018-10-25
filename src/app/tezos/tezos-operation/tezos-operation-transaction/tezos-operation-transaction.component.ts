@@ -31,11 +31,11 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.tezosOperationTransactionForm = this.fb.group({
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
+      fee: [{ value: '0', disabled: true }, [Validators.required]],
       amount:  new FormControl('', {
         validators: Validators.required,
         updateOn: 'blur'
       }),
-      fee: [{ value: '0', disabled: true }, [Validators.required]],
     })
 
     // listen to tezos wallets detail

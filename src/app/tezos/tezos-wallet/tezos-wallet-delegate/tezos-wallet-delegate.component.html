@@ -16,27 +16,29 @@
           Delegate funds
         </h2>
       </mat-card-header>
-      <mat-horizontal-stepper [linear]="false">
+      <mat-horizontal-stepper [linear]="false" #matHorizontalStepper>
 
         <mat-step [editable]="false" optional="false" label="Preparattion">
           <div>
-            <app-tezos-operation-delegation>
+            <app-tezos-operation-delegation (delegation)="tezosTrezorPreparation($event)">
             </app-tezos-operation-delegation>
-            
-            <button mat-flat-button matStepperNext (click)="tezosDelegateFunds()">
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Connect Trezor" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
+          <div class="tezos-trezor-connect">
+
+            <app-tezos-trezor-connect>
+            </app-tezos-trezor-connect>
+
+            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorDelegateFunds()">
               <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-              Continue &nbsp;
+              Continue to Verification&nbsp;
             </button>
-          
           </div>
         </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Connect Trezor">
-          <div>
-          </div>
-        </mat-step>
-
-        <mat-step [editable]="false" optional="false" label="Verification">
+        <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
