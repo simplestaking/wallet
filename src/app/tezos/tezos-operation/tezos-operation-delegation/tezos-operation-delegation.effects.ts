@@ -18,9 +18,6 @@ export class TezosOperationDelegationEffects {
         // add state to effect
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
 
-        tap(({ action, state }) => console.log(action)),
-
-        //
         flatMap(({ action, state }) => of([]).pipe(
 
             // wait until sodium is ready
@@ -36,29 +33,32 @@ export class TezosOperationDelegationEffects {
                 path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
-            // delegate funds
-            // setDelegation(stateWallet => {
-            //     return {
-            //         to: state.tezos.tezosOperationDelegation.form.to,
-            //     }
-            // }),
+            // if we have implicit contract originate new contract 
+            flatMap(stateWallet => state.tezos.tezosWalletDetail.delegate.setable === true ?
 
-            // originate funds
-            originateContract(stateWallet => {
-                return {
-                    to: state.tezos.tezosOperationDelegation.form.to,
-                    amount: 1,
-                }
-            }),
+                // delegate funds
+                of(stateWallet).pipe(
+                    setDelegation(stateWallet => ({
+                        to: state.tezos.tezosOperationDelegation.form.to,
+                    }))
+                ) :
 
+                // originate contract with delegation 
+                of(stateWallet).pipe(
+                    originateContract(stateWallet => ({
+                        to: state.tezos.tezosOperationDelegation.form.to,
+                        amount: state.tezos.tezosOperationDelegation.form.amount,
+                    }))
+                )
 
+            ),
 
         )),
-
+        tap(response => console.log('[TEZOS_OPERATION_DELEGATION_SUCCESS]', response)),
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_OPERATION_DELEGATION_SUCCESS',
-            payload: { ...data }
+            payload: { injectionOperation: data.injectionOperation }
         })),
         catchError((error, caught) => {
             console.error(error.message)
@@ -69,10 +69,45 @@ export class TezosOperationDelegationEffects {
             return caught;
         }),
 
-        // // redirect to wallet detail
-        // tap((action) => {
-        //     this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
-        // })
+    )
+
+    // check mempool for operation
+    @Effect()
+    TezosOperationDelegationPending$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_DELEGATION_SUCCESS'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action: any, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            // wait until sodium is ready
+            initializeWallet(stateWallet => ({
+                // set tezos node
+                node: state.tezos.tezosNode.api,
+            })),
+
+            // wait until operation is confirmed & moved from mempool to head
+            confirmOperation(stateWallet => ({
+                injectionOperation: action.payload.injectionOperation,
+            })),
+
+            map(() => ({ action, state }))
+        )),
+
+        map(({ action, state }) => ({
+            type: 'TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS',
+            payload: {
+                wallet: {
+                    publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash
+                },
+            },
+        })),
+
+        // redirect to wallet detail
+        tap((action) => {
+            this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
+        }),
     )
 
     constructor(
