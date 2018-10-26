@@ -6,7 +6,7 @@ const initialState: any = {
 export function reducer(state = initialState, action) {
     switch (action.type) {
 
-        case 'TEZOS_OPERATION_DELEGATION_DESTROY': {
+        case 'TEZOS_OPERATION_RECEIVE_DESTROY': {
             return {
                 ...state,
                 form: {},
@@ -19,10 +19,11 @@ export function reducer(state = initialState, action) {
                 ...state,
                 form: {
                     ...state.form,
-                    from: action.payload.publicKeyHash
+                    to: action.payload.publicKeyHash
                 }
             }
         }
+
 
         default:
             return state;

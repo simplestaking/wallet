@@ -65,6 +65,8 @@ import { TezosOperationTransactionEffects } from './tezos-operation/tezos-operat
 import { TezosOperationOriginationEffects } from './tezos-operation/tezos-operation-origination/tezos-operation-origination.effects'
 import { TezosOperationDelegationEffects } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.effects'
 import { TezosOperationHistoryEffects } from './tezos-operation/tezos-operation-history/tezos-operation-history.effects'
+import { TezosOperationReceiveEffects } from './tezos-operation/tezos-operation-receive/tezos-operation-receive.effects'
+
 
 import { TezosTrezorConnectEffects } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.effects'
 import { TezosTrezorNewEffects } from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.effects'
@@ -86,7 +88,8 @@ import { TezosWalletNewTrezorComponent } from './tezos-wallet/tezos-wallet-new/t
 import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new.component';
 import { TezosTrezorNewComponent } from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.component';
 import { TezosTrezorConnectComponent } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.component';
-import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.component'
+import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.component';
+import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operation-receive/tezos-operation-receive.component'
 
 @NgModule({
   imports: [
@@ -115,6 +118,7 @@ import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delega
       TezosOperationTransactionEffects,
       TezosOperationDelegationEffects,
       TezosOperationHistoryEffects,
+      TezosOperationReceiveEffects,
       
       TezosTrezorConnectEffects,
       TezosTrezorNewEffects,
@@ -173,7 +177,8 @@ import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delega
     TezosWalletNewComponent,
     TezosTrezorNewComponent,
     TezosTrezorConnectComponent,
-    TezosWalletDelegateComponent
+    TezosWalletDelegateComponent,
+    TezosOperationReceiveComponent
   ]
 })
 export class TezosModule { }

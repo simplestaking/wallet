@@ -11,6 +11,7 @@ import * as fromTezosOperationTransaction from './tezos-operation/tezos-operatio
 import * as fromTezosOperationOrigination from './tezos-operation/tezos-operation-origination/tezos-operation-origination.reducer';
 import * as fromTezosOperationDelegation from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.reducer';
 import * as fromTezosOperationHistory from './tezos-operation/tezos-operation-history/tezos-operation-history.reducer';
+import * as fromTezosOperationReceive from './tezos-operation/tezos-operation-receive/tezos-operation-receive.reducer';
 
 import * as fromTezosTrezorConnect from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.reducer';
 import * as fromTezosTrezorNew from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.reducer';
@@ -26,6 +27,7 @@ export interface State {
     tezosOperationOrigination: any;
     tezosOperationDelegation: any;
     tezosOperationHistory: any;
+    tezosOperationReceive: any;
     tezosTrezorConnect: any;
     tezosTrezorNew: any;
 }
@@ -41,6 +43,7 @@ export const reducers: ActionReducerMap<State> = {
     tezosOperationOrigination: fromTezosOperationOrigination.reducer,
     tezosOperationDelegation: fromTezosOperationDelegation.reducer,
     tezosOperationHistory: fromTezosOperationHistory.reducer,
+    tezosOperationReceive: fromTezosOperationReceive.reducer,
     tezosTrezorConnect: fromTezosTrezorConnect.reducer,
     tezosTrezorNew: fromTezosTrezorNew.reducer,
 };

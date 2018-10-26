@@ -36,7 +36,7 @@ export class TezosWalletDelegateEffects {
     
     // redicert to url with tezos public address
     @Effect()
-    TezosWalletSendRedirect$ = this.actions$.pipe(
+    TezosWalletDelegateRedirect$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_DELEGATION_FROM_CHANGE'),
         tap((action: any) => this.router.navigate(['/tezos/wallet/delegate/' + action.payload])),
         map(() => ({ type: 'TEZOS_WALLET_DELEGATE_REDIRECT' })),

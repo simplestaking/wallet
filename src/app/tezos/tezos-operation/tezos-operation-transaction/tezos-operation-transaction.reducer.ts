@@ -13,7 +13,7 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        // set from after walet details are loaded
+        // set after wallet details are loaded
         case 'TEZOS_WALLET_DETAIL_LOAD_SUCCESS': {
             return {
                 ...state,

@@ -15,26 +15,29 @@ export class TezosWalletReceiveEffects {
 
     // trigger layout change  
     @Effect()
-    TezosWalletDelegate = this.actions$.pipe(
+    TezosWalletReceive = this.actions$.pipe(
         ofRoute('/tezos/wallet/receive'),
-        map(() => ({ type: 'TEZOS_WALLET_RECEIVE_SHOW' })),
+        flatMap(() => [
+            { type: 'TEZOS_WALLET_RECEIVE_SHOW' },
+            { type: 'TEZOS_WALLET_LIST_LOAD' },
+        ])
     )
 
     // trigger data load based on navigation change  
     @Effect()
-    TezosWalletSendAddressLoad$ = this.actions$.pipe(
+    TezosWalletReceiveAddressLoad$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/receive/:address'),
         flatMap(() => [
             { type: 'TEZOS_WALLET_RECEIVE_SHOW' },
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+            { type: 'TEZOS_WALLET_LIST_LOAD' },
         ]),
     )
 
-    // redicert to url with tezos public address
-    // TODO explain - whre it redirect? and why?
+    // redirect to url with tezos public address
     @Effect()
-    TezosWalletSendRedirect$ = this.actions$.pipe(
-        ofType('TEZOS_WALLET_RECEIVE_TO_CHANGE'),
+    TezosWalletReceiveRedirect$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_RECEIVE_FROM_CHANGE'),
         tap((action: any) => this.router.navigate(['/tezos/wallet/receive/' + action.payload])),
         map(() => ({ type: 'TEZOS_WALLET_RECEIVE_REDIRECT' })),
     )

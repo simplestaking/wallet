@@ -1,0 +1,51 @@
+<div class="tezos-operation-receive" [formGroup]="tezosOperationReceiveForm" ngrxForm="tezos.tezosOperationReceive">
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>To</mat-label>
+    <mat-select placeholder="To" formControlName="to">
+
+      <mat-option *ngFor="let to of tezosWalletListTo | async" [value]="to.publicKeyHash">
+        <!-- {{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ -->
+        <div class="tezos-wallet-list-option" style="display: flex;justify-content:space-between;">
+
+          <span style="justify-content: flex-start;">
+            <svg width="25" height="25" identiconHash="{{to.publicKeyHash}}" style="justify-content: center; align-items:center;">
+            </svg>
+            {{ to.name }}
+            <span style="opacity:0.2;">
+              &nbsp;&nbsp;&nbsp;{{ to.type }}&nbsp; <i>{{ to.path }}</i>  
+            </span>
+
+            <span style="opacity:0.2;">
+                &nbsp;&nbsp;&nbsp;{{ to.publicKeyHash }}
+              </span>
+              
+          </span>
+
+          <span style="justify-content: flex-end;">
+            {{ to.balance * 0.000001 | number:'1.2-6' }} XTZ
+            <!-- ꜩ -->
+          </span>
+        </div>
+      </mat-option>
+
+    </mat-select>
+    <mat-error>
+      Please choose address
+    </mat-error>
+  </mat-form-field>
+
+</div>
+
+<!-- <button mat-flat-button (click)="send('WEB')" *ngIf="tezosWalletDetail?.type !== 'TREZOR_T'">
+  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  Send funds
+</button>
+
+<button *ngIf="tezosWalletDetail?.type === 'TREZOR_T'" mat-flat-button (click)="send('TREZOR_T')">
+  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  Continue to Connect Trezor
+</button> -->
+
+<br />

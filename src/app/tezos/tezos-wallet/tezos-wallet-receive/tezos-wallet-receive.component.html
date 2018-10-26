@@ -21,7 +21,10 @@
 
         <mat-step [editable]="false" optional="false" label="Preparation">
           <div>
-              <div class="tezos-wallet-receive" [formGroup]="tezosWalletReceiveForm" ngrxForm="tezos.tezosWalletReceive">
+              <app-tezos-operation-receive>
+              </app-tezos-operation-receive>
+
+              <!-- <div class="tezos-wallet-receive" [formGroup]="tezosWalletReceiveForm" ngrxForm="tezos.tezosWalletReceive">
                 <mat-form-field appearance="outline">
                   <mat-label>Select wallet to receive funds</mat-label>
                     <mat-select placeholder="Receive address" formControlName="receiveTo">
@@ -30,8 +33,10 @@
                       </mat-option>
                     </mat-select>
                 </mat-form-field>
-              </div>
+              </div> -->
+
               <br />
+
               <button mat-flat-button matStepperNext>
                 <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
                 Continue&nbsp;
