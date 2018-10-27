@@ -4,9 +4,47 @@
 
     <mat-label>From</mat-label>
     <mat-select placeholder="From" formControlName="from">
+      
+      <mat-select-trigger>
+        <div class="tezos-wallet-list-option">
+          <div class="tezos-wallet-list-option-left">
+            <svg width="25" height="25" identiconHash="{{tezosWalletDetail?.publicKeyHash}}" class="tezos-wallet-list-option-identicon">
+            </svg>
+            <span class="tezos-wallet-list-option-name">
+              {{ tezosWalletDetail?.name }}
+            </span>
+            <span class="tezos-wallet-list-option-opacity">
+              {{ tezosWalletDetail?.publicKeyHash }}
+            </span>
+            <span class="tezos-wallet-list-option-opacity">
+              <i>{{ tezosWalletDetail?.type }}</i>
+            </span>
+          </div>
+          <span class="tezos-wallet-list-option-balance">
+            {{ tezosWalletDetail?.balance * 0.000001 | number:'1.2-6' }} XTZ
+          </span>
+        </div>
+      </mat-select-trigger>
 
-      <mat-option *ngFor="let from of tezosWalletListFrom | async" [value]="from.publicKeyHash">
-        {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ
+      <mat-option *ngFor="let from of tezosWalletListFrom | async" [value]="from.publicKeyHash" #selected>
+        <div class="tezos-wallet-list-option">
+          <div class="tezos-wallet-list-option-left">
+            <svg width="25" height="25" identiconHash="{{from.publicKeyHash}}" class="tezos-wallet-list-option-identicon">
+            </svg>
+            <span class="tezos-wallet-list-option-name">
+              {{ from.name }}
+            </span>
+            <span class="tezos-wallet-list-option-opacity">
+              {{ from.publicKeyHash }}
+            </span>
+            <span class="tezos-wallet-list-option-opacity">
+              <i>{{ from.type }}</i>
+            </span>
+          </div>
+          <span class="tezos-wallet-list-option-balance">
+            {{ from.balance * 0.000001 | number:'1.2-6' }} XTZ
+          </span>
+        </div>
       </mat-option>
 
     </mat-select>

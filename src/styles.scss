@@ -135,7 +135,7 @@ mat-horizontal-stepper .mat-step-header:hover {
 }
 
 
-// // form field 
+/* form field */ 
 
 // // add missing border to form field outline 
 // mat-form-field .mat-form-field-outline .mat-form-field-outline-gap {
@@ -144,7 +144,7 @@ mat-horizontal-stepper .mat-step-header:hover {
 
 // // move form field label
 // .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-//     transform: translateY(-2.25em) scale(0.75) !important;
+//     transform: translateY(-2.375em) scale(0.75) !important;
 // }
 
 // // reset form field outline
@@ -154,7 +154,7 @@ mat-horizontal-stepper .mat-step-header:hover {
 
 // // center form field placeholder
 // .mat-form-field-label-wrapper {
-//     top: -1.25em; 
+//     top: -1.0em; 
 //     padding-top: 0.5em;
 // }
 // .mat-form-field-appearance-outline .mat-form-field-label {
@@ -168,7 +168,51 @@ mat-horizontal-stepper .mat-step-header:hover {
 
 // //set form field height 
 // .mat-form-field {
-//     height: 6em !important;
+//     height: 6.5em !important;
 // }
 
+// // add padding to form
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//     padding: 1.25em 0 1.25em 0;
+// }
+
+// center form field arrow arrow 
+.mat-select-arrow-wrapper {
+    padding-top: 0.5em
+}
+
+// center form field text
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.725em 0 1.25em 0;
+}
+
+/*  mat select  */
+.tezos-wallet-list-option {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.tezos-wallet-list-option-left {
+    display:flex;
+    justify-content: flex-start;
+    align-items:center;
+}
+
+.tezos-wallet-list-option-name {
+    justify-content: flex-start;margin-left: 30px
+}
+
+.tezos-wallet-list-option-balance {
+    justify-content: flex-end;
+}
+
+.tezos-wallet-list-option-identicon {
+    position: absolute;
+}
+
+.tezos-wallet-list-option-opacity {
+    opacity: 0.2;
+    margin-left: 10px;
+}
 @include angular-material-theme($simple-theme);
