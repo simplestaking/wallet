@@ -6,47 +6,57 @@
     <mat-select placeholder="To" formControlName="to">
 
       <mat-select-trigger>
-        <div class="tezos-wallet-list-option" style="display: flex;justify-content:space-between;">
+        <div class="tezos-wallet-list-option" style="display: flex;justify-content:space-between;align-items: center;">
 
-            <span style="justify-content: flex-start;">
-              <!-- <svg width="25" height="25" identiconHash="{{tezosWalletDetail?.publicKeyHash}}" style="justify-content: center; align-items:center;">
-              </svg> -->
+          <div style="display:flex;justify-content: flex-start;align-items:center;">
+            <svg width="25" height="25" identiconHash="{{tezosWalletDetail?.publicKeyHash}}">
+            </svg>
+            <span style="justify-content: flex-start;" style="margin-left: 10px">
               {{ tezosWalletDetail?.name }}
-              <!-- <span style="opacity:0.2;">
-                &nbsp;&nbsp;&nbsp;{{ tezosWalletDetail?.type }}&nbsp; <i>{{ tezosWalletDetail?.path }}</i>
-              </span> -->
-  
-              <span style="opacity:0.2;">
-                &nbsp;&nbsp;&nbsp;{{ tezosWalletDetail?.publicKeyHash }}
-              </span>
-  
             </span>
-  
-            <span style="justify-content: flex-end;">
-              {{ tezosWalletDetail?.balance * 0.000001 | number:'1.2-6' }} XTZ
+
+
+            <span style="opacity:0.2;">
+              &nbsp;&nbsp;&nbsp;{{ tezosWalletDetail?.publicKeyHash }}
             </span>
+         
+            <span style="opacity:0.2;">
+              <i>&nbsp;&nbsp;&nbsp;{{ tezosWalletDetail?.type }}&nbsp;</i>
+              <!-- <i>{{ tezosWalletDetail?.path }}</i> -->
+            </span>
+
           </div>
-  
+
+
+          <span style="justify-content: flex-end;">
+            {{ tezosWalletDetail?.balance * 0.000001 | number:'1.2-6' }} XTZ
+          </span>
+
+        </div>
       </mat-select-trigger>
 
       <mat-option *ngFor="let to of tezosWalletListTo | async" [value]="to.publicKeyHash" #selected>
 
         <div class="tezos-wallet-list-option" style="display: flex;justify-content:space-between;">
 
-          <span style="justify-content: flex-start;">
-            <svg width="25" height="25" identiconHash="{{to.publicKeyHash}}" style="justify-content: center; align-items:center;">
+          <div style="display:flex;justify-content: flex-start;align-items:center;">
+            <svg width="25" height="25" identiconHash="{{to.publicKeyHash}}">
             </svg>
-            {{ to.name }}
+            <span style="justify-content: flex-start;" style="margin-left: 10px">
+              {{ to.name }}
+            </span>
+          </div>
+
+          <!-- <span style="justify-content: flex-start;align-items:center;">
+
             <span style="opacity:0.2;">
               &nbsp;&nbsp;&nbsp;{{ to.type }}&nbsp; <i>{{ to.path }}</i>
             </span>
-
             <span style="opacity:0.2;">
               &nbsp;&nbsp;&nbsp;{{ to.publicKeyHash }}
             </span>
-
           </span>
-
+ -->
           <span style="justify-content: flex-end;">
             {{ to.balance * 0.000001 | number:'1.2-6' }} XTZ
             <!-- ꜩ -->
