@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TezosOperationReceiveComponent implements OnInit {
 
+  public tezosWalletDetail
   public tezosWalletList
   public tezosWalletListTo
   public tezosOperationReceive
@@ -29,6 +30,13 @@ export class TezosOperationReceiveComponent implements OnInit {
       to: ['', [Validators.required]],
     })
 
+    // listen to tezos wallets detail
+    this.store.select('tezos', 'tezosWalletDetail')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        // create tezos wallet detail 
+        this.tezosWalletDetail = state
+      })
 
     // listen to tezos wallets list
     this.store.select('tezos', 'tezosWalletList')

@@ -5,8 +5,32 @@
     <mat-label>To</mat-label>
     <mat-select placeholder="To" formControlName="to">
 
-      <mat-option *ngFor="let to of tezosWalletListTo | async" [value]="to.publicKeyHash">
-        <!-- {{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ -->
+      <mat-select-trigger>
+        <div class="tezos-wallet-list-option" style="display: flex;justify-content:space-between;">
+
+            <span style="justify-content: flex-start;">
+              <!-- <svg width="25" height="25" identiconHash="{{tezosWalletDetail?.publicKeyHash}}" style="justify-content: center; align-items:center;">
+              </svg> -->
+              {{ tezosWalletDetail?.name }}
+              <!-- <span style="opacity:0.2;">
+                &nbsp;&nbsp;&nbsp;{{ tezosWalletDetail?.type }}&nbsp; <i>{{ tezosWalletDetail?.path }}</i>
+              </span> -->
+  
+              <span style="opacity:0.2;">
+                &nbsp;&nbsp;&nbsp;{{ tezosWalletDetail?.publicKeyHash }}
+              </span>
+  
+            </span>
+  
+            <span style="justify-content: flex-end;">
+              {{ tezosWalletDetail?.balance * 0.000001 | number:'1.2-6' }} XTZ
+            </span>
+          </div>
+  
+      </mat-select-trigger>
+
+      <mat-option *ngFor="let to of tezosWalletListTo | async" [value]="to.publicKeyHash" #selected>
+
         <div class="tezos-wallet-list-option" style="display: flex;justify-content:space-between;">
 
           <span style="justify-content: flex-start;">
@@ -14,13 +38,13 @@
             </svg>
             {{ to.name }}
             <span style="opacity:0.2;">
-              &nbsp;&nbsp;&nbsp;{{ to.type }}&nbsp; <i>{{ to.path }}</i>  
+              &nbsp;&nbsp;&nbsp;{{ to.type }}&nbsp; <i>{{ to.path }}</i>
             </span>
 
             <span style="opacity:0.2;">
-                &nbsp;&nbsp;&nbsp;{{ to.publicKeyHash }}
-              </span>
-              
+              &nbsp;&nbsp;&nbsp;{{ to.publicKeyHash }}
+            </span>
+
           </span>
 
           <span style="justify-content: flex-end;">

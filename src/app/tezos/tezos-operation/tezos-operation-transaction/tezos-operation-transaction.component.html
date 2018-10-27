@@ -44,7 +44,7 @@
   <mat-form-field appearance="outline">
 
     <mat-label>Fee</mat-label>
-    <input matInput #fee type="number" placeholder="Fee" formControlName="fee"/>
+    <input matInput #fee type="number" placeholder="Fee" formControlName="fee" />
     <mat-hint align="end">{{fee.value?.length || 0}}/8</mat-hint>
     <mat-error>
       Please enter fee
@@ -58,13 +58,12 @@
 
 <button mat-flat-button (click)="send('WEB')" *ngIf="tezosWalletDetail?.type !== 'TREZOR_T'">
   <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-  Send funds 
+  Send funds
 </button>
 
-<button *ngIf="tezosWalletDetail?.type === 'TREZOR_T'"
-  mat-flat-button (click)="send('TREZOR_T')">
+<button *ngIf="tezosWalletDetail?.type === 'TREZOR_T'" mat-flat-button (click)="send('TREZOR_T')">
   <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
   Continue to Connect Trezor
 </button>
 
-<br/>
+<br />
