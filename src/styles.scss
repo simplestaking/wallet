@@ -28,22 +28,6 @@ $simple-theme: mat-light-theme($simple-primary, $simple-accent, $simple-warn);
     // box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 0px 0px 0 rgba(0,0,0,.09) !important;
 }
 
-// select panel
-.mat-select-panel:not([class*=mat-elevation-z]) {
-    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
-    border-radius: 2px;
-    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
-    // border-radius: 2px;
-}
-
-// autocomplete
-.mat-autocomplete-panel:not([class*=mat-elevation-z]) {
-    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
-    border-radius: 2px;
-    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
-    // border-radius: 2px;
-}
-
 // table
 .mat-table:not([class*=mat-elevation-z]) {
     box-shadow: none;
@@ -144,15 +128,47 @@ mat-horizontal-stepper .mat-step-header:hover {
 }
 
 
-/* checbox remove animation and change border */
+// checkbox remove animation and change border 
 .mat-checkbox-frame {
     border-width: 1px !important;
     border-color: #00000075;
 }
 
-/* remove white like next to menu */
-.mat-drawer-container {
-    background-color: whitesmoke !important;
-}
+
+// // form field 
+
+// // add missing border to form field outline 
+// mat-form-field .mat-form-field-outline .mat-form-field-outline-gap {
+//     border-top-color: initial !important;
+// }
+
+// // move form field label
+// .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+//     transform: translateY(-2.25em) scale(0.75) !important;
+// }
+
+// // reset form field outline
+// .mat-form-field-appearance-outline .mat-form-field-outline {
+//     top: 0 !important;
+// }
+
+// // center form field placeholder
+// .mat-form-field-label-wrapper {
+//     top: -1.25em; 
+//     padding-top: 0.5em;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-label {
+//     margin-top: 0.5em;
+// }
+
+// // move form field label out off imput
+// .mat-form-field-infix {
+//     border-top: initial !important;
+// }
+
+// //set form field height 
+// .mat-form-field {
+//     height: 6em !important;
+// }
 
 @include angular-material-theme($simple-theme);
