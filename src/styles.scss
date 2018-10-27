@@ -64,10 +64,8 @@ $simple-theme: mat-light-theme($simple-primary, $simple-accent, $simple-warn);
 // preload images 
 body:after {
     display:none;
-    content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg');
+    content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg') url('/assets/trezor_verify_detail.svg') url('/assets/trezor_confirm_transaction.svg');
 }
-
-
 
 
 // stepper 
@@ -206,11 +204,12 @@ mat-horizontal-stepper .mat-step-header:hover {
     padding: 0.725em 0 1.12em 0;
 }
 
-/*  mat select  */
+/*  mat-select  */
 .tezos-wallet-list-option {
     display: flex;
     justify-content:space-between;
     align-items: center;
+    font-size: 14px;
 }
 
 .tezos-wallet-list-option-left {
@@ -235,4 +234,63 @@ mat-horizontal-stepper .mat-step-header:hover {
     opacity: 0.2;
     margin-left: 10px;
 }
+
+/* tezos trezor verify stepper   */
+
+.tezos-trezor-verify {
+    display:flex;
+    align-items:center;
+    flex-direction: column;
+}
+
+.tezos-trezor-verify-step {
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+    padding:30px
+}
+
+.tezos-trezor-verify-info {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 390px;
+    border-radius:5px
+}
+
+mat-card.tezos-trezor-verify-card {
+    background-color: #f5f6f8;
+    width:314px;
+    height: 160px;
+    padding:20px
+}
+
+mat-card.tezos-trezor-verify-card-short {
+    background-color: #f5f6f8;
+    width:314px;
+    height: 80px;
+    padding:20px
+}
+
+mat-card-content .tezos-trezor-verify-input {
+    display: flex;   
+    font-weight:500;
+    background-color: #e3e5e8;
+    border-radius: 2px;
+    padding: 13px 10px 13px 10px;
+    margin: 7px 0px 7px 0px;
+    height: 15px;
+    width: 295px;
+    padding-right: 10px;
+}
+
+.tezos-trezor-verify-warning {
+    padding:17px;
+    font-weight: 300;
+}
+
+.tezos-stepper-next{
+    font-size:18px;
+}
+
 @include angular-material-theme($simple-theme);

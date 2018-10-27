@@ -1,6 +1,8 @@
 
 const initialState: any = {
     form: {
+        to: 'tz1L6fGALjHqQkLkwMUQD94SXM5fViSkhEb6',
+        amount: '1',
         fee: 0,
     },
 }

@@ -41,7 +41,7 @@ export class TezosOperationTransactionComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         // create tezos wallet detail 
-        this.tezosWalletDetail = state
+        this.tezosWalletDetail = state        
       })
 
     // listen to tezos wallets list
@@ -132,8 +132,8 @@ export class TezosOperationTransactionComponent implements OnInit {
             walletType: walletType,
           }
         })
-     
-     }
+
+      }
 
     }
 

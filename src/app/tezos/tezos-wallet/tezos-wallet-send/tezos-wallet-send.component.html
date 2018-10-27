@@ -38,40 +38,41 @@
           </div>
         </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
+        <!-- *ngIf="tezosWalletDetail?.type==='TREZOR_T'" -->
+        <mat-step [editable]="false" optional="false" label="Verification">
 
-          <div style="display:flex;align-items:center;flex-direction: column;">
+          <div class="tezos-trezor-verify">
 
-            <div *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart || tezosTrezorConnectButton === tezosTrezorConnectButtonStart + 1"
-              style="display:flex;justify-content: center;flex-direction: row; padding:30px">
+            <!-- verify amount & address -->
+            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart || tezosTrezorConnectButton === tezosTrezorConnectButtonStart + 1">
 
               <img src="/assets/trezor_verify_detail.svg" alt="Trezor Verification">
 
-              <div style="display:flex;align-items: center;flex-direction: column;width: 390px; border-radius:5px">
+              <div class="tezos-trezor-verify-info">
 
-                <mat-card style="background-color: #f5f6f8; width:314px ; height: 160px; padding:20px">
+                <mat-card class="tezos-trezor-verify-card">
                   <mat-card-content>
 
                     <span class="mat-body-1">
                       Amount
                     </span>
-                    <span class="mat-body-1" class="tezos-verify-input" style="font-weight:500">
+                    <span class="mat-body-1" class="tezos-verify-input">
                       {{tezosOperationTransaction.form.amount}} XTZ
                     </span>
 
                     <br />
 
                     <span class="mat-body-1">
-                      to (receiving address)
+                      To (receiving address)
                     </span>
-                    <span class="mat-body-1" class="tezos-verify-input" style="font-weight:500">
+                    <span class="mat-body-1" class="tezos-verify-input">
                       {{tezosOperationTransaction.form.to}}
                     </span>
                   </mat-card-content>
                 </mat-card>
 
-                <div style="padding:15px;font-weight: 300">
-                  As malaware can replace address shown on computer, you should always check the authenticity of
+                <div class="tezos-trezor-verify-warning">
+                  As malware can replace address shown on computer, you should always check the authenticity of
                   receiving address when sending funds from Trezor
                 </div>
 
@@ -79,13 +80,44 @@
 
             </div>
 
-            <div *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+2" style="display:flex;justify-content: center;flex-direction: row; padding:30px">
+            <!-- verifi amount & fee -->
+            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+2">
 
-              <img src="/assets/trezor_confirm_transaction.svg" alt="Trezor Verification">
+              <img src="/assets/trezor_confirm_transaction.svg" alt="Trezor Verification" />
+
+              <div class="tezos-trezor-verify-info">
+
+                <mat-card class="tezos-trezor-verify-card">
+                  <mat-card-content>
+
+                    <span class="mat-body-1">
+                      Amount
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input">
+                      {{tezosOperationTransaction.form.amount}} XTZ
+                    </span>
+
+                    <br />
+
+                    <span class="mat-body-1">
+                      Fee
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input">
+                      {{tezosOperationTransaction.form.fee}}
+                    </span>
+                  </mat-card-content>
+                </mat-card>
+
+                <div class="tezos-trezor-verify-warning">
+                  As malware can replace address shown on computer, you should always check the authenticity of
+                  receiving address when sending funds from Trezor
+                </div>
+
+              </div>
 
             </div>
 
-            <div style="font-size:18px;">
+            <div class="tezos-stepper-next">
               Confirm transaction detail on your device
             </div>
           </div>

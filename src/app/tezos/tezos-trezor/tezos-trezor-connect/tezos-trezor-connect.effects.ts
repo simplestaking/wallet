@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { map, withLatestFrom, catchError, flatMap } from 'rxjs/operators';
+import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
 
 import TrezorConnect, { DEVICE, TRANSPORT } from 'trezor-connect';
 
@@ -17,7 +17,7 @@ export class TezosTrezorConnectEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
 
-        flatMap((state: any) => {
+        tap((state: any) => {
 
             // TODO: refactor windows.TrezorConnect 
             if (!(<any>window).TrezorConnect) {
@@ -100,7 +100,7 @@ export class TezosTrezorConnectEffects {
                 // });
 
                 // initialize TrezorConnect 
-                return (<any>window).TrezorConnect.init({
+                (<any>window).TrezorConnect.init({
                     connectSrc: 'http://localhost:5500/dist/',
                     frame_src: 'http://localhost:5500/dist/iframe.html',
                     popup_src: 'http://localhost:5500/dist/popup.html',

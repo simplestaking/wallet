@@ -11,8 +11,12 @@ import { takeUntil } from 'rxjs/operators';
 export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
 
   public tezosWalletDetail
+  public tezosOperationDelegation
   public tezosWalletDelegateStepper
   public tezosTrezorConnectConnected
+  public tezosTrezorConnectButton
+  public tezosTrezorConnectButtonStart
+
   public destroy$ = new Subject<null>();
 
   @ViewChild('matHorizontalStepper') stepper
@@ -35,10 +39,23 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
         this.tezosTrezorConnectConnected = state
       })
 
+    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'button')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosTrezorConnectButton = state
+      })
+
+    this.store.select('tezos', 'tezosOperationDelegation')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosOperationDelegation = state
+      })
+
+
     this.store.select('tezos', 'tezosWalletDelegate', 'stepper')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
-        
+
         // only move stepper for page >0 and change
         if (state !== 0 && this.tezosWalletDelegateStepper !== state) {
           // move stepper to next page
@@ -51,6 +68,9 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
 
   // delegate funds 
   tezosTrezorDelegateFunds() {
+
+    // save trezor button state
+    this.tezosTrezorConnectButtonStart = this.tezosTrezorConnectButton
 
     console.log('[tezosTrezorDelegateFunds]', this.tezosWalletDetail)
 

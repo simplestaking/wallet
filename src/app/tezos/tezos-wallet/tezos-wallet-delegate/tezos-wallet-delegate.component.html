@@ -7,6 +7,7 @@
 
 <div class="stepper">
 
+
   <mat-card>
     <mat-card-content>
 
@@ -15,6 +16,8 @@
         <h2 class="mat-h1 reset">
           Delegate funds
         </h2>
+        {{ tezosWalletDelegateStepper | json }}
+        {{ tezosTrezorConnectButton | json }}
       </mat-card-header>
       <mat-horizontal-stepper [linear]="false" #matHorizontalStepper>
 
@@ -39,10 +42,104 @@
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="tezos-trezor-verify">
+
+            <!-- verify from address -->
+            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart || tezosTrezorConnectButton === tezosTrezorConnectButtonStart + 1">
+
+              <img src="/assets/trezor_verify_detail.svg" alt="Trezor Verification">
+
+              <div class="tezos-trezor-verify-info">
+
+                <mat-card class="tezos-trezor-verify-card-short">
+                  <mat-card-content>
+                    <span class="mat-body-1">
+                      From (address delegating XTZ)
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input">
+                      {{tezosOperationDelegation.form.from}}
+                    </span>
+                    <br />
+                  </mat-card-content>
+                </mat-card>
+
+                <div class="tezos-trezor-verify-warning">
+                  As malware can replace address shown on computer, you should always check the authenticity of
+                  receiving address when sending funds from Trezor
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- verify baker address -->
+            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+2">
+
+              <img src="/assets/trezor_verify_detail.svg" alt="Trezor Verification">
+
+              <div class="tezos-trezor-verify-info">
+
+                <mat-card class="tezos-trezor-verify-card-short">
+                  <mat-card-content>
+                    <span class="mat-body-1">
+                      To ( baker address )
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input">
+                      {{tezosOperationDelegation.form.to}}
+                    </span>
+                    <br />
+                  </mat-card-content>
+                </mat-card>
+
+                <div class="tezos-trezor-verify-warning">
+                  As malware can replace address shown on computer, you should always check the authenticity of
+                  receiving address when sending funds from Trezor
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- verifi amount & fee -->
+            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+3">
+
+              <img src="/assets/trezor_confirm_transaction.svg" alt="Trezor Verification" />
+
+              <div class="tezos-trezor-verify-info">
+
+                <mat-card class="tezos-trezor-verify-card">
+                  <mat-card-content>
+                    <span class="mat-body-1">
+                      Balance
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input">
+                      {{tezosOperationDelegation.form.amount}}
+                    </span>
+                    <br />
+                    <span class="mat-body-1">
+                      Fee
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input">
+                      {{tezosOperationDelegation.form.fee}}
+                    </span>
+                    <br />
+                  </mat-card-content>
+                </mat-card>
+
+                <div class="tezos-trezor-verify-warning">
+                  As malware can replace address shown on computer, you should always check the authenticity of
+                  receiving address when sending funds from Trezor
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="tezos-stepper-next">
+              Confirm delegation detail on your device
+            </div>
           </div>
+
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Confirmation">

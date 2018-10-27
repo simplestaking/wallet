@@ -61,7 +61,23 @@
 
     <mat-autocomplete #auto="matAutocomplete" appearance="outline">
       <mat-option *ngFor="let to of tezosWalletList | async" [value]="to.publicKeyHash">
-        <small>{{ to.name }} | {{ to.balance * 0.000001 | number:'1.0-6' }} ꜩ</small>
+
+        <div class="tezos-wallet-list-option">
+          <div class="tezos-wallet-list-option-left">
+            <svg width="25" height="25" identiconHash="{{to.publicKeyHash}}" class="tezos-wallet-list-option-identicon">
+            </svg>
+            <span class="tezos-wallet-list-option-name">
+              {{ to.name }}
+            </span>
+            <span class="tezos-wallet-list-option-opacity">
+              {{ to.publicKeyHash }}
+            </span>
+          </div>
+          <span class="tezos-wallet-list-option-balance">
+            {{ to.balance * 0.000001 | number:'1.2-6' }} XTZ
+          </span>
+        </div>
+  
       </mat-option>
     </mat-autocomplete>
     <mat-error>
