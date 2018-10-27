@@ -2,12 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { ofRoute } from '../../../shared/utils/rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { map, withLatestFrom, catchError, tap } from 'rxjs/operators';
 
 import TrezorConnect, { DEVICE, TRANSPORT } from 'trezor-connect';
 
@@ -18,7 +13,6 @@ export class TezosTrezorConnectEffects {
     @Effect()
     TezosTrezorConnect = this.actions$.pipe(
         ofType('TEZOS_TREZOR_CONNECT'),
-        // ofRoute('/tezos/wallet/new/trezor'),
 
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
@@ -127,14 +121,20 @@ export class TezosTrezorConnectEffects {
 
         }),
         map(() => ({ type: 'TEZOS_TREZOR_CONNECT_SUCCESS' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
 
     constructor(
         private actions$: Actions,
         private store: Store<any>,
-        private db: AngularFirestore,
-        private router: Router,
     ) { }
 
 }

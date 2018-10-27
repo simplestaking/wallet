@@ -25,6 +25,15 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_WALLET_SEND_DESTROY':
+        case 'TEZOS_WALLET_RECEIVE_DESTROY':
+        case 'TEZOS_WALLET_DELEGATE_DESTROY': {
+            return {
+                ...initialState,
+                price: state.price,
+            }
+        }
+
         default:
             return state;
     }

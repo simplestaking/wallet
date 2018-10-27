@@ -17,8 +17,8 @@ export class TezosWalletDelegateEffects {
     @Effect()
     TezosWalletDelegate = this.actions$.pipe(
         ofRoute('/tezos/wallet/delegate'),
-        flatMap(() => [
-            { type: 'TEZOS_WALLET_DELEGATE_SHOW' },
+        flatMap((action: any) => [
+            { type: 'TEZOS_WALLET_DELEGATE_SHOW', payload: action.payload },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
         ]),
     )
@@ -27,13 +27,13 @@ export class TezosWalletDelegateEffects {
     @Effect()
     TezosWalletDelegateAddressLoad$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/delegate/:address'),
-        flatMap(() => [
-            { type: 'TEZOS_WALLET_SEND_SHOW' },
+        flatMap((action: any) => [
+            { type: 'TEZOS_WALLET_DELEGATE_SHOW', payload: action.payload },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
         ]),
     )
-    
+
     // redicert to url with tezos public address
     @Effect()
     TezosWalletDelegateRedirect$ = this.actions$.pipe(

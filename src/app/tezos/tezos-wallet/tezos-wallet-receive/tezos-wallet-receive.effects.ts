@@ -17,8 +17,8 @@ export class TezosWalletReceiveEffects {
     @Effect()
     TezosWalletReceive = this.actions$.pipe(
         ofRoute('/tezos/wallet/receive'),
-        flatMap(() => [
-            { type: 'TEZOS_WALLET_RECEIVE_SHOW' },
+        flatMap((action: any) => [
+            { type: 'TEZOS_WALLET_RECEIVE_SHOW', payload: action.payload },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
         ])
     )
@@ -27,8 +27,8 @@ export class TezosWalletReceiveEffects {
     @Effect()
     TezosWalletReceiveAddressLoad$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/receive/:address'),
-        flatMap(() => [
-            { type: 'TEZOS_WALLET_RECEIVE_SHOW' },
+        flatMap((action: any) => [
+            { type: 'TEZOS_WALLET_RECEIVE_SHOW', payload: action.payload },
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
         ]),

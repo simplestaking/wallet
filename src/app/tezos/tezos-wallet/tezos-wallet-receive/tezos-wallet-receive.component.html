@@ -11,7 +11,7 @@
   <mat-card>
     <mat-card-content>
 
-      <br/>
+      <br />
       <mat-card-header>
         <h2 class="mat-h1 reset">
           Receive funds
@@ -21,33 +21,23 @@
 
         <mat-step [editable]="false" optional="false" label="Preparation">
           <div>
-              <app-tezos-operation-receive>
-              </app-tezos-operation-receive>
+            <app-tezos-operation-receive>
+            </app-tezos-operation-receive>
 
-              <!-- <div class="tezos-wallet-receive" [formGroup]="tezosWalletReceiveForm" ngrxForm="tezos.tezosWalletReceive">
-                <mat-form-field appearance="outline">
-                  <mat-label>Select wallet to receive funds</mat-label>
-                    <mat-select placeholder="Receive address" formControlName="receiveTo">
-                      <mat-option *ngFor="let from of tezosWalletList | async" [value]="from.publicKeyHash">
-                        {{ from.name }} | {{ from.balance * 0.000001 | number:'1.0-6' }} ꜩ
-                      </mat-option>
-                    </mat-select>
-                </mat-form-field>
-              </div> -->
+            <br />
 
-              <br />
-
-              <button mat-flat-button matStepperNext>
-                <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-                Continue&nbsp;
-              </button>
+            <button mat-flat-button matStepperNext>
+              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              Continue&nbsp;
+            </button>
           </div>
         </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Connect Trezor">
+        <mat-step [editable]="false" optional="false" label="Connect Trezor" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
           <div class="tezos-trezor-connect">
-            <app-tezos-trezor-connect>
-            </app-tezos-trezor-connect>
+
+            <!-- <app-tezos-trezor-connect>
+            </app-tezos-trezor-connect> -->
 
             <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected">
               <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
@@ -56,7 +46,7 @@
           </div>
         </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Verification">
+        <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>

@@ -39,6 +39,22 @@ $simple-theme: mat-light-theme($simple-primary, $simple-accent, $simple-warn);
     box-shadow:  0 0px 5px -1px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09) !important
 }
 
+// select panel
+.mat-select-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
+    border-radius: 2px;
+    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
+    // border-radius: 2px;
+}
+    
+// autocomplete
+.mat-autocomplete-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
+    border-radius: 2px;
+    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
+    // border-radius: 2px;
+}
+
 // backgorund 
 .mat-drawer-container {
     background-color: #f5f5f5;
@@ -134,6 +150,10 @@ mat-horizontal-stepper .mat-step-header:hover {
     border-color: #00000075;
 }
 
+// remove white like next to menu 
+.mat-drawer-container {
+    background-color: whitesmoke !important;
+}
 
 /* form field */ 
 
@@ -183,7 +203,7 @@ mat-horizontal-stepper .mat-step-header:hover {
 
 // center form field text
 .mat-form-field-appearance-outline .mat-form-field-infix {
-    padding: 0.725em 0 1.25em 0;
+    padding: 0.725em 0 1.12em 0;
 }
 
 /*  mat select  */

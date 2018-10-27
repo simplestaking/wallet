@@ -29,7 +29,7 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.tezosOperationTransactionForm = this.fb.group({
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
-      fee: [{ value: '0', disabled: true }, [Validators.required]],
+      fee: ['', [Validators.required]],
       amount: new FormControl('', {
         validators: Validators.required,
         updateOn: 'blur'
@@ -70,7 +70,7 @@ export class TezosOperationTransactionComponent implements OnInit {
         // dispatch action when from address change  
         if (this.tezosOperationTransaction && state.from && (this.tezosOperationTransaction.from !== state.from)) {
           this.store.dispatch({
-            type: 'TEZOS_OPERATION_RECEIVE_FROM_CHANGE',
+            type: 'TEZOS_OPERATION_TRANSACTION_FROM_CHANGE',
             payload: state.from
           })
         }

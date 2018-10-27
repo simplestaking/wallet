@@ -17,8 +17,8 @@ export class TezosWalletSendEffects {
     @Effect()
     TezosWalletSendLoad = this.actions$.pipe(
         ofRoute('/tezos/wallet/send'),
-        flatMap(() => [
-            { type: 'TEZOS_WALLET_SEND_SHOW' },
+        flatMap((action: any) => [
+            { type: 'TEZOS_WALLET_SEND_SHOW', payload: action.payload  },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
         ]),
     )
@@ -27,15 +27,14 @@ export class TezosWalletSendEffects {
     @Effect()
     TezosWalletSendAddressLoad$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/send/:address'),
-        flatMap(() => [
-            { type: 'TEZOS_WALLET_SEND_SHOW' },
+        flatMap((action: any) => [
+            { type: 'TEZOS_WALLET_SEND_SHOW', payload: action.payload  },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
         ]),
     )
 
     // redicert to url with tezos public address
-    // TODO explain - where it redirect? and why?
     @Effect()
     TezosWalletSendRedirect$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_TRANSACTION_FROM_CHANGE'),
