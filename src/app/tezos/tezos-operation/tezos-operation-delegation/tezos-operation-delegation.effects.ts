@@ -8,6 +8,8 @@ import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/opera
 
 import { initializeWallet, setDelegation, originateContract, confirmOperation } from '../../../../../tezos-wallet'
 
+import { AngularFirestore } from 'angularfire2/firestore';
+
 @Injectable()
 export class TezosOperationDelegationEffects {
 
@@ -58,7 +60,9 @@ export class TezosOperationDelegationEffects {
         // dispatch action based on result
         map((data: any) => ({
             type: 'TEZOS_OPERATION_DELEGATION_SUCCESS',
-            payload: { injectionOperation: data.injectionOperation }
+            payload: {
+                ...data,
+            }
         })),
         catchError((error, caught) => {
             console.error(error.message)
@@ -113,10 +117,48 @@ export class TezosOperationDelegationEffects {
         }),
     )
 
+
+    // check mempool for operation
+    @Effect()
+    TezosOperationDelegationSaveNewContract$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_DELEGATION_SUCCESS'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action: any, state: any) => ({ action, state })),
+        flatMap(({ action, state }) => {
+            console.log('[TEZOS_OPERATION_DELEGATION_SUCCESS]', action)
+
+            let operation_result = action.payload.preapply[0].contents[0].metadata.operation_result
+
+            if (operation_result && operation_result.originated_contracts) {
+                console.warn('[TEZOS_OPERATION_DELEGATION_SUCCESS] origination')
+
+
+
+                return of(operation_result.originated_contracts[0])
+            } else {
+                console.warn('[TEZOS_OPERATION_DELEGATION_SUCCESS] delegate')
+                return of(operation_result)
+            }
+            
+       
+        }),
+        map(({ action, state }) => ({
+            type: 'TEZOS_OPERATION_DELEGATION_NEW_CONTRACT_SAVE_SUCCESS',
+            payload: {
+                // wallet: {
+                //     publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash
+                // },
+            },
+        })),
+
+    )
+
     constructor(
         private actions$: Actions,
         private http: HttpClient,
         private store: Store<any>,
+        private db: AngularFirestore,
         private router: Router
     ) { }
 
