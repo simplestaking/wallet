@@ -4,73 +4,89 @@
 
     <mat-card-header>
       <h2 class="mat-h1 reset">
-        Wallet detail {{tezosWalletDetail.name}}
+        Wallet detail
       </h2>
     </mat-card-header>
 
     <br />
-    <br />
 
     <div class="panel">
       <div class="address" style="margin-left:20px;">
-        <span class="mat-h2 reset" style="opacity:0.85">
-          {{tezosWalletDetail.publicKeyHash}}
+        <span class="mat-h2 label">
+          Name
         </span>
-        <span class="mat-h2 reset" style="opacity:0.65;font-size: 14px;line-height: 20px;">
-          wallet address
+        <span class="mat-h1 label">
+          {{tezosWalletDetail.name}}
         </span>
       </div>
 
       <div class="amount" style="margin-right:20px;">
-        <span class="mat-h2 reset" style="opacity:0.85">
-          {{tezosWalletDetail.balance*0.000001 | number:'1.1'}} XTZ
+        <span class="mat-h2 label">
+          Total USD balance
         </span>
-        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;line-height: 20px;">
+        <span class="mat-h1 label">
           {{(tezosWalletDetail.balance*0.000001 * tezosWalletDetail.price) | number:'1.1'}} USD
         </span>
       </div>
     </div>
 
-    <br />
-    <br />
-
-    <mat-card-content>
-      <app-chart-line-nav [data]="chartLineNavData">
-      </app-chart-line-nav>
-    </mat-card-content>
-
-    <br />
-    <br />
-
     <div class="panel">
       <div class="address" style="margin-left:20px;">
-        <span class="mat-h2 reset" style="opacity:0.85">
-          {{tezosWalletDetail?.delegate?.value}}
+        <span class="mat-h2 label">
+          Address
         </span>
-        <span class="mat-h2 reset" style="opacity:0.65;font-size: 14px;line-height: 20px;">
-          wallet delegate
+        <span class="mat-h1 label">
+          {{tezosWalletDetail.publicKeyHash}}
         </span>
       </div>
 
       <div class="amount" style="margin-right:20px;">
-        <span class="mat-h2 reset" style="opacity:0.85">
-          {{tezosWalletDetail?.delegate?.setable}}
+        <span class="mat-h2 label">
+          Total XTZ balance
+          <!-- {{(tezosWalletDetail.balance*0.000001 * tezosWalletDetail.price) | number:'1.1'}} USD -->
         </span>
-        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;line-height: 20px;">
-          delegatable
+        <span class="mat-h1 label">
+          {{tezosWalletDetail.balance*0.000001 | number:'1.1'}} XTZ
         </span>
       </div>
     </div>
+
+    <div class="panel" style="border: initial">
+      <div class="address" style="margin-left:20px;">
+        <span class="mat-h2 label">
+          Delegate
+        </span>
+        <span class="mat-h1 label">
+          {{tezosWalletDetail?.delegate?.value}}
+        </span>
+      </div>
+
+      <div class="amount" style="margin-right:20px;">
+        <span class="mat-h2 label">
+          Delegate setable
+        </span>
+        <span class="mat-h1 label">
+          {{tezosWalletDetail?.delegate?.setable}}
+        </span>
+      </div>
+    </div>
+
+    <br />
 
   </mat-card>
 
   <mat-card>
 
-    <!-- <mat-card-header>
+    <mat-card-header>
       <h2 class="mat-h1 reset">
-        Transaction history
+        Wallet history
       </h2>
-    </mat-card-header> -->
+    </mat-card-header>
+
+    <mat-card-content>
+      <app-chart-line-nav [data]="chartLineNavData">
+      </app-chart-line-nav>
+    </mat-card-content>
 
     <mat-card-content>
       <app-tezos-operation-history>
