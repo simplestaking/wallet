@@ -28,17 +28,17 @@ const createWindow = () => {
     titleBarStyle: 'hidden',
     frame: false,
     resizable: false,
-    icon: __dirname + '/../../dist/assets/icon/electron.png',
+    icon: __dirname + '/dist/assets/icon/electron.png',
     webPreferences: {
       webSecurity: false
     }
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/../../dist/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

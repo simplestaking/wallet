@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --aot --build-optimizer",
+    "build:electron": "ng build --output-path=electron/src/dist",
     "deploy": "ng build --prod --build-optimizer & firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
