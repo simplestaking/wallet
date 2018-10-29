@@ -9,6 +9,8 @@
 /tezos-wallet/node_modules
 /app-builds
 /electron/node_modules
+/electron/src/dist
+
 
 # dependencies
 /node_modules
