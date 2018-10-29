@@ -12,9 +12,9 @@ import { takeUntil } from 'rxjs/operators'
 })
 export class TezosWalletListComponent implements OnInit, OnDestroy {
 
-  private tezosWalletList
-  private tableDataSource
-  private onDestroy$ = new Subject()
+  public tezosWalletList
+  public tableDataSource
+  public onDestroy$ = new Subject()
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

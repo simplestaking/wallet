@@ -8,6 +8,7 @@
 /functions/node_modules/firebase-debug.log
 /tezos-wallet/node_modules
 /app-builds
+/electron/node_modules
 
 # dependencies
 /node_modules

@@ -15,10 +15,10 @@ export class TezosTrezorNewComponent implements OnInit, OnDestroy {
   // public displayedColumns: string[] = ['address', 'path', 'amount', 'operations'];
   public displayedColumns: string[] = ['select', 'address'];
 
-  private onDestroy$ = new Subject()
+  public onDestroy$ = new Subject()
 
-  private data
-  private dataSource = [
+  public data
+  public dataSource = [
     { address: "tz1Kef7BSg6fo75jk37WkKRYSnJDs69KVqt9", path: "44'/1729'/0'", amount: "123123", operations: "123123" },
   ]
 

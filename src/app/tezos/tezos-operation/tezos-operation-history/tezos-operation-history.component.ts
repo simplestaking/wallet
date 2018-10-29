@@ -13,10 +13,10 @@ export class TezosOperationHistoryComponent implements OnInit {
 
   public displayedColumns: string[] = ['position', 'name', 'address', 'symbol', 'fee'];
 
-  private onDestroy$ = new Subject()
+  public onDestroy$ = new Subject()
 
-  private data
-  private dataSource
+  public data
+  public dataSource
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
