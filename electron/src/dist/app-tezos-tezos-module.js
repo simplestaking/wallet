@@ -32266,13 +32266,13 @@ var TezosTrezorConnectEffects = /** @class */ (function () {
                 });
                 // initialize TrezorConnect 
                 window.TrezorConnect.init({
-                    // connectSrc: 'http://localhost:5836/',
-                    // frame_src: 'http://localhost:5836/iframe.html',
-                    // popup_src: 'http://localhost:5836/popup.html',
-                    connectSrc: 'http://localhost:5500/',
-                    frame_src: 'http://localhost:5500/iframe.html',
-                    popup_src: 'http://localhost:5500/popup.html',
-                    popup: true,
+                    connectSrc: 'http://localhost:5836/',
+                    frame_src: 'http://localhost:5836/iframe.html',
+                    popup_src: 'http://localhost:5836/popup.html',
+                    // connectSrc: 'http://localhost:5500/',
+                    // frame_src: 'http://localhost:5500/iframe.html',
+                    // popup_src: 'http://localhost:5500/popup.html',
+                    popup: false,
                     webusb: false,
                     debug: true,
                 }).then(function (response) { return console.log('[TrezorConnect][init]', response); })

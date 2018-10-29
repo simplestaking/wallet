@@ -14,10 +14,8 @@ const createWindow = () => {
 
   // Create the connect hidden window.
   connectWindow = new BrowserWindow({
-    show: true,
-    webPreferences: {
-      webSecurity: false
-    }
+    show: false,
+    backgroundThrottling: false,
   })
   connectWindow.loadFile(__dirname + '/connect/connect.html')
 
@@ -30,7 +28,9 @@ const createWindow = () => {
     resizable: false,
     icon: __dirname + '/dist/assets/icon/electron.png',
     webPreferences: {
-      webSecurity: false
+      webSecurity: false,
+      nodeIntegration: false,
+      allowRunningInsecureContent: true,
     }
   });
 

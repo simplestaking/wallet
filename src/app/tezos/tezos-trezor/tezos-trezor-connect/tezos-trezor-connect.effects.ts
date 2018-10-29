@@ -102,15 +102,15 @@ export class TezosTrezorConnectEffects {
                 // initialize TrezorConnect 
                 (<any>window).TrezorConnect.init({
 
-                    // connectSrc: 'http://localhost:5836/',
-                    // frame_src: 'http://localhost:5836/iframe.html',
-                    // popup_src: 'http://localhost:5836/popup.html',
+                    connectSrc: 'http://localhost:5836/',
+                    frame_src: 'http://localhost:5836/iframe.html',
+                    popup_src: 'http://localhost:5836/popup.html',
 
-                    connectSrc: 'http://localhost:5500/',
-                    frame_src: 'http://localhost:5500/iframe.html',
-                    popup_src: 'http://localhost:5500/popup.html',
+                    // connectSrc: 'http://localhost:5500/',
+                    // frame_src: 'http://localhost:5500/iframe.html',
+                    // popup_src: 'http://localhost:5500/popup.html',
 
-                    popup: true,
+                    popup: false,
                     webusb: false,
                     debug: true,
                 }).then(response => console.log('[TrezorConnect][init]', response))

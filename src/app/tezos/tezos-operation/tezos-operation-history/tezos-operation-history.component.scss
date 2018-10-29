@@ -5,3 +5,14 @@ table {
 .mat-cell {
     // opacity: 0.8;
 }
+
+// set white backgorund for list 
+mat-card {
+    background-color: whitesmoke !important;
+}
+table {
+    background-color: whitesmoke !important;
+}
+mat-paginator {
+    background-color: whitesmoke !important;
+}

@@ -48,3 +48,14 @@ a {
 .dashboard .mat-h1 {
     font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
 }
+
+// set white backgorund for list 
+mat-card {
+    background-color: whitesmoke !important;
+}
+table {
+    background-color: whitesmoke !important;
+}
+mat-paginator {
+    background-color: whitesmoke !important;
+}

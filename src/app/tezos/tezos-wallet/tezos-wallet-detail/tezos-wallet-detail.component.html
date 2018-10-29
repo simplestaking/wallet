@@ -1,109 +1,36 @@
 <div class="wallet-detail">
- 
-  <!-- create panel and refactor -->
-  <!-- <div style="padding-bottom:10px;display: flex;">
-
-  <span class="filler-content"></span>
-
-  <app-tezos-node>
-  </app-tezos-node>
-
-</div> -->
-
-  <!-- 
-<div style="padding:10px;display: flex;">
-
-  <button mat-button>
-    USD
-  </button>
-
-  <span class="filler-content"></span>
-
-  <button mat-button>
-    Day
-  </button>
-
-  <button mat-button>
-    Month
-  </button>
-
-  <button mat-button>
-    Year
-  </button>
-
-</div> -->
 
   <mat-card>
-    <mat-card-content>
-      <div class="panel">
 
-        <!-- <svg width="70" height="70" style="opacity:0.5;display:flex;margin-right:10px" identiconHash="{{tezosWalletDetail.publicKeyHash}}">
-            Fallback text for browsers not supporting inline svg
-          </svg> -->
-
-        <!-- <div class="address">
+    <div class="panel">
+      <div class="address">
         <span class="mat-h1 reset">
           {{tezosWalletDetail.name}}
         </span>
         <span class="mat-h1 reset" style="opacity:0.65;font-size: 14px;">
-          wallet name
+          {{tezosWalletDetail.publicKeyHash}}
         </span>
-      </div> -->
-
-        <div class="address">
-          <span class="mat-h1 reset">
-            {{tezosWalletDetail.publicKeyHash}}
-          </span>
-          <span class="mat-h1 reset" style="opacity:0.65;font-size: 14px;">
-            wallet address
-          </span>
-        </div>
-
-
-        <div class="amount">
-
-          <span class="mat-h1 reset" style="opacity:0.85">
-            XTZ {{tezosWalletDetail.balance*0.000001 | number:'1.3'}}
-            <!-- &nbsp;ꜩ -->
-          </span>
-
-          <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;">
-            total balance
-            <!-- {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.0-6'}}&nbsp;$ -->
-          </span>
-
-        </div>
-
       </div>
 
-    </mat-card-content>
-  </mat-card>
-
-  <br />
-
-
-  <mat-card>
-    <mat-card-header style="display: flex;flex-direction: row;justify-content: flex-end;">
-      <mat-card-title>
-        <span class="mat-h1 reset">
-          USD {{tezosWalletDetail.balance*tezosWalletDetail.price*0.000001 | number:'1.3'}}
+      <div class="amount">
+        <span class="mat-h1 reset" style="opacity:0.85">
+          USD {{tezosWalletDetail.balance*0.000001 * tezosWalletDetail.price | number:'1.1'}}
         </span>
-      </mat-card-title>
-      <mat-card-subtitle style="display: flex;flex-direction: row;justify-content: flex-end;">
-        total balance
-      </mat-card-subtitle>
-    </mat-card-header>
+        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;">
+          XTZ {{tezosWalletDetail.balance*0.000001 | number:'1.1'}}
+        </span>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
     <mat-card-content>
-
-      <!-- <br /> -->
-      <!-- <br/>
-    <br/> -->
-
       <app-chart-line-nav [data]="chartLineNavData">
       </app-chart-line-nav>
-
     </mat-card-content>
   </mat-card>
+
   <br />
 
   <mat-card>

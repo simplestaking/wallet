@@ -1437,7 +1437,7 @@ var AppRouting = [
     // { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
     { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
     // routing for electron
-    { path: '', redirectTo: '/tezos', pathMatch: 'full' },
+    { path: '', redirectTo: 'tezos', pathMatch: 'full' },
 ];
 var CustomRouterStateSerializer = /** @class */ (function () {
     function CustomRouterStateSerializer() {

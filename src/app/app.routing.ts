@@ -21,13 +21,13 @@ export const AppRouting: Routes = [
   // { path: 'tezos-baking', component: TezosBakingComponent },
   // { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
   // routing for web
-  // { path: '', component: TezosHardwareWalletComponent },
+  { path: '', component: TezosHardwareWalletComponent },
   
   // { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
   { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
   
   // routing for electron
-  { path: '', redirectTo: '/tezos', pathMatch: 'full' },
+  //{ path: '', redirectTo: 'tezos', pathMatch: 'full' },
   //{ path: '**', component: PageNotFoundComponent }
 
 ];
