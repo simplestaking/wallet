@@ -56,8 +56,11 @@
         <span class="mat-h2 label">
           Delegate
         </span>
-        <span class="mat-h1 label">
+        <span class="mat-h1 label" *ngIf="tezosWalletDetail?.delegate?.value">
           {{tezosWalletDetail?.delegate?.value}}
+        </span>
+        <span class="mat-h1 label" *ngIf="!tezosWalletDetail?.delegate?.value">
+          No delegate
         </span>
       </div>
 
@@ -65,8 +68,11 @@
         <span class="mat-h2 label">
           Delegate setable
         </span>
-        <span class="mat-h1 label">
-          {{tezosWalletDetail?.delegate?.setable}}
+        <span class="mat-h1 label" *ngIf="tezosWalletDetail?.delegate?.setable">
+          Yes
+        </span>
+        <span class="mat-h1 label" *ngIf="!tezosWalletDetail?.delegate?.setable">
+          No
         </span>
       </div>
     </div>

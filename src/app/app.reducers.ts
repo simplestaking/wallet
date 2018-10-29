@@ -22,19 +22,9 @@ import { storeFreeze } from 'ngrx-store-freeze';
  */
 
 import * as fromApp from './app.reducer';
-//import * as fromDelegate from './delegate/delegate.reducer';
-import * as fromAccount from './account/account.reducer';
-import * as fromAccountNew from './account/account-new/account-new.reducer';
-import * as fromAccountDetail from './account/account-detail/account-detail.reducer';
 import * as fromAuthLogin from './auth/login/login.reducer';
 import * as fromAuthRegistration from './auth/registration/registration.reducer';
 import * as fromAuthForgot from './auth/forgot/forgot.reducer';
-//import * as fromTransaction from './transaction/transaction.reducer';
-//import * as fromLoginViaFile from './login-via-file/login-via-file.reducer';
-import * as fromTezosNode from './shared/tezos/tezos-node/tezos-node.reducer';
-import * as fromTezosTransaction from './shared/tezos/tezos-transaction/tezos-transaction.reducer';
-import * as fromTezosOrigination from './shared/tezos/tezos-origination/tezos-origination.reducer';
-import * as fromTezosDelegation from './shared/tezos/tezos-delegation/tezos-delegation.reducer';
 import * as fromLandingTezosHardwareWallet from './landing/tezos-hardware-wallet/tezos-hardware-wallet.reducer';
 
 // meta reducert for dynamic forms
@@ -47,18 +37,9 @@ import * as fromNgrxForm from './shared/ngrx-form.reducer';
 export interface State {
   app: any;
 
-  account: any;
-  accountNew: any;
-  accountDetail: any;
-
   authLogin: any;
   authRegistration: any;
   authForgot: any;
-
-  tezosNode: any;
-  tezosTransaction: any;
-  tezosOrigination: any;
-  tezosDelegation: any;
 
   landingTezosHardwareWallet: any;
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
@@ -72,18 +53,9 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
   app: fromApp.reducer,
   
-  account: fromAccount.reducer,
-  accountNew: fromAccountNew.reducer,
-  accountDetail: fromAccountDetail.reducer,
-  
   authLogin: fromAuthLogin.reducer,
   authRegistration: fromAuthRegistration.reducer,
   authForgot: fromAuthForgot.reducer,
-
-  tezosNode: fromTezosNode.reducer,
-  tezosTransaction: fromTezosTransaction.reducer,
-  tezosOrigination: fromTezosOrigination.reducer,
-  tezosDelegation: fromTezosDelegation.reducer,
   
   landingTezosHardwareWallet: fromLandingTezosHardwareWallet.reducer,
   routerReducer: fromRouter.routerReducer,

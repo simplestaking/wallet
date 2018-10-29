@@ -30,9 +30,7 @@ import { AppInterceptor } from './app.interceptor'
 import { reducers, metaReducers } from './app.reducers';
 
 import { AllEffects } from './app.effects'
-// import { AccountEffects } from './account/account.effects'
-import { AccountNewEffects } from './account/account-new/account-new.effects'
-// import { AccountDetailEffects } from './account/account-detail/account-detail.effects'
+
 
 // import { AuthLoginEffects } from './auth/login/login.effects'
 // import { AuthRegistrationEffects } from './auth/registration/registration.effects'
@@ -81,12 +79,6 @@ import {
   // MatStepperModule,
 } from '@angular/material';
 
-// import { AccountComponent } from './account/account.component';
-// import { AccountNewComponent } from './account/account-new/account-new.component';
-// import { AccountDetailComponent } from './account/account-detail/account-detail.component';
-
-// import { DelegateComponent } from './delegate/delegate.component';
-
 // import { AuthComponent } from './auth/auth.component';
 // import { LoginComponent } from './auth/login/login.component';
 // import { RegistrationComponent } from './auth/registration/registration.component';
@@ -98,30 +90,10 @@ import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-pa
 import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
 import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/tezos-hardware-wallet.component';
 
-// import { TezosDelegationComponent } from './shared/tezos/tezos-delegation/tezos-delegation.component';
-// import { TezosTransactionComponent } from './shared/tezos/tezos-transaction/tezos-transaction.component';
-// import { TezosActivationComponent } from './shared/tezos/tezos-activation/tezos-activation.component';
-// import { TezosOriginationComponent } from './shared/tezos/tezos-origination/tezos-origination.component';
-// import { TezosNodeComponent } from './shared/tezos/tezos-node/tezos-node.component';
-// import { TezosWalletComponent } from './shared/tezos/tezos-wallet/tezos-wallet.component';
-
-// import { LoginViaFileComponent } from './login-via-file/login-via-file.component';
-// import { TransactionComponent } from './transaction/transaction.component';
-// import { DayChartComponent } from "./day-chart/day-chart.component";
-
-// import { TransactionService } from "./service/transaction/transaction.service";
-// import { UrlApi } from "./service/urlApi";
-
 @NgModule({
   declarations: [
     AppComponent,
 
-    // AccountComponent,
-    // AccountNewComponent,
-    // AccountDetailComponent,
-    
-    // DelegateComponent,
-    
     // AuthComponent,
     // LoginComponent,
     // RegistrationComponent,
@@ -133,17 +105,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     TezosPaperWalletComponent,
     TezosBakingComponent,
     TezosHardwareWalletComponent,
-    
-    // TezosDelegationComponent,
-    // TezosTransactionComponent,
-    // TezosActivationComponent,
-    // TezosOriginationComponent,
-    // TezosNodeComponent,
-    // TezosWalletComponent,
-    
-    //TransactionComponent,
-    //DayChartComponent,
-    //LoginViaFileComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -171,23 +133,12 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     // Set side effects
     EffectsModule.forRoot([
       AllEffects,
-      // AccountEffects,
-      AccountNewEffects,
-      // AccountDetailEffects,
 
       // AuthLoginEffects,
       // AuthRegistrationEffects,
       // AuthForgotEffects,
 
-      // DelegateEffects,
       // TrezorEffects,
-
-      // TransactionEffects,
-      // LoginViaFileEffects,
-
-      // TrezorTransactionEffects,
-      // TrezorOriginationEffects,
-      // TrezorDelegationEffects
 
       TezosHardwareWalletEffects
     ]),
@@ -272,9 +223,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi: true
-    },
-    // UrlApi,
-    // TransactionService,
+    }
   ],
   bootstrap: [AppComponent]
 })
