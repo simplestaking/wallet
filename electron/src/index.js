@@ -8,16 +8,30 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let connectWindow;
 
 const createWindow = () => {
+
+  // Create the connect hidden window.
+  connectWindow = new BrowserWindow({
+    show: true,
+    webPreferences: {
+      webSecurity: false
+    }
+  })
+  connectWindow.loadFile(__dirname + '/connect/connect.html')
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
-    // titleBarStyle: 'hiddenInset',
     titleBarStyle: 'hidden',
     frame: false,
-    resizable: false
+    resizable: false,
+    icon: __dirname + '/../../dist/assets/icon/electron.png',
+    webPreferences: {
+      webSecurity: false
+    }
   });
 
   // and load the index.html of the app.
