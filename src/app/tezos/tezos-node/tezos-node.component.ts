@@ -12,6 +12,7 @@ import { takeUntil, filter } from 'rxjs/operators';
 export class TezosNodeComponent implements OnInit {
 
   public tezosNode
+  public tezosNodeDisplay
   public destroy$ = new Subject<null>();
 
   constructor(
@@ -25,7 +26,8 @@ export class TezosNodeComponent implements OnInit {
     this.store.select('tezos', 'tezosNode')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
-        this.tezosNode = state
+        this.tezosNodeDisplay = state.api.display,
+        this.tezosNode = Object.keys(state.nodes).map(name => state.nodes[name])
       })
 
   }

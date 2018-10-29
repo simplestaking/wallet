@@ -6,8 +6,6 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of, timer, defer } from 'rxjs';
 import { map, withLatestFrom, switchMap, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
 
-import { ofRoute } from 'app/shared/utils/rxjs/operators';
-
 @Injectable()
 export class TezosNodeEffects {
 

@@ -1,22 +1,33 @@
+let initialState: any = {
+    nodes: {
+        zero: {
+            display: 'Zeronet',
+            name: 'zero',
+            url: 'https://zeronet.simplestaking.com:3000',
+            tzscan: {
+                url: 'http://zeronet.tzscan.io/',
+                operations: 'https://zeronet-api.tzscan.io/v1/operations/',
+                operations_number: 'https://api5.tzscan.io/v1/timestamp/',
+                block_timestamp: 'https://zeronet-api.tzscan.io/v1/timestamp/',
+            }
+        },
+        main: {
+            display: 'Mainnet',
+            name: 'main',
+            url: 'https://mainnet.simplestaking.com:3000',
+            tzscan: {
+                url: 'http://tzscan.io/',
+                operations: 'https://api3.tzscan.io/v1/operations/',
+                operations_number: 'https://api3.tzscan.io/v2/number_operations/',
+                block_timestamp: 'https://api5.tzscan.io/v1/timestamp/',
+            }
+        },
+    }
+}
 
-const initialState: any = {
-    api: {
-        display: 'Zeronet',
-        name: 'zero',
-        url: 'https://zeronet.simplestaking.com:3000'
-        // display: 'Mainnet',
-        // name: 'main',
-        // url: 'https://mainnet.simplestaking.com:3000'
-    },
-    nodes: [{
-        display: 'Zeronet',
-        name: 'zero',
-        url: 'https://zeronet.simplestaking.com:3000'
-    }, {
-        display: 'Mainnet',
-        name: 'main',
-        url: 'https://mainnet.simplestaking.com:3000'
-    }],
+initialState = {
+    ...initialState,
+    api: initialState.nodes.zero,
 }
 
 export function reducer(state = initialState, action) {

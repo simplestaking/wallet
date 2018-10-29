@@ -23,12 +23,10 @@ export class TezosOperationHistoryEffects {
         ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
         // get state from store
-        withLatestFrom(this.store, (action, state: any) => state.routerReducer.state.root.children[0].firstChild.params.address),
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
 
-        // 
-        flatMap(publicKeyHash =>
-            // get public key hash from url 
-            of([publicKeyHash]).pipe(
+        flatMap(({ action, state }) =>
+            of([]).pipe(
 
                 // // get number of  operation transactions
                 // flatMap(() =>
@@ -37,19 +35,23 @@ export class TezosOperationHistoryEffects {
 
                 // get operation transactions
                 flatMap(() =>
-                    // this.http.get('https://api3.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=10')
-                    this.http.get('https://zeronet-api.tzscan.io/v1/operations/' + publicKeyHash + '?type=Transaction&p=0&number=50')
-                    ),
+                    this.http.get(
+                        // get api url
+                        state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                        // get public key hash from url 
+                        state.routerReducer.state.root.children[0].firstChild.params.address +
+                        '?type=Transaction&p=0&number=50')
+                ),
 
                 // add publicKeyHash
                 map(operations => ({
-                    publicKeyHash: publicKeyHash,
+                    publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
                     operations: operations,
                 }))
 
             )
         ),
-        tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
     )
 
@@ -58,33 +60,30 @@ export class TezosOperationHistoryEffects {
     TezosWalletOperationHistoryTimpeLoad$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_HISTORY_LOAD_SUCCESS'),
 
-        // create observable for each operation
-        flatMap((action: any) => {
-            return action.payload.operations
-        }),
+        // get state from store
+        withLatestFrom(this.store, (action: any, state: any) => ({ action, state })),
 
-        // 
-        flatMap((operations: any) =>
-            // get public key hash from url 
-            of([operations]).pipe(
-                // tap((operations) => console.log('[operations]', operations[0].block_hash)),
-                // get block timestamp
-                flatMap(() =>
-                    // this.http.get('https://api5.tzscan.io/v1/timestamp/' + operations.block_hash)
-                    this.http.get('https://zeronet-api.tzscan.io/v1/timestamp/' + operations.block_hash)
-                ),
-                map(response => {
-                    // console.log('[operations]', operations)
-                    return {
-                        timestamp: response[0],
-                        hash: operations.hash,
-                        block_hash: operations.block_hash,
-                    }
-                })
-            )
+        // create observable for each operation
+        flatMap(({ action, state }) => action.payload.operations
+            .map(operation => ({
+                operation: operation,
+                url: state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.block_timestamp
+            }))
         ),
 
-        //
+        // get block timestamp
+        flatMap((state: any) =>
+            of([]).pipe(
+                flatMap(() =>
+                    this.http.get(state.url + state.operation.block_hash)
+                ),
+                map(response => ({
+                    timestamp: response[0],
+                    hash: state.operation.hash,
+                    block_hash: state.operation.block_hash,
+                }))
+            )
+        ),
         // tap((response) => console.log('[operations] response', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS', payload: response })),
 

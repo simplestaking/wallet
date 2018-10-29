@@ -11,41 +11,7 @@ import { TrezorConnect } from 'trezor-connect'
 export class AllEffects {
 
     // public api = environment.tezos.betanet
-    public api = environment.tezos.zeronet
-
-    // @Effect()
-    // TrezorInitEffects$ = this.actions$.pipe(
-    //     ofType('TREZOR_INIT'),
-    //     tap(action => {
-
-    //         console.error('[TREZOR_INIT]')
-    //         try {
-
-    //             const handleTransportEvent = (event) => {
-    //                 TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
-    //             }
-
-    //             TrezorConnect.on('TRANSPORT_EVENT', handleTransportEvent);
-
-    //             TrezorConnect.init({
-    //                 connectSrc: 'http://localhost:5500/dist/',
-    //                 frame_src: 'http://localhost:5500/dist/iframe.html',
-    //                 popup_src: 'http://localhost:5500/dist/popup.html',
-
-    //                 // frame_src: 'https://sisyfos.trezor.io/iframe.html',
-    //                 // popup_src: 'https://sisyfos.trezor.io/popup.html',
-
-    //                 popup: false,
-    //                 webusb: false,
-    //                 debug: true,
-    //             });
-
-    //         } catch (error) {
-    //             throw error;
-    //         }
-
-    //     })
-    // )
+    // public api = environment.tezos.zeronet
 
     // @Effect()
     // HeartbeatEffects$ = this.actions$
