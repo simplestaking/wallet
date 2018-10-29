@@ -105,7 +105,8 @@ export class TezosTrezorConnectEffects {
                     connectSrc: 'http://localhost:5836/',
                     frame_src: 'http://localhost:5836/iframe.html',
                     popup_src: 'http://localhost:5836/popup.html',
-
+                    trustedHost: true,
+                    
                     // connectSrc: 'http://localhost:5500/',
                     // frame_src: 'http://localhost:5500/iframe.html',
                     // popup_src: 'http://localhost:5500/popup.html',
