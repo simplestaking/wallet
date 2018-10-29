@@ -11,7 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TezosOperationHistoryComponent implements OnInit {
 
-  public displayedColumns: string[] = ['position', 'name', 'address', 'symbol', 'fee'];
+  public displayedColumns: string[] = ['position', 'name', 'address', 'symbol']; //fee
 
   public onDestroy$ = new Subject()
 

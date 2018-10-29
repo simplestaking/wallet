@@ -1424,6 +1424,8 @@ var metaReducers = !_environments_environment__WEBPACK_IMPORTED_MODULE_0__["envi
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppRouting", function() { return AppRouting; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomRouterStateSerializer", function() { return CustomRouterStateSerializer; });
+/* harmony import */ var _landing_tezos_hardware_wallet_tezos_hardware_wallet_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./landing/tezos-hardware-wallet/tezos-hardware-wallet.component */ "./src/app/landing/tezos-hardware-wallet/tezos-hardware-wallet.component.ts");
+
 var AppRouting = [
     // auth
     // { path: 'login', component: LoginComponent },
@@ -1433,11 +1435,9 @@ var AppRouting = [
     // { path: 'tezos-baking', component: TezosBakingComponent },
     // { path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
     // routing for web
-    // { path: '', component: TezosHardwareWalletComponent },
+    { path: '', component: _landing_tezos_hardware_wallet_tezos_hardware_wallet_component__WEBPACK_IMPORTED_MODULE_0__["TezosHardwareWalletComponent"] },
     // { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
     { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
-    // routing for electron
-    { path: '', redirectTo: 'tezos', pathMatch: 'full' },
 ];
 var CustomRouterStateSerializer = /** @class */ (function () {
     function CustomRouterStateSerializer() {

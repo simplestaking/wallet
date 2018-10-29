@@ -1,40 +1,21 @@
 <div class="chart">
-  
-  <ngx-charts-line-chart-nav
 
-    [results]="data"
-    [scheme]="colorScheme"
-    
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    
-    [xAxisTickFormatting]="dateAxisTickFormatting" 
-    [yAxisTickFormatting]="amountAxisTickFormatting"
-    
-    [autoScale]="autoScale"
-    [tooltipDisabled]="tooltipDisabled"
-    
-    [animations]="animations"
-    [gradient]="gradient"
-    [roundDomains]="roundDomains"
-    
-    [legend]="legend"
-    >
-   
+  <ngx-charts-line-chart-nav [results]="data" [scheme]="colorScheme" [xAxis]="showXAxis" [yAxis]="showYAxis"
+    [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisTickFormatting]="dateAxisTickFormatting"
+    [yAxisTickFormatting]="amountAxisTickFormatting" [autoScale]="autoScale" [tooltipDisabled]="tooltipDisabled"
+    [animations]="animations" [gradient]="gradient" [roundDomains]="roundDomains" [legend]="legend">
+
     <ng-template #seriesTooltipTemplate let-model="model">
       <div style="padding: 10px">
         <span style="font-size: 16px">
-          USD {{ model[0].value | number:'1.0-6' }} 
+          {{ model[0].value | number:'1.0-6' }} USD
         </span>
-        <br/>
+        <br />
         <!-- <span style="opacity:0.5">
           XTZ {{ model[0].balance | number:'1.0-6' }} 
         </span> -->
-        <br/>
-        <br/>
+        <br />
+        <br />
         <span style="opacity:0.5">
           {{ model[0].name | date: 'MMMM dd, yyyy' }}
         </span>

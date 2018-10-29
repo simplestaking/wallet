@@ -2,22 +2,31 @@
 
   <mat-card>
 
+    <mat-card-header>
+      <h2 class="mat-h1 reset">
+        Wallet detail {{tezosWalletDetail.name}}
+      </h2>
+    </mat-card-header>
+
+    <br />
+    <br />
+
     <div class="panel">
-      <div class="address">
-        <span class="mat-h1 reset">
-          {{tezosWalletDetail.name}}
-        </span>
-        <span class="mat-h1 reset" style="opacity:0.65;font-size: 14px;">
+      <div class="address" style="margin-left:20px;">
+        <span class="mat-h2 reset" style="opacity:0.85">
           {{tezosWalletDetail.publicKeyHash}}
+        </span>
+        <span class="mat-h2 reset" style="opacity:0.65;font-size: 14px;line-height: 20px;">
+          wallet address
         </span>
       </div>
 
-      <div class="amount">
-        <span class="mat-h1 reset" style="opacity:0.85">
-          USD {{tezosWalletDetail.balance*0.000001 * tezosWalletDetail.price | number:'1.1'}}
+      <div class="amount" style="margin-right:20px;">
+        <span class="mat-h2 reset" style="opacity:0.85">
+          {{tezosWalletDetail.balance*0.000001 | number:'1.1'}} XTZ
         </span>
-        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;">
-          XTZ {{tezosWalletDetail.balance*0.000001 | number:'1.1'}}
+        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;line-height: 20px;">
+          {{(tezosWalletDetail.balance*0.000001 * tezosWalletDetail.price) | number:'1.1'}} USD
         </span>
       </div>
     </div>
@@ -29,13 +38,41 @@
       <app-chart-line-nav [data]="chartLineNavData">
       </app-chart-line-nav>
     </mat-card-content>
+
+    <br />
+    <br />
+
+    <div class="panel">
+      <div class="address" style="margin-left:20px;">
+        <span class="mat-h2 reset" style="opacity:0.85">
+          {{tezosWalletDetail?.delegate?.value}}
+        </span>
+        <span class="mat-h2 reset" style="opacity:0.65;font-size: 14px;line-height: 20px;">
+          wallet delegate
+        </span>
+      </div>
+
+      <div class="amount" style="margin-right:20px;">
+        <span class="mat-h2 reset" style="opacity:0.85">
+          {{tezosWalletDetail?.delegate?.setable}}
+        </span>
+        <span class="mat-h1 reset" style="opacity:0.5;font-size: 14px;line-height: 20px;">
+          delegatable
+        </span>
+      </div>
+    </div>
+
   </mat-card>
 
-  <br />
-
   <mat-card>
-    <mat-card-content>
 
+    <!-- <mat-card-header>
+      <h2 class="mat-h1 reset">
+        Transaction history
+      </h2>
+    </mat-card-header> -->
+
+    <mat-card-content>
       <app-tezos-operation-history>
       </app-tezos-operation-history>
 

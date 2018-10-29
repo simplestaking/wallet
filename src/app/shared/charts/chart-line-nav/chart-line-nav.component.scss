@@ -7,12 +7,14 @@
 ::ng-deep .ngx-charts { 
 
     text {
+        font-weight: 300;
         opacity: 0.5;
     }
 
     .line {
         // stroke: #6495ed;
-        stroke-width: 2.5;
+        // stroke-width: 2.5;
+        stroke-width: 1.5;
         // fill: url(#line-gradient);
         // stroke: url(#line-gradient);
         // stroke-width: 2px;

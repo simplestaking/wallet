@@ -28,6 +28,14 @@
     padding: 0px 0px 0px 0px !important;
 }
 
+.mat-h1.reset {
+    font: 300 24px/32px Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-h2.reset {
+    font: 300 18px Roboto, "Helvetica Neue", sans-serif;
+}
+
 //TODO: move to separete component 
 .filler-content {
     flex: auto;
@@ -51,6 +59,12 @@
 
 .wallet-detail mat-card {
     min-width: 700px;
+}
+
+mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 // set white backgorund for list 
