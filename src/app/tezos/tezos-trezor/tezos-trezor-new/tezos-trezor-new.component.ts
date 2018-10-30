@@ -12,8 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TezosTrezorNewComponent implements OnInit, OnDestroy {
 
   public selectedRow
-  // public displayedColumns: string[] = ['address', 'path', 'amount', 'operations'];
-  public displayedColumns: string[] = ['select', 'address', 'balance'];
+  public displayedColumns: string[] = ['select', 'address', 'contracts', 'balance'];
 
   public onDestroy$ = new Subject()
 

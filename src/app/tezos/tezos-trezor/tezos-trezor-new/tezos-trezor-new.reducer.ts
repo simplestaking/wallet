@@ -25,7 +25,7 @@ export function reducer(state = initialState, action) {
                     [action.payload.address]: {
                         address: action.payload.address,
                         path: 'm/' + action.payload.serializedPath,
-                        operations: '',
+                        contracts: '',
                         balance: '',
                     }
                 },
@@ -61,8 +61,6 @@ export function reducer(state = initialState, action) {
         }
 
         case 'TEZOS_TREZOR_NEW_DETAIL_SUCCESS': {
-            console.error('[TEZOS_TREZOR_NEW_DETAIL_SUCCESS]',action.payload)
-
             return {
                 ...state,
                 entities: {
@@ -70,6 +68,20 @@ export function reducer(state = initialState, action) {
                     [action.payload.wallet.publicKeyHash]: {
                         ...state.entities[action.payload.wallet.publicKeyHash],
                         balance: action.payload.getWallet.balance * 0.000001,
+                    }
+                },
+            }
+        }
+
+        case 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_SUCCESS': {
+            console.error('[TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_SUCCESS]', action.payload)
+            return {
+                ...state,
+                entities: {
+                    ...state.entities,
+                    [action.payload.address]: {
+                        ...state.entities[action.payload.address],
+                        contracts: action.payload.contracts,
                     }
                 },
             }

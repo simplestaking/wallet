@@ -5,7 +5,7 @@
     </th>
     <td mat-cell *matCellDef="let row">
       <mat-checkbox color="primary" (change)="selectRow(row)" [disableRipple]="true" [checked]="isRowSelected(row)">
-       </mat-checkbox>
+      </mat-checkbox>
     </td>
   </ng-container>
 
@@ -28,17 +28,20 @@
     <td mat-cell *matCellDef="let element"> {{element.path}}</td>
   </ng-container>
 
-  
+
   <!-- Operations Column -->
-  <ng-container matColumnDef="operations">
-    <th mat-header-cell *matHeaderCellDef> Operations </th>
-    <td mat-cell *matCellDef="let element"> {{element.operations}} </td>
+  <ng-container matColumnDef="contracts">
+    <th mat-header-cell *matHeaderCellDef> Contracts </th>
+    <td mat-cell *matCellDef="let element"> {{element.contracts}} </td>
   </ng-container>
 
   <!-- Balance Column -->
   <ng-container matColumnDef="balance">
     <th mat-header-cell *matHeaderCellDef> Balance </th>
-    <td mat-cell *matCellDef="let element"> {{element.balance | number:'1.0-6' }}</td>
+    <td mat-cell *matCellDef="let element">
+      {{element.balance | number:'1.0-6' }}
+      <span *ngIf="element.balance"> XTZ</span>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

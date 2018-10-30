@@ -2,6 +2,14 @@ table {
     width: 100%;
 }
 
+
+.mat-cell.cdk-column-address.mat-column-address {
+    width: 350px;
+}
+
+.mat-header-cell.cdk-column-address.mat-column-address {
+}
+
 .mat-cell.cdk-column-balance.mat-column-balance {
     width: 200px;
     text-align: right;

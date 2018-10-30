@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of, } from 'rxjs';
 import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,7 +23,7 @@ export class TezosTrezorNewEffects {
         // ofRoute('/tezos/wallet/new/trezor'),
         // ofType('TEZOS_TREZOR_CONNECT_TRANSPORT_START'),
         ofType('TEZOS_TREZOR_NEW'),
-        
+
         // TODO: find action for connect initialization
         delay(2000),
 
@@ -53,7 +54,7 @@ export class TezosTrezorNewEffects {
             payload: response.payload,
         })),
     )
-    
+
     // TODO: !!! triger after click on continue, potential race condition when user select address during loading 
     // get tezos public key  from trezor   
     @Effect()
@@ -85,8 +86,6 @@ export class TezosTrezorNewEffects {
 
     )
 
-    // TODO: !!! triger after click on continue, potential race condition when user select address during loading 
-    // get tezos public key  from trezor   
     @Effect()
     TezosTrezorNewContractDetail = this.actions$.pipe(
         ofType('TEZOS_TREZOR_NEW_SUCCESS'),
@@ -116,10 +115,38 @@ export class TezosTrezorNewEffects {
 
 
 
+    @Effect()
+    TezosTrezorNewContractCount = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_NEW_SUCCESS'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action: any, state) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            // get contracts count for ogirination
+            flatMap(() =>
+                this.http.get(
+                    // get api url
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations_number +
+                    action.payload.address +
+                    '?type=Origination')
+            ),
+            // add address to response
+            map((response: any) => ({ contracts: response[0], address: action.payload.address })),
+        )),
+
+        map((response: any) => ({
+            type: 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_SUCCESS',
+            payload: response,
+        })),
+
+    )
 
     constructor(
         private actions$: Actions,
         private store: Store<any>,
+        private http: HttpClient,
         private db: AngularFirestore,
         private router: Router,
     ) { }

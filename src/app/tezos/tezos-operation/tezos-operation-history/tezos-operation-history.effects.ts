@@ -25,31 +25,30 @@ export class TezosOperationHistoryEffects {
         // get state from store
         withLatestFrom(this.store, (action, state: any) => ({ action, state })),
 
-        flatMap(({ action, state }) =>
-            of([]).pipe(
+        flatMap(({ action, state }) => of([]).pipe(
 
-                // // get number of  operation transactions
-                // flatMap(() =>
-                //     this.http.get('https://api3.tzscan.io/v2/number_operations/' + publicKeyHash + '?type=Transaction')
-                // ),
+            // // get number of  operation transactions
+            // flatMap(() =>
+            //     this.http.get('https://api3.tzscan.io/v2/number_operations/' + publicKeyHash + '?type=Transaction')
+            // ),
 
-                // get operation transactions
-                flatMap(() =>
-                    this.http.get(
-                        // get api url
-                        state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
-                        // get public key hash from url 
-                        state.routerReducer.state.root.children[0].firstChild.params.address +
-                        '?type=Transaction&p=0&number=50')
-                ),
+            // get operation transactions
+            flatMap(() =>
+                this.http.get(
+                    // get api url
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                    // get public key hash from url 
+                    state.routerReducer.state.root.children[0].firstChild.params.address +
+                    '?type=Transaction&p=0&number=50')
+            ),
 
-                // add publicKeyHash
-                map(operations => ({
-                    publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
-                    operations: operations,
-                }))
+            // add publicKeyHash
+            map(operations => ({
+                publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+                operations: operations,
+            }))
 
-            )
+        )
         ),
         // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),

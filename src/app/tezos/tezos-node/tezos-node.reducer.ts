@@ -7,7 +7,7 @@ let initialState: any = {
             tzscan: {
                 url: 'http://zeronet.tzscan.io/',
                 operations: 'https://zeronet-api.tzscan.io/v1/operations/',
-                operations_number: 'https://api5.tzscan.io/v1/timestamp/',
+                operations_number: 'https://zeronet-api.tzscan.io/v1/number_operations/',
                 block_timestamp: 'https://zeronet-api.tzscan.io/v1/timestamp/',
             }
         },
