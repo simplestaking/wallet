@@ -10,6 +10,8 @@ import { ofRoute } from '../../../shared/utils/rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import TrezorConnect from 'trezor-connect';
+import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
+
 
 @Injectable()
 export class TezosTrezorNewEffects {
@@ -30,8 +32,8 @@ export class TezosTrezorNewEffects {
             "m/44'/1729'/2'",
             "m/44'/1729'/3'",
             "m/44'/1729'/4'",
-            // "m/44'/1729'/5'",
-            // "m/44'/1729'/6'",
+            "m/44'/1729'/5'",
+            "m/44'/1729'/6'",
             // "m/44'/1729'/7'",
             // "m/44'/1729'/8'",
             // "m/44'/1729'/9'",
@@ -82,6 +84,36 @@ export class TezosTrezorNewEffects {
         })),
 
     )
+
+    // TODO: !!! triger after click on continue, potential race condition when user select address during loading 
+    // get tezos public key  from trezor   
+    @Effect()
+    TezosTrezorNewContractDetail = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_NEW_SUCCESS'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action: any, state) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            // initialie 
+            initializeWallet(stateWallet => ({
+                publicKeyHash: action.payload.address,
+                node: state.tezos.tezosNode.api,
+            })),
+
+            // get wallet info
+            getWallet(),
+
+        )),
+
+        map((response: any) => ({
+            type: 'TEZOS_TREZOR_NEW_DETAIL_SUCCESS',
+            payload: response,
+        })),
+
+    )
+
 
 
 

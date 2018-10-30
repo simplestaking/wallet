@@ -13,7 +13,7 @@ export class TezosTrezorNewComponent implements OnInit, OnDestroy {
 
   public selectedRow
   // public displayedColumns: string[] = ['address', 'path', 'amount', 'operations'];
-  public displayedColumns: string[] = ['select', 'address'];
+  public displayedColumns: string[] = ['select', 'address', 'balance'];
 
   public onDestroy$ = new Subject()
 
@@ -69,7 +69,7 @@ export class TezosTrezorNewComponent implements OnInit, OnDestroy {
     // close all open observables
     this.onDestroy$.next();
     this.onDestroy$.complete();
-    
+
     this.store.dispatch({
       type: 'TEZOS_TREZOR_NEW_DESTROY',
     })
