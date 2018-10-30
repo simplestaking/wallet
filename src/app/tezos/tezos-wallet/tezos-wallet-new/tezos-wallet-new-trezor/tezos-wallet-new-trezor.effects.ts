@@ -9,7 +9,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ofRoute } from '../../../../shared/utils/rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
-
 @Injectable()
 export class TezosWalletNewTrezorEffects {
 

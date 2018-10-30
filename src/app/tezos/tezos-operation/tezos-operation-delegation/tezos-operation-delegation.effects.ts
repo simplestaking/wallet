@@ -8,10 +8,12 @@ import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/opera
 
 import { initializeWallet, setDelegation, originateContract, confirmOperation } from '../../../../../tezos-wallet'
 
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable()
 export class TezosOperationDelegationEffects {
+
+    public walletCollection: AngularFirestoreCollection<any>;
 
     @Effect()
     TezosOperationDelegation$ = this.actions$.pipe(
@@ -133,17 +135,36 @@ export class TezosOperationDelegationEffects {
             if (operation_result && operation_result.originated_contracts) {
                 console.warn('[TEZOS_OPERATION_DELEGATION_SUCCESS] origination')
 
+                // save wallet to wallet list in FireBase Store 
+                this.walletCollection = this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet');
 
+                // add wallet to firestore
+                return this.walletCollection
+                    // set document id as tezos wallet
+                    .doc(operation_result.originated_contracts[0])
+                    .set({
+                        // save uid to set security 
+                        // if user is not logged null will be stored
+                        uid: state.app.user.uid,
+                        name: state.tezos.tezosWalletDetail.name +  '_' + operation_result.originated_contracts[0].slice(0, 8),
+                        publicKey: state.tezos.tezosWalletDetail.publicKey,
+                        publicKeyHash: operation_result.originated_contracts[0],
+                        path: state.tezos.tezosWalletDetail.path,
+                        network: state.tezos.tezosNode.api.name,
+                        balance: 0,
+                        type: 'TREZOR_T',
+                    })
 
-                return of(operation_result.originated_contracts[0])
+                // return of(operation_result.originated_contracts[0])
             } else {
+
                 console.warn('[TEZOS_OPERATION_DELEGATION_SUCCESS] delegate')
                 return of(operation_result)
             }
-            
-       
+
+
         }),
-        map(({ action, state }) => ({
+        map((response) => ({
             type: 'TEZOS_OPERATION_DELEGATION_NEW_CONTRACT_SAVE_SUCCESS',
             payload: {
                 // wallet: {
