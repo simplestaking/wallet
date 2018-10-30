@@ -17,40 +17,60 @@
           Receive funds
         </h2>
       </mat-card-header>
-      <mat-horizontal-stepper [linear]="false">
+      <mat-horizontal-stepper [linear]="false" #matHorizontalStepper>
 
         <mat-step [editable]="false" optional="false" label="Preparation">
           <div>
             <app-tezos-operation-receive>
             </app-tezos-operation-receive>
-
-            <br />
-
-            <button mat-flat-button matStepperNext>
-              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-              Continue&nbsp;
-            </button>
           </div>
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Connect Trezor" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
           <div class="tezos-trezor-connect">
 
-            <!-- <app-tezos-trezor-connect>
-            </app-tezos-trezor-connect> -->
+            <app-tezos-trezor-connect>
+            </app-tezos-trezor-connect>
 
-            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected">
+            <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorReceiveFunds()">
               <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-              Continue to Select address&nbsp;
+              Continue to Verification&nbsp;
             </button>
           </div>
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Verification" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="tezos-trezor-verify">
+
+            <!-- verify amount & address -->
+            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart || tezosTrezorConnectButton === tezosTrezorConnectButtonStart + 1">
+
+              <img src="./assets/trezor_verify_detail.svg" alt="Trezor Verification">
+
+              <div class="tezos-trezor-verify-info">
+
+                <mat-card class="tezos-trezor-verify-card-short">
+                  <mat-card-content>
+
+                    <span class="mat-body-1">
+                      To (receiving address)
+                    </span>
+                    <span class="mat-body-1" class="tezos-verify-input">
+                      {{tezosOperationReceive.form.to}}
+                    </span>
+                  </mat-card-content>
+                </mat-card>
+
+                <div class="tezos-trezor-verify-warning">
+                  As malware can replace address shown on computer, you should always check the authenticity of
+                  receiving address when sending funds from Trezor
+                </div>
+
+              </div>
+            </div>
+          
           </div>
+
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Confirmation">

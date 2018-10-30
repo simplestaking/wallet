@@ -1,29 +1,27 @@
 const initialState: any = {
-	form: {},
+    stepper: 0,
 }
 
 export function reducer(state = initialState, action) {
-	switch (action.type) {
+    switch (action.type) {
 
-			case 'TEZOS_WALLET_RECEIVE_DESTROY': {
-					return {
-							...state,
-							form: {},
-					}
-			}
+        case 'TEZOS_WALLET_RECEIVE_DESTROY': {
+            return {
+                ...state,
+                stepper: 0,
+            }
+        }
 
-			// set from after walet details are loaded
-			case 'TEZOS_WALLET_DETAIL_LOAD_SUCCESS': {
-					return {
-							...state,
-							form: {
-									...state.form,
-									from: action.payload.publicKeyHash
-							}
-					}
-			}
+        // move stepper to next page 
+        case 'TEZOS_OPERATION_RECEIVE_FORM_SUBMIT':
+        case 'TEZOS_OPERATION_RECEIVE_SUCCESS': {
+            return {
+                ...state,
+                stepper: state.stepper + 1,
+            }
+        }
 
-			default:
-					return state;
-	}
+        default:
+            return state;
+    }
 }

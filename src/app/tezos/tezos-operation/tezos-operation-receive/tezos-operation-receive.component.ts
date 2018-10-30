@@ -72,4 +72,42 @@ export class TezosOperationReceiveComponent implements OnInit {
       })
   }
 
+  receive(walletType) {
+
+    // mark input 
+    this.tezosOperationReceiveForm.controls.to.markAsTouched()
+
+    // check validity
+    this.tezosOperationReceiveForm.updateValueAndValidity()
+
+    // dispatch only if valid
+    if (this.tezosOperationReceiveForm.valid) {
+
+      // TODO: remove after WEB wallet verification page is added   
+      if (walletType === 'WEB') {
+
+        // send fund 
+        this.store.dispatch({
+          type: "TEZOS_OPERATION_RECEIVE",
+          payload: {
+            walletType: walletType,
+          }
+        })
+
+      } else {
+
+        // dispatch send funds form event 
+        this.store.dispatch({
+          type: "TEZOS_OPERATION_RECEIVE_FORM_SUBMIT",
+          payload: {
+            walletType: walletType,
+          }
+        })
+
+      }
+
+    }
+
+  }
+
 }
