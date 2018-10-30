@@ -98,24 +98,37 @@ export class TezosOperationDelegationEffects {
                 injectionOperation: action.payload.injectionOperation,
             })),
 
-            map(() => ({ action, state }))
+            // add metadata to state
+            map((response: any) => {
+                // check if we have new originated contract publicKey hash
+                let metadata = action.payload.preapply[0].contents[0].metadata
+
+                // TODO: handle error states for low balance etc ..., we need at least one XTZ for delegation 
+
+                let originatedPublicKeyHash = (metadata && metadata.operation_result.originated_contracts) ?
+                    metadata.operation_result.originated_contracts[0] : undefined;
+                return {
+                    // // if we have new originated contract redirect to new contract address
+                    // publicKeyHash: originatedPublicKeyHash ? originatedPublicKeyHash : action.payload.wallet.publicKeyHash,
+                    publicKeyHash: action.payload.wallet.publicKeyHash,
+                    originatedContract: originatedPublicKeyHash,
+                }
+            })
         )),
 
-        map(({ action, state }) => ({
+        map((response) => ({
             type: 'TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS',
             payload: {
-                wallet: {
-                    publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash
-                },
+                ...response,
             },
         })),
 
-        // wait for tzscan to process tranzaction
-        delay(3000),
+        // wait for tzscan to process transaction
+        delay(5000),
 
         // redirect to wallet detail
-        tap((action) => {
-            this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
+        tap((action: any) => {
+            this.router.navigate(['/tezos/wallet/detail/' + action.payload.publicKeyHash])
         }),
     )
 
@@ -123,17 +136,13 @@ export class TezosOperationDelegationEffects {
     // check mempool for operation
     @Effect()
     TezosOperationDelegationSaveNewContract$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_DELEGATION_SUCCESS'),
+        ofType('TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS'),
 
         // add state to effect
         withLatestFrom(this.store, (action: any, state: any) => ({ action, state })),
         flatMap(({ action, state }) => {
-            console.log('[TEZOS_OPERATION_DELEGATION_SUCCESS]', action)
 
-            let operation_result = action.payload.preapply[0].contents[0].metadata.operation_result
-
-            if (operation_result && operation_result.originated_contracts) {
-                console.warn('[TEZOS_OPERATION_DELEGATION_SUCCESS] origination')
+            if (action.payload.originatedPublicKeyHash) {
 
                 // save wallet to wallet list in FireBase Store 
                 this.walletCollection = this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet');
@@ -141,36 +150,26 @@ export class TezosOperationDelegationEffects {
                 // add wallet to firestore
                 return this.walletCollection
                     // set document id as tezos wallet
-                    .doc(operation_result.originated_contracts[0])
+                    .doc(action.payload.originatedPublicKeyHash)
                     .set({
                         // save uid to set security 
                         // if user is not logged null will be stored
                         uid: state.app.user.uid,
-                        name: state.tezos.tezosWalletDetail.name +  '_' + operation_result.originated_contracts[0].slice(0, 8),
+                        name: state.tezos.tezosWalletDetail.name + '_' + action.payload.originatedContract.slice(0, 8),
                         publicKey: state.tezos.tezosWalletDetail.publicKey,
-                        publicKeyHash: operation_result.originated_contracts[0],
+                        publicKeyHash: action.payload.originatedPublicKeyHash,
                         path: state.tezos.tezosWalletDetail.path,
                         network: state.tezos.tezosNode.api.name,
                         balance: 0,
                         type: 'TREZOR_T',
                     })
-
-                // return of(operation_result.originated_contracts[0])
             } else {
-
-                console.warn('[TEZOS_OPERATION_DELEGATION_SUCCESS] delegate')
-                return of(operation_result)
+                return of(action.payload.publicKeyHash)
             }
-
 
         }),
         map((response) => ({
             type: 'TEZOS_OPERATION_DELEGATION_NEW_CONTRACT_SAVE_SUCCESS',
-            payload: {
-                // wallet: {
-                //     publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash
-                // },
-            },
         })),
 
     )
