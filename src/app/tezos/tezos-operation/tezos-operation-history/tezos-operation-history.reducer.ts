@@ -115,7 +115,7 @@ export function reducer(state = initialState, action) {
                             // us timestamp
                             // moment(action.payload.timestamp).format('MMM DD YYYY, h:mm:ss a'),
                             // eu timestamp
-                            moment(action.payload.timestamp).format('DD MMM YYYY, hh:mm:ss'),
+                            moment(action.payload.timestamp).format('DD MMM YYYY, HH:mm:ss'),
                     }
                 }
             }

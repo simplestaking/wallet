@@ -1,9 +1,9 @@
 <div class="dashboard">
   <mat-card>
-    
+
     <mat-card-header>
       <h2 class="mat-h1 reset">
-        Wallet list 
+        Wallet list
         <app-tezos-node>
         </app-tezos-node>
       </h2>
@@ -40,7 +40,7 @@
         <ng-container matColumnDef="balance" stickyEnd>
           <th mat-header-cell *matHeaderCellDef> Balance </th>
           <td mat-cell *matCellDef="let element">
-            <a routerLink="/tezos/wallet/detail/{{element.id}}">{{element.balance*0.000001 | number:'1.3-6' }} XTZ</a>
+            <a routerLink="/tezos/wallet/detail/{{element.id}}">{{element.balance*0.000001 | number:'1.2-6' }} XTZ</a>
           </td>
         </ng-container>
 
@@ -55,7 +55,7 @@
 
 
       </table>
-      <mat-paginator [pageSizeOptions]="[20]" hidePageSize></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[10,20]" hidePageSize></mat-paginator>
 
     </mat-card-content>
   </mat-card>
