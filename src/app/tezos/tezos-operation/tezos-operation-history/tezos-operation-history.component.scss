@@ -17,18 +17,19 @@ mat-paginator {
     background-color: whitesmoke !important;
 }
 
+.mat-cell.cdk-column-date.mat-column-date {
+    width: 155px;
+}
 .mat-cell.cdk-column-operation.mat-column-operation {
-    width: 60px;
+    width: 75px;
 }
-.mat-header-cell.cdk-column-amount.mat-column-amount {
-    width: 60px;
+.mat-cell.cdk-column-address.mat-column-address  {
+    width: 340px;
 }
-
 .mat-cell.cdk-column-amount.mat-column-amount {
     width: 135px;
     text-align: right;
 }
-
 .mat-header-cell.cdk-column-amount.mat-column-amount {
     text-align: right;
 }

@@ -19,18 +19,13 @@ export class TezosOperationHistoryEffects {
 
     // get historical operation data  
     @Effect()
-    TezosWalletOperationHistoryLoad$ = this.actions$.pipe(
+    TezosWalletOperationHistoryTransactionLoad$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
         // get state from store
         withLatestFrom(this.store, (action, state: any) => ({ action, state })),
 
         flatMap(({ action, state }) => of([]).pipe(
-
-            // // get number of  operation transactions
-            // flatMap(() =>
-            //     this.http.get('https://api3.tzscan.io/v2/number_operations/' + publicKeyHash + '?type=Transaction')
-            // ),
 
             // get operation transactions
             flatMap(() =>
@@ -48,8 +43,69 @@ export class TezosOperationHistoryEffects {
                 operations: operations,
             }))
 
-        )
-        ),
+        )),
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+    )
+
+    // get historical operation data  
+    @Effect()
+    TezosWalletOperationHistoryOriginationLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            // get operation transactions
+            flatMap(() =>
+                this.http.get(
+                    // get api url
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                    // get public key hash from url 
+                    state.routerReducer.state.root.children[0].firstChild.params.address +
+                    '?type=Origination&p=0&number=10')
+            ),
+
+            // add publicKeyHash
+            map(operations => ({
+                publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+                operations: operations,
+            }))
+
+        )),
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+    )
+
+    // get historical operation data  
+    @Effect()
+    TezosWalletOperationHistoryDelegationLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            // get operation transactions
+            flatMap(() =>
+                this.http.get(
+                    // get api url
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                    // get public key hash from url 
+                    state.routerReducer.state.root.children[0].firstChild.params.address +
+                    '?type=Delegation&p=0&number=10')
+            ),
+
+            // add publicKeyHash
+            map(operations => ({
+                publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+                operations: operations,
+            }))
+
+        )),
         // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
     )

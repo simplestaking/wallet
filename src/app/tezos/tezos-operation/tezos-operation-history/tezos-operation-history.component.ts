@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { of, Subject } from 'rxjs';
@@ -9,9 +9,9 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './tezos-operation-history.component.html',
   styleUrls: ['./tezos-operation-history.component.scss']
 })
-export class TezosOperationHistoryComponent implements OnInit {
+export class TezosOperationHistoryComponent implements OnInit, OnDestroy {
 
-  public displayedColumns: string[] = ['position', 'operation', 'address', 'amount']; //fee
+  public displayedColumns: string[] = ['date', 'operation', 'address', 'amount']; //fee
 
   public onDestroy$ = new Subject()
 
@@ -41,6 +41,19 @@ export class TezosOperationHistoryComponent implements OnInit {
 
       })
 
+  }
+  
+  ngOnDestroy() {
+
+    // close all open observables
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+
+    // destroy tezos delegation component
+    this.store.dispatch({
+      type: 'TEZOS_OPERATION_HISTORY_DESTROY',
+    })
+  
   }
 
 }

@@ -35,7 +35,14 @@ export class TezosWalletDetailComponent implements OnInit {
       .subscribe(state => {
 
         if (state.ids.length > 0) {
+
           this.operationHistory = state
+          
+          // TODO: remove all operations without amount  
+          // Object.keys(state.entities)
+          //   .reduce((accum, value) =>
+          //     state.entities[value].amount ? { ...accum, ...state.entities[value] } : accum, {})
+
         } else {
           this.operationHistory = undefined
         }
@@ -43,7 +50,7 @@ export class TezosWalletDetailComponent implements OnInit {
         if (state.historicalPrice && state.historicalPrice.ids.length > 0) {
           this.historicalPrice = state.historicalPrice
         } else {
-          this.historicalPrice = undefined  
+          this.historicalPrice = undefined
         }
 
       })

@@ -1,9 +1,9 @@
 <table mat-table [dataSource]="data">
 
   <!-- Date Column -->
-  <ng-container matColumnDef="position">
+  <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef> Date </th>
-    <td mat-cell *matCellDef="let element" style="width:170px">
+    <td mat-cell *matCellDef="let element">
       <a href="http://zeronet.tzscan.io/{{element.hash}}" style="text-decoration:none;color: #000000" target="_blank">
         {{element.datetime}}
       </a>
@@ -37,7 +37,9 @@
   <!-- Amount Column -->
   <ng-container matColumnDef="amount" stickyEnd>
     <th mat-header-cell *matHeaderCellDef> Amount </th>
-    <td mat-cell *matCellDef="let element"> {{element.amount * 0.000001  | number:'1.2-6' }} XTZ</td>
+    <td mat-cell *matCellDef="let element"> {{element.amount * 0.000001  | number:'1.2-6' }} 
+      <span *ngIf="element.amount">XTZ</span>
+    </td>
   </ng-container>
 
 

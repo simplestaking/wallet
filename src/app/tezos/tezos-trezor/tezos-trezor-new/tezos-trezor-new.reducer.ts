@@ -74,7 +74,6 @@ export function reducer(state = initialState, action) {
         }
 
         case 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_SUCCESS': {
-            console.error('[TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_SUCCESS]', action.payload)
             return {
                 ...state,
                 entities: {

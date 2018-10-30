@@ -16,45 +16,95 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 ids: [
+                    ...state.ids,
                     ...action.payload.operations.map(operation => operation.hash).reverse()
                 ],
-                entities: action.payload.operations.reduce((accumulator, operation) => {
+                entities: {
+                    ...state.entities,
+                    ...action.payload.operations.reduce((accumulator, operation) => {
 
-                    let operationTransformed
-                    if (operation.type.operations[0].kind === 'transaction' &&
-                        operation.type.source.tz === action.payload.publicKeyHash) {
-                        operationTransformed = {
-                            operation: 'debit',
-                            address: operation.type.operations[0].destination.tz,
-                            amount: operation.type.operations[0].amount * -1,
-                            fee: operation.type.operations[0].fee,
+                        let operationTransformed
+                        if (operation.type.operations[0].kind === 'transaction' &&
+                            operation.type.source.tz === action.payload.publicKeyHash) {
+
+                            // console.log('[debit]', operation.type.operations[0], action.payload.publicKeyHash);
+
+                            operationTransformed = {
+                                operation: 'debit',
+                                address: operation.type.operations[0].destination.tz,
+                                amount: operation.type.operations[0].amount * -1,
+                                fee: operation.type.operations[0].fee,
+                            }
                         }
-                    } else {
-                        operationTransformed = {
-                            operation: 'credit',
-                            address: operation.type.operations[0].src.tz,
-                            amount: operation.type.operations[0].amount * +1,
-                            fee: operation.type.operations[0].fee,
+
+                        if (operation.type.operations[0].kind === 'transaction' &&
+                            operation.type.source.tz !== action.payload.publicKeyHash) {
+
+                            // console.log('[credit]', operation.type.operations[0], action.payload.publicKeyHash);
+
+                            operationTransformed = {
+                                operation: 'credit',
+                                address: operation.type.operations[0].src.tz,
+                                amount: operation.type.operations[0].amount * +1,
+                                fee: operation.type.operations[0].fee,
+                            }
                         }
-                    }
-                    
-                    return {
-                        ...accumulator,
-                        [operation.hash]: {
-                            hash: operation.hash, 
-                            datetime: '... pending',
-                            ...operationTransformed,
+
+                        if (operation.type.operations[0].kind === 'origination' &&
+                            operation.type.source.tz === action.payload.publicKeyHash) {
+
+                            // console.log('[origination] -', operation.type.operations[0], action.payload.publicKeyHash);
+
+                            operationTransformed = {
+                                operation: 'origination',
+                                address: operation.type.operations[0].tz1.tz,
+                                amount: operation.type.operations[0].balance * -1,
+                                fee: operation.type.operations[0].fee,
+                            }
                         }
-                    }
-                }, {}),
+
+                        if (operation.type.operations[0].kind === 'origination' &&
+                            operation.type.source.tz !== action.payload.publicKeyHash) {
+
+                            // console.log('[origination] +', operation.type.operations[0], action.payload.publicKeyHash);
+
+                            operationTransformed = {
+                                operation: 'origination',
+                                address: operation.type.operations[0].src.tz,
+                                amount: operation.type.operations[0].balance * +1,
+                                fee: operation.type.operations[0].fee,
+                            }
+                        }
+
+                        if (operation.type.operations[0].kind === 'delegation' &&
+                            operation.type.source.tz === action.payload.publicKeyHash) {
+
+                            // console.log('[delegation]', operation.type.operations[0], action.payload.publicKeyHash);
+
+                            operationTransformed = {
+                                operation: 'delegation',
+                                address: operation.type.operations[0].delegate.tz,
+                                fee: operation.type.operations[0].fee,
+                            }
+                        }
+
+
+                        return {
+                            ...accumulator,
+                            [operation.hash]: {
+                                hash: operation.hash,
+                                ...operationTransformed,
+                            }
+                        }
+                    }, {})
+                },
             }
         }
 
         case 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS': {
 
-            // type ?.operations[0] ?.destination.tz 
-
-            return {
+            // add timestamp to state
+            let stateExtended = {
                 ...state,
                 entities: {
                     ...state.entities,
@@ -69,11 +119,19 @@ export function reducer(state = initialState, action) {
                     }
                 }
             }
+
+            // sort state according to time stamp 
+            return {
+                ...stateExtended,
+                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
+                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+                )
+            }
         }
 
         case 'TEZOS_OPERATION_HISTORY_DESTROY': {
             return {
-                ...state,
+                ...initialState,
             }
         }
 
