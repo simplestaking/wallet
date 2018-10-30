@@ -111,7 +111,7 @@ export class TezosOperationDelegationEffects {
                     // // if we have new originated contract redirect to new contract address
                     // publicKeyHash: originatedPublicKeyHash ? originatedPublicKeyHash : action.payload.wallet.publicKeyHash,
                     publicKeyHash: action.payload.wallet.publicKeyHash,
-                    originatedContract: originatedPublicKeyHash,
+                    originatedPublicKeyHash: originatedPublicKeyHash,
                 }
             })
         )),
@@ -142,8 +142,10 @@ export class TezosOperationDelegationEffects {
         withLatestFrom(this.store, (action: any, state: any) => ({ action, state })),
         flatMap(({ action, state }) => {
 
+            console.log('[TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS]', action, state)
             if (action.payload.originatedPublicKeyHash) {
 
+                console.log('[TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS] originated ')
                 // save wallet to wallet list in FireBase Store 
                 this.walletCollection = this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet');
 
@@ -155,7 +157,7 @@ export class TezosOperationDelegationEffects {
                         // save uid to set security 
                         // if user is not logged null will be stored
                         uid: state.app.user.uid,
-                        name: state.tezos.tezosWalletDetail.name + '_' + action.payload.originatedContract.slice(0, 8),
+                        name: state.tezos.tezosWalletDetail.name + '_' + action.payload.originatedPublicKeyHash.slice(0, 8),
                         publicKey: state.tezos.tezosWalletDetail.publicKey,
                         publicKeyHash: action.payload.originatedPublicKeyHash,
                         path: state.tezos.tezosWalletDetail.path,
@@ -164,6 +166,7 @@ export class TezosOperationDelegationEffects {
                         type: 'TREZOR_T',
                     })
             } else {
+                console.log('[TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS] delegation ')
                 return of(action.payload.publicKeyHash)
             }
 
