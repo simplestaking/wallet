@@ -83,28 +83,13 @@ export class TezosOperationReceiveComponent implements OnInit {
     // dispatch only if valid
     if (this.tezosOperationReceiveForm.valid) {
 
-      // TODO: remove after WEB wallet verification page is added   
-      if (walletType === 'WEB') {
-
-        // send fund 
-        this.store.dispatch({
-          type: "TEZOS_OPERATION_RECEIVE",
-          payload: {
-            walletType: walletType,
-          }
-        })
-
-      } else {
-
-        // dispatch send funds form event 
-        this.store.dispatch({
-          type: "TEZOS_OPERATION_RECEIVE_FORM_SUBMIT",
-          payload: {
-            walletType: walletType,
-          }
-        })
-
-      }
+      // dispatch send funds form event 
+      this.store.dispatch({
+        type: "TEZOS_OPERATION_RECEIVE_FORM_SUBMIT",
+        payload: {
+          walletType: walletType,
+        }
+      })
 
     }
 

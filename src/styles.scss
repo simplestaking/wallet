@@ -152,6 +152,65 @@ mat-horizontal-stepper .mat-step-header:hover {
 }
 
 
+.tezos-stepper-card {
+    display:flex;
+    align-items:center;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.tezos-stepper-card-row {
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.tezos-stepper-card-column {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 390px;
+    border-radius:5px
+}
+
+.tezos-stepper-card-qrcode svg {
+    width: 100px;
+    padding: 10px;
+    margin: 10px 0px 30px 0px;
+    background-color: white;
+}
+
+.tezos-stepper-card-address {
+    background-color: white;
+    padding: 13px 25px 13px 25px;
+    border-radius: 3px;
+}
+
+.tezos-stepper-card .mat-card {
+    padding: 0px 30px 20px 30px !important;
+    background-color: #f5f6f8;
+    width:320px; 
+    border: 1px #e6e8eb solid;
+    border-radius:3px;
+}
+
+.tezos-stepper-card .mat-card-header {
+    background-color: white;
+    border-radius: 3px;
+    margin: -20px -30px 0px -30px;
+    padding: 20px 30px 0px 30px;
+}
+
+.tezos-stepper-card .mat-card-content {
+    padding: 30px 0px 20px 0px;
+    text-align: center;
+}
+
+.tezos-stepper-card .mat-card-header-text {
+    margin: initial;
+}
+
+
 // checkbox remove animation and change border 
 .mat-checkbox-frame {
     border-width: 1px !important;

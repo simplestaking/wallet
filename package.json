@@ -43,6 +43,7 @@
     "@swimlane/ngx-charts": "^9.0.0",
     "@types/d3-shape": "^1.2.4",
     "angularfire2": "5.0.2",
+    "angularx-qrcode": "^1.2.4",
     "babel-polyfill": "^6.26.0",
     "bip39": "^2.5.0",
     "bs58check": "^2.1.2",

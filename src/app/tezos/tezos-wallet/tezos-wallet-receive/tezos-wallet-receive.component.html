@@ -68,13 +68,43 @@
 
               </div>
             </div>
-          
+
           </div>
 
         </mat-step>
 
-        <mat-step [editable]="false" optional="false" label="Confirmation">
-          <div>
+        <mat-step [editable]="false" optional="false" label="Receive">
+          <div class="tezos-stepper-card">
+            <div class="tezos-stepper-card-row">
+              <div class="tezos-stepper-card-column">
+
+                <mat-card>
+                  <mat-card-header>
+                    <h2 class="mat-h1">
+                      Verified
+                    </h2>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <span class="tezos-stepper-card-qrcode">
+                      <qrcode [qrdata]="tezosOperationReceive?.form?.to" [size]="1" [level]="'M'" [usesvg]="true"></qrcode>
+                    </span>
+                    <br />
+                    <span style="display:block;height:30px;opacity: 0.7;">
+                      Address for account: <b>{{ tezosWalletDetail.name }}</b>
+                    </span>
+                    <span class="tezos-stepper-card-address" style="display:block;opacity: 0.7;">
+                      {{tezosOperationReceive.form.to}}
+                    </span>
+                    <span>
+                      <a style="text-decoration: none;" style="cursor:pointer;color:#1175ff;display:block;margin-top:25px">
+                        <fa-icon [icon]="['fal', 'clone']"></fa-icon>&nbsp;
+                        Copy address
+                      </a>
+                    </span>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
           </div>
         </mat-step>
 

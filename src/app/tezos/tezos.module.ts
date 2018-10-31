@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'app/shared/shared.module'
 
+import { QRCodeModule } from 'angularx-qrcode';
+
 // added font awesome pro icons
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -99,7 +101,8 @@ import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operatio
     HttpClientModule,
     
     FontAwesomeModule,
-
+    QRCodeModule,
+    
     RouterModule.forChild(TezosRouting),
 
     StoreModule.forFeature('tezos', reducers),
