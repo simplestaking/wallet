@@ -1,0 +1,38 @@
+{
+    "productName": "angular-electron",
+    "directories": {
+      "output": "release/"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!node_modules/",
+      "!release/",
+      "!package.json",
+      "!package-lock.json"
+    ],
+    "win": {
+      "icon": "dist",
+      "target": [
+        "portable"
+      ]
+    },
+    "mac": {
+      "icon": "dist",
+      "target": [
+        "zip",
+        "dmg"
+      ],
+      "publish": {
+        "provider": "spaces",
+        "name": "simplewallet",
+        "region": "ams3"
+      }
+    },
+    "linux": {
+      "icon": "dist",
+      "target": [
+        "AppImage"
+      ]
+    }
+  }
