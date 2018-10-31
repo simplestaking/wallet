@@ -1,5 +1,12 @@
 import { app, BrowserWindow } from 'electron';
 
+// autoupdater
+import { autoUpdater } from "electron-updater"
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
+
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
@@ -11,6 +18,9 @@ let mainWindow;
 let connectWindow;
 
 const createWindow = () => {
+  
+  // This will immediately download an update, then install when the app quits
+  autoUpdater.checkForUpdatesAndNotify();
 
   // Create the connect hidden window.
   connectWindow = new BrowserWindow({
@@ -73,3 +83,23 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+autoUpdater.on('checking-for-update', () => {
+  console.log('[checking-for-update]')
+})
+autoUpdater.on('update-available', (info) => {
+  console.log('[update-available]',info)
+})
+autoUpdater.on('update-not-available', (info) => {
+  console.log('[update-not-available]',info)
+})
+autoUpdater.on('error', (err) => {
+  console.error('[error]',info)
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  console.log('[download-progress]',info)
+})
+autoUpdater.on('update-downloaded', (info) => {
+  console.log('[update-downloaded]',info)
+  autoUpdater.quitAndInstall();  
+})
