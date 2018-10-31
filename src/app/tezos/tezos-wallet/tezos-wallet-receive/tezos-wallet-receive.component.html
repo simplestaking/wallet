@@ -88,7 +88,6 @@
                     <span class="tezos-stepper-card-qrcode">
                       <qrcode [qrdata]="tezosOperationReceive?.form?.to" [size]="1" [level]="'M'" [usesvg]="true"></qrcode>
                     </span>
-                    <br />
                     <span style="display:block;height:30px;opacity: 0.7;">
                       Address for account: <b>{{ tezosWalletDetail.name }}</b>
                     </span>
@@ -96,10 +95,10 @@
                       {{tezosOperationReceive.form.to}}
                     </span>
                     <span>
-                      <a style="text-decoration: none;" style="cursor:pointer;color:#1175ff;display:block;margin-top:25px">
+                      <button mat-button color="primary" ngxClipboard [cbContent]="tezosOperationReceive.form.to" style="font-weight:300;margin-top:25px">
                         <fa-icon [icon]="['fal', 'clone']"></fa-icon>&nbsp;
                         Copy address
-                      </a>
+                      </button>
                     </span>
                   </mat-card-content>
                 </mat-card>

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'app/shared/shared.module'
 
 import { QRCodeModule } from 'angularx-qrcode';
+import { ClipboardModule } from 'ngx-clipboard';
 
 // added font awesome pro icons
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -102,7 +103,8 @@ import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operatio
     
     FontAwesomeModule,
     QRCodeModule,
-    
+    ClipboardModule,
+
     RouterModule.forChild(TezosRouting),
 
     StoreModule.forFeature('tezos', reducers),
