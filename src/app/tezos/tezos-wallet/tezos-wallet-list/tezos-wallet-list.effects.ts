@@ -106,7 +106,7 @@ export class TezosWalletListEffects {
                     });
             }
 
-            return state
+            return of(state)
         }),
 
         map(action => ({ type: 'TEZOS_WALLET_LIST_NODE_DETAIL_SUCCESS', payload: action })),
