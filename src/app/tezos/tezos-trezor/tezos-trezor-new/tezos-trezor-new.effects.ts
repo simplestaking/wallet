@@ -105,7 +105,7 @@ export class TezosTrezorNewEffects {
 
     @Effect()
     TezosTrezorNewContractDetail = this.actions$.pipe(
-        ofType('TEZOS_TREZOR_NEW_SUCCESS_'),
+        ofType('TEZOS_TREZOR_NEW_SUCCESS'),
 
         // add state to effect
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
