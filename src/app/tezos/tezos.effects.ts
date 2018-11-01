@@ -15,6 +15,14 @@ export class TezosEffects {
     TezosShowSidenavEffects = this.actions$.pipe(
         ofRoute('/tezos/wallet'),
         map(() => ({ type: 'TEZOS_WALLET_SHOW' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_SHOW_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     constructor(

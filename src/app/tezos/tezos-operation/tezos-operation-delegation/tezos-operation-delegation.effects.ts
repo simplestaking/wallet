@@ -122,7 +122,14 @@ export class TezosOperationDelegationEffects {
                 ...response,
             },
         })),
-
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_DELEGATION_PENDING_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
         // wait for tzscan to process transaction
         delay(5000),
 
@@ -174,6 +181,14 @@ export class TezosOperationDelegationEffects {
         map((response) => ({
             type: 'TEZOS_OPERATION_DELEGATION_NEW_CONTRACT_SAVE_SUCCESS',
         })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_DELEGATION_NEW_CONTRACT_SAVE_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
 
     )
 

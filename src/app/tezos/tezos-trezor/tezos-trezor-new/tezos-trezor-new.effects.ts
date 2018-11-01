@@ -53,6 +53,14 @@ export class TezosTrezorNewEffects {
             type: 'TEZOS_TREZOR_NEW_SUCCESS',
             payload: response.payload,
         })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // TODO: !!! triger after click on continue, potential race condition when user select address during loading 
@@ -84,11 +92,20 @@ export class TezosTrezorNewEffects {
             payload: response,
         })),
 
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_PUBLICKEY_SAVE_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
     )
 
     @Effect()
     TezosTrezorNewContractDetail = this.actions$.pipe(
-        ofType('TEZOS_TREZOR_NEW_SUCCESS'),
+        ofType('TEZOS_TREZOR_NEW_SUCCESS_'),
 
         // add state to effect
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
@@ -110,6 +127,14 @@ export class TezosTrezorNewEffects {
             type: 'TEZOS_TREZOR_NEW_DETAIL_SUCCESS',
             payload: response,
         })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_DETAIL_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
 
     )
 
@@ -140,6 +165,15 @@ export class TezosTrezorNewEffects {
             type: 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_SUCCESS',
             payload: response,
         })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+        
 
     )
 

@@ -18,20 +18,36 @@ export class TezosWalletSendEffects {
     TezosWalletSendLoad = this.actions$.pipe(
         ofRoute('/tezos/wallet/send'),
         flatMap((action: any) => [
-            { type: 'TEZOS_WALLET_SEND_SHOW', payload: action.payload  },
+            { type: 'TEZOS_WALLET_SEND_SHOW', payload: action.payload },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
         ]),
-    )
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_SEND_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }))
 
     // trigger data load based on navigation change  
     @Effect()
     TezosWalletSendAddressLoad$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/send/:address'),
         flatMap((action: any) => [
-            { type: 'TEZOS_WALLET_SEND_SHOW', payload: action.payload  },
+            { type: 'TEZOS_WALLET_SEND_SHOW', payload: action.payload },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
         ]),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_SEND_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
+        
     )
 
     // redicert to url with tezos public address
@@ -40,6 +56,14 @@ export class TezosWalletSendEffects {
         ofType('TEZOS_OPERATION_TRANSACTION_FROM_CHANGE'),
         tap((action: any) => this.router.navigate(['/tezos/wallet/send/' + action.payload])),
         map(() => ({ type: 'TEZOS_WALLET_SEND_REDIRECT' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_SEND_REDIRECT_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
     )
 
 

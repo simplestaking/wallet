@@ -92,7 +92,14 @@ export class TezosOperationTransactionEffects {
 
         // wait for tzscan to process tranzaction
         delay(3000),
-        
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_TRANSACTION_PENDING_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
         // redirect to wallet detail
         tap((action) => {
             this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])

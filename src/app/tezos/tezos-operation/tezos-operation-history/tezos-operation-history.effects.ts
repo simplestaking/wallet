@@ -14,7 +14,15 @@ export class TezosOperationHistoryEffects {
     @Effect()
     TezosWalletOperationHistory$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/detail/:address'),
-        map(() => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD' }))
+        map(() => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_LOAD',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // get historical operation data  
@@ -46,6 +54,14 @@ export class TezosOperationHistoryEffects {
         )),
         // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // get historical operation data  
@@ -77,6 +93,14 @@ export class TezosOperationHistoryEffects {
         )),
         // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // get historical operation data  
@@ -108,6 +132,14 @@ export class TezosOperationHistoryEffects {
         )),
         // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // get historical operation data  
@@ -141,7 +173,14 @@ export class TezosOperationHistoryEffects {
         ),
         // tap((response) => console.log('[operations] response', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS', payload: response })),
-
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     constructor(

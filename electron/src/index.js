@@ -1,11 +1,30 @@
 const { app, BrowserWindow } = require('electron')
+const logger = require('electron-timber');
 var path = require('path')
 var url = require('url')
 
-let win;
-const args = process.argv.slice(1);
+let win, connectWindow;
+
 
 function createWindow() {
+
+  
+  // Create the connect hidden window.
+  connectWindow = new BrowserWindow({
+    show: false,
+    backgroundThrottling: false,
+    webPreferences: {
+      webSecurity: false,
+      allowRunningInsecureContent: true,
+    }
+  })
+
+
+  connectWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'connect/connect.html'),
+    protocol: 'file:',
+    slashes: true,
+  }))
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -14,22 +33,31 @@ function createWindow() {
     titleBarStyle: 'hidden',
     frame: false,
     resizable: false,
+    webPreferences: {
+      webSecurity: false,
+      allowRunningInsecureContent: true,
+    }
   });
-  
+
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'dist/index.html'),
     protocol: 'file:',
     slashes: true,
   }));
 
-  win.webContents.openDevTools();
 
+  win.webContents.openDevTools();
+  
+  logger.log('Main log');
+	logger.error('Main error');
+  
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     win = null;
+    connectWindow = null;
   });
 
 }
@@ -59,8 +87,9 @@ try {
   });
 
 } catch (e) {
+  console.log(e)
   // Catch Error
-  // throw e;
+  throw e;
 }
 
 

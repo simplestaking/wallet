@@ -5,10 +5,6 @@
     },
     "files": [
         "**/*",
-        "!**/*.ts",
-        "!release/",
-        "!package.json",
-        "!package-lock.json"
     ],
     "win": {
         "icon": "dist",

@@ -18,6 +18,15 @@ export class TezosNodeEffects {
             // can be loaded only for pages with detail on page
             // { type: 'TEZOS_WALLET_DETAIL_LOAD' },
         ]),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_NODE_CHANGE',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
     )
 
 
@@ -35,10 +44,14 @@ export class TezosNodeEffects {
                                 type: 'TEZOS_NODE_PRICE_UPDATE_SUCCESS',
                                 payload: response
                             })),
-                            catchError(error => of({
-                                type: 'TEZOS_NODE_PRICE_UPDATE_ERROR',
-                                payload: error
-                            })),
+                            catchError((error, caught) => {
+                                console.error(error.message)
+                                this.store.dispatch({
+                                    type: 'TEZOS_NODE_PRICE_UPDATE_ERROR',
+                                    payload: error.message,
+                                });
+                                return caught;
+                            }),
                         )
                     ),
                 ),
@@ -55,10 +68,14 @@ export class TezosNodeEffects {
                         type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_SUCCESS',
                         payload: response
                     })),
-                    catchError(error => of({
-                        type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_ERROR',
-                        payload: error
-                    })),
+                    catchError((error, caught) => {
+                        console.error(error.message)
+                        this.store.dispatch({
+                            type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_ERROR',
+                            payload: error.message,
+                        });
+                        return caught;
+                    }),
                 ),
             ),
         )

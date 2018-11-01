@@ -19,6 +19,14 @@ export class TezosWalletNewTrezorEffects {
     TezosWalletNewTrezor = this.actions$.pipe(
         ofRoute('/tezos/wallet/new/trezor'),
         map(() => ({ type: 'TEZOS_WALLET_NEW_TREZOR_SHOW' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_NEW_TREZOR_SHOW_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
     )
 
 
@@ -59,8 +67,16 @@ export class TezosWalletNewTrezorEffects {
         map(() => ({ type: 'TEZOS_WALLET_NEW_TREZOR_SHOW_SAVE_SUCCESS' })),
     
         // redirect back to wallet list
-        tap(() => this.router.navigate(['/tezos/wallet']))
-
+        tap(() => this.router.navigate(['/tezos/wallet'])),
+        
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_NEW_TREZOR_SHOW_SAVE_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
     )
 
     constructor(

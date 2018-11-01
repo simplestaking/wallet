@@ -18,6 +18,14 @@ export class TezosWalletDetailEffects {
     TezosWalletList$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/detail/:address'),
         map(() => ({ type: 'TEZOS_WALLET_DETAIL_LOAD' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_DETAIL_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // load wallet data 
@@ -34,7 +42,14 @@ export class TezosWalletDetailEffects {
         ),
 
         map(response => ({ type: 'TEZOS_WALLET_DETAIL_LOAD_SUCCESS', payload: response })),
-        // onErrorResumeNext(of({ type: 'TEZOS_WALLET_DETAIL_LOAD_ERROR' }))
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_DETAIL_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // get wallet balance 

@@ -20,6 +20,14 @@ export class TezosWalletListEffects {
     TezosWalletList$ = this.actions$.pipe(
         ofRoute('/tezos/wallet'),
         map(() => ({ type: 'TEZOS_WALLET_LIST_LOAD' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_LIST_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // load wallet data 
@@ -39,7 +47,14 @@ export class TezosWalletListEffects {
         ),
 
         map(response => ({ type: 'TEZOS_WALLET_LIST_LOAD_SUCCESS', payload: response })),
-        // onErrorResumeNext(of({ type: 'TEZOS_WALLET_LIST_LOAD_ERROR' }))
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_LIST_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // get wallet balance 
@@ -76,7 +91,7 @@ export class TezosWalletListEffects {
 
         )),
 
-        tap((state: any) => {
+        flatMap((state: any) => {
 
             // save only if balance changed 
             if (state.wallet.detail.balance !== state.getWallet.balance) {
@@ -84,7 +99,7 @@ export class TezosWalletListEffects {
                 // TODO: move to custom rxjs operator
                 // update balance on firebase
                 this.accountDoc = this.db.doc('tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash);
-                this.accountDoc
+                return this.accountDoc
                     .update({ balance: state.getWallet.balance })
                     .catch(err => {
                         console.error('[firebase] tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash, err);
