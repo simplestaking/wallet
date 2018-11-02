@@ -13,10 +13,6 @@ function createWindow() {
   connectWindow = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
-    webPreferences: {
-      webSecurity: false,
-      allowRunningInsecureContent: true,
-    }
   })
 
 
@@ -28,15 +24,11 @@ function createWindow() {
 
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1424,
+    width: 1024,
     height: 768,
     titleBarStyle: 'hidden',
     frame: false,
-    resizable: false,
-    webPreferences: {
-      webSecurity: false,
-      allowRunningInsecureContent: true,
-    }
+    //resizable: false,
   });
 
   win.loadURL(url.format({
