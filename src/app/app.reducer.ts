@@ -130,8 +130,7 @@ export function reducer(state = initialState, action) {
 
         case 'TEZOS_WALLET_SEND_SHOW':
         case 'TEZOS_WALLET_RECEIVE_SHOW':
-        case 'TEZOS_WALLET_DELEGATE_SHOW':
-        case 'TEZOS_WALLET_____': {
+        case 'TEZOS_WALLET_DELEGATE_SHOW': {
             // return {
             //     ...state,
             //     sidenav: {
@@ -169,8 +168,7 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'TEZOS_WALLET_NEW_TREZOR_SHOW':
-        case 'TEZOS_WALLET______': {
+        case 'TEZOS_WALLET_NEW_TREZOR_SHOW': {
             return {
                 ...state,
                 sidenav: {

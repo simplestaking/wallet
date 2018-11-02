@@ -67,9 +67,9 @@ export class TezosWalletListEffects {
 
         // get all accounts address
         flatMap((state: any) => state.tezos.tezosWalletList.ids
-            .filter(id => 
+            .filter(id =>
                 // get balnce only if last downlaod is older than 3 mins
-                (new Date().getTime() - state.tezos.tezosWalletList.entities[id].timestamp) < (5*60*1000) ? false : true
+                (new Date().getTime() - state.tezos.tezosWalletList.entities[id].timestamp) < (5 * 60 * 1000) ? false : true
             )
             .map(id => ({
                 node: state.tezos.tezosNode.api,
@@ -91,6 +91,7 @@ export class TezosWalletListEffects {
 
         )),
 
+
         flatMap((state: any) => {
 
             // save only if balance changed 
@@ -99,11 +100,16 @@ export class TezosWalletListEffects {
                 // TODO: move to custom rxjs operator
                 // update balance on firebase
                 this.accountDoc = this.db.doc('tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash);
-                return this.accountDoc
-                    .update({ balance: state.getWallet.balance })
-                    .catch(err => {
-                        console.error('[firebase] tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash, err);
-                    });
+                return of([]).pipe(
+                    flatMap(() =>
+                        this.accountDoc
+                            .update({ balance: state.getWallet.balance })
+                            .catch(err => {
+                                console.error('[firebase] tezos_' + state.wallet.node.name + '_wallet/' + state.wallet.publicKeyHash, err);
+                            })
+                    ),
+                    map(() => state),
+                )
             }
 
             return of(state)
