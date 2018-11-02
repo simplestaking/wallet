@@ -203,34 +203,37 @@
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Confirmation">
-            <div class="tezos-stepper-card">
-                <div class="tezos-stepper-card-row">
-                  <div class="tezos-stepper-card-column">
-                    <mat-card>
-                      <mat-card-header>
-                        <h2 class="mat-h1">
-                          Delegation sent
-                        </h2>
-                      </mat-card-header>
-                      <mat-card-content>
-                        <span class="mat-body-1">
-                          The transaction has been signed and sent to the network.
-                          Your wallet delegate will update once the blockchain has confirmed the transaction.
-                        </span>
-                        <br />
-                        <br />
-                        <br />
-                        <!-- <span>
-                          <a style="text-decoration: none;" href="dfsf" target="_blank">
-                            <fa-icon [icon]="['fal', 'external-link-square']"></fa-icon>&nbsp;
-                            View in Explorer
-                          </a>
-                        </span> -->
-                      </mat-card-content>
-                    </mat-card>
-                  </div>
-                </div>
-              </div>  
+          <div class="tezos-stepper-card">
+            <div class="tezos-stepper-card-row">
+              <div class="tezos-stepper-card-column">
+                <mat-card>
+                  <mat-card-header>
+                    <h2 class="mat-h1">
+                      Delegation sent
+                    </h2>
+                  </mat-card-header>
+                  <!-- Progress bar -->
+                  <mat-progress-bar mode="indeterminate" style="width:380px;margin-left:-30px">
+                  </mat-progress-bar>
+                  <mat-card-content>
+                    <span class="mat-body-1">
+                      The transaction has been signed and sent to the network.
+                      Your wallet delegate will update once the blockchain has confirmed the transaction.
+                    </span>
+                    <br />
+                    <br />
+                    <br />
+                    <span>
+                      <a style="text-decoration: none;" href="dfsf" target="_blank">
+                        <fa-icon [icon]="['fal', 'external-link-square']"></fa-icon>&nbsp;
+                        View in Explorer
+                      </a>
+                    </span>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </div>
         </mat-step>
 
       </mat-horizontal-stepper>

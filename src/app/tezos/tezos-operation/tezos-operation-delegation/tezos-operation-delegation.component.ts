@@ -28,7 +28,7 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
     // create form group
     this.tezosOperationDelegationForm = this.fb.group({
       from: ['', [Validators.required]],
-      to: ['tz1eopTNAL3RXU8wQQdgzoanbZesyb3BFzfM', [Validators.required]],
+      to: ['', [Validators.required]],
       fee: ['', [Validators.required]],
       // name: ['',[Validators.required]],
       amount: new FormControl('', {
