@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "pack": "electron-builder --dir",
-    "dist": "electron-builder", 
+    "dist": "electron-builder",
     "publish": "electron-builder --publish always",
     "postinstall": "electron-builder install-app-deps"
   },

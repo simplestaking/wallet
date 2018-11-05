@@ -3,7 +3,7 @@ const logger = require('electron-timber');
 var path = require('path')
 var url = require('url')
 
-let win, connectWindow;
+let mainWindow, connectWindow;
 
 
 function createWindow() {
@@ -15,15 +15,14 @@ function createWindow() {
     backgroundThrottling: false,
   })
 
-
   connectWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'connect/connect.html'),
+    pathname: path.join(__dirname, 'connect','connect.html'),
     protocol: 'file:',
     slashes: true,
   }))
 
   // Create the browser window.
-  win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
     titleBarStyle: 'hidden',
@@ -31,24 +30,28 @@ function createWindow() {
     //resizable: false,
   });
 
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'dist/index.html'),
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'dist','index.html'),
     protocol: 'file:',
     slashes: true,
   }));
 
 
-  win.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   
   logger.log('Main log');
 	logger.error('Main error');
   
   // Emitted when the window is closed.
-  win.on('closed', () => {
+  mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store window
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null;
+
+    connectWindow.close(); 
+    app.quit();
+
+    mainWindow = null;
     connectWindow = null;
   });
 
