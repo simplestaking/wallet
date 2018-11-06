@@ -34,9 +34,14 @@
         }
     },
     "linux": {
-        "icon": "dist",
+        "icon": "src/dist/assets/icon/electron.png",
         "target": [
             "AppImage"
-        ]
+        ],
+        "publish": {
+            "provider": "spaces",
+            "name": "simplewallet",
+            "region": "ams3"
+        }
     }
 }
