@@ -12,8 +12,14 @@
     "win": {
         "icon": "src/dist/assets/icon/electron.png",
         "target": [
+            "nsis", 
             "portable"
-        ]
+        ],
+        "publish": {
+            "provider": "spaces",
+            "name": "simplewallet",
+            "region": "ams3"
+        }
     },
     "mac": {
         "icon": "src/dist/assets/icon/electron.png",

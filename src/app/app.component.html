@@ -3,14 +3,14 @@
   <!-- Header -->
   <div class="toolbar">
 
-    <mat-toolbar style="position:absolute;background-color: white; display:flex; justify-content: center;
+    <mat-toolbar style="position:absolute;background-color: white; display:flex; justify-content: center;align-items: flex-end;padding-bottom:10px;
     box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09)">
 
       <!-- <span class="filler-content"></span> -->
       <h2 class="mat-h2" style="font-weight:300;font-size:16px;">
         Update SimpleStaking Wallet to the latest version &nbsp;
       </h2>
-      <button mat-stroked-button (click)="signOut()">
+      <button mat-flat-button (click)="signOut()">
         Install and update
       </button>
 
@@ -28,7 +28,7 @@
       <span *ngIf="app.logo.isVisible" style="margin: 40px 0px 0px 10px; font-weight: 300;font-size: 19px;display: flex;align-items: center;justify-content: center;">
         <img src="./assets/simple_wallet_logo_blue.svg" alt="" style="width:23px; margin: -7px 6px 0px 0px;">
         <span>
-          Simple<span style="color:#2c71f4">Staking</span>
+          Simple<span style="color:#2c71f4">Staking +</span>
         </span>
       </span>
       <!-- matTooltip="Client is connected to node {{app.node.timestamp}}" matTooltipPosition="left" -->

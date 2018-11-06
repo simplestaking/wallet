@@ -151,6 +151,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule.disableNetwork(),
 
     MatAutocompleteModule,
     MatButtonModule,

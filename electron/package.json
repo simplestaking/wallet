@@ -1,11 +1,10 @@
 {
   "name": "simplewallet",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "description": "Simple Wallet with Trezor support",
   "main": "src/index.js",
   "scripts": {
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
+    "build": "electron-builder --dir",
     "publish": "electron-builder --publish always",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -18,7 +17,7 @@
   },
   "dependencies": {
     "electron-log": "^2.2.17",
-    "electron-timber": "^0.5.1",
+    "electron-updater": "^3.1.6",
     "express": "^4.16.4",
     "serve-static": "^1.13.2"
   }
