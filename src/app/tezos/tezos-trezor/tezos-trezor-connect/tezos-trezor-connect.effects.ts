@@ -29,7 +29,7 @@ export class TezosTrezorConnectEffects {
                 state.tezos.tezosTrezorConnect.device.connected,
                 state)
 
-            // transaport initialized do not init 
+            // transport initialized do not init 
             if (!state.tezos.tezosTrezorConnect.transport.type &&
                 !state.tezos.tezosTrezorConnect.device.connected) {
 

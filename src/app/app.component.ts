@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-root',

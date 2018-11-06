@@ -56,6 +56,7 @@
     "ngrx-store-freeze": "0.2.4",
     "ngrx-store-logger": "^0.2.2",
     "ngx-clipboard": "^11.1.9",
+    "ngx-electron": "^1.0.4",
     "start": "^5.1.0",
     "trezor-connect": "^5.0.33"
   },
@@ -73,6 +74,7 @@
     "buffer": "5.1.0",
     "chart.js": "^2.7.2",
     "codelyzer": "^4.4.4",
+    "electron": "^3.0.8",
     "electron-installer-dmg": "^2.0.0",
     "jasmine-core": "^3.2.1",
     "jasmine-spec-reporter": "^4.2.1",

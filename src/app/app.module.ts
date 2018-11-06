@@ -14,6 +14,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
+import { NgxElectronModule } from 'ngx-electron';
+
 // added font awesome pro icons
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -36,10 +38,6 @@ import { AllEffects } from './app.effects'
 // import { AuthRegistrationEffects } from './auth/registration/registration.effects'
 // import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 
-// import { DelegateEffects } from './delegate/delegate.effects'
-
-// import { LoginViaFileEffects } from "./login-via-file/login-via-file.effects";
-// import { TransactionEffects } from "./transaction/transaction.effects";
 
 import { TezosHardwareWalletEffects } from "./landing/tezos-hardware-wallet/tezos-hardware-wallet.effects";
 
@@ -113,6 +111,8 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     HttpClientModule,
     SharedModule,
     
+    NgxElectronModule,
+
     FontAwesomeModule,
     // NoopAnimationsModule,
     BrowserAnimationsModule,
@@ -151,7 +151,6 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence(),
-    AngularFirestoreModule.disableNetwork(),
 
     MatAutocompleteModule,
     MatButtonModule,
