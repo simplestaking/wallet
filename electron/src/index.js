@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
 var path = require('path')
@@ -56,7 +56,6 @@ function createWindow() {
 // send auto update status to 
 function sendStatusToWindow(text) {
   log.info(text);
-  console.log(text);
   mainWindow.webContents.send('message', text);
 }
 
@@ -88,8 +87,18 @@ try {
     }
   });
 
+  // listen for async message from renderer process
+  ipcMain.on('async', (event, arg) => {
+
+    log.info(event, arg);
+
+    event.sender.send('async-reply', 2);
+
+  });
+
+
 } catch (e) {
-  console.log(e)
+  log.error(e);
   // Catch Error
   throw e;
 }
