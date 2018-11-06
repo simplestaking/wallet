@@ -27,7 +27,7 @@ function createWindow() {
     height: 768,
     titleBarStyle: 'hidden',
     frame: false,
-    //resizable: false,
+    resizable: false
   });
 
   mainWindow.loadURL(url.format({
@@ -36,8 +36,7 @@ function createWindow() {
     slashes: true,
   }));
 
-
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
   
   logger.log('Main log');
 	logger.error('Main error');

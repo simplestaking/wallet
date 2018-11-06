@@ -4,10 +4,13 @@
         "output": "release/"
     },
     "files": [
-        "**/*",
+        "**/*"
     ],
+    "electronDownload": {
+        "cache": "./tmp"
+    },
     "win": {
-        "icon": "dist",
+        "icon": "src/dist/assets/icon/electron.png",
         "target": [
             "portable"
         ]
