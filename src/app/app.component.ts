@@ -23,9 +23,13 @@ export class AppComponent {
       .subscribe(data => {
         this.app = data
       })
-    
+
     // 
-    this.electronService.ipcRenderer.send(' renderer test ')
+    this.electronService.ipcRenderer.send('async', 'tralalaa')
+
+    this.electronService.ipcRenderer.on('async-reply', (event, arg) => {
+      console.warn('[ipcRenderer][async]', event, arg);
+    })
 
   }
 
