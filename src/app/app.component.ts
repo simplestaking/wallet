@@ -11,6 +11,7 @@ import { ElectronService } from 'ngx-electron'
 export class AppComponent {
 
   public app
+  public electronVersion = 'web'
 
   constructor(
     public store: Store<any>,
@@ -24,12 +25,32 @@ export class AppComponent {
         this.app = data
       })
 
-    // 
-    this.electronService.ipcRenderer.send('async', 'tralalaa')
+    // run only in electron application  
+    if (this.electronService.ipcRenderer === null) {
+      console.log('[electron] web ')
+    } else {
 
-    this.electronService.ipcRenderer.on('async-reply', (event, arg) => {
-      console.warn('[ipcRenderer][async]', event, arg);
-    })
+      console.log('[electron] electron ')
+      this.electronService.ipcRenderer.on('message', (event, arg) => {
+        console.warn('[ipcRenderer][message] message ', arg)
+      })
+
+      this.electronService.ipcRenderer.on('async-reply', (event, arg) => {
+        console.warn('[ipcRenderer][message] async-reply', arg)
+      })
+
+      this.electronVersion = this.electronService.remote.app.getVersion();
+      console.warn('[electron][version]', this.electronVersion)
+      console.warn('[electron][check]', navigator.userAgent.toLowerCase().indexOf('electron') > -1 )
+
+      this.store.dispatch({
+        type: 'ELECTRON_VERSION',
+        payload: {
+          version: this.electronVersion,
+        }
+      })
+
+    }
 
   }
 

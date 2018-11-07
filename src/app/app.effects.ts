@@ -10,9 +10,6 @@ import { TrezorConnect } from 'trezor-connect'
 @Injectable()
 export class AllEffects {
 
-    // public api = environment.tezos.betanet
-    // public api = environment.tezos.zeronet
-
     // @Effect()
     // HeartbeatEffects$ = this.actions$
     //     .ofType('HEARTBEAT').pipe(

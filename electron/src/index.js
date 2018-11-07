@@ -49,6 +49,7 @@ function createWindow() {
 
     mainWindow = null;
     connectWindow = null;
+
   });
 
 }
@@ -91,7 +92,6 @@ try {
   ipcMain.on('async', (event, arg) => {
 
     log.info(event, arg);
-
     event.sender.send('async-reply', 2);
 
   });
@@ -104,29 +104,29 @@ try {
 }
 
 autoUpdater.on('checking-for-update', () => {
-  sendStatusToWindow('Checking for update...');
+  sendStatusToWindow('checking-for-update');
 })
 autoUpdater.on('update-available', (ev, info) => {
-  sendStatusToWindow('Update available.');
+  sendStatusToWindow('update-available');
 })
 autoUpdater.on('update-not-available', (ev, info) => {
-  sendStatusToWindow('Update not available.');
+  sendStatusToWindow('update-not-available');
 })
 autoUpdater.on('error', (ev, err) => {
-  sendStatusToWindow('Error in auto-updater.');
+  sendStatusToWindow('error');
 })
 autoUpdater.on('download-progress', (ev, progressObj) => {
-  sendStatusToWindow('Download progress...');
+  sendStatusToWindow('download-progress');
 })
 autoUpdater.on('update-downloaded', (ev, info) => {
-  sendStatusToWindow('Update downloaded; will install in 5 seconds');
+  sendStatusToWindow('update-downloaded');
 
   // Wait 5 seconds, then quit and install
   // In your application, you don't need to wait 5 seconds.
   // You could call autoUpdater.quitAndInstall(); immediately
 
-  setTimeout(function () {
-    autoUpdater.quitAndInstall();
-  }, 5000)
+  // setTimeout(function () {
+  //   autoUpdater.quitAndInstall();
+  // }, 5000)
 
 });
