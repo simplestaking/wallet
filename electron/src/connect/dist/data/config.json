@@ -27,8 +27,8 @@
             "url": "./data/coins.json"
         },
         {
-            "name": "ethereumNetworks",
-            "url": "./data/ethereumNetworks.json"
+            "name": "bridge",
+            "url": "./data/bridge/releases.json"
         },
         {
             "name": "firmware-t1",

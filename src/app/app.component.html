@@ -99,7 +99,6 @@
           <fa-icon [icon]="['fal', 'retweet']" [fixedWidth]="true"></fa-icon>&nbsp;
           Delegate funds
         </a>
-        <!-- <a mat-list-item routerLink="/tezos/wallet/originate">Originate</a> -->
 
         <hr />
 
@@ -108,13 +107,18 @@
           New wallet
         </a>
 
+        <a mat-list-item routerLink="/tezos/wallet/trezor/debug">
+          <fa-icon [icon]="['fal', 'screwdriver']" [fixedWidth]="true"></fa-icon>&nbsp;
+          Debug
+        </a>
+
         <!-- <a mat-list-item routerLink="/transactions">Transactions</a> -->
         <!-- <a mat-list-item routerLink="/delegates">Explorer</a>
         <a mat-list-item routerLink="/trezor">Trezor</a> -->
         <!-- <a mat-list-item routerLink="/settings">Settings</a>  -->
       </mat-nav-list>
 
-      <div class="app-version" style="display: flex;align-items: flex-end;padding: 0 16px; height: 50%;opacity:0.2;font-size:12px;">
+      <div class="app-version" style="display: flex;align-items: flex-end;padding: 0 16px; height: 20%;opacity:0.2;font-size:12px;">
         {{electronVersion}}
       </div>
 

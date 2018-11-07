@@ -41,7 +41,7 @@ export class AppComponent {
 
       this.electronVersion = this.electronService.remote.app.getVersion();
       console.warn('[electron][version]', this.electronVersion)
-      console.warn('[electron][check]', navigator.userAgent.toLowerCase().indexOf('electron') > -1 )
+      console.warn('[electron][check]', navigator.userAgent.toLowerCase().indexOf('electron') > -1 , navigator.userAgent.toLowerCase() )
 
       this.store.dispatch({
         type: 'ELECTRON_VERSION',

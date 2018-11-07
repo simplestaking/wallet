@@ -92,7 +92,8 @@ import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-w
 import { TezosTrezorNewComponent } from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.component';
 import { TezosTrezorConnectComponent } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.component';
 import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.component';
-import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operation-receive/tezos-operation-receive.component'
+import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operation-receive/tezos-operation-receive.component';
+import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tezor-trezor-debug.component'
 
 @NgModule({
   imports: [
@@ -183,7 +184,8 @@ import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operatio
     TezosTrezorNewComponent,
     TezosTrezorConnectComponent,
     TezosWalletDelegateComponent,
-    TezosOperationReceiveComponent
+    TezosOperationReceiveComponent,
+    TezorTrezorDebugComponent
   ]
 })
 export class TezosModule { }

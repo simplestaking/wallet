@@ -10,6 +10,8 @@ import { TezosWalletSendComponent } from './tezos-wallet/tezos-wallet-send/tezos
 import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive/tezos-wallet-receive.component';
 import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.component';
 
+import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tezor-trezor-debug.component'
+
 
 export const TezosRouting: Routes = [
 
@@ -17,16 +19,17 @@ export const TezosRouting: Routes = [
   
   { path: 'wallet/new', component: TezosWalletNewComponent },
   { path: 'wallet/new/trezor', component: TezosWalletNewTrezorComponent },
-
+  
   { path: 'wallet/detail/:address', component: TezosWalletDetailComponent },
   
   { path: 'wallet/send', component: TezosWalletSendComponent },
   { path: 'wallet/send/:address', component: TezosWalletSendComponent },
-
+  
   { path: 'wallet/receive', component: TezosWalletReceiveComponent },
   { path: 'wallet/receive/:address', component: TezosWalletReceiveComponent },
-
+  
   { path: 'wallet/delegate', component: TezosWalletDelegateComponent },
   { path: 'wallet/delegate/:address', component: TezosWalletDelegateComponent },
-
+  
+  { path: 'wallet/trezor/debug', component: TezorTrezorDebugComponent },
 ];
