@@ -27,31 +27,49 @@ export class TezorTrezorDebugComponent implements OnInit {
     let tezosTrezorConnectInitialized = document.getElementById('trezorconnect')
 
     if (!tezosTrezorConnectInitialized) {
-    
+
       // initialize TrezorConnect 
       TrezorConnect.init({
 
-        connectSrc: 'http://localhost:5500/build/',
+        //connectSrc: 'http://localhost:5500/build/',
+        connectSrc: 'http://localhost:5500/electron/src/connect/dist/',
         // frame_src: 'http://localhost:5500/build/iframe.html',
         // popup_src: 'http://localhost:5500/build/popup.html',
 
         popup: false,
-        webusb: true,
+        webusb: false,
         debug: true,
 
       }).then(response => console.log('[TrezorConnect][init]', response))
         .catch(error => console.error('[ERROR][TrezorConnect][init]', error));
-    
+
     } else {
 
+      // remove iframe 
+      // document.getElementById('trezorconnect').remove();
+
       TrezorConnect.uiResponse({
-        type:'iframe-handshake',
+        type: 'iframe-handshake',
         payload: {}
       })
 
     }
-    
+
   }
+
+  removeTrezor() {
+    // check if iframe exist
+    let tezosTrezorConnectInitialized = document.getElementById('trezorconnect')
+
+    if (tezosTrezorConnectInitialized) {
+      
+      TrezorConnect.dispose()
+      
+      document.getElementById('trezorconnect').remove();
+    }
+
+  }
+
 
   getTezosAddress() {
 

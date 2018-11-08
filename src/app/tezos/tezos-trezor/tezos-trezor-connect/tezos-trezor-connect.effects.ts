@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
 
-import TrezorConnect, { DEVICE, TRANSPORT } from 'trezor-connect';
+import TrezorConnect, { DEVICE, TRANSPORT, UI } from 'trezor-connect';
 
 @Injectable()
 export class TezosTrezorConnectEffects {
@@ -24,16 +24,14 @@ export class TezosTrezorConnectEffects {
                 (<any>window).TrezorConnect = TrezorConnect
             }
 
-            console.log('[TEZOS_TREZOR_CONNECT]',
-                state.tezos.tezosTrezorConnect.transport.type,
-                state.tezos.tezosTrezorConnect.device.connected,
-                state)
+            // if iframe exist do no initialize again
+            let tezosTrezorConnectInitialized = document.getElementById('trezorconnect')
 
-            // transport initialized do not init 
-            if (!state.tezos.tezosTrezorConnect.transport.type &&
-                !state.tezos.tezosTrezorConnect.device.connected) {
+            console.log('[TEZOS_TREZOR_CONNECT]', tezosTrezorConnectInitialized)
 
-                (<any>window).TrezorConnect.on('DEVICE_EVENT', (event) => {
+            if (!tezosTrezorConnectInitialized) {
+
+                TrezorConnect.on('DEVICE_EVENT', (event) => {
                     console.log('[TrezorConnect][DEVICE_EVENT]', event);
 
                     if (event.type === DEVICE.CONNECT || event.type === DEVICE.CONNECT_UNACQUIRED) {
@@ -60,7 +58,7 @@ export class TezosTrezorConnectEffects {
                     //(<any>window).TrezorConnect.off('DEVICE_EVENT', handleDeviceEvent);
                 });
 
-                (<any>window).TrezorConnect.on('TRANSPORT_EVENT', (event) => {
+                TrezorConnect.on('TRANSPORT_EVENT', (event) => {
                     console.log('[TrezorConnect][TRANSPORT_EVENT]', event);
 
                     if (event.type === TRANSPORT.START) {
@@ -80,31 +78,31 @@ export class TezosTrezorConnectEffects {
                     //(<any>window).TrezorConnect.off('TRANSPORT_EVENT', handleTransportEvent);
                 });
 
-                (<any>window).TrezorConnect.on('UI_EVENT', (event) => {
+                TrezorConnect.on('UI_EVENT', (event) => {
                     console.log('[TrezorConnect][UI_EVENT]', event);
-                    // this.store.dispatch({
-                    //     type: 'TEZOS_TREZOR_CONNECT_UI',
-                    //     payload: event,
-                    // })
+
+                    this.store.dispatch({
+                        type: 'TEZOS_TREZOR_CONNECT_UI',
+                        payload: event,
+                    })
                     //(<any>window).TrezorConnect.off('UI_EVENT', handleUiEvent);
                 });
 
-                (<any>window).TrezorConnect.on('RESPONSE_EVENT', (event) => {
+                TrezorConnect.on('RESPONSE_EVENT', (event) => {
                     console.log('[TrezorConnect][RESPONSE_EVENT]', event);
                     //(<any>window).TrezorConnect.off('RESPONSE_EVENT', handleResponseEvent);
                 });
 
-                (<any>window).TrezorConnect.on('CORE_EVENT', (event) => {
+                TrezorConnect.on('CORE_EVENT', (event) => {
                     console.log('[TrezorConnect][CORE_EVENT]', event);
                     // (<any>window).TrezorConnect.off('CORE_EVENT', handleCoreEvent);
                 });
 
                 // initialize TrezorConnect 
-                (<any>window).TrezorConnect.init({
+                TrezorConnect.init({
 
                     connectSrc: 'http://localhost:5836/',
-                    frame_src: 'http://localhost:5836/iframe.html',
-                    popup_src: 'http://localhost:5836/popup.html',
+                    //connectSrc: 'http://localhost:5500/electron/src/connect/dist/',
 
                     popup: false,
                     webusb: false,

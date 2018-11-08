@@ -39,7 +39,7 @@ function createWindow() {
     slashes: true,
   }));
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -83,7 +83,7 @@ try {
   app.on('activate', () => {
     // on OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (win === null) {
+    if (mainWindow === null) {
       createWindow();
     }
   });
