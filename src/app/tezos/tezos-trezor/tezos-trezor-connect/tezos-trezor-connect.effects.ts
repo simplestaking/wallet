@@ -103,6 +103,8 @@ export class TezosTrezorConnectEffects {
 
                     connectSrc: 'http://localhost:5836/',
                     //connectSrc: 'http://localhost:5500/electron/src/connect/dist/',
+                    frame_src: 'http://localhost:5836/iframe.html',
+                    popup_src: 'http://localhost:5836/popup.html',
 
                     popup: false,
                     webusb: false,
