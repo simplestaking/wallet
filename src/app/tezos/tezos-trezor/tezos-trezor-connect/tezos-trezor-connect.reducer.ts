@@ -13,7 +13,7 @@ const initialState: any = {
             url: '',
             urlText: '',
         },
-        error: '',
+        error: false,
         event: '',
     }
 }
@@ -34,6 +34,7 @@ export function reducer(state = initialState, action) {
                         text: !state.device.connected ? 'Connect your Trezor to Continue...' : state.status.message.text
                     },
                     event: action.payload.type,
+                    error: false,
                 }
             }
         }
@@ -50,7 +51,8 @@ export function reducer(state = initialState, action) {
                     message: {
                         text: 'Trezor Bridge failed. Please restart PC or reinstall Trezor Bridge.'
                     },
-                    event: action.payload.type
+                    event: action.payload.type,
+                    error: true,
                 }
             }
         }

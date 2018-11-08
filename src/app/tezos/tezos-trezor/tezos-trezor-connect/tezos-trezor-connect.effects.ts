@@ -169,6 +169,15 @@ export class TezosTrezorConnectEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
 
+        // remove iframe if transport failed
+        tap((state: any) => {
+            if (state.tezos.tezosTrezorConnect.status.error === true) {
+                // check if iframe exist
+                if (document.getElementById('trezorconnect')) {
+                    TrezorConnect.dispose()
+                }
+            }
+        }),
 
         map(() => ({ type: 'TEZOS_TREZOR_CONNECT_CLOSE_SUCCESS' })),
         catchError((error, caught) => {

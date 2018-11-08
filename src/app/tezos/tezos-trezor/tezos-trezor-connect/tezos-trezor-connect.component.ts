@@ -42,7 +42,12 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterView
   } 
 
   ngOnDestroy() {
-
+    
+    // dispatch connect, it removes TrezorConnect only if it is in error state
+    this.store.dispatch({
+      type:'TEZOS_TREZOR_CONNECT_CLOSE'
+    })
+    
     // close all open observables
     this.destroy$.next();
     this.destroy$.complete();
