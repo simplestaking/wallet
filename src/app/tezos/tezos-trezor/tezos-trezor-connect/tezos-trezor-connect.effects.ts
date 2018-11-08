@@ -106,7 +106,7 @@ export class TezosTrezorConnectEffects {
 
                     popup: false,
                     webusb: false,
-                    debug: false,
+                    debug: true,
 
                 }).then(response => console.log('[TrezorConnect][init]', response))
                     .catch(error => console.error('[ERROR][TrezorConnect][init]', error));
