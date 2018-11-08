@@ -17,6 +17,7 @@ export class TezosTrezorConnectEffects {
         // add state to effect
         withLatestFrom(this.store, (action, state) => state),
 
+        // TODO: ! refactor tap to flatMap so we can catch error
         tap((state: any) => {
 
             // TODO: refactor windows.TrezorConnect 
@@ -137,7 +138,7 @@ export class TezosTrezorConnectEffects {
                     popup: false,
                     webusb: false,
                     // try to reconect when bridge is not working
-                    transportReconnect: true,
+                    // transportReconnect: true,
                     debug: true,
 
                 }).then(response => console.log('[TrezorConnect][init]', response))
@@ -170,6 +171,7 @@ export class TezosTrezorConnectEffects {
         withLatestFrom(this.store, (action, state) => state),
 
         // remove iframe if transport failed
+        // TODO: ! refactor tap to flatMap so we can catch error
         tap((state: any) => {
             if (state.tezos.tezosTrezorConnect.status.error === true) {
                 // check if iframe exist

@@ -31,7 +31,7 @@ export function reducer(state = initialState, action) {
                 status: {
                     ...state.status,
                     message: {
-                        text: !state.device.connected ? 'Connect your Trezor to Continue...' : state.status.message.text
+                        text: !state.device.connected ? 'Connect your Trezor to Continue...' : state.status.message.text,
                     },
                     event: action.payload.type,
                     error: false,
@@ -49,7 +49,9 @@ export function reducer(state = initialState, action) {
                 status: {
                     ...state.status,
                     message: {
-                        text: 'Trezor Bridge failed. Please restart PC or reinstall Trezor Bridge.'
+                        text: 'Trezor Bridge failed. Please restart PC or',
+                        url: 'https://wallet.trezor.io/',
+                        urlText: 'reinstall Trezor Bridge.' 
                     },
                     event: action.payload.type,
                     error: true,
@@ -125,10 +127,14 @@ export function reducer(state = initialState, action) {
                 status: {
                     ...state.status,
                     event: action.payload,
+                    message: {
+                        text: 'TrezorConect initialization failed. Please restart application.'
+                    },
+                    error: true,
                 }
             }
         }
-
+        
         default:
             return state;
     }

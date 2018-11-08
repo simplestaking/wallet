@@ -10,7 +10,11 @@
   <div class="trezor-disconnected" *ngIf="!tezosTrezorConnect.device.connected">
     <img src="./assets/trezor_disconnected.svg" alt="Connect your Trezor to Continue...">
     <span class="action">
-      {{ tezosTrezorConnect.status.message.text }}
+      {{ tezosTrezorConnect.status.message.text }}&nbsp;
+      <a *ngIf="tezosTrezorConnect.status?.message?.urlText" target="_blank" href="{{ tezosTrezorConnect.status?.message?.url }}"
+        externalLink>
+        {{ tezosTrezorConnect.status?.message?.urlText }}
+      </a>
     </span>
 
     <span class="status">

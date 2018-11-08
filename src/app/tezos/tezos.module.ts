@@ -185,7 +185,6 @@ import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tez
     TezosTrezorConnectComponent,
     TezosWalletDelegateComponent,
     TezosOperationReceiveComponent,
-    TezorTrezorDebugComponent
-  ]
+    TezorTrezorDebugComponent  ]
 })
 export class TezosModule { }
