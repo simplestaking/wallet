@@ -10,7 +10,7 @@
         "cache": "./tmp"
     },
     "win": {
-        "icon": "src/dist/assets/icon/electron_12.png",
+        "icon": "src/dist/assets/icon/electron_9.png",
         "target": [
             "nsis", 
             "portable"
@@ -22,7 +22,7 @@
         }
     },
     "mac": {
-        "icon": "src/dist/assets/icon/electron_12.png",
+        "icon": "src/dist/assets/icon/electron_11.png",
         "target": [
             "zip",
             "dmg"
