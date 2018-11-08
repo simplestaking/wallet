@@ -1,6 +1,6 @@
 {
   "name": "simplewallet",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Simple Wallet with Trezor support",
   "main": "src/index.js",
   "scripts": {
