@@ -136,11 +136,17 @@ export class TezosTrezorConnectEffects {
 
                     popup: false,
                     webusb: false,
+                    // try to reconect when bridge is not working
+                    transportReconnect: true,
                     debug: true,
 
                 }).then(response => console.log('[TrezorConnect][init]', response))
                     .catch(error => {
                         console.error('[ERROR][TrezorConnect][init]', error)
+                        this.store.dispatch({
+                            type: 'TEZOS_TREZOR_CONNECT_INIT_ERROR',
+                            payload: error,
+                        })
                     });
             }
 
@@ -156,6 +162,24 @@ export class TezosTrezorConnectEffects {
         }),
     )
 
+    @Effect()
+    TezosTrezorConnectClose = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT_CLOSE'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action, state) => state),
+
+
+        map(() => ({ type: 'TEZOS_TREZOR_CONNECT_CLOSE_SUCCESS' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_CLOSE_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+    )
 
     constructor(
         private actions$: Actions,

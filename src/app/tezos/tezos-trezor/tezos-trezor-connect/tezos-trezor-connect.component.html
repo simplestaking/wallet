@@ -3,18 +3,21 @@
   <div class="trezor-connected" *ngIf="tezosTrezorConnect.device.connected">
     <img src="./assets/trezor_connected.svg" alt="Trezor Connected">
     <span class="action">
-      {{ tezosTrezorConnect.device.status }}
+      {{ tezosTrezorConnect.status.message.text }}
     </span>
   </div>
 
   <div class="trezor-disconnected" *ngIf="!tezosTrezorConnect.device.connected">
     <img src="./assets/trezor_disconnected.svg" alt="Connect your Trezor to Continue...">
     <span class="action">
-      {{ tezosTrezorConnect.device.status }}
+      {{ tezosTrezorConnect.status.message.text }}
     </span>
-    <span class="action">
-      {{ tezosTrezorConnect.device.event }}
+
+    <span class="status">
+      <!-- <span *ngIf="tezosTrezorConnect.status.event">Status</span> -->
+      &nbsp;{{ tezosTrezorConnect.status.event }}
     </span>
+
   </div>
 
 </div>

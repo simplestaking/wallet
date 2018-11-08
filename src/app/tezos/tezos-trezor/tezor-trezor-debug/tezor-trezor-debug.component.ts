@@ -31,14 +31,17 @@ export class TezorTrezorDebugComponent implements OnInit {
       // initialize TrezorConnect 
       TrezorConnect.init({
 
-        //connectSrc: 'http://localhost:5500/build/',
-        connectSrc: 'http://localhost:5500/electron/src/connect/dist/',
-        // frame_src: 'http://localhost:5500/build/iframe.html',
-        // popup_src: 'http://localhost:5500/build/popup.html',
+        connectSrc: 'http://localhost:5836/',
+        frame_src: 'http://localhost:5836/iframe.html',
+        popup_src: 'http://localhost:5836/popup.html',
+        //connectSrc: 'http://localhost:5500/electron/src/connect/dist/',
 
         popup: false,
         webusb: false,
+        // try to reconect when bridge is not working
+        transportReconnect: true,
         debug: true,
+
 
       }).then(response => console.log('[TrezorConnect][init]', response))
         .catch(error => console.error('[ERROR][TrezorConnect][init]', error));
@@ -62,7 +65,7 @@ export class TezorTrezorDebugComponent implements OnInit {
     let tezosTrezorConnectInitialized = document.getElementById('trezorconnect')
 
     if (tezosTrezorConnectInitialized) {
-      
+
       TrezorConnect.dispose()
       
       document.getElementById('trezorconnect').remove();

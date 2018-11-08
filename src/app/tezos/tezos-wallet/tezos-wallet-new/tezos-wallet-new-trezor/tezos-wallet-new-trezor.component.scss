@@ -14,3 +14,7 @@
 .stepper .tezos-trezor-new table {
     width: 100%
 }
+
+.stepper ::ng-deep .mat-horizontal-content-container {
+    padding: 0px !important; 
+}

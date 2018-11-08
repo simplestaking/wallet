@@ -4,12 +4,18 @@ const initialState: any = {
     device: {
         connected: false,
         button: 0,
-        status: 'Connect your Trezor to Continue...',
-        error: '',
-        event: '',
     },
     response: {},
     ui: {},
+    status: {
+        message: {
+            text: 'Connect your Trezor to Continue...',
+            url: '',
+            urlText: '',
+        },
+        error: '',
+        event: '',
+    }
 }
 
 export function reducer(state = initialState, action) {
@@ -21,6 +27,12 @@ export function reducer(state = initialState, action) {
                 transport: {
                     ...state.device,
                     ...action.payload.payload,
+                },
+                status: {
+                    ...state.status,
+                    message: {
+                        text: !state.device.connected ? 'Connect your Trezor to Continue...' : state.status.message.text
+                    }
                 }
             }
         }
@@ -31,7 +43,13 @@ export function reducer(state = initialState, action) {
                 transport: {
                     ...state.device,
                     ...action.payload.payload,
-                    status: 'Trezor Bridge failed. Please restart PC or reinstall Trezor Bridge.',
+                },
+                status: {
+                    ...state.status,
+                    message: {
+                        text: 'Trezor Bridge failed. Please restart PC or reinstall Trezor Bridge.'
+                    },
+                    event: action.payload.type
                 }
             }
         }
@@ -43,7 +61,12 @@ export function reducer(state = initialState, action) {
                     ...state.device,
                     ...action.payload.payload,
                     connected: true,
-                    status: 'Trezor Connected',
+                },
+                status: {
+                    ...state.status,
+                    message: {
+                        text: 'Trezor Connected'
+                    },
                 }
             }
         }
@@ -55,7 +78,12 @@ export function reducer(state = initialState, action) {
                     ...state.device,
                     ...action.payload.payload,
                     connected: false,
-                    status: 'Connect your Trezor to Continue...',
+                },
+                status: {
+                    ...state.status,
+                    message: {
+                        text: 'Connect your Trezor to Continue...'
+                    },
                 }
             }
         }
@@ -66,7 +94,7 @@ export function reducer(state = initialState, action) {
                 device: {
                     ...state.device,
                     button: state.device.button + 1,
-                }
+                },
             }
         }
 
@@ -77,7 +105,23 @@ export function reducer(state = initialState, action) {
                 ...state,
                 device: {
                     ...state.device,
-                    event: action.payload.type,
+                },
+                status: {
+                    ...state.status,
+                    event: action.payload.type
+                }
+            }
+        }
+
+        case 'TEZOS_TREZOR_CONNECT_INIT_ERROR': {
+            return {
+                ...state,
+                device: {
+                    ...state.device,
+                },
+                status: {
+                    ...state.status,
+                    event: action.payload,
                 }
             }
         }
