@@ -61,14 +61,10 @@ export class TezorTrezorDebugComponent implements OnInit {
   }
 
   removeTrezor() {
+    
     // check if iframe exist
-    let tezosTrezorConnectInitialized = document.getElementById('trezorconnect')
-
-    if (tezosTrezorConnectInitialized) {
-
+    if (document.getElementById('trezorconnect')) {
       TrezorConnect.dispose()
-      
-      document.getElementById('trezorconnect').remove();
     }
 
   }

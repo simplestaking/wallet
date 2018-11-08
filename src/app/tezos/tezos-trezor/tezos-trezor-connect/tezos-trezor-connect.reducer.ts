@@ -32,7 +32,8 @@ export function reducer(state = initialState, action) {
                     ...state.status,
                     message: {
                         text: !state.device.connected ? 'Connect your Trezor to Continue...' : state.status.message.text
-                    }
+                    },
+                    event: action.payload.type,
                 }
             }
         }
