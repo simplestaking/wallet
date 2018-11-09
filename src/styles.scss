@@ -72,6 +72,10 @@ body:after {
     content: url('assets/trezor_connected.svg') url('assets/trezor_disconnected.svg') url('assets/trezor_verify_detail.svg') url('assets/trezor_confirm_transaction.svg');
 }
 
+body {
+    user-select: none;
+}
+
 // set dragable for electron
 mat-toolbar {
     -webkit-user-select: none;
