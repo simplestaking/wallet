@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgrxFormDirective } from './ngrx-form.directive';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ExternalLinkDirective } from './external-link.directive';
+import { LoadingSpinnerDirective } from './loading-spinner.directive';
 
 import { ChartLineNavComponent } from './charts/chart-line-nav/chart-line-nav.component';
 
@@ -27,11 +28,14 @@ import { TooltipAreaNavComponent } from './charts/chart-line-nav/tooltip-area-na
   exports: [
     NgrxFormDirective,
     ExternalLinkDirective,
+    LoadingSpinnerDirective,
+    
     ChartLineNavComponent
   ],
   declarations: [
     NgrxFormDirective,
     ExternalLinkDirective,
+    LoadingSpinnerDirective,
 
     ChartLineNavComponent,
     LineChartNavComponent,

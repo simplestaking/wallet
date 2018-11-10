@@ -114,6 +114,10 @@ mat-toolbar {
     flex-direction: column;
 }
 
+.mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+
 // close button for stepper 
 .close {
     display: flex;
@@ -364,6 +368,15 @@ mat-card-content .tezos-trezor-verify-input {
 
 .tezos-stepper-next{
     font-size:18px;
+}
+
+.app-status-bar { 
+    position:fixed;
+    top:33px;
+    margin-left:175px;
+    z-index:1;
+    height:40px;
+    background-color: transparent;
 }
 
 @include angular-material-theme($simple-theme);

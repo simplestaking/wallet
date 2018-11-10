@@ -32,12 +32,12 @@ export class TezorTrezorDebugComponent implements OnInit {
         console.log('[debug][TrezorConnect][UI_EVENT]', event);
 
         if (event.type === 'ui-request_passphrase') {
-          
+
           TrezorConnect.setPassphrase({
             'passphrase': "test",
           }).then(response => { console.warn('[setPassphrase]', response) })
             .catch(error => { console.error('[ERROR][setPassphrase]', error) });
-        
+
         }
 
       });
@@ -100,5 +100,20 @@ export class TezorTrezorDebugComponent implements OnInit {
 
   }
 
+  getTezosAddressBundle() {
 
+    TrezorConnect.tezosGetAddress(    {
+      bundle: [
+        { path: "m/44'/1729'/0'", showOnTrezor: false }, // account 1
+        { path: "m/44'/1729'/1'", showOnTrezor: false }, // account 2
+        { path: "m/44'/1729'/2'", showOnTrezor: false },  // account 3
+        { path: "m/44'/1729'/3'", showOnTrezor: false },  // account 3
+        { path: "m/44'/1729'/4'", showOnTrezor: false },  // account 3
+      ]
+    }).then(response => { console.warn('[tezosGetAddress][bundle]', response) })
+      .catch(error => { console.error('[ERROR][tezosGetAddress]', error) });
+
+
+
+  }
 }

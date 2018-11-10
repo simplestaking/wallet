@@ -31,6 +31,9 @@
           Simple<span style="color:#2c71f4">Staking </span>
         </span>
       </span>
+
+      <mat-spinner [diameter]="20" [strokeWidth]="1" style="top:20px;left:10px;" *loadingSpinner></mat-spinner>
+
       <!-- matTooltip="Client is connected to node {{app.node.timestamp}}" matTooltipPosition="left" -->
 
       <!-- 
@@ -131,4 +134,8 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
+
+  <!-- <mat-toolbar class="app-status-bar">
+  </mat-toolbar> -->
+
 </div>
