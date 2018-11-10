@@ -3,22 +3,60 @@
   <div class="trezor-connected" *ngIf="tezosTrezorConnect.device.connected">
     <img src="./assets/trezor_connected.svg" alt="Trezor Connected">
     <span class="action">
-      {{ tezosTrezorConnect.status.message.text }}
+      Trezor Connected
     </span>
   </div>
 
   <div class="trezor-disconnected" *ngIf="!tezosTrezorConnect.device.connected">
     <img src="./assets/trezor_disconnected.svg" alt="Connect your Trezor to Continue...">
-    <span class="action">
-      {{ tezosTrezorConnect.status.message.text }}&nbsp;
-      <a *ngIf="tezosTrezorConnect.status?.message?.urlText" target="_blank" href="{{ tezosTrezorConnect.status?.message?.url }}"
-        externalLink>
-        {{ tezosTrezorConnect.status?.message?.urlText }}
+
+    <span class="action" *ngIf="!tezosTrezorConnect.status.error">
+      Connect your Trezor to Continue...
+    </span>
+
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='firmware'">
+      The firmware of your device needs to be upgraded.<br />
+      Please re-connect device after upgrading at
+      <a target="_blank" href="https://beta-wallet.trezor.io/" externalLink>
+        beta-wallet.trezor.io
       </a>
     </span>
 
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='bootloader'">
+      Connected device is in firmware update mode. Please re-connect it.
+    </span>
+
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='initialize'">
+      Your device needs to be initialized first.<br />
+      Please re-connect device after initializing at
+      <a target="_blank" href="https://wallet.trezor.io/" externalLink>
+        wallet.trezor.io
+      </a>
+    </span>
+
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='transport'">
+      Trezor Bridge failed. <br />
+      Please restart PC or reinstall
+      <a target="_blank" href="https://wallet.trezor.io/" externalLink>
+        Trezor Bridge.
+      </a>
+    </span>
+
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='init'">
+      TrezorConect initialization failed. Please restart application.
+    </span>
+
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='used'">
+      Your device is being used by another application.<br />
+      Please re-connect device after closing another application.
+    </span>
+
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='occupied'">
+      Your device is being used by another application.<br />
+      Please re-connect device after closing another application.
+    </span>
+
     <span class="status">
-      <!-- <span *ngIf="tezosTrezorConnect.status.event">Status</span> -->
       &nbsp;{{ tezosTrezorConnect.status.event }}
     </span>
 

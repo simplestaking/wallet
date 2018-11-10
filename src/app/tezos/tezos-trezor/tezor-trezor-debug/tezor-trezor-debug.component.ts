@@ -28,13 +28,30 @@ export class TezorTrezorDebugComponent implements OnInit {
 
     if (!tezosTrezorConnectInitialized) {
 
+      TrezorConnect.on('UI_EVENT', (event) => {
+        console.log('[debug][TrezorConnect][UI_EVENT]', event);
+
+        if (event.type === 'ui-request_passphrase') {
+          
+          TrezorConnect.setPassphrase({
+            'passphrase': "test",
+          }).then(response => { console.warn('[setPassphrase]', response) })
+            .catch(error => { console.error('[ERROR][setPassphrase]', error) });
+        
+        }
+
+      });
+
       // initialize TrezorConnect 
       TrezorConnect.init({
 
-        connectSrc: 'http://localhost:5836/',
-        frame_src: 'http://localhost:5836/iframe.html',
-        popup_src: 'http://localhost:5836/popup.html',
-        //connectSrc: 'http://localhost:5500/electron/src/connect/dist/',
+        // connectSrc: 'http://localhost:5836/',
+        // frame_src: 'http://localhost:5836/iframe.html',
+        // popup_src: 'http://localhost:5836/popup.html',
+
+        connectSrc: 'http://localhost:5500/build/',
+        frame_src: 'http://localhost:5500/build/iframe.html',
+        popup_src: 'http://localhost:5500/build/popup.html',
 
         popup: false,
         webusb: false,
@@ -61,7 +78,7 @@ export class TezorTrezorDebugComponent implements OnInit {
   }
 
   removeTrezor() {
-        
+
     // check if iframe exist
     if (document.getElementById('trezorconnect')) {
       TrezorConnect.dispose()

@@ -69,7 +69,7 @@ $simple-theme: mat-light-theme($simple-primary, $simple-accent, $simple-warn);
 // preload images 
 body:after {
     display:none;
-    content: url('assets/trezor_connected.svg') url('assets/trezor_disconnected.svg') url('assets/trezor_verify_detail.svg') url('assets/trezor_confirm_transaction.svg');
+    content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg') url('/assets/trezor_verify_detail.svg') url('/assets/trezor_confirm_transaction.svg');
 }
 
 body {

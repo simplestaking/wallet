@@ -32,10 +32,17 @@ export class TezosTrezorConnectEffects {
                     console.log('[TrezorConnect][DEVICE_EVENT]', event);
                     switch (event.type) {
 
-                        case DEVICE.CONNECT:
-                        case DEVICE.CONNECT_UNACQUIRED: {
+                        case DEVICE.CHANGED:
+                        case DEVICE.CONNECT: {
                             return this.store.dispatch({
                                 type: 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT',
+                                payload: event,
+                            })
+                        }
+
+                        case DEVICE.CONNECT_UNACQUIRED: {
+                            return this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT_UNACQUIRED',
                                 payload: event,
                             })
                         }
@@ -130,11 +137,14 @@ export class TezosTrezorConnectEffects {
                 // initialize TrezorConnect 
                 TrezorConnect.init({
 
-                    connectSrc: 'http://localhost:5836/',
-                    frame_src: 'http://localhost:5836/iframe.html',
-                    popup_src: 'http://localhost:5836/popup.html',
-                    //connectSrc: 'http://localhost:5500/electron/src/connect/dist/',
+                    // connectSrc: 'http://localhost:5836/',
+                    // frame_src: 'http://localhost:5836/iframe.html',
+                    // popup_src: 'http://localhost:5836/popup.html',
 
+                    connectSrc: 'http://localhost:5500/build/',
+                    frame_src: 'http://localhost:5500/build/iframe.html',
+                    popup_src: 'http://localhost:5500/build/popup.html',
+                    
                     popup: false,
                     webusb: false,
                     // try to reconect when bridge is not working

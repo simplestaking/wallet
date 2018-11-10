@@ -8,12 +8,13 @@ const initialState: any = {
     response: {},
     ui: {},
     status: {
-        message: {
-            text: 'Connect your Trezor to Continue...',
-            url: '',
-            urlText: '',
-        },
+        // message: {
+        //     text: 'Connect your Trezor to Continue...',
+        //     url: '',
+        //     urlText: '',
+        // },
         error: false,
+        errorType: '',
         event: '',
     }
 }
@@ -30,11 +31,8 @@ export function reducer(state = initialState, action) {
                 },
                 status: {
                     ...state.status,
-                    message: {
-                        text: !state.device.connected ? 'Connect your Trezor to Continue...' : state.status.message.text,
-                    },
                     event: action.payload.type,
-                    error: false,
+                    errorStatus: !state.device.connected && !state.status.error ? '' : state.status.errorStatus
                 }
             }
         }
@@ -48,32 +46,94 @@ export function reducer(state = initialState, action) {
                 },
                 status: {
                     ...state.status,
-                    message: {
-                        text: 'Trezor Bridge failed. Please restart PC or',
-                        url: 'https://wallet.trezor.io/',
-                        urlText: 'reinstall Trezor Bridge.' 
-                    },
                     event: action.payload.type,
                     error: true,
+                    errorType: 'transport',
                 }
             }
         }
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT': {
+
+            let connected = false
+            let error = false
+            let errorType = ''
+
+            let version = {
+                major: undefined,
+                minor: undefined,
+                patch: undefined,
+            }
+
+            if (action.payload.payload && action.payload.payload.features) {
+                version['major'] = Number.isInteger(action.payload.payload.features.major_version) ?
+                    action.payload.payload.features.major_version : undefined
+                version['minor'] = Number.isInteger(action.payload.payload.features.minor_version) ?
+                    action.payload.payload.features.minor_version : undefined
+                version['patch'] = Number.isInteger(action.payload.payload.features.patch_version) ?
+                    action.payload.payload.features.patch_version : undefined
+            }
+
+            // check for firmware update state 
+            if (action.payload.payload.mode === 'bootloader') {
+
+                error = true
+                errorType = 'bootloader'
+
+                // check for firmware version
+                // TODO: refactor to safer way 
+            } else if (
+                (!(version['major'] >= 2 && version['minor'] >= 0 && version['patch'] >= 8)) &&
+                (version['major'] !== undefined && version['minor'] !== undefined && version['patch'] !== undefined)
+            ) {
+
+                error = true
+                errorType = 'firmware'
+
+                // check for not initialized device    
+            } else if (action.payload.payload.mode === 'initialize') {
+
+                error = true
+                errorType = 'initialize'
+
+            } else if (action.payload.payload.mode === 'normal') {
+
+                if (action.payload.payload.status === 'used') {
+                    error = true
+                    errorType = 'used'
+                }
+
+                if (action.payload.payload.status === 'occupied') {
+                    error = true
+                    errorType = 'occupied'
+                }
+
+                if (action.payload.payload.status === 'available') {
+                    connected = true
+                    error = false
+                    errorType = ''
+                }
+
+            }
+
             return {
                 ...state,
                 device: {
                     ...state.device,
                     ...action.payload.payload,
-                    connected: true,
+                    connected: connected,
                 },
                 status: {
                     ...state.status,
-                    message: {
-                        text: 'Trezor Connected'
-                    },
+                    event: action.payload.type,
+                    error: error,
+                    errorType: errorType,
                 }
             }
+        }
+
+        case 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT_UNACQUIRED': {
+            return state;
         }
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE_DISCONNECT': {
@@ -86,9 +146,11 @@ export function reducer(state = initialState, action) {
                 },
                 status: {
                     ...state.status,
-                    message: {
-                        text: 'Connect your Trezor to Continue...'
-                    },
+                    // message: {
+                    //     text: 'Connect your Trezor to Continue...'
+                    // },
+                    error: false,
+                    errorType: '',
                 }
             }
         }
@@ -127,14 +189,12 @@ export function reducer(state = initialState, action) {
                 status: {
                     ...state.status,
                     event: action.payload,
-                    message: {
-                        text: 'TrezorConect initialization failed. Please restart application.'
-                    },
                     error: true,
+                    errorType: 'init',
                 }
             }
         }
-        
+
         default:
             return state;
     }
