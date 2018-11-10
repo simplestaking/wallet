@@ -26,7 +26,6 @@ export class LoadingSpinnerDirective implements OnInit, OnDestroy {
         } else {
           this.viewContainer.clear();
         }
-        console.log('[loadingSpinner]', isVisible)
       })
 
 

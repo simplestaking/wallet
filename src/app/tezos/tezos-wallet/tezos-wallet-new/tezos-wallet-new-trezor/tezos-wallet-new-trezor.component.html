@@ -1,8 +1,16 @@
-<div class="close">
-  <button mat-button routerLink="/tezos/wallet">
-    <mat-icon>close</mat-icon>
-    Close
-  </button>
+<div style="display: flex;align-items: center; padding-left: 8px;">
+
+  <mat-spinner [diameter]="20" [strokeWidth]="1" *loadingSpinner></mat-spinner>
+
+  <span class="filler-content"></span>
+
+  <div class="close">
+    <button mat-button routerLink="/tezos/wallet">
+      <mat-icon>close</mat-icon>
+      Close
+    </button>
+  </div>
+
 </div>
 
 <div class="stepper">
@@ -17,7 +25,7 @@
         </h2>
       </mat-card-header>
 
-      
+
       <mat-horizontal-stepper [linear]="false">
 
 
@@ -35,8 +43,8 @@
         </mat-step>
 
         <mat-step [editable]="false" [optional]="false" label="Select Address">
-      
-      
+
+
           <div class="tezos-trezor-new">
 
             <!-- <span class="mat-h2">
@@ -93,7 +101,7 @@
             <br />
 
             <div class="tezos-trezor-new-next">
-              <button mat-flat-button matStepperNext (click)="tezosTrezorNewSave()" >
+              <button mat-flat-button matStepperNext (click)="tezosTrezorNewSave()">
                 <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
                 Finish&nbsp;
               </button>
