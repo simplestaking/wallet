@@ -149,7 +149,7 @@ export class TezosTrezorConnectEffects {
                     webusb: false,
                     // try to reconect when bridge is not working
                     // transportReconnect: true,
-                    debug: true,
+                    // debug: true,
 
                 }).then(response => console.log('[TrezorConnect][init]', response))
                     .catch(error => {

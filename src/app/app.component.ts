@@ -27,7 +27,6 @@ export class AppComponent {
 
     // run only in electron application  
     if (this.electronService.ipcRenderer === null) {
-      console.log('[electron] web ')
     } else {
 
       console.log('[electron] electron ')

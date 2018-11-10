@@ -27,24 +27,15 @@ export class TezosTrezorNewEffects {
         // TODO: find action for connect initialization
         delay(2000),
 
-        flatMap(() => [
-            // "m/44'/1729'/0'",
-            // "m/44'/1729'/1'",
-            // "m/44'/1729'/2'",
-            "m/44'/1729'/3'",
-            "m/44'/1729'/4'",
-            "m/44'/1729'/5'",
-            "m/44'/1729'/6'",
-            "m/44'/1729'/7'",
-            // "m/44'/1729'/8'",
-            // "m/44'/1729'/9'",
-            // "m/44'/1729'/10'",
-        ]),
-
-        concatMap((xtzPath) => {
+        flatMap((xtzPath) => {
             return TrezorConnect.tezosGetAddress({
-                'path': xtzPath,
-                'showOnTrezor': false,
+                bundle: [
+                    { path: "m/44'/1729'/0'", showOnTrezor: false },
+                    { path: "m/44'/1729'/1'", showOnTrezor: false },
+                    { path: "m/44'/1729'/2'", showOnTrezor: false },
+                    { path: "m/44'/1729'/3'", showOnTrezor: false },
+                    { path: "m/44'/1729'/4'", showOnTrezor: false },
+                ]
             })
         }),
 
@@ -63,7 +54,6 @@ export class TezosTrezorNewEffects {
         }),
     )
 
-    // TODO: !!! triger after click on continue, potential race condition when user select address during loading 
     // get tezos public key  from trezor   
     @Effect()
     TezosTrezorNewPublicKey = this.actions$.pipe(
@@ -72,10 +62,7 @@ export class TezosTrezorNewEffects {
         // add state to effect
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
 
-        // tap(({ action, state }) => console.log('[TEZOS_TREZOR_NEW_SELECT] path',
-        //     state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path)),
-        // get state and action 
-
+        // download publicKey to path
         flatMap(({ action, state }) => of([]).pipe(
             flatMap(() =>
                 TrezorConnect.tezosGetPublicKey({
@@ -88,14 +75,14 @@ export class TezosTrezorNewEffects {
         )),
 
         map((response: any) => ({
-            type: 'TEZOS_TREZOR_NEW_PUBLICKEY_SAVE',
+            type: 'TEZOS_TREZOR_NEW_SELECT_SUCCESS',
             payload: response,
         })),
 
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
-                type: 'TEZOS_TREZOR_NEW_PUBLICKEY_SAVE_ERROR',
+                type: 'TEZOS_TREZOR_NEW_SELECT_ERROR',
                 payload: error.message,
             });
             return caught;
@@ -104,8 +91,20 @@ export class TezosTrezorNewEffects {
     )
 
     @Effect()
-    TezosTrezorNewContractDetail = this.actions$.pipe(
+    TezosTrezorNewGetDetails$ = this.actions$.pipe(
         ofType('TEZOS_TREZOR_NEW_SUCCESS'),
+        tap((action)=>console.log('[TEZOS_TREZOR_NEW_SUCCESS]',action)),
+        // create new action for every item in array
+        flatMap((action: any) => action.payload),
+        flatMap((payload: any) => [
+            { type: 'TEZOS_TREZOR_NEW_DETAIL_BALANCE', payload: payload },
+            { type: 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT', payload: payload },
+        ]),
+    )
+
+    @Effect()
+    TezosTrezorNewContractDetail = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_NEW_DETAIL_BALANCE'),
 
         // add state to effect
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
@@ -124,13 +123,13 @@ export class TezosTrezorNewEffects {
         )),
 
         map((response: any) => ({
-            type: 'TEZOS_TREZOR_NEW_DETAIL_SUCCESS',
+            type: 'TEZOS_TREZOR_NEW_DETAIL_BALANCE_SUCCESS',
             payload: response,
         })),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
-                type: 'TEZOS_TREZOR_NEW_DETAIL_ERROR',
+                type: 'TEZOS_TREZOR_NEW_DETAIL_BALANCE_ERROR',
                 payload: error.message,
             });
             return caught;
@@ -139,10 +138,9 @@ export class TezosTrezorNewEffects {
     )
 
 
-
     @Effect()
     TezosTrezorNewContractCount = this.actions$.pipe(
-        ofType('TEZOS_TREZOR_NEW_SUCCESS'),
+        ofType('TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT'),
 
         // add state to effect
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
@@ -173,7 +171,6 @@ export class TezosTrezorNewEffects {
             });
             return caught;
         }),
-        
 
     )
 

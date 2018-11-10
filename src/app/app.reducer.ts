@@ -83,7 +83,11 @@ export function reducer(state = initialState, action) {
         }
 
         case 'PROGRESSBAR_SHOW':
-        // case 'TEZOS_TREZOR_NEW':
+        case 'TEZOS_TREZOR_NEW':
+        case 'TEZOS_TREZOR_NEW_SELECT':
+        case 'TEZOS_TREZOR_NEW_DETAIL_BALANCE':
+        case 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT':
+
         case 'TEZOS_OPERATION_DELEGATION_SUCCESS':
         case 'TEZOS_OPERATION_TRANSACTION_SUCCESS': {
             return {
@@ -96,7 +100,11 @@ export function reducer(state = initialState, action) {
         }
 
         case 'PROGRESSBAR_HIDE':
-        // case 'TEZOS_TREZOR_NEW_SUCESS':
+        case 'TEZOS_TREZOR_NEW_SUCCESS':
+        case 'TEZOS_TREZOR_NEW_SELECT_SUCCESS':
+        case 'TEZOS_TREZOR_NEW_DETAIL_BALANCE_SUCCESS':
+        case 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT_SUCCESS':
+
         case 'TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS':
         case 'TEZOS_OPERATION_TRANSACTION_PENDING_SUCCESS': {
             return {

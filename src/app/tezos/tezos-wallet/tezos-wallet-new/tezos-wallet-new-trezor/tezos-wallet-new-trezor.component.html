@@ -57,7 +57,7 @@
             </app-tezos-trezor-new>
 
             <div class="tezos-trezor-new-next">
-              <button mat-flat-button matStepperNext *ngIf="tezosTrezorNewSelected">
+              <button mat-flat-button matStepperNext *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.publicKey">
                 <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
                 Continue to Add Name&nbsp;
               </button>

@@ -10,29 +10,40 @@ const initialState: any = {
 export function reducer(state = initialState, action) {
     switch (action.type) {
 
+        case 'TEZOS_TREZOR_NEW': {
+            return {
+                ...state,
+                ids: [],
+                entities: {},
+            }
+        }
+
         case 'TEZOS_TREZOR_NEW_SUCCESS': {
 
             console.log('[TEZOS_TREZOR_NEW_SUCCESS]', action.payload)
-
+            
             return {
                 ...state,
                 ids: [
-                    ...state.ids,
-                    ...action.payload.address
+                    ...action.payload.map(item => item.address),
                 ],
                 entities: {
                     ...state.entities,
-                    [action.payload.address]: {
-                        address: action.payload.address,
-                        path: 'm/' + action.payload.serializedPath,
-                        contracts: '',
-                        balance: '',
-                    }
+                    ...action.payload.reduce((accumulator, value) => ({
+                        ...accumulator,
+                        [value.address]: {
+                            address: value.address,
+                            path: 'm/' + value.serializedPath,
+                            contracts: '',
+                            balance: '',
+                        }
+                    }), {}),
+ 
                 },
             }
         }
 
-        case 'TEZOS_TREZOR_NEW_PUBLICKEY_SAVE': {
+        case 'TEZOS_TREZOR_NEW_SELECT_SUCCESS': {
             return {
                 ...state,
                 entities: {
@@ -60,7 +71,7 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'TEZOS_TREZOR_NEW_DETAIL_SUCCESS': {
+        case 'TEZOS_TREZOR_NEW_DETAIL_BALANCE_SUCCESS': {
             return {
                 ...state,
                 entities: {
