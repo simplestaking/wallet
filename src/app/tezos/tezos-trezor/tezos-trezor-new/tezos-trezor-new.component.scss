@@ -3,11 +3,11 @@ table {
 }
 
 .mat-cell.cdk-column-select.mat-column-select {
-    width: 75px;
+    width: 50px;
 }
 
 .mat-cell.cdk-column-address.mat-column-address {
-    width: 375px;
+    width: 360px;
 }
 
 .mat-cell.cdk-column-path.mat-column-path {
@@ -19,11 +19,10 @@ table {
 }
 
 .mat-cell.cdk-column-balance.mat-column-balance {
-    width: 200px;
+    width: 150px;
     text-align: right;
 }
 
 .mat-header-cell.cdk-column-balance.mat-column-balance {
-    width: 200px;
     text-align: right;
 }
