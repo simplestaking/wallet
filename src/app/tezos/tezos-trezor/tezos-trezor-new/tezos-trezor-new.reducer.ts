@@ -5,6 +5,7 @@ const initialState: any = {
     page: 0,
     itemsPerPage: 10,
     itemsTotalCount: 0,
+    pending: false,
 }
 
 export function reducer(state = initialState, action) {
@@ -15,6 +16,7 @@ export function reducer(state = initialState, action) {
                 ...state,
                 ids: [],
                 entities: {},
+                pending: true,
             }
         }
 
@@ -24,6 +26,7 @@ export function reducer(state = initialState, action) {
             
             return {
                 ...state,
+                pending: false,
                 ids: [
                     ...action.payload.map(item => item.address),
                 ],
@@ -43,9 +46,26 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_TREZOR_NEW_ERROR': {
+            return {
+                ...state,
+                pending: false,
+            }
+        }
+
+
+        case 'TEZOS_TREZOR_NEW_SELECT': {
+            return {
+                ...state,
+                pending: true,
+                selected: action.payload.id,
+            }
+        }
+
         case 'TEZOS_TREZOR_NEW_SELECT_SUCCESS': {
             return {
                 ...state,
+                pending: false,
                 entities: {
                     ...state.entities,
                     [action.payload.address]: {
@@ -53,13 +73,6 @@ export function reducer(state = initialState, action) {
                         publicKey: action.payload.publicKey
                     }
                 },
-            }
-        }
-
-        case 'TEZOS_TREZOR_NEW_SELECT': {
-            return {
-                ...state,
-                selected: action.payload.id,
             }
         }
 

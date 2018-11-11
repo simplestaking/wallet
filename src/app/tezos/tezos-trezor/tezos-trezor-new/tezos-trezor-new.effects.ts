@@ -100,6 +100,15 @@ export class TezosTrezorNewEffects {
             { type: 'TEZOS_TREZOR_NEW_DETAIL_BALANCE', payload: payload },
             { type: 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT', payload: payload },
         ]),
+        
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_SUCCESS_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     @Effect()

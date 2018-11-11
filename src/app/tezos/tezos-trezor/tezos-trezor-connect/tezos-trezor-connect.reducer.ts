@@ -4,19 +4,19 @@ const initialState: any = {
     device: {
         connected: false,
         button: 0,
+        buttonType: '',
     },
     response: {},
     ui: {},
     status: {
-        // message: {
-        //     text: 'Connect your Trezor to Continue...',
-        //     url: '',
-        //     urlText: '',
-        // },
         error: false,
         errorType: '',
         event: '',
-    }
+    },
+    passpharse: {
+        isVisible: false,
+        type: '',
+    },
 }
 
 export function reducer(state = initialState, action) {
@@ -53,6 +53,7 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_TREZOR_CONNECT_DEVICE_CHANGED':
         case 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT': {
 
             let connected = false
@@ -109,31 +110,60 @@ export function reducer(state = initialState, action) {
                 }
 
                 if (action.payload.payload.status === 'available') {
-                    connected = true
-                    error = false
-                    errorType = ''
+                    console.log('[passphrase]',
+                        action.payload.payload.features.passphrase_protection,
+                        action.payload.payload.features.passphrase_cached)
+
+                    // if password is needed and there is no password in cache
+                    if (action.payload.payload.features.passphrase_protection &&
+                        !action.payload.payload.features.passphrase_cached) {
+
+                        error = true
+                        errorType = 'passphrase'
+
+                    } else {
+
+                        // everything is ok user can use device
+                        connected = true
+                        error = false
+                        errorType = ''
+
+                    }
+
                 }
 
-            }
-
-            return {
-                ...state,
-                device: {
-                    ...state.device,
-                    ...action.payload.payload,
-                    connected: connected,
-                },
-                status: {
-                    ...state.status,
-                    event: action.payload.type,
-                    error: error,
-                    errorType: errorType,
+                return {
+                    ...state,
+                    device: {
+                        ...state.device,
+                        ...action.payload.payload,
+                        connected: connected,
+                    },
+                    status: {
+                        ...state.status,
+                        event: action.payload.type,
+                        error: error,
+                        errorType: errorType,
+                    }
                 }
             }
         }
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT_UNACQUIRED': {
-            return state;
+            return {
+                ...state,
+                device: {
+                    ...state.device,
+                    ...action.payload.payload,
+                    connected: false,
+                },
+                status: {
+                    ...state.status,
+                    event: action.payload.type,
+                    error: true,
+                    errorType: 'unacquired',
+                }
+            }
         }
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE_DISCONNECT': {
@@ -146,9 +176,6 @@ export function reducer(state = initialState, action) {
                 },
                 status: {
                     ...state.status,
-                    // message: {
-                    //     text: 'Connect your Trezor to Continue...'
-                    // },
                     error: false,
                     errorType: '',
                 }
@@ -161,6 +188,42 @@ export function reducer(state = initialState, action) {
                 device: {
                     ...state.device,
                     button: state.device.button + 1,
+                    buttonType: action.payload.payload.code
+                },
+            }
+        }
+
+        // device is password protected  
+        case 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON_PASSPHRASE': {
+            return {
+                ...state,
+                device: {
+                    ...state.device,
+                    buttonType: 'passphrase',
+                },
+                passphrase: {
+                    ...state.passphrase,
+                    isVisible: true,
+                }
+            }
+        }
+
+        case 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_DEVICE': {
+            return {
+                ...state,
+                passphrase: {
+                    ...state.device,
+                    type: 'device',
+                },
+            }
+        }
+
+        case 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_HOST': {
+            return {
+                ...state,
+                passphrase: {
+                    ...state.device,
+                    type: 'host',
                 },
             }
         }

@@ -2,6 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+
+import { of, empty } from 'rxjs';
 import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
 
 import TrezorConnect, { DEVICE, TRANSPORT, UI } from 'trezor-connect';
@@ -32,10 +34,15 @@ export class TezosTrezorConnectEffects {
                     console.log('[TrezorConnect][DEVICE_EVENT]', event);
                     switch (event.type) {
 
-                        case DEVICE.CHANGED:
                         case DEVICE.CONNECT: {
                             return this.store.dispatch({
                                 type: 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT',
+                                payload: event,
+                            })
+                        }
+                        case DEVICE.CHANGED: {
+                            return this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_DEVICE_CHANGED',
                                 payload: event,
                             })
                         }
@@ -55,10 +62,26 @@ export class TezosTrezorConnectEffects {
                         }
 
                         case DEVICE.BUTTON: {
-                            return this.store.dispatch({
-                                type: 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON',
-                                payload: event,
-                            })
+
+                            console.warn('[DEVICE.BUTTON]', event.payload.code);
+
+                            switch (event.payload.code) {
+
+                                case 'ButtonRequest_PassphraseType': {
+                                    return this.store.dispatch({
+                                        type: 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON_PASSPHRASE',
+                                        payload: event,
+                                    })
+                                }
+
+                                default: {
+                                    return this.store.dispatch({
+                                        type: 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON',
+                                        payload: event,
+                                    })
+                                }
+
+                            }
                         }
 
                         default:
@@ -101,6 +124,23 @@ export class TezosTrezorConnectEffects {
                 TrezorConnect.on('UI_EVENT', (event) => {
                     console.log('[TrezorConnect][UI_EVENT]', event);
                     switch (event.type) {
+
+                        // request password  device
+                        case 'ui-request_passphrase_on_device': {
+                            return this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_DEVICE',
+                                payload: event,
+                            })
+                        }
+
+                        // request password aplication
+                        case 'ui-request_passphrase': {
+                            return this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_HOST',
+                                payload: event,
+                            })
+                        }
+
                         default: {
                             return this.store.dispatch({
                                 type: 'TEZOS_TREZOR_CONNECT_UI',
@@ -144,7 +184,7 @@ export class TezosTrezorConnectEffects {
                     connectSrc: 'http://localhost:5500/build/',
                     frame_src: 'http://localhost:5500/build/iframe.html',
                     popup_src: 'http://localhost:5500/build/popup.html',
-                    
+
                     popup: false,
                     webusb: false,
                     // try to reconect when bridge is not working
@@ -201,6 +241,60 @@ export class TezosTrezorConnectEffects {
             return caught;
         }),
     )
+
+    // listen to device connection   
+    // get all new address from trezor
+    @Effect()
+    TezosTrezorConnectDeviceConnect = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT_DEVICE_CONNECT'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action, state) => ({ state, action })),
+
+        flatMap(({ state, action }) => {
+
+            console.warn('[TEZOS_TREZOR_CONNECT_DEVICE_CONNECT] connected ',
+                state.tezos.tezosTrezorConnect.device.connected,
+                state.tezos.tezosTrezorConnect.device.features.passphrase_protection &&
+                    !state.tezos.tezosTrezorConnect.device.features.passphrase_cached
+            )
+
+            // if device is connected with normal state get all address
+            return (!state.tezos.tezosTrezorNew.pending && (
+
+                // !TODO check if we already downloaded all new addresses
+                // set flag in tezosTrezorNew has already all address download 
+                // 2. if we have address in tezosWalletDetail if it match addresses on trezor 
+                // if not we have wrong password or wrong device  
+                (state.tezos.tezosTrezorConnect.device.connected  )||
+
+                // if we need password and password is not in cache
+                (state.tezos.tezosTrezorConnect.device.features.passphrase_protection &&
+                    !state.tezos.tezosTrezorConnect.device.features.passphrase_cached)
+
+            )) ?
+                of({ type: 'TEZOS_TREZOR_NEW' }) : empty()
+
+        }),
+
+    )
+
+    // listen for device passpharse event    
+    @Effect()
+    TezosTrezorConnectDevicePasspharse = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT_DEVICE_PASSHPARSE'),
+
+        map(() => ({ type: 'TEZOS_TREZOR_CONNECT_DEVICE_PASSPHARSE_SUCCESS' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_DEVICE_PASSPHARSE_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+    )
+
 
     constructor(
         private actions$: Actions,
