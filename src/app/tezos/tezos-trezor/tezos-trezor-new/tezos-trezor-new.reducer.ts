@@ -6,6 +6,8 @@ const initialState: any = {
     itemsPerPage: 10,
     itemsTotalCount: 0,
     pending: false,
+    error: false,
+    errorTyle: '',
 }
 
 export function reducer(state = initialState, action) {
@@ -23,7 +25,15 @@ export function reducer(state = initialState, action) {
         case 'TEZOS_TREZOR_NEW_SUCCESS': {
 
             console.log('[TEZOS_TREZOR_NEW_SUCCESS]', action.payload)
-            
+            if (action.payload.hasOwnProperty('error')) {
+                return {
+                    ...state,
+                    pending: false,
+                    error: true,
+                    errorType: action.payload.error
+                }
+            }
+
             return {
                 ...state,
                 pending: false,
@@ -41,7 +51,7 @@ export function reducer(state = initialState, action) {
                             balance: '',
                         }
                     }), {}),
- 
+
                 },
             }
         }

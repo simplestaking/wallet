@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, } from 'rxjs';
+import { Observable, of, empty, } from 'rxjs';
 import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -95,12 +95,12 @@ export class TezosTrezorNewEffects {
         ofType('TEZOS_TREZOR_NEW_SUCCESS'),
         tap((action)=>console.log('[TEZOS_TREZOR_NEW_SUCCESS]',action)),
         // create new action for every item in array
-        flatMap((action: any) => action.payload),
+        flatMap((action: any) => !action.payload.error ? action.payload : empty() ),
         flatMap((payload: any) => [
             { type: 'TEZOS_TREZOR_NEW_DETAIL_BALANCE', payload: payload },
             { type: 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT', payload: payload },
         ]),
-        
+
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({

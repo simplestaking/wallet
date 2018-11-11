@@ -7,8 +7,7 @@
     </span>
   </div>
 
-  <div class="trezor-disconnected" *ngIf="!tezosTrezorConnect.device.connected && 
-  tezosTrezorConnect.status.errorType!='passphrase'">
+  <div class="trezor-disconnected" *ngIf="!tezosTrezorConnect.device.connected && !tezosTrezorConnect.passphrase.isVisible">
     <img src="./assets/trezor_disconnected.svg" alt="Connect your Trezor to Continue...">
 
     <span class="action" *ngIf="!tezosTrezorConnect.status.error">
@@ -62,6 +61,10 @@
       Your device is being used by another application.
     </span>
 
+    <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='passphrase'">
+      Password is required. Please wait for Trezor to start.
+    </span>
+
     <!-- 
       <span class="status">
         &nbsp;{{ tezosTrezorConnect.status.event }}
@@ -69,9 +72,12 @@
 
   </div>
 
-  <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.status?.errorType=='passphrase'">
+  <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.isVisible">
     Where to enter your passphrase ?
 
+    <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type==''">
+      empty
+    </div>
 
     <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type=='host'">
       host

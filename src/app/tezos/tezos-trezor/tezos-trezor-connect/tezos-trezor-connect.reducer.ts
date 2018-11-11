@@ -13,7 +13,7 @@ const initialState: any = {
         errorType: '',
         event: '',
     },
-    passpharse: {
+    passphrase: {
         isVisible: false,
         type: '',
     },
@@ -59,6 +59,7 @@ export function reducer(state = initialState, action) {
             let connected = false
             let error = false
             let errorType = ''
+            let passphraseIsVisible = false
 
             let version = {
                 major: undefined,
@@ -120,6 +121,7 @@ export function reducer(state = initialState, action) {
 
                         error = true
                         errorType = 'passphrase'
+                        passphraseIsVisible = true
 
                     } else {
 
@@ -144,6 +146,11 @@ export function reducer(state = initialState, action) {
                         event: action.payload.type,
                         error: error,
                         errorType: errorType,
+                    },
+                    passphrase: {
+                        ...state.passpharse,
+                        isVisible: false, // isVisible: passphraseIsVisible,
+                        type: '',
                     }
                 }
             }
@@ -178,6 +185,10 @@ export function reducer(state = initialState, action) {
                     ...state.status,
                     error: false,
                     errorType: '',
+                },
+                passphrase: {
+                    isVisible: false,
+                    type:'',
                 }
             }
         }
@@ -204,6 +215,7 @@ export function reducer(state = initialState, action) {
                 passphrase: {
                     ...state.passphrase,
                     isVisible: true,
+                    type: '',
                 }
             }
         }
@@ -212,7 +224,7 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 passphrase: {
-                    ...state.device,
+                    ...state.passphrase,
                     type: 'device',
                 },
             }
@@ -222,7 +234,7 @@ export function reducer(state = initialState, action) {
             return {
                 ...state,
                 passphrase: {
-                    ...state.device,
+                    ...state.passphrase,
                     type: 'host',
                 },
             }
@@ -256,6 +268,10 @@ export function reducer(state = initialState, action) {
                     errorType: 'init',
                 }
             }
+        }
+
+        case 'TEZOS_TREZOR_CONNECT_CLOSE': {
+            return initialState
         }
 
         default:
