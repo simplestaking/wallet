@@ -121,9 +121,7 @@
         <!-- <a mat-list-item routerLink="/settings">Settings</a>  -->
       </mat-nav-list>
 
-      <div class="app-version" class="mat-body" style="display: flex;align-items: flex-end;padding: 0 16px; height: 20%;opacity:0.1;font-size:12px;position: fixed;bottom: 10px;">
-        {{electronVersion}}
-      </div>
+
 
     </mat-sidenav>
 
@@ -135,7 +133,9 @@
     </mat-sidenav-content>
 
   </mat-sidenav-container>
-
+  <div class="app-version" class="mat-body" style="position: fixed;bottom: 10px;padding-left: 26px; z-index:1;opacity:0.1;font-size:10px;">
+    {{electronVersion}}
+  </div>
 
 
   <!-- <mat-toolbar class="app-status-bar">

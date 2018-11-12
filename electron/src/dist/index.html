@@ -21,15 +21,23 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114065646-1"></script>
-
+  <style>
+    @keyframes flickerAnimation {
+      0%   { opacity:0; }
+      50%  { opacity:1; }
+      100% { opacity:0; }
+    }
+  </style>
 </head>
 
-<body>
-  <app-root></app-root>
+<body style="background-color:whitesmoke;">
+  
+  <app-root>
+    <div style="display: flex; justify-content: center; margin-top:25%; animation: flickerAnimation 7s infinite;">
+      <img src="./assets/icon/electron_basic.png" alt="loading ..."  style="width:250px;height:250px"/>
+    </div>
+  </app-root>
 
-  <div style="">
-    loading ...
-  </div>
 
 <script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="styles.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script></body>
 
