@@ -168,6 +168,7 @@ export class TezosOperationDelegationEffects {
                         publicKey: state.tezos.tezosWalletDetail.publicKey,
                         publicKeyHash: action.payload.originatedPublicKeyHash,
                         path: state.tezos.tezosWalletDetail.path,
+                        manager: state.tezos.tezosWalletDetail.publicKeyHash,
                         network: state.tezos.tezosNode.api.name,
                         balance: 0,
                         type: 'TREZOR_T',

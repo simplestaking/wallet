@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, catchError, filter, tap } from 'rxjs/operators';
 
 import { ofRoute } from 'app/shared/utils/rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -40,12 +40,21 @@ export class TezosWalletListEffects {
         // get data from firebase 
         // TODO: move to custom rxjs operator
         flatMap(state =>
-            this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet',
-                query => query.where('uid', '==', null)
-                    .orderBy('name', 'asc')
-            ).valueChanges()
+            of([]).pipe(
+                // get data from firebase 
+                flatMap(() => this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet',
+                    query => query.where('uid', '==', null)
+                        .orderBy('name', 'asc')
+                ).valueChanges()),
+                // show only valid trezor addresses or dektop with private key 
+                map(addresses => addresses
+                    .filter((address:any) =>
+                        state.tezos.tezosTrezorNew.ids.includes(address.manager) || 
+                        (!address.type && address.secretKey) 
+                    )
+                )
+            )
         ),
-
         map(response => ({ type: 'TEZOS_WALLET_LIST_LOAD_SUCCESS', payload: response })),
         catchError((error, caught) => {
             console.error(error.message)
@@ -67,10 +76,11 @@ export class TezosWalletListEffects {
 
         // get all accounts address
         flatMap((state: any) => state.tezos.tezosWalletList.ids
-            .filter(id =>
-                // get balnce only if last downlaod is older than 3 mins
-                (new Date().getTime() - state.tezos.tezosWalletList.entities[id].timestamp) < (5 * 60 * 1000) ? false : true
-            )
+            // TODO: temp comment to see changes fast
+            // .filter(id =>
+            //     // get balnce only if last downlaod is older than 3 mins
+            //     (new Date().getTime() - state.tezos.tezosWalletList.entities[id].timestamp) < (5 * 60 * 1000) ? false : true
+            // )
             .map(id => ({
                 node: state.tezos.tezosNode.api,
                 detail: state.tezos.tezosWalletList.entities[id],

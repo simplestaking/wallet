@@ -56,6 +56,7 @@ export class TezosWalletNewTrezorEffects {
                     name: action.payload,
                     publicKey: state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].publicKey,
                     publicKeyHash: state.tezos.tezosTrezorNew.selected,
+                    manager: state.tezos.tezosTrezorNew.selected,
                     path: state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path,       
                     network: state.tezos.tezosNode.api.name,
                     balance: 0,
