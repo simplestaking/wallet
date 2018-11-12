@@ -7,15 +7,39 @@ import { Observable, of, empty, } from 'rxjs';
 import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ofRoute } from '../../../shared/utils/rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import TrezorConnect from 'trezor-connect';
 
-
 @Injectable()
 export class TezosTrezorPassphraseEffects {
-   
+
+    @Effect()
+    TezosTrezorPassphrase$ = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_PASSPHRASE'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action: any, state) => state),
+
+        flatMap((state) => of(
+            TrezorConnect.setPassphrase({
+                'passphrase': state.tezos.tezosTrezorPassphrase.form.password,
+            })
+        )),
+
+        map((response: any) => ({ type: 'TEZOS_TREZOR_PASSPHRASE_SUCCESS' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_PASSPHRASE_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+    )
+
+
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

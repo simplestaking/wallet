@@ -46,9 +46,41 @@
       <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
       <div class="tezos-trezor-verify-info">
 
-        <mat-card class="tezos-trezor-verify-card">
+        <mat-card class="tezos-trezor-verify-card" style="height:210px">
           <mat-card-content>
             <span class="mat-body-1">
+
+              <div class="tezos-trezor-passphrase" [formGroup]="tezosTrezorPassphraseForm" ngrxForm="tezos.tezosTrezorPassphrase">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input matInput #password type="text" placeholder="Password" formControlName="password" />
+                  <mat-error>
+                    Please enter password
+                  </mat-error>
+                </mat-form-field>
+
+                <br />
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Repeat Password</mat-label>
+                  <input matInput #repeatPassword type="text" placeholder="Repeat Password" formControlName="repeatPassword"
+                    [errorStateMatcher]="passphraseErrorMatcher" />
+                  <mat-error>
+                    Please repeat password
+                  </mat-error>
+                </mat-form-field>
+
+                <br />
+                <br />
+
+                <button mat-flat-button (click)="submitPassphrase()">
+                  Submit
+                </button>
+
+                <br />
+
+              </div>
 
 
             </span>
