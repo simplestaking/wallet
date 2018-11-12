@@ -48,9 +48,13 @@ export class TezosWalletListEffects {
                 ).valueChanges()),
                 // show only valid trezor addresses or dektop with private key 
                 map(addresses => addresses
-                    .filter((address:any) =>
-                        state.tezos.tezosTrezorNew.ids.includes(address.manager) || 
-                        (!address.type && address.secretKey) 
+                    .filter((address: any) =>
+                        // show all, we have no Trezor addresses 
+                        state.tezos.tezosTrezorNew.ids.length === 0  ||
+                        // show only valid Trezor address    
+                        state.tezos.tezosTrezorNew.ids.includes(address.manager) ||
+                        // show only valid Desktop address
+                        (!address.type && address.secretKey)
                     )
                 )
             )

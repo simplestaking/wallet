@@ -6,6 +6,7 @@ import { of, defer, timer } from 'rxjs';
 import { map, tap, switchMap, flatMap, catchError } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { TrezorConnect } from 'trezor-connect'
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
 export class AllEffects {
@@ -33,12 +34,17 @@ export class AllEffects {
     // )
 
     @Effect()
-    Init$ = defer(() => of({ type: 'HEARTBEAT' })
-    );
+    Init$ = defer(() => {
+        // disable online data 
+        this.db.firestore.disableNetwork();
+        return of({ type: 'HEARTBEAT' })
+
+    });
 
     constructor(
         private actions$: Actions,
         private http: HttpClient,
+        private db: AngularFirestore,
     ) { }
 
 }

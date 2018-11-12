@@ -34,19 +34,18 @@ export class TezosWalletNewTrezorEffects {
     @Effect()
     TezosWalletNewTrezorSave = this.actions$.pipe(
         ofType('TEZOS_WALLET_NEW_TREZOR_SAVE'),
-        
+
         // get state and action 
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
 
         //tap(({ action, state }) => console.log('[TEZOS_WALLET_NEW_TREZOR_SAVE]', action, state)),
-        
-        flatMap(({ action, state }) => {
 
+        tap(({ action, state }) => {
             // save wallet to wallet list in FireBase Store 
             this.walletCollection = this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet');
-            
+
             // add wallet to firestore
-            return this.walletCollection
+            this.walletCollection
                 // set document id as tezos wallet
                 .doc(state.tezos.tezosTrezorNew.selected)
                 .set({
@@ -57,19 +56,16 @@ export class TezosWalletNewTrezorEffects {
                     publicKey: state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].publicKey,
                     publicKeyHash: state.tezos.tezosTrezorNew.selected,
                     manager: state.tezos.tezosTrezorNew.selected,
-                    path: state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path,       
+                    path: state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path,
                     network: state.tezos.tezosNode.api.name,
                     balance: 0,
                     type: 'TREZOR_T',
                 })
         }),
-    
+
         // dispatch action
         map(() => ({ type: 'TEZOS_WALLET_NEW_TREZOR_SHOW_SAVE_SUCCESS' })),
-    
-        // redirect back to wallet list
-        tap(() => this.router.navigate(['/tezos/wallet'])),
-        
+
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -77,7 +73,10 @@ export class TezosWalletNewTrezorEffects {
                 payload: error.message,
             });
             return caught;
-        })
+        }),
+
+        // redirect back to wallet list
+        // tap(() => this.router.navigate(['/tezos/wallet'])),
     )
 
     constructor(
