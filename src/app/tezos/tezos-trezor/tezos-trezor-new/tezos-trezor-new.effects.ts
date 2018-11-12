@@ -20,15 +20,14 @@ export class TezosTrezorNewEffects {
     //  get tezos address from trezor   
     @Effect()
     TezosTrezorNew = this.actions$.pipe(
-        // ofRoute('/tezos/wallet/new/trezor'),
-        // ofType('TEZOS_TREZOR_CONNECT_TRANSPORT_START'),
+
         ofType('TEZOS_TREZOR_NEW'),
 
         // TODO: find action for connect initialization
-        delay(2000),
+        // delay(2000),
 
-        flatMap((xtzPath) => {
-            return TrezorConnect.tezosGetAddress({
+        flatMap(() => Promise.resolve(
+            TrezorConnect.tezosGetAddress({
                 bundle: [
                     { path: "m/44'/1729'/0'", showOnTrezor: false },
                     { path: "m/44'/1729'/1'", showOnTrezor: false },
@@ -36,9 +35,8 @@ export class TezosTrezorNewEffects {
                     { path: "m/44'/1729'/3'", showOnTrezor: false },
                     { path: "m/44'/1729'/4'", showOnTrezor: false },
                 ]
-            })
-        }),
-
+            }))
+        ),
 
         map((response: any) => ({
             type: 'TEZOS_TREZOR_NEW_SUCCESS',
@@ -64,11 +62,11 @@ export class TezosTrezorNewEffects {
 
         // download publicKey to path
         flatMap(({ action, state }) => of([]).pipe(
-            flatMap(() =>
+            flatMap(() => Promise.resolve(
                 TrezorConnect.tezosGetPublicKey({
                     'path': state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path,
                     'showOnTrezor': false,
-                })
+                }))
             ),
             // add address to response
             map((response: any) => ({ ...response.payload, address: action.payload.address })),
@@ -93,9 +91,9 @@ export class TezosTrezorNewEffects {
     @Effect()
     TezosTrezorNewGetDetails$ = this.actions$.pipe(
         ofType('TEZOS_TREZOR_NEW_SUCCESS'),
-        tap((action)=>console.log('[TEZOS_TREZOR_NEW_SUCCESS]',action)),
+        tap((action) => console.log('[TEZOS_TREZOR_NEW_SUCCESS]', action)),
         // create new action for every item in array
-        flatMap((action: any) => !action.payload.error ? action.payload : empty() ),
+        flatMap((action: any) => !action.payload.error ? action.payload : empty()),
         flatMap((payload: any) => [
             { type: 'TEZOS_TREZOR_NEW_DETAIL_BALANCE', payload: payload },
             { type: 'TEZOS_TREZOR_NEW_DETAIL_CONTRACT_COUNT', payload: payload },
