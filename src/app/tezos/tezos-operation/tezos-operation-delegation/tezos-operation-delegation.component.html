@@ -16,9 +16,9 @@
             <span class="tezos-wallet-list-option-opacity">
               {{ tezosWalletDetail?.publicKeyHash }}
             </span>
-            <span class="tezos-wallet-list-option-opacity">
-              <i>{{ tezosWalletDetail?.type }}</i>
-            </span>
+            <!-- <span class="tezos-wallet-list-option-opacity">
+              <i>{{ tezosWalletDetail?.path }}</i>
+            </span> -->
           </div>
           <span class="tezos-wallet-list-option-balance">
             {{ tezosWalletDetail?.balance * 0.000001 | number:'1.2-6' }} XTZ
@@ -34,11 +34,11 @@
             <span class="tezos-wallet-list-option-name">
               {{ from.name }}
             </span>
-            <span class="tezos-wallet-list-option-opacity">
+            <!-- <span class="tezos-wallet-list-option-opacity">
               {{ from.publicKeyHash }}
-            </span>
+            </span> -->
             <span class="tezos-wallet-list-option-opacity">
-              <i>{{ from.type }}</i>
+              <i>{{ from.path }}</i>
             </span>
           </div>
           <span class="tezos-wallet-list-option-balance">

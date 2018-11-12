@@ -35,9 +35,8 @@ export class TezorTrezorDebugComponent implements OnInit {
 
           TrezorConnect.setPassphrase({
             'passphrase': "test",
-          }).then(response => { console.warn('[setPassphrase]', response) })
-            .catch(error => { console.error('[ERROR][setPassphrase]', error) });
-
+          })
+          
         }
 
       });

@@ -86,7 +86,9 @@
                   </mat-card-header>
                   <mat-card-content style="padding:initial">
                     <span class="tezos-stepper-card-qrcode">
-                      <qrcode [qrdata]="tezosOperationReceive?.form?.to" [size]="1" [level]="'M'" [usesvg]="true"></qrcode>
+                      <qrcode *ngIf="tezosOperationReceive?.form?.to" [qrdata]="tezosOperationReceive?.form?.to" [size]="1"
+                        [level]="'M'" [usesvg]="true">
+                      </qrcode>
                     </span>
                     <span style="display:block;height:30px;opacity: 0.7;">
                       Address for account: <b>{{ tezosWalletDetail.name }}</b>

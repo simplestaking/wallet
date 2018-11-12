@@ -51,7 +51,7 @@ export class TezosTrezorPassphraseComponent implements OnInit {
     // check validity
     this.tezosTrezorPassphraseForm.updateValueAndValidity()
 
-    console.log('[submitPassphrase]', this.tezosTrezorPassphraseForm.valid, this.tezosTrezorPassphraseForm.value.password)
+    console.log('[submitPassphrase]', this.tezosTrezorPassphraseForm.valid  , this.tezosTrezorPassphraseForm.value.password)
 
     // dispatch only if valid
     if (this.tezosTrezorPassphraseForm.valid &&
