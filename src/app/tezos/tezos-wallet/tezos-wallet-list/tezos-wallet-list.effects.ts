@@ -1,14 +1,14 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { map, withLatestFrom, flatMap, catchError, filter, tap } from 'rxjs/operators';
-
-import { ofRoute } from 'app/shared/utils/rxjs/operators';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
+
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 @Injectable()
 export class TezosWalletListEffects {
@@ -50,7 +50,7 @@ export class TezosWalletListEffects {
                 map(addresses => addresses
                     .filter((address: any) =>
                         // show all, we have no Trezor addresses 
-                        state.tezos.tezosTrezorNew.ids.length === 0  ||
+                        state.tezos.tezosTrezorNew.ids.length === 0 ||
                         // show only valid Trezor address    
                         state.tezos.tezosTrezorNew.ids.includes(address.manager) ||
                         // show only valid Desktop address
@@ -103,6 +103,9 @@ export class TezosWalletListEffects {
             // get wallet info
             getWallet(),
 
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
+
         )),
 
 
@@ -146,6 +149,7 @@ export class TezosWalletListEffects {
         private actions$: Actions,
         private store: Store<any>,
         private db: AngularFirestore,
+        private zone: NgZone
     ) { }
 
 }

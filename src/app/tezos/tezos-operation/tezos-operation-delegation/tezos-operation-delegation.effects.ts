@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/operators';
+import { enterZone } from '../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, setDelegation, originateContract, confirmOperation } from '../../../../../tezos-wallet'
 
@@ -57,6 +58,9 @@ export class TezosOperationDelegationEffects {
 
             ),
 
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
+
         )),
         tap(response => console.log('[TEZOS_OPERATION_DELEGATION_SUCCESS]', response)),
         // dispatch action based on result
@@ -97,6 +101,9 @@ export class TezosOperationDelegationEffects {
             confirmOperation(stateWallet => ({
                 injectionOperation: action.payload.injectionOperation,
             })),
+
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
 
             // add metadata to state
             map((response: any) => {
@@ -198,7 +205,8 @@ export class TezosOperationDelegationEffects {
         private http: HttpClient,
         private store: Store<any>,
         private db: AngularFirestore,
-        private router: Router
+        private router: Router,
+        private zone: NgZone
     ) { }
 
 }

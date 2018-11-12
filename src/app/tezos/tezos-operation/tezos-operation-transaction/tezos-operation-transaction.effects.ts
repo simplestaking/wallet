@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, catchError, delay } from 'rxjs/operators';
+import { enterZone } from '../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
 
@@ -38,6 +39,9 @@ export class TezosOperationTransactionEffects {
                 to: state.tezos.tezosOperationTransaction.form.to,
                 amount: state.tezos.tezosOperationTransaction.form.amount,
             })),
+
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
 
         )),
 
@@ -78,6 +82,9 @@ export class TezosOperationTransactionEffects {
                 injectionOperation: action.payload.injectionOperation,
             })),
 
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
+            
             map(() => ({ action, state }))
         )),
 
@@ -90,8 +97,6 @@ export class TezosOperationTransactionEffects {
             },
         })),
 
-        // wait for tzscan to process tranzaction
-        delay(3000),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -100,6 +105,8 @@ export class TezosOperationTransactionEffects {
             });
             return caught;
         }),
+        // wait for tzscan to process tranzaction
+        delay(3000),
         // redirect to wallet detail
         tap((action) => {
             this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
@@ -110,7 +117,8 @@ export class TezosOperationTransactionEffects {
         private actions$: Actions,
         private http: HttpClient,
         private store: Store<any>,
-        private router: Router
+        private router: Router,
+        private zone: NgZone,
     ) { }
 
 }

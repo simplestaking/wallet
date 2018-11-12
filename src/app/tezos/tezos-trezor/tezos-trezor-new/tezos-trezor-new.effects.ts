@@ -1,13 +1,13 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, empty, } from 'rxjs';
-import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
+import { enterZone } from '../../../shared/utils/rxjs/operators';
 
-import { ofRoute } from '../../../shared/utils/rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import TrezorConnect from 'trezor-connect';
@@ -127,6 +127,8 @@ export class TezosTrezorNewEffects {
             // get wallet info
             getWallet(),
 
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
         )),
 
         map((response: any) => ({
@@ -187,6 +189,7 @@ export class TezosTrezorNewEffects {
         private http: HttpClient,
         private db: AngularFirestore,
         private router: Router,
+        private zone: NgZone
     ) { }
 
 }

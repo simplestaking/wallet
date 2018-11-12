@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, catchError } from 'rxjs/operators';
+import { enterZone } from '../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
 
@@ -21,12 +22,12 @@ export class TezosOperationReceiveEffects {
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
 
         // show address on device
-        flatMap(({ action, state }) => {
-            return TrezorConnect.tezosGetAddress({
+        flatMap(({ action, state }) => Promise.resolve(
+            TrezorConnect.tezosGetAddress({
                 'path': state.tezos.tezosWalletDetail.path,
                 'showOnTrezor': true,
             })
-        }),
+        )),
 
         // dispatch action based on result
         map((response: any) => ({
@@ -65,6 +66,9 @@ export class TezosOperationReceiveEffects {
     //             injectionOperation: action.payload.injectionOperation,
     //         })),
 
+    //          // enter back into zone.js so change detection works
+    //          enterZone(this.zone),
+
     //         map(() => ({ action, state }))
     //     )),
 
@@ -87,7 +91,8 @@ export class TezosOperationReceiveEffects {
         private actions$: Actions,
         private http: HttpClient,
         private store: Store<any>,
-        private router: Router
+        private router: Router,
+        private zone: NgZone
     ) { }
 
 }

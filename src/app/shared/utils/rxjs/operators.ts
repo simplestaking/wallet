@@ -1,7 +1,7 @@
 import { OperatorFunction } from 'rxjs/interfaces';
 import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { } from '@angular/router';
 
 interface ActionWithPayload extends Action {
     payload?: object;
@@ -45,4 +45,13 @@ export function ofRoute(path: string | string[]): OperatorFunction<Action, Actio
     });
 }
 
-
+export function enterZone(zone) {
+    return function enterZoneImplementation(source) {
+      return Observable.create(observer => {
+        const onNext = (value) => zone.run(() => observer.next(value));
+        const onError = (e) => zone.run(() => observer.error(e));
+        const onComplete = () => zone.run(() => observer.complete());
+        return source.subscribe(onNext, onError, onComplete);
+      });
+    };
+  }

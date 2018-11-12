@@ -1,12 +1,12 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { AngularFirestore } from '@angular/fire/firestore';
+
 import { Observable, of } from 'rxjs';
 import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
-
-import { ofRoute } from './../../../shared/utils/rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
 
@@ -72,6 +72,9 @@ export class TezosWalletDetailEffects {
             // get wallet info
             getWallet(),
 
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
+
         )),
 
         map(action => ({ type: 'TEZOS_WALLET_DETAIL_NODE_DETAIL_SUCCESS', payload: action })),
@@ -91,6 +94,7 @@ export class TezosWalletDetailEffects {
         private actions$: Actions,
         private store: Store<any>,
         private db: AngularFirestore,
+        private zone: NgZone
     ) { }
 
 }
