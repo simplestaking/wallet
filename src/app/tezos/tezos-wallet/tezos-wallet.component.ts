@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { Store } from '@ngrx/store'
+import { Store } from '@ngrx/store';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-tezos-wallet',
@@ -10,13 +12,14 @@ export class TezosWalletComponent implements OnInit, AfterViewChecked {
 
   constructor(
     public store: Store<any>,
+    private router: Router,
   ) { }
 
   ngOnInit() {
   }
-  
+
   ngAfterViewChecked() {
- 
+
   }
 
 }

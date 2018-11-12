@@ -22,7 +22,7 @@
         }
     },
     "mac": {
-        "icon": "src/dist/assets/icon/electron_26.png",
+        "icon": "src/dist/assets/icon/electron_basic.png",
         "target": [
             "zip",
             "dmg"

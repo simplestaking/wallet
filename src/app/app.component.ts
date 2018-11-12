@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { ElectronService } from 'ngx-electron'
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,9 @@ export class AppComponent {
 
   constructor(
     public store: Store<any>,
-    public electronService: ElectronService
+    public electronService: ElectronService,
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
@@ -50,6 +53,8 @@ export class AppComponent {
       })
 
     }
+
+    this.router.navigate(['/tezos/wallet/new/trezor'])
 
   }
 

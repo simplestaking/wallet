@@ -76,7 +76,7 @@ export class TezosWalletNewTrezorEffects {
         }),
 
         // redirect back to wallet list
-        // tap(() => this.router.navigate(['/tezos/wallet'])),
+        tap(() => this.router.navigate(['/tezos/wallet'])),
     )
 
     constructor(
