@@ -1,0 +1,101 @@
+<div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type==''">
+
+  <div class="tezos-trezor-verify">
+
+    <div class="tezos-trezor-verify-step">
+
+      <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
+
+      <div class="tezos-trezor-verify-info">
+
+        <mat-card class="tezos-trezor-verify-card">
+          <mat-card-content>
+
+            <span class="mat-body-1">
+              Text where we explaim that if user loses password we can not recover his
+              money and that it is very very important to keep it save and backup it
+
+              Also we explain difference beetween Device and Host
+              If user enters password on device it is safer because there is no way to
+              get it when computer is hacked
+
+              If user enters password on host it is more convenient
+
+              There is alsp option where user do not enter any password
+            </span>
+
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+
+    </div>
+
+    <div class="tezos-stepper-next">
+      Please chose place where to enter password
+    </div>
+  </div>
+
+</div>
+
+<div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type=='host'">
+
+  <div class="tezos-trezor-verify">
+    <div class="tezos-trezor-verify-step">
+
+      <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
+      <div class="tezos-trezor-verify-info">
+
+        <mat-card class="tezos-trezor-verify-card">
+          <mat-card-content>
+            <span class="mat-body-1">
+
+
+            </span>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+
+    </div>
+
+    <div class="tezos-stepper-next">
+      Please type your passpharse on device
+    </div>
+  </div>
+
+
+</div>
+
+<div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type=='device'">
+
+  <div class="tezos-trezor-verify">
+
+    <div class="tezos-trezor-verify-step">
+
+      <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
+
+      <div class="tezos-trezor-verify-info">
+
+        <mat-card class="tezos-trezor-verify-card">
+          <mat-card-content>
+
+            <span class="mat-body-1">
+              If user loose password there is no way to recover it and he will lose money
+
+              There is also option where user do not enter any password
+            </span>
+
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+
+    </div>
+
+    <div class="tezos-stepper-next">
+      Please type your passpharse on device
+    </div>
+  </div>
+
+</div>

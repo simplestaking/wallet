@@ -4,11 +4,11 @@ import { Subject, of } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-tezos-trezor-connect',
-  templateUrl: './tezos-trezor-connect.component.html',
-  styleUrls: ['./tezos-trezor-connect.component.scss']
+  selector: 'app-tezos-trezor-passphrase',
+  templateUrl: './tezos-trezor-passphrase.component.html',
+  styleUrls: ['./tezos-trezor-passphrase.component.scss']
 })
-export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TezosTrezorPassphraseComponent implements OnInit {
 
   public tezosTrezorConnect
   public destroy$ = new Subject<null>();
@@ -31,25 +31,11 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterView
 
   }
 
-  ngAfterViewInit() {
-
-    this.store.dispatch({
-      type: 'TEZOS_TREZOR_CONNECT',
-    })
-    
-  } 
-
   ngOnDestroy() {
-    
-    // if TrezorConnect is in error state, close it
-    this.store.dispatch({
-      type:'TEZOS_TREZOR_CONNECT_CLOSE'
-    })
     
     // close all open observables
     this.destroy$.next();
     this.destroy$.complete();
 
   }
-  
 }

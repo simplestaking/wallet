@@ -15,6 +15,7 @@ import * as fromTezosOperationReceive from './tezos-operation/tezos-operation-re
 
 import * as fromTezosTrezorConnect from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.reducer';
 import * as fromTezosTrezorNew from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.reducer';
+import * as fromTezosTrezorPassphrase from './tezos-trezor/tezos-trezor-passphrase/tezos-trezor-passphrase.reducer';
 
 export interface State {
     tezosNode: any;
@@ -30,6 +31,7 @@ export interface State {
     tezosOperationReceive: any;
     tezosTrezorConnect: any;
     tezosTrezorNew: any;
+    tezosTrezorPassphrase: any;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -46,4 +48,5 @@ export const reducers: ActionReducerMap<State> = {
     tezosOperationReceive: fromTezosOperationReceive.reducer,
     tezosTrezorConnect: fromTezosTrezorConnect.reducer,
     tezosTrezorNew: fromTezosTrezorNew.reducer,
+    tezosTrezorPassphrase: fromTezosTrezorPassphrase.reducer,
 };

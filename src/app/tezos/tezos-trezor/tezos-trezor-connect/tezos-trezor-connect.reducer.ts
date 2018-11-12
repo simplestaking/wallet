@@ -270,9 +270,9 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'TEZOS_TREZOR_CONNECT_CLOSE': {
-            return initialState
-        }
+        // case 'TEZOS_TREZOR_CONNECT_CLOSE': {
+        //     return initialState
+        // }
 
         default:
             return state;

@@ -73,67 +73,10 @@
   </div>
 
   <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.isVisible">
-    Where to enter your passphrase ?
 
-    <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type==''">
-      empty
-    </div>
-
-    <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type=='host'">
-      host
-    </div>
-
-    <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type=='device'">
-      device
-    </div>
+    <app-tezos-trezor-passphrase>
+    </app-tezos-trezor-passphrase>
 
   </div>
-
-
-
-
-
-  <!-- <div class="tezos-trezor-verify">
-
-      <div class="tezos-trezor-verify-step">
-
-        <img src="./assets/trezor_passphrase.svg" alt="Trezor Verification">
-
-        <div class="tezos-trezor-verify-info">
-
-          <mat-card class="tezos-trezor-verify-card">
-            <mat-card-content>
-
-              <span class="mat-body-1">
-                Amount
-              </span>
-              <span class="mat-body-1" class="tezos-verify-input">
-                34567 XTZ
-              </span>
-
-              <br />
-
-              <span class="mat-body-1">
-                To (receiving address)
-              </span>
-              <span class="mat-body-1" class="tezos-verify-input">
-              </span>
-            </mat-card-content>
-          </mat-card>
-
-          <div class="tezos-trezor-verify-warning">
-            As malware can replace address shown on computer, you should always check the authenticity of
-            receiving address when sending funds from Trezor
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="tezos-stepper-next">
-        Confirm transaction detail on your device
-      </div>
-    </div> -->
-
 
 </div>

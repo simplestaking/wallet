@@ -21,6 +21,14 @@ export function reducer(state = initialState, action) {
                 pending: true,
             }
         }
+        
+        // close pending
+        case 'TEZOS_TREZOR_CONNECT_CLOSE': {
+            return {
+                ...state,
+                pending: false,
+            }
+        }
 
         case 'TEZOS_TREZOR_NEW_SUCCESS': {
 
