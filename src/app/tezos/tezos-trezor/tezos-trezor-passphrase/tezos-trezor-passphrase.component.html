@@ -1,7 +1,33 @@
 <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type==''">
 
-  <div class="tezos-trezor-verify">
+  <div class="tezos-stepper-card">
+    <div class="tezos-stepper-card-row">
 
+      <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
+
+      <div class="tezos-stepper-card-column" style="padding:20px">
+
+        <mat-card>
+          <mat-card-header>
+            <h2 class="mat-h1">
+              Access passphrase protected wallet
+            </h2>
+          </mat-card-header>
+          <mat-card-content style="padding:initial">
+            <span> Please choose, where to enter your passphrase.</span>
+            <span style="display:block;height:30px;opacity: 0.7;">
+              The safest option to enter passphrase is your Trezor.
+              In general, internet connected computers might vulnerable
+              to malware attacks.
+            </span>
+
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="tezos-trezor-verify">
     <div class="tezos-trezor-verify-step">
 
       <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
@@ -9,21 +35,18 @@
       <div class="tezos-trezor-verify-info">
 
         <mat-card class="tezos-trezor-verify-card">
-          <mat-card-content>
-
-            <span class="mat-body-1">
-              Text where we explaim that if user loses password we can not recover his
-              money and that it is very very important to keep it save and backup it
-
-              Also we explain difference beetween Device and Host
-              If user enters password on device it is safer because there is no way to
-              get it when computer is hacked
-
-              If user enters password on host it is more convenient
-
-              There is alsp option where user do not enter any password
+          <mat-card-header>
+            <h2 class="mat-h1">
+              Access passphrase protected wallet
+            </h2>
+          </mat-card-header>
+          <mat-card-content style="padding:initial">
+            <span> Please choose, where to enter your passphrase.</span>
+            <span style="display:block;height:30px;opacity: 0.7;">
+              The safest option to enter passphrase is your Trezor.
+              In general, internet connected computers might vulnerable
+              to malware attacks.
             </span>
-
           </mat-card-content>
         </mat-card>
 
