@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
+import { RouterModule, Routes,PreloadAllModules } from '@angular/router'
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -121,6 +121,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
 
     RouterModule.forRoot(AppRouting, {
       //useHash:true
+      preloadingStrategy: PreloadAllModules
     }),
 
     // Connects RouterModule with StoreModule

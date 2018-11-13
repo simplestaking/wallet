@@ -14,14 +14,14 @@ const initialState = {
     },
     // menu in sidebar/sideNav
     sidenav: {
-        isVisible: true,
+        isVisible: false,
         color: 'whitesmoke',
         toggleButton: {
             isVisible: false,
         },
     },
     toolbar: {
-        isVisible: true,
+        isVisible: false,
         color: 'whitesmoke',
     },
     logo: {

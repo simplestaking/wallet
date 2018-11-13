@@ -7,6 +7,9 @@ import { map, tap, switchMap, flatMap, catchError, withLatestFrom } from 'rxjs/o
 import { environment } from '../environments/environment';
 import { TrezorConnect } from 'trezor-connect'
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+
+import { ofRoute } from './shared/utils/rxjs/operators';
 
 @Injectable()
 export class AllEffects {
@@ -41,7 +44,17 @@ export class AllEffects {
 
     });
 
-    // effect to degug falling outside of zone
+    // effect to debug falling outside of zone
+    // @Effect({ dispatch: false })
+    // AppRedirectEffects$ = this.actions$.pipe(
+    //     ofRoute('/tezos'),
+    //     tap(() => {
+    //         // this.router.navigate(['/tezos/wallet/new/trezor'])
+    //     })
+    // )
+
+
+    // effect to debug falling outside of zone
     @Effect({ dispatch: false })
     ZoneDebugEffects$ = this.actions$
         .pipe(
@@ -54,6 +67,7 @@ export class AllEffects {
         private http: HttpClient,
         private db: AngularFirestore,
         private store: Store<any>,
+        private router: Router,
 
     ) { }
 

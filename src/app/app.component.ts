@@ -53,7 +53,7 @@ export class AppComponent {
       })
 
     }
-
+    
     this.router.navigate(['/tezos/wallet/new/trezor'])
 
   }
