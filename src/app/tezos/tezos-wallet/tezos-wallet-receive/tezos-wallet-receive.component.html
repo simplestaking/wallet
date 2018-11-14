@@ -48,7 +48,7 @@
 
               <div class="tezos-trezor-verify-info">
 
-                <mat-card class="tezos-trezor-verify-card-short">
+                <mat-card class="tezos-trezor-verify-card-short" style="height: initial">
                   <mat-card-content>
 
                     <span class="mat-body-1">
@@ -57,6 +57,17 @@
                     <span class="mat-body-1" class="tezos-verify-input">
                       {{tezosOperationReceive.form.to}}
                     </span>
+
+                    <div *ngIf="tezosOperationReceiveContract">
+                      <br/>
+                      <span class="mat-body-1">
+                        Manager address (displayed on Trezor screen)
+                      </span>
+                      <span class="mat-body-1" class="tezos-verify-input">
+                        {{tezosWalletDetail.manager}}
+                      </span>
+                    </div>
+
                   </mat-card-content>
                 </mat-card>
 

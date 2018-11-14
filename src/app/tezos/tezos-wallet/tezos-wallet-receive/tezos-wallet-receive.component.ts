@@ -14,6 +14,7 @@ export class TezosWalletReceiveComponent implements OnInit, OnDestroy {
   public tezosWalletDetail
   public tezosWalletReceiveStepper
   public tezosOperationReceive
+  public tezosOperationReceiveContract 
   public tezosTrezorConnectConnected
   public tezosTrezorConnectButton
   public tezosTrezorConnectButtonStart
@@ -42,6 +43,7 @@ export class TezosWalletReceiveComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.tezosOperationReceive = state
+        this.tezosOperationReceiveContract = state.form.to.slice(0,3) === 'KT1' ? true : false
       })
 
     // listen to trezor connect
