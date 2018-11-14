@@ -67,6 +67,20 @@ export class TezosTrezorConnectEffects {
 
                             switch (event.payload.code) {
 
+                                case 'ButtonRequest_Address': {
+                                    return this.store.dispatch({
+                                        type: 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON_ADDRESS',
+                                        payload: event,
+                                    })
+                                }
+
+                                case 'ButtonRequest_SignTx': {
+                                    return this.store.dispatch({
+                                        type: 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON_SIGNTX',
+                                        payload: event,
+                                    })
+                                }
+                                
                                 case 'ButtonRequest_PassphraseType': {
                                     return this.store.dispatch({
                                         type: 'TEZOS_TREZOR_CONNECT_DEVICE_BUTTON_PASSPHRASE',
@@ -133,7 +147,14 @@ export class TezosTrezorConnectEffects {
                             })
                         }
 
-                        // request password aplication
+                        case 'ui-close_window': {
+                            return this.store.dispatch({
+                                type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS',
+                                payload: event,
+                            })
+                        }
+
+                        // request password application
                         case 'ui-request_passphrase': {
                             return this.store.dispatch({
                                 type: 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_HOST',
@@ -177,13 +198,13 @@ export class TezosTrezorConnectEffects {
                 // initialize TrezorConnect 
                 TrezorConnect.init({
 
-                    connectSrc: 'http://localhost:5836/',
-                    frame_src: 'http://localhost:5836/iframe.html',
-                    popup_src: 'http://localhost:5836/popup.html',
+                    // connectSrc: 'http://localhost:5836/',
+                    // frame_src: 'http://localhost:5836/iframe.html',
+                    // popup_src: 'http://localhost:5836/popup.html',
 
-                    // connectSrc: 'http://localhost:5500/build/',
-                    // frame_src: 'http://localhost:5500/build/iframe.html',
-                    // popup_src: 'http://localhost:5500/build/popup.html',
+                    connectSrc: 'http://localhost:5500/build/',
+                    frame_src: 'http://localhost:5500/build/iframe.html',
+                    popup_src: 'http://localhost:5500/build/popup.html',
 
                     popup: false,
                     webusb: false,
