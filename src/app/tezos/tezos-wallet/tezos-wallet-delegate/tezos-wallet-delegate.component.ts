@@ -14,9 +14,9 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
   public tezosWalletDetail
   public tezosOperationDelegation
   public tezosWalletDelegateStepper
+  public tezosWalletDelegateDeviceButton
   public tezosTrezorConnectConnected
-  public tezosTrezorConnectButton
-  public tezosTrezorConnectButtonStart
+
 
   public destroy$ = new Subject<null>();
 
@@ -46,11 +46,6 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
         this.tezosTrezorConnectConnected = state
       })
 
-    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'button')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(state => {
-        this.tezosTrezorConnectButton = state
-      })
 
     this.store.select('tezos', 'tezosOperationDelegation')
       .pipe(takeUntil(this.destroy$))
@@ -70,14 +65,27 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
         }
         this.tezosWalletDelegateStepper = state
       })
+
+    this.store.select('tezos', 'tezosWalletDelegate', 'stepperReset')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        if (state) {
+          // reset stepper to beginning
+          this.stepper.reset();
+        }
+      })
+
+    this.store.select('tezos', 'tezosWalletDelegate', 'deviceButton')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosWalletDelegateDeviceButton = state
+      })
+
   }
 
 
   // delegate funds 
   tezosTrezorDelegateFunds() {
-
-    // save trezor button state
-    this.tezosTrezorConnectButtonStart = this.tezosTrezorConnectButton
 
     console.log('[tezosTrezorDelegateFunds]', this.tezosWalletDetail)
 

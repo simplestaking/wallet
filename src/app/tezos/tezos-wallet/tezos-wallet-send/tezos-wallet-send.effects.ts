@@ -66,6 +66,22 @@ export class TezosWalletSendEffects {
         })
     )
 
+    @Effect()
+    TezosWalletSendUiClose$ = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS'),
+     
+        map(() => ({ type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_SUCCESS' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
+
+        ) 
+    
 
     constructor(
         private actions$: Actions,

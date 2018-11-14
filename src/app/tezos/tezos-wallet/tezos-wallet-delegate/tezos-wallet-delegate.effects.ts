@@ -56,8 +56,43 @@ export class TezosWalletDelegateEffects {
             });
             return caught;
         }),
-        
+
     )
+
+
+    @Effect()
+    TezosWalletDelegateUiClosePending$ = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS'),
+        // add state so we can recognize delegation vs origination
+        withLatestFrom(this.store, (action: any, state) => state),
+        map((state) => ({ type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_PENDING', payload: state })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
+
+    )
+
+    @Effect()
+    TezosWalletDelegateUiClose$ = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_PENDING'),
+
+        map(() => ({ type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_SUCCESS' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
+
+    )
+
 
     constructor(
         private actions$: Actions,

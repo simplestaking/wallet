@@ -44,7 +44,7 @@
           <div class="tezos-trezor-verify" *ngIf="tezosWalletDetail?.delegate?.setable===true">
 
             <!-- verify baker address  -->
-            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart || tezosTrezorConnectButton === tezosTrezorConnectButtonStart + 1">
+            <div class="tezos-trezor-verify-step" *ngIf="tezosWalletDelegateDeviceButton == 0 || tezosWalletDelegateDeviceButton == 1">
 
               <img src="./assets/trezor_verify_detail.svg" alt="Trezor Verification">
 
@@ -72,7 +72,7 @@
             </div>
 
             <!-- verify fee -->
-            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+2">
+            <div class="tezos-trezor-verify-step" *ngIf="tezosWalletDelegateDeviceButton == 2">
 
               <img src="./assets/trezor_confirm_transaction.svg" alt="Trezor Verification" />
 
@@ -105,7 +105,7 @@
           <div class="tezos-trezor-verify" *ngIf="tezosWalletDetail?.delegate?.setable===false">
 
             <!-- verify from address -->
-            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart || tezosTrezorConnectButton === tezosTrezorConnectButtonStart + 1">
+            <div class="tezos-trezor-verify-step" *ngIf="tezosWalletDelegateDeviceButton == 0 || tezosWalletDelegateDeviceButton == 1">
 
               <img src="./assets/trezor_verify_detail.svg" alt="Trezor Verification">
 
@@ -133,7 +133,7 @@
             </div>
 
             <!-- verify baker address -->
-            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+2">
+            <div class="tezos-trezor-verify-step" *ngIf="tezosWalletDelegateDeviceButton == 2">
 
               <img src="./assets/trezor_verify_detail.svg" alt="Trezor Verification">
 
@@ -161,7 +161,7 @@
             </div>
 
             <!-- verifi amount & fee -->
-            <div class="tezos-trezor-verify-step" *ngIf="tezosTrezorConnectButton === tezosTrezorConnectButtonStart+3">
+            <div class="tezos-trezor-verify-step" *ngIf="tezosWalletDelegateDeviceButton == 3">
 
               <img src="./assets/trezor_confirm_transaction.svg" alt="Trezor Verification" />
 
@@ -225,8 +225,7 @@
                     <br />
                     <span>
                       <a style="text-decoration: none;" externalLink href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationDelegation.injectionOperation}}" target="_blank">
-                        <fa-icon [icon]="['fal', 'external-link-square']"></fa-icon>&nbsp;
-                        View in Explorer
+                        <fa-icon [icon]="['fal', 'external-link-square']"></fa-icon>View in Explorer
                       </a>
                     </span>
                   </mat-card-content>

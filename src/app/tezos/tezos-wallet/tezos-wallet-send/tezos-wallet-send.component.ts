@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tezos-wallet-send',
@@ -13,10 +13,9 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
   public tezosNode
   public tezosWalletDetail
   public tezosWalletSendStepper
+  public tezosWalletSendDeviceButton
   public tezosOperationTransaction
   public tezosTrezorConnectConnected
-  public tezosTrezorConnectButton
-  public tezosTrezorConnectButtonStart
 
   public destroy$ = new Subject<null>();
 
@@ -27,23 +26,17 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    
+
     this.store.select('tezos', 'tezosNode')
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(state => {
-      this.tezosNode = state
-    })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosNode = state
+      })
 
     this.store.select('tezos', 'tezosTrezorConnect', 'device', 'connected')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.tezosTrezorConnectConnected = state
-      })
-
-    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'button')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(state => {
-        this.tezosTrezorConnectButton = state
       })
 
     this.store.select('tezos', 'tezosWalletDetail')
@@ -69,14 +62,26 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
         this.tezosWalletSendStepper = state
       })
 
+    this.store.select('tezos', 'tezosWalletSend', 'stepperReset')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        if (state) {
+          // reset stepper to beginning
+          this.stepper.reset();
+        }
+      })
+
+    this.store.select('tezos', 'tezosWalletSend', 'deviceButton')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosWalletSendDeviceButton = state
+      })
+
   }
 
   // send funds with Trezor
   tezosTrezorSendFunds() {
 
-    // save trezor button state
-    this.tezosTrezorConnectButtonStart = this.tezosTrezorConnectButton
-   
     console.log('[tezosTrezorSendFunds]', this.tezosWalletDetail)
 
     this.store.dispatch({
