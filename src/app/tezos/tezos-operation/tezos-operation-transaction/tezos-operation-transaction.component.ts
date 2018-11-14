@@ -67,7 +67,7 @@ export class TezosOperationTransactionComponent implements OnInit {
         // create tezos wallet list 
         this.tezosWalletList =
           of(state.ids
-            .filter(id => id !== this.tezosWalletDetail.publicKeyHash)
+            .filter(id => id !== this.tezosOperationTransactionForm.controls.from.value)
             .map(id => state.entities[id])
           )
 
@@ -75,6 +75,7 @@ export class TezosOperationTransactionComponent implements OnInit {
         this.tezosWalletListFrom = of(state.ids
           .map(id => state.entities[id])
         )
+
       })
 
     // listen to tezos wallet detail 
