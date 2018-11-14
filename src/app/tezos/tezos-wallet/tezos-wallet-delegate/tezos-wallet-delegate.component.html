@@ -29,7 +29,7 @@
         <mat-step [editable]="false" optional="false" label="Connect Trezor" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
           <div class="tezos-trezor-connect">
 
-            <app-tezos-trezor-connect>
+            <app-tezos-trezor-connect *ngIf="tezosWalletDelegateStepper==1">
             </app-tezos-trezor-connect>
 
             <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorDelegateFunds()">
@@ -224,7 +224,7 @@
                     <br />
                     <br />
                     <span>
-                      <a style="text-decoration: none;" href="dfsf" target="_blank">
+                      <a style="text-decoration: none;" externalLink href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationTransaction.injectionOperation}}" target="_blank">
                         <fa-icon [icon]="['fal', 'external-link-square']"></fa-icon>&nbsp;
                         View in Explorer
                       </a>

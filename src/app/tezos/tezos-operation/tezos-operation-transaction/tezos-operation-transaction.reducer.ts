@@ -31,6 +31,13 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_OPERATION_TRANSACTION_SUCCESS': {
+            return {
+                ...state,
+                ...action.payload,
+            }
+        }
+        
         default:
             return state;
     }

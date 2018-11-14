@@ -5,7 +5,6 @@
   </button>
 </div> -->
 
-
 <div class="stepper">
 
   <mat-card>
@@ -29,7 +28,7 @@
         <mat-step [editable]="false" optional="false" label="Connect Trezor" *ngIf="tezosWalletDetail?.type==='TREZOR_T'">
           <div class="tezos-trezor-connect">
 
-            <app-tezos-trezor-connect>
+            <app-tezos-trezor-connect *ngIf="tezosWalletReceiveStepper==1">
             </app-tezos-trezor-connect>
 
             <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorReceiveFunds()">

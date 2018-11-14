@@ -13,7 +13,13 @@ export function reducer(state = initialState, action) {
         }
 
         // move stepper to next page 
-        case 'TEZOS_OPERATION_TRANSACTION_FORM_SUBMIT':
+        case 'TEZOS_OPERATION_TRANSACTION_FORM_SUBMIT': {
+            return {
+                ...state,
+                stepper: state.stepper + 1,
+            }
+        }
+
         case 'TEZOS_OPERATION_TRANSACTION_SUCCESS': {
             return {
                 ...state,

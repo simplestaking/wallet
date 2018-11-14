@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TezosWalletSendComponent implements OnInit, OnDestroy {
 
+  public tezosNode
   public tezosWalletDetail
   public tezosWalletSendStepper
   public tezosOperationTransaction
@@ -26,6 +27,12 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    
+    this.store.select('tezos', 'tezosNode')
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(state => {
+      this.tezosNode = state
+    })
 
     this.store.select('tezos', 'tezosTrezorConnect', 'device', 'connected')
       .pipe(takeUntil(this.destroy$))
