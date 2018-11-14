@@ -5,17 +5,21 @@
 
       <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
 
-      <div class="tezos-stepper-card-column" style="padding:20px">
+      <div class="tezos-stepper-card-column" style="padding-left:20px">
 
         <mat-card>
           <mat-card-header>
-            <h2 class="mat-h1">
+            <h2 class="mat-h1" style="font-size: 20px;">
               Access passphrase protected wallet
             </h2>
           </mat-card-header>
           <mat-card-content style="padding:initial">
-            <span> Please choose, where to enter your passphrase.</span>
-            <span style="display:block;height:30px;opacity: 0.7;">
+
+            <span style="display: block;margin: 30px 0px 20px 0px;font-weight: 500;">
+              Please choose, where to enter your passphrase.
+            </span>
+
+            <span style="display:block;margin: 30px 0px 20px 0px;opacity: 0.95">
               The safest option to enter passphrase is your Trezor.
               In general, internet connected computers might vulnerable
               to malware attacks.
@@ -24,38 +28,6 @@
           </mat-card-content>
         </mat-card>
       </div>
-    </div>
-  </div>
-
-  <div class="tezos-trezor-verify">
-    <div class="tezos-trezor-verify-step">
-
-      <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
-
-      <div class="tezos-trezor-verify-info">
-
-        <mat-card class="tezos-trezor-verify-card">
-          <mat-card-header>
-            <h2 class="mat-h1">
-              Access passphrase protected wallet
-            </h2>
-          </mat-card-header>
-          <mat-card-content style="padding:initial">
-            <span> Please choose, where to enter your passphrase.</span>
-            <span style="display:block;height:30px;opacity: 0.7;">
-              The safest option to enter passphrase is your Trezor.
-              In general, internet connected computers might vulnerable
-              to malware attacks.
-            </span>
-          </mat-card-content>
-        </mat-card>
-
-      </div>
-
-    </div>
-
-    <div class="tezos-stepper-next">
-      Please chose place where to enter password
     </div>
   </div>
 
@@ -63,59 +35,60 @@
 
 <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type=='host'">
 
-  <div class="tezos-trezor-verify">
-    <div class="tezos-trezor-verify-step">
+  <div class="tezos-stepper-card">
+    <div class="tezos-stepper-card-row">
 
       <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
-      <div class="tezos-trezor-verify-info">
 
-        <mat-card class="tezos-trezor-verify-card" style="height:210px">
-          <mat-card-content>
-            <span class="mat-body-1">
+      <div class="tezos-stepper-card-column" style="padding-left:20px;align-items: flex-start">
 
-              <div class="tezos-trezor-passphrase" [formGroup]="tezosTrezorPassphraseForm" ngrxForm="tezos.tezosTrezorPassphrase">
+        <mat-card>
+          <mat-card-header>
+            <h2 class="mat-h1" style="font-size: 20px;">
+              Enter passphrases
+            </h2>
+          </mat-card-header>
+          <mat-card-content style="padding:initial">
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Password</mat-label>
-                  <input matInput #password type="text" placeholder="Password" formControlName="password" />
-                  <mat-error>
-                    Please enter password
-                  </mat-error>
-                </mat-form-field>
+            <div class="tezos-trezor-passphrase" [formGroup]="tezosTrezorPassphraseForm" ngrxForm="tezos.tezosTrezorPassphrase">
 
-                <br />
+              <mat-form-field appearance="outline" style="width:100%;margin-top:25px;">
+                <mat-label>Password</mat-label>
+                <input matInput #password type="text" placeholder="Password" formControlName="password" />
+                <mat-error>
+                  Please enter password
+                </mat-error>
+              </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Repeat Password</mat-label>
-                  <input matInput #repeatPassword type="text" placeholder="Repeat Password" formControlName="repeatPassword"
-                    [errorStateMatcher]="passphraseErrorMatcher" />
-                  <mat-error>
-                    Please repeat password
-                  </mat-error>
-                </mat-form-field>
+              <mat-form-field appearance="outline" style="width:100%">
+                <mat-label>Repeat Password</mat-label>
+                <input matInput #repeatPassword type="text" placeholder="Repeat Password" formControlName="repeatPassword"
+                  [errorStateMatcher]="passphraseErrorMatcher" />
+                <mat-error>
+                  Please repeat password
+                </mat-error>
+              </mat-form-field>
 
-                <br />
-                <br />
+            </div>
 
-                <button mat-flat-button (click)="submitPassphrase()">
-                  Submit
-                </button>
-
-                <br />
-
-              </div>
-
-
+            <span style="display: block;margin: 0px 0px 5px 0px;font-weight: 500; text-align: left;">
+              Keep your passphrase in a safe place. In case you forget your
+              passphrase, your funds protected by it are lost forever.
+              <span style="font-weight: 400;">
+                If you mistype the passphrase, a different wallet is opened.
+              </span>
             </span>
+
+
           </mat-card-content>
         </mat-card>
 
+        <button mat-flat-button (click)="submitPassphrase()" style="margin-top:15px">
+          <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+          Continue
+        </button>
+
       </div>
-
-    </div>
-
-    <div class="tezos-stepper-next">
-      Please type your passpharse on device
     </div>
   </div>
 
@@ -124,32 +97,33 @@
 
 <div class="tezos-trezor-passpharse" *ngIf="tezosTrezorConnect?.passphrase?.type=='device'">
 
-  <div class="tezos-trezor-verify">
-
-    <div class="tezos-trezor-verify-step">
+  <div class="tezos-stepper-card">
+    <div class="tezos-stepper-card-row">
 
       <img src="./assets/trezor_passphrase.svg" alt="Trezor Passphrase">
 
-      <div class="tezos-trezor-verify-info">
+      <div class="tezos-stepper-card-column" style="padding-left:20px">
 
-        <mat-card class="tezos-trezor-verify-card">
-          <mat-card-content>
+        <mat-card>
+          <mat-card-header>
+            <h2 class="mat-h1" style="font-size: 20px;">
+              About passphrases
+            </h2>
+          </mat-card-header>
+          <mat-card-content style="padding:initial">
 
-            <span class="mat-body-1">
-              If user loose password there is no way to recover it and he will lose money
+            <span style="display: block;margin: 30px 0px 20px 0px;font-weight: 500;">
+              Keep your passphrase in a safe place. In case you forget your
+              passphrase, your funds protected by it are lost forever.
+            </span>
 
-              There is also option where user do not enter any password
+            <span style="display:block;margin: 30px 0px 20px 0px">
+              If you mistype the passphrase, a different wallet is opened.
             </span>
 
           </mat-card-content>
         </mat-card>
-
       </div>
-
-    </div>
-
-    <div class="tezos-stepper-next">
-      Please type your passpharse on device
     </div>
   </div>
 
