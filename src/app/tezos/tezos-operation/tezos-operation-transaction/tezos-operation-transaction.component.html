@@ -56,8 +56,11 @@
   <mat-form-field appearance="outline">
 
     <mat-label>To</mat-label>
-    <input matInput #to placeholder="To" formControlName="to" [matAutocomplete]="auto" />
+    <input matInput #to placeholder="To" formControlName="to" [matAutocomplete]="auto" [errorStateMatcher]="tezosAddressErrorMatcher"/>
     <mat-hint align="end">{{to.value?.length || 0}}/36</mat-hint>
+    <mat-error>
+      Please enter valid address
+    </mat-error>
 
     <mat-autocomplete #auto="matAutocomplete" appearance="outline">
       <mat-option *ngFor="let to of tezosWalletList | async" [value]="to.publicKeyHash">
@@ -80,18 +83,15 @@
   
       </mat-option>
     </mat-autocomplete>
-    <mat-error>
-      Please enter valid address
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
 
     <mat-label>Amount</mat-label>
     <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
-    <mat-hint align="end">{{amount.value?.length || 0}}/8</mat-hint>
+    <mat-hint align="end">{{amount.value?.length || 0}}/16</mat-hint>
     <mat-error>
-      Please enter amount
+      Please enter valid amount
     </mat-error>
   </mat-form-field>
 
@@ -99,9 +99,9 @@
 
     <mat-label>Fee</mat-label>
     <input matInput #fee type="number" placeholder="Fee" formControlName="fee" />
-    <mat-hint align="end">{{fee.value?.length || 0}}/8</mat-hint>
+    <mat-hint align="end">{{fee.value?.length || 0}}/16</mat-hint>
     <mat-error>
-      Please enter fee
+      Please enter valid fee
     </mat-error>
   </mat-form-field>
 

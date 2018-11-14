@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormControl } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil, } from 'rxjs/operators';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-tezos-operation-delegation',
@@ -17,6 +18,7 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
   public tezosOperationDelegation
   public tezosOperationDelegationForm
   public destroy$ = new Subject<null>();
+  public tezosAddressErrorMatcher = new TezosAddressErrorStateMatcher();
 
   constructor(
     public store: Store<any>,
@@ -29,10 +31,22 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
     this.tezosOperationDelegationForm = this.fb.group({
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
-      fee: ['', [Validators.required]],
-      // name: ['',[Validators.required]],
       amount: new FormControl('', {
-        validators: Validators.required,
+        validators: [
+          Validators.required,
+          Validators.min(0.000001),
+          Validators.max(999999999),
+          Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
+        ],
+        updateOn: 'blur'
+      }),
+      fee: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(999999999),
+          Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
+        ],
         updateOn: 'blur'
       }),
     })
@@ -107,7 +121,12 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
     this.tezosOperationDelegationForm.controls.to.markAsTouched()
 
     if (!this.tezosWalletDetail.delegate || this.tezosWalletDetail.delegate.setable !== true) {
-      this.tezosOperationDelegationForm.controls.amount.setValidators([Validators.required])
+      this.tezosOperationDelegationForm.controls.amount.setValidators([
+        Validators.required,
+        Validators.min(0.000001),
+        Validators.max(999999999),
+        Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
+      ])
       this.tezosOperationDelegationForm.controls.amount.markAsTouched()
     } else {
       this.tezosOperationDelegationForm.controls.amount.setValidators([])
@@ -149,4 +168,22 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
 
   }
 
+}
+
+
+class TezosAddressErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+
+    const isSubmitted = form && form.submitted;
+    const address = form.control.controls.to.value;
+    const prefix = address.slice(0, 3);
+    const isValidTezosAddress =
+      (prefix === 'tz1' || prefix === 'tz2' || prefix === 'tz3' || prefix === 'KT1') && address.length === 36
+
+      return !!(control && control.invalid &&
+        (control.dirty || control.touched || isSubmitted) ||
+        ((control.dirty || control.touched || isSubmitted) && !isValidTezosAddress)
+      )
+  
+  }
 }

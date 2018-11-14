@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-tezos-operation-transaction',
@@ -17,6 +18,7 @@ export class TezosOperationTransactionComponent implements OnInit {
   public tezosOperationTransaction
   public tezosOperationTransactionForm
   public destroy$ = new Subject<null>();
+  public tezosAddressErrorMatcher = new TezosAddressErrorStateMatcher();
 
   constructor(
     public store: Store<any>,
@@ -29,9 +31,22 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.tezosOperationTransactionForm = this.fb.group({
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
-      fee: ['', [Validators.required]],
       amount: new FormControl('', {
-        validators: Validators.required,
+        validators: [
+          Validators.required,
+          Validators.min(0.000001),
+          Validators.max(999999999),
+          Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
+        ],
+        updateOn: 'blur'
+      }),
+      fee: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(999999999),
+          Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
+        ],
         updateOn: 'blur'
       }),
     })
@@ -41,7 +56,7 @@ export class TezosOperationTransactionComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         // create tezos wallet detail 
-        this.tezosWalletDetail = state        
+        this.tezosWalletDetail = state
       })
 
     // listen to tezos wallets list
@@ -139,4 +154,21 @@ export class TezosOperationTransactionComponent implements OnInit {
 
   }
 
+}
+
+class TezosAddressErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+
+    const isSubmitted = form && form.submitted;
+    const address = form.control.controls.to.value;
+    const prefix = address.slice(0, 3);
+    const isValidTezosAddress =
+      (prefix === 'tz1' || prefix === 'tz2' || prefix === 'tz3' || prefix === 'KT1') && address.length === 36
+
+    return !!(control && control.invalid &&
+      (control.dirty || control.touched || isSubmitted) ||
+      ((control.dirty || control.touched || isSubmitted) && !isValidTezosAddress)
+    )
+
+  }
 }

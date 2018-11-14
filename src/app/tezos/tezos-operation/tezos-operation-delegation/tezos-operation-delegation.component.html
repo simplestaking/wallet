@@ -55,10 +55,10 @@
 
   <mat-form-field appearance="outline">
     <mat-label>To</mat-label>
-    <input matInput #address placeholder="To" formControlName="to">
+    <input matInput #address placeholder="To" formControlName="to" [errorStateMatcher]="tezosAddressErrorMatcher">
     <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>
     <mat-error>
-      Please choose address
+      Please choose valid address
     </mat-error>
   </mat-form-field>
 
@@ -66,9 +66,9 @@
 
     <mat-label>Amount</mat-label>
     <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
-    <mat-hint align="end">{{amount.value?.length || 0}}/8</mat-hint>
+    <mat-hint align="end">{{amount.value?.length || 0}}/16</mat-hint>
     <mat-error>
-      Please enter amount
+      Please enter valid amount
     </mat-error>
   </mat-form-field>
 
@@ -76,9 +76,9 @@
 
     <mat-label>Fee</mat-label>
     <input matInput #fee type="number" placeholder="Fee" formControlName="fee" />
-    <mat-hint align="end">{{fee.value?.length || 0}}/8</mat-hint>
+    <mat-hint align="end">{{fee.value?.length || 0}}/16</mat-hint>
     <mat-error>
-      Please enter fee
+      Please enter valid fee
     </mat-error>
   </mat-form-field>
 

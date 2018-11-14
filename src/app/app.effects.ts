@@ -59,7 +59,11 @@ export class AllEffects {
     ZoneDebugEffects$ = this.actions$
         .pipe(
             withLatestFrom(this.store, (action: any, state) => ({ action, state })),
-            tap(({ action, state }) => { console.info('[zone][debug]', NgZone.isInAngularZone(), action) })
+            tap(({ action, state }) => {
+                if (NgZone.isInAngularZone() === false) {
+                    console.error('[zone][debug]', NgZone.isInAngularZone(), action)
+                }
+            })
         )
 
     constructor(
