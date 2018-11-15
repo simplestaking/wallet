@@ -81,10 +81,10 @@ export class TezosWalletListEffects {
         // get all accounts address
         flatMap((state: any) => state.tezos.tezosWalletList.ids
             // TODO: temp comment to see changes fast
-            .filter(id =>
-                // get balance only if last download is older than 3 mins
-                (new Date().getTime() - state.tezos.tezosWalletList.entities[id].timestamp) < (5 * 60 * 1000) ? false : true
-            )
+            // .filter(id =>
+            //     // get balance only if last download is older than 3 mins
+            //     (new Date().getTime() - state.tezos.tezosWalletList.entities[id].timestamp) < (5 * 60 * 1000) ? false : true
+            // )
             .map(id => ({
                 node: state.tezos.tezosNode.api,
                 detail: state.tezos.tezosWalletList.entities[id],

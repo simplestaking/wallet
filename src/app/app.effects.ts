@@ -39,7 +39,7 @@ export class AllEffects {
     @Effect()
     Init$ = defer(() => {
         // disable online data 
-        this.db.firestore.disableNetwork();
+        his.db.firestore.disableNetwork();
         return of({ type: 'HEARTBEAT' })
 
     });
