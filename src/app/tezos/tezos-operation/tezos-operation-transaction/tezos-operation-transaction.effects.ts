@@ -106,7 +106,7 @@ export class TezosOperationTransactionEffects {
             return caught;
         }),
         // wait for tzscan to process tranzaction
-        delay(3000),
+        delay(5000),
         // redirect to wallet detail
         tap((action) => {
             this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
