@@ -15,7 +15,7 @@ const initialState = {
     // menu in sidebar/sideNav
     sidenav: {
         isVisible: false,
-        color: 'whitesmoke',
+        color: 'white',//'whitesmoke',
         toggleButton: {
             isVisible: false,
         },
