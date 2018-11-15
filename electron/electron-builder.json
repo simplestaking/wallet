@@ -24,7 +24,6 @@
     "mac": {
         "icon": "src/dist/assets/icon/electron_basic.png",
         "target": [
-            "zip",
             "dmg"
         ],
         "publish": {

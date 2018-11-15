@@ -146,7 +146,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
       TezosHardwareWalletEffects
     ]),
 
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
 
     // https://github.com/zalmoxisus/redux-devtools-extension
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 25 }) : [],
