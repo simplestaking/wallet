@@ -1,18 +1,50 @@
 <div class="tezos-wallet-start">
-  <div class="tezos-wallet-start-container">
+  <div class="tezos-wallet-start-container" style="display:flex;">
 
-    <button mat-flat-button routerLink="/tezos/wallet/new/trezor">
-      Get started
-    </button>
+    <div class="tezos-wallet-start-logo" style="display:flex;flex-direction: row;">
 
-    <br />
-    <br />
+      <div class="ezos-wallet-start-logo-column" style="display:flex;flex-direction: column;align-items: center">
+        <img src="./assets/icon/electron_black_beta.png" style="width:80px;height:80px;">
+        <br />
+        <span class="mat-display-1" style="margin: initial;font-weight: 300;font-size:34px;display:flex;align-items:center;margin-top:10px">
+          &nbsp;SimpleStaking
+        </span>
+        <span class="mat-body" style="font-weight: 300;margin-left:10px;font-size:15px;opacity: 0.6;">
+          Safe Way To Store & Stake Tezos
+        </span>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
   
-    <button mat-flat-button (click)="download()">
+        <button mat-flat-button routerLink="/tezos/wallet/new/trezor" style="font-size: 15px;font-weight: 300;padding: 5px 20px 5px 20px;margin-left:5px;">
+          <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+          Get started with Trezor
+        </button>
+
+        <span class="mat-body" style="font-weight: 300;margin-left:10px;font-size:12px; margin-top:5px;opacity: 0.6;">
+          Required Trezor firmware 2.0.8 or later
+        </span>
+
+      </div>
+
+    </div>
+
+    <br />
+
+    <br />
+
+
+    <br />
+    <br />
+
+    <!-- <button mat-flat-button (click)="download()">
       Download
-    </button>
-    
-    <br/>
+    </button> -->
+
+    <br />
 
   </div>
 </div>
