@@ -51,11 +51,13 @@
     "d3": "^5.7.0",
     "firebase": "5.5.1",
     "jdenticon": "^2.1.0",
+    "js-yaml": "^3.12.0",
     "libsodium-wrappers": "^0.7.3",
     "moment": "^2.22.2",
     "ngrx-store-freeze": "0.2.4",
     "ngrx-store-logger": "^0.2.2",
     "ngx-clipboard": "^11.1.9",
+    "ngx-device-detector": "^1.3.4",
     "ngx-electron": "^1.0.4",
     "start": "^5.1.0",
     "trezor-connect": "^5.0.33"

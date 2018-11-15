@@ -2,6 +2,7 @@ import { Routes } from '@angular/router'
 
 import { TezosNodeComponent } from './tezos-node/tezos-node.component';
 import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
+import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tezos-wallet-start.component'
 import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new.component';
 import { TezosWalletNewTrezorComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.component';
 
@@ -16,6 +17,8 @@ import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tez
 export const TezosRouting: Routes = [
 
   { path: 'wallet', component: TezosWalletComponent },
+  
+  { path: 'wallet/start', component: TezosWalletStartComponent },
   
   { path: 'wallet/new', component: TezosWalletNewComponent },
   { path: 'wallet/new/trezor', component: TezosWalletNewTrezorComponent },

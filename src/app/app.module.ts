@@ -16,6 +16,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { NgxElectronModule } from 'ngx-electron';
 
+import { DeviceDetectorModule } from 'ngx-device-detector';
+
 // added font awesome pro icons
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -143,6 +145,8 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
 
       TezosHardwareWalletEffects
     ]),
+
+    DeviceDetectorModule.forRoot()
 
     // https://github.com/zalmoxisus/redux-devtools-extension
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 25 }) : [],
