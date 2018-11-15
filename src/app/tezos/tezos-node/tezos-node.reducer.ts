@@ -14,7 +14,7 @@ let initialState: any = {
         main: {
             display: 'Mainnet',
             name: 'main',
-            url: 'https://tezos-vpn01.westeurope.cloudapp.azure.com',//'https://mainnet.simplestaking.com:3000',
+            url: 'https://mainnet.simplestaking.com:3000', // 'https://tezos-vpn01.westeurope.cloudapp.azure.com',
             tzscan: {
                 url: 'http://tzscan.io/',
                 operations: 'https://api3.tzscan.io/v1/operations/',
@@ -27,7 +27,7 @@ let initialState: any = {
 
 initialState = {
     ...initialState,
-    api: initialState.nodes.main,
+    api: initialState.nodes.zero,
 }
 
 export function reducer(state = initialState, action) {
