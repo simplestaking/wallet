@@ -54,20 +54,32 @@
             <div class="tezos-trezor-new-next">
               <button mat-flat-button matStepperNext *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.publicKey">
                 <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
-                Continue to Add Name&nbsp;
+                <span *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts==0">
+                  Continue to Add Name&nbsp;
+                </span>
+                <span *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts>0">
+                  Continue to Add Contract&nbsp;
+                </span>
               </button>
             </div>
-
-            {{ tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts | json}}
-
-            <app-tezos-trezor-contract>
-            </app-tezos-trezor-contract>
 
           </div>
         </mat-step>
 
         <mat-step [editable]="false" optional="false" label="Add Contract" *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts>0">
-          <div class="tezos-trezor-new" style="margin-left:25px;">
+          <div class="tezos-trezor-new">
+
+            <app-tezos-trezor-contract>
+            </app-tezos-trezor-contract>
+
+            <div class="tezos-trezor-new-next">
+              <button mat-flat-button matStepperNext *ngIf="tezosTrezorContract?.selected">
+                <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+                <span>
+                  Continue to Add Name&nbsp;
+                </span>
+              </button>
+            </div>
           </div>
         </mat-step>
 

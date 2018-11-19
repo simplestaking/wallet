@@ -11,10 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class TezosWalletNewTrezorComponent implements OnInit, OnDestroy {
 
-  public tezosTrezorConnectConnected
   public tezosTrezorNew
   public tezosTrezorNewSelected
   public tezosTrezorNewForm: FormGroup;
+  public tezosTrezorConnectConnected
+  public tezosTrezorContract
+  public tezosTrezorContractSelected
 
   public destroy$ = new Subject<null>();
 
@@ -39,8 +41,15 @@ export class TezosWalletNewTrezorComponent implements OnInit, OnDestroy {
     this.store.select('tezos', 'tezosTrezorNew')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
-        this.tezosTrezorNew = state 
+        this.tezosTrezorNew = state
         this.tezosTrezorNewSelected = state.selected
+      })
+
+    this.store.select('tezos', 'tezosTrezorContract')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.tezosTrezorContract = state
+        this.tezosTrezorContractSelected = state.selected
       })
 
   }

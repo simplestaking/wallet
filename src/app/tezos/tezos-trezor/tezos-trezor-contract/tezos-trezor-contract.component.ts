@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TezosTrezorContractComponent implements OnInit {
 
   public selectedRow
-  public displayedColumns: string[] = ['select', 'address', 'path', 'contracts', 'balance'];
+  public displayedColumns: string[] = ['select', 'contract', 'balance'];
   public onDestroy$ = new Subject()
 
   public data
@@ -40,6 +40,23 @@ export class TezosTrezorContractComponent implements OnInit {
 
   }
 
+  // dispatch action with selected row 
+  selectRow(row) {
+
+    this.selectedRow = row;
+
+    this.store.dispatch({
+      type: 'TEZOS_TREZOR_CONTRACT_SELECT',
+      payload: this.selectedRow
+    })
+
+  }
+
+  // check if row is selected
+  isRowSelected(row) {
+    return this.selectedRow && this.selectedRow.id === row.id
+  }
+  
   ngOnDestroy() {
 
     // close all open observables
