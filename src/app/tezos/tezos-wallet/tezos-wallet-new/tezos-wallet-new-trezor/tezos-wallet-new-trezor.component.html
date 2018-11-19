@@ -42,14 +42,9 @@
           </div>
         </mat-step>
 
-        <mat-step [editable]="false" [optional]="false" label="Add New Address">
-
+        <mat-step [editable]="false" [optional]="false" label="Add Address">
 
           <div class="tezos-trezor-new">
-
-            <!-- <span class="mat-h2">
-              Select address
-            </span> -->
 
             <br />
 
@@ -63,6 +58,16 @@
               </button>
             </div>
 
+            {{ tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts | json}}
+
+            <app-tezos-trezor-contract>
+            </app-tezos-trezor-contract>
+
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Add Contract" *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts>0">
+          <div class="tezos-trezor-new" style="margin-left:25px;">
           </div>
         </mat-step>
 

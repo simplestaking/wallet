@@ -73,6 +73,7 @@ import { TezosOperationReceiveEffects } from './tezos-operation/tezos-operation-
 
 import { TezosTrezorConnectEffects } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.effects'
 import { TezosTrezorNewEffects } from './tezos-trezor/tezos-trezor-new/tezos-trezor-new.effects'
+import { TezosTrezorContractEffects } from './tezos-trezor/tezos-trezor-contract/tezos-trezor-contract.effects'
 import { TezosTrezorPassphraseEffects } from './tezos-trezor/tezos-trezor-passphrase/tezos-trezor-passphrase.effects'
 
 import { TezosNodeComponent } from './tezos-node/tezos-node.component';
@@ -96,7 +97,8 @@ import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delega
 import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operation-receive/tezos-operation-receive.component';
 import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tezor-trezor-debug.component';
 import { TezosTrezorPassphraseComponent } from './tezos-trezor/tezos-trezor-passphrase/tezos-trezor-passphrase.component';
-import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tezos-wallet-start.component'
+import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tezos-wallet-start.component';
+import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contract/tezos-trezor-contract.component'
 
 @NgModule({
   imports: [
@@ -131,6 +133,7 @@ import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tez
       
       TezosTrezorConnectEffects,
       TezosTrezorNewEffects,
+      TezosTrezorContractEffects,
       TezosTrezorPassphraseEffects
       
     ]),
@@ -191,6 +194,7 @@ import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tez
     TezosOperationReceiveComponent,
     TezorTrezorDebugComponent,
     TezosTrezorPassphraseComponent,
-    TezosWalletStartComponent  ]
+    TezosWalletStartComponent,
+    TezosTrezorContractComponent  ]
 })
 export class TezosModule { }

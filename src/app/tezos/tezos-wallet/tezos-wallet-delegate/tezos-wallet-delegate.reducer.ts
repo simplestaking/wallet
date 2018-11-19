@@ -52,7 +52,6 @@ export function reducer(state = initialState, action) {
                     !action.payload.tezos.tezosWalletDetail.delegate.setable
                 ))
             ) {
-                console.warn('!!![reset]!!!')
                 return {
                     ...state,
                     stepper: 0,
