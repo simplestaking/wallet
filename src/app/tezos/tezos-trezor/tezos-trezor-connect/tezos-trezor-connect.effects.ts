@@ -135,41 +135,41 @@ export class TezosTrezorConnectEffects {
 
                 });
 
-                TrezorConnect.on('UI_EVENT', (event) => {
-                    console.log('[TrezorConnect][UI_EVENT]', event);
-                    switch (event.type) {
+TrezorConnect.on('UI_EVENT', (event) => {
+    console.log('[TrezorConnect][UI_EVENT]', event);
+    switch (event.type) {
 
-                        // request password  device
-                        case 'ui-request_passphrase_on_device': {
-                            return this.store.dispatch({
-                                type: 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_DEVICE',
-                                payload: event,
-                            })
-                        }
+        // request password  device
+        case 'ui-request_passphrase_on_device': {
+            return this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_DEVICE',
+                payload: event,
+            })
+        }
 
-                        case 'ui-close_window': {
-                            return this.store.dispatch({
-                                type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS',
-                                payload: event,
-                            })
-                        }
+        case 'ui-close_window': {
+            return this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS',
+                payload: event,
+            })
+        }
 
-                        // request password application
-                        case 'ui-request_passphrase': {
-                            return this.store.dispatch({
-                                type: 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_HOST',
-                                payload: event,
-                            })
-                        }
+        // request password application
+        case 'ui-request_passphrase': {
+            return this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_UI_REQUEST_PASSPHRASE_HOST',
+                payload: event,
+            })
+        }
 
-                        default: {
-                            return this.store.dispatch({
-                                type: 'TEZOS_TREZOR_CONNECT_UI',
-                                payload: event,
-                            })
-                        }
-                    }
-                });
+        default: {
+            return this.store.dispatch({
+                type: 'TEZOS_TREZOR_CONNECT_UI',
+                payload: event,
+            })
+        }
+    }
+});
 
                 TrezorConnect.on('RESPONSE_EVENT', (event) => {
                     console.log('[TrezorConnect][RESPONSE_EVENT]', event);

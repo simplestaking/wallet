@@ -13,7 +13,6 @@ export class TezosTrezorNewComponent implements OnInit, OnDestroy {
 
   public selectedRow
   public displayedColumns: string[] = ['select', 'address', 'path', 'contracts', 'balance'];
-
   public onDestroy$ = new Subject()
 
   public data

@@ -83,35 +83,54 @@
       [fixedInViewport]="true" [fixedTopGap]="64" [fixedBottomGap]="0">
       <mat-nav-list>
 
-        <a mat-list-item routerLink="/tezos/wallet">
+        <!-- <a mat-list-item routerLink="/tezos/wallet">
           <fa-icon [icon]="['fal', 'chart-line']" [fixedWidth]="true"></fa-icon>&nbsp;
+          Dashboard
+        </a> -->
+        <a mat-list-item routerLink="/tezos/wallet">
+          <svg-icon icon="dashboard"></svg-icon>&nbsp;
           Dashboard
         </a>
 
         <hr />
 
-        <a mat-list-item routerLink="/tezos/wallet/send">
+        <!-- <a mat-list-item routerLink="/tezos/wallet/send">
           <fa-icon [icon]="['fal', 'arrow-from-bottom']" [fixedWidth]="true"></fa-icon>&nbsp;
           Send funds
+        </a> -->
+        <a mat-list-item routerLink="/tezos/wallet/send">
+          <svg-icon icon="send"></svg-icon>&nbsp;
+          Send funds
         </a>
-        <a mat-list-item routerLink="/tezos/wallet/receive">
+        <!-- <a mat-list-item routerLink="/tezos/wallet/receive">
           <fa-icon [icon]="['fal', 'arrow-from-top']" [fixedWidth]="true"></fa-icon>&nbsp;
           Receive funds
+        </a> -->
+        <a mat-list-item routerLink="/tezos/wallet/receive">
+          <svg-icon icon="receive"></svg-icon>&nbsp;
+          Receive funds
         </a>
-        <a mat-list-item routerLink="/tezos/wallet/delegate">
+        <!-- <a mat-list-item routerLink="/tezos/wallet/delegate">
           <fa-icon [icon]="['fal', 'retweet']" [fixedWidth]="true"></fa-icon>&nbsp;
+          Delegate funds
+        </a> -->
+        <a mat-list-item routerLink="/tezos/wallet/delegate">
+          <svg-icon icon="delegate"></svg-icon>&nbsp;
           Delegate funds
         </a>
 
         <hr />
 
-        <a mat-list-item routerLink="/tezos/wallet/new/trezor">
+        <!-- <a mat-list-item routerLink="/tezos/wallet/new/trezor">
           <fa-icon [icon]="['fal', 'plus']" [fixedWidth]="true"></fa-icon>&nbsp;
           New wallet
+        </a> -->
+        <a mat-list-item routerLink="/tezos/wallet/new/trezor">
+          <svg-icon icon="new"></svg-icon>&nbsp;
+            New wallet
         </a>
 
         <!-- <a mat-list-item routerLink="/tezos/wallet/trezor/debug">
-          <fa-icon [icon]="['fal', 'screwdriver']" [fixedWidth]="true"></fa-icon>&nbsp;
           Debug
         </a> -->
 

@@ -19,6 +19,7 @@ import { YAxisTicksNavComponent } from './charts/chart-line-nav/y-axis-ticks-nav
 
 import { CircleSeriesNavComponent } from './charts/chart-line-nav/circle-series-nav.component';
 import { TooltipAreaNavComponent } from './charts/chart-line-nav/tooltip-area-nav.component';
+import { SvgIconComponent } from './svg-icon/svg-icon.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { TooltipAreaNavComponent } from './charts/chart-line-nav/tooltip-area-na
     NgrxFormDirective,
     ExternalLinkDirective,
     LoadingSpinnerDirective,
+    SvgIconComponent,
     
     ChartLineNavComponent
   ],
@@ -47,6 +49,7 @@ import { TooltipAreaNavComponent } from './charts/chart-line-nav/tooltip-area-na
     YAxisTicksNavComponent,
     CircleSeriesNavComponent,
     TooltipAreaNavComponent,
+    SvgIconComponent,
   ]
 })
 export class SharedModule { }

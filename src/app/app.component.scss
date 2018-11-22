@@ -74,6 +74,11 @@ mat-nav-list a.mat-list-item:hover fa-icon:not(:hover) {
   color:#2c71f4;
 }
 
+mat-nav-list a.mat-list-item:hover svg:hover  {
+  fill:#2c71f4;
+}
+
+
 hr {
   display: block;
   height: 1px;
