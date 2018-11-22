@@ -6,9 +6,9 @@ let initialState: any = {
             url: 'https://zeronet.simplestaking.com:3000',
             tzscan: {
                 url: 'http://zeronet.tzscan.io/',
-                operations: 'https://zeronet-api.tzscan.io/v1/operations/',
-                operations_number: 'https://zeronet-api.tzscan.io/v1/number_operations/',
-                block_timestamp: 'https://zeronet-api.tzscan.io/v1/timestamp/',
+                operations: 'https://api.zeronet.tzscan.io/v2/operations/',
+                operations_number: 'https://api.zeronet.tzscan.io/v2/number_operations/',
+                block_timestamp: 'https://api.zeronet.tzscan.io/v2/timestamp/',
             }
         },
         main: {
@@ -17,9 +17,9 @@ let initialState: any = {
             url: 'https://mainnet.simplestaking.com:3000', // 'https://tezos-vpn01.westeurope.cloudapp.azure.com',
             tzscan: {
                 url: 'http://tzscan.io/',
-                operations: 'https://api3.tzscan.io/v1/operations/',
-                operations_number: 'https://api3.tzscan.io/v2/number_operations/',
-                block_timestamp: 'https://api5.tzscan.io/v1/timestamp/',
+                operations: 'https://api6.tzscan.io/v2/operations/',
+                operations_number: 'https://api6.tzscan.io/v2/number_operations/',
+                block_timestamp: 'https://api6.tzscan.io/v2/timestamp/',
             }
         },
     }
