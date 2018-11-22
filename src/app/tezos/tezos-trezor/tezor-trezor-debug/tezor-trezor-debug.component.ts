@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { TezosWalletDialogComponent } from '../../tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component'
 
 import TrezorConnect from 'trezor-connect';
 
@@ -9,7 +11,9 @@ import TrezorConnect from 'trezor-connect';
 })
 export class TezorTrezorDebugComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
 
@@ -36,7 +40,7 @@ export class TezorTrezorDebugComponent implements OnInit {
           TrezorConnect.setPassphrase({
             'passphrase': "test",
           })
-          
+
         }
 
       });
@@ -101,7 +105,7 @@ export class TezorTrezorDebugComponent implements OnInit {
 
   getTezosAddressBundle() {
 
-    TrezorConnect.tezosGetAddress(    {
+    TrezorConnect.tezosGetAddress({
       bundle: [
         { path: "m/44'/1729'/0'", showOnTrezor: false }, // account 1
         { path: "m/44'/1729'/1'", showOnTrezor: false }, // account 2
@@ -112,7 +116,18 @@ export class TezorTrezorDebugComponent implements OnInit {
     }).then(response => { console.warn('[tezosGetAddress][bundle]', response) })
       .catch(error => { console.error('[ERROR][tezosGetAddress]', error) });
 
+  }
 
+  getErrorDialog() {
+    console.log('[getErrorDialog]')
+
+    const dialogConfig = new MatDialogConfig();
+
+    // dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    this.dialog.open(TezosWalletDialogComponent, dialogConfig);
 
   }
+
 }

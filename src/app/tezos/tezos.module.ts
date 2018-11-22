@@ -28,9 +28,9 @@ import {
   MatStepperModule,
   MatCheckboxModule,
   MatProgressSpinnerModule,
+  MatDialogModule,
   // MatChipsModule,
   // MatDatepickerModule,
-  // MatDialogModule,
   // MatExpansionModule,
   // MatGridListModule,
   // MatRadioModule,
@@ -92,7 +92,8 @@ import { TezosOperationReceiveComponent } from './tezos-operation/tezos-operatio
 import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tezor-trezor-debug.component';
 import { TezosTrezorPassphraseComponent } from './tezos-trezor/tezos-trezor-passphrase/tezos-trezor-passphrase.component';
 import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tezos-wallet-start.component';
-import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contract/tezos-trezor-contract.component'
+import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contract/tezos-trezor-contract.component';
+import { TezosWalletDialogComponent } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component'
 
 @NgModule({
   imports: [
@@ -100,7 +101,7 @@ import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contra
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    
+
     QRCodeModule,
     ClipboardModule,
 
@@ -111,24 +112,24 @@ import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contra
     EffectsModule.forFeature([
       TezosEffects,
       TezosNodeEffects,
-      
+
       TezosWalletListEffects,
       TezosWalletDetailEffects,
       TezosWalletSendEffects,
       TezosWalletReceiveEffects,
       TezosWalletDelegateEffects,
       TezosWalletNewTrezorEffects,
-      
+
       TezosOperationTransactionEffects,
       TezosOperationDelegationEffects,
       TezosOperationHistoryEffects,
       TezosOperationReceiveEffects,
-      
+
       TezosTrezorConnectEffects,
       TezosTrezorNewEffects,
       TezosTrezorContractEffects,
       TezosTrezorPassphraseEffects
-      
+
     ]),
 
     MatAutocompleteModule,
@@ -151,9 +152,9 @@ import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contra
     MatSelectModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     // MatChipsModule,
     // MatDatepickerModule,
-    // MatDialogModule,
     // MatExpansionModule,
     // MatGridListModule,
     // MatRadioModule,
@@ -188,6 +189,11 @@ import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contra
     TezorTrezorDebugComponent,
     TezosTrezorPassphraseComponent,
     TezosWalletStartComponent,
-    TezosTrezorContractComponent  ]
+    TezosTrezorContractComponent,
+    TezosWalletDialogComponent
+  ],
+  entryComponents: [
+    TezosWalletDialogComponent
+  ]
 })
 export class TezosModule { }
