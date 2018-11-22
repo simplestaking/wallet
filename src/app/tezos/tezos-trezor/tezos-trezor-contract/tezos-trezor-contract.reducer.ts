@@ -36,7 +36,6 @@ export function reducer(state = initialState, action) {
         }
 
         case 'TEZOS_TREZOR_CONTRACT_SELECT': {
-
             return {
                 ...state,
                 pending: true,
@@ -44,6 +43,14 @@ export function reducer(state = initialState, action) {
                 selected: state.selected.indexOf(action.payload.id) === -1 ?
                     [...state.selected, action.payload.id] :
                     state.selected.filter(row => action.payload.id !== row )
+            }
+        }
+
+        case 'TEZOS_TREZOR_CONTRACT_DESTROY': {
+            return {
+                ...state,
+                pending: false,
+                selected: []
             }
         }
 

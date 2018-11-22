@@ -63,6 +63,38 @@ export class TezosWalletNewTrezorEffects {
                 })
         }),
 
+        tap(({ action, state }) => {
+
+            // save contract to wallet list in FireBase Store 
+            this.walletCollection = this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet');
+
+            // save all originated contracts
+            state.tezos.tezosTrezorContract.selected.map(contract => {
+
+                console.log('[TEZOS_WALLET_NEW_TREZOR_SAVE]', action.payload + '_' + state.tezos.tezosTrezorContract.entities[contract].contract.slice(0, 5))
+
+                // add wallet to firestore
+                this.walletCollection
+                    // set document id as tezos wallet
+                    .doc(state.tezos.tezosTrezorContract.entities[contract].contract)
+                    .set({
+                        // save uid to set security 
+                        // if user is not logged null will be stored
+                        uid: state.app.user.uid,
+                        name: action.payload + '_' + state.tezos.tezosTrezorContract.entities[contract].contract.slice(0, 5),
+                        publicKey: state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].publicKey,
+                        publicKeyHash: state.tezos.tezosTrezorContract.entities[contract].contract,
+                        manager: state.tezos.tezosTrezorNew.selected,
+                        path: state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path,
+                        network: state.tezos.tezosNode.api.name,
+                        balance: state.tezos.tezosTrezorContract.entities[contract].balance * 1000000,
+                        type: 'TREZOR_T',
+                    })
+
+            })
+
+        }),
+
         // dispatch action
         map(() => ({ type: 'TEZOS_WALLET_NEW_TREZOR_SHOW_SAVE_SUCCESS' })),
 

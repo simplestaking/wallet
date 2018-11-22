@@ -67,9 +67,9 @@ export class TezosTrezorContractComponent implements OnInit {
     this.onDestroy$.next();
     this.onDestroy$.complete();
 
-    this.store.dispatch({
-      type: 'TEZOS_TREZOR_CONTRACT_DESTROY',
-    })
+    // this.store.dispatch({
+    //   type: 'TEZOS_TREZOR_CONTRACT_DESTROY',
+    // })
 
   }
 
