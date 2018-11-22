@@ -25,8 +25,7 @@
         </h2>
       </mat-card-header>
 
-
-      <mat-horizontal-stepper [linear]="false">
+      <mat-horizontal-stepper [linear]="false" #stepper>
 
 
         <mat-step [editable]="false" [optional]="false" [completed]="true" label="Connect Trezor">
@@ -69,7 +68,7 @@
         <mat-step [editable]="false" optional="false" label="Add Contract" *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts>0">
           <div class="tezos-trezor-new">
 
-            <app-tezos-trezor-contract>
+            <app-tezos-trezor-contract *ngIf="tezosTrezorNew.entities[tezosTrezorNew.selected]?.contracts>0 && stepper.selectedIndex ===2">
             </app-tezos-trezor-contract>
 
             <div class="tezos-trezor-new-next">

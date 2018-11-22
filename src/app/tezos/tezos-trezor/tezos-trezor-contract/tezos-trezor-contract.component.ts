@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { of, Subject } from 'rxjs';
@@ -11,9 +12,10 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TezosTrezorContractComponent implements OnInit {
 
-  public selectedRow
-  public displayedColumns: string[] = ['select', 'contract', 'balance'];
+  public selectedRows = []
+  public displayedColumns: string[] = ['selectContract', 'contract', 'balance'];
   public onDestroy$ = new Subject()
+  public selection = new SelectionModel<any>(true, []);
 
   public data
   public dataSource = []
@@ -32,31 +34,33 @@ export class TezosTrezorContractComponent implements OnInit {
       .subscribe(data => {
 
         this.dataSource = data.ids.map(id => ({ id, ...data.entities[id] }))
-
         this.data = new MatTableDataSource<any>(this.dataSource);
+
         this.data.paginator = this.paginator;
+        this.selectedRows = data.selected
 
       })
+
 
   }
 
   // dispatch action with selected row 
-  selectRow(row) {
-
-    this.selectedRow = row;
+  selectRowContract(row) {
 
     this.store.dispatch({
       type: 'TEZOS_TREZOR_CONTRACT_SELECT',
-      payload: this.selectedRow
+      payload: row
     })
 
   }
 
-  // check if row is selected
-  isRowSelected(row) {
-    return this.selectedRow && this.selectedRow.id === row.id
+  isSelectedContract(row) {
+
+    return this.selectedRows.indexOf(row.id) === -1 ? false : true
+
   }
-  
+
+
   ngOnDestroy() {
 
     // close all open observables

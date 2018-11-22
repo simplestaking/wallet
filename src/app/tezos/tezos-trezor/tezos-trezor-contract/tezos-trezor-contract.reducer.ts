@@ -1,7 +1,7 @@
 const initialState: any = {
     ids: [],
     entities: {},
-    selected: '',
+    selected: [],
     page: 0,
     itemsPerPage: 10,
     itemsTotalCount: 0,
@@ -36,10 +36,14 @@ export function reducer(state = initialState, action) {
         }
 
         case 'TEZOS_TREZOR_CONTRACT_SELECT': {
+
             return {
                 ...state,
                 pending: true,
-                selected: action.payload.id,
+                // toggle row selection  
+                selected: state.selected.indexOf(action.payload.id) === -1 ?
+                    [...state.selected, action.payload.id] :
+                    state.selected.filter(row => action.payload.id !== row )
             }
         }
 

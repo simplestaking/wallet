@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +19,8 @@ export class TezosWalletNewTrezorComponent implements OnInit, OnDestroy {
   public tezosTrezorContractSelected
 
   public destroy$ = new Subject<null>();
+
+  @ViewChild('stepper') stepper;
 
   constructor(
     public store: Store<any>,
