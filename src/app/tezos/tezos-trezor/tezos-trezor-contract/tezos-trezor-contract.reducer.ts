@@ -46,6 +46,7 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_WALLET_NEW_TREZOR_SHOW:
         case 'TEZOS_TREZOR_CONTRACT_DESTROY': {
             return {
                 ...state,
