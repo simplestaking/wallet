@@ -33,7 +33,7 @@
             </app-tezos-trezor-connect>
 
             <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorDelegateFunds()">
-              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              <svg-icon icon="next"></svg-icon>&nbsp;
               Continue to Verification&nbsp;
             </button>
           </div>
@@ -224,8 +224,10 @@
                     <br />
                     <br />
                     <span>
-                      <a style="text-decoration: none;" externalLink href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationDelegation.injectionOperation}}" target="_blank">
-                        <fa-icon [icon]="['fal', 'external-link-square']"></fa-icon>View in Explorer
+                      <a style="text-decoration: none;" externalLink href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationDelegation.injectionOperation}}"
+                        target="_blank">
+                        <svg-icon icon="link"></svg-icon>&nbsp;
+                        View in Explorer
                       </a>
                     </span>
                   </mat-card-content>

@@ -98,11 +98,11 @@
 <br />
 
 <button *ngIf="tezosWalletDetail?.type !== 'TREZOR_T'" mat-flat-button (click)="delegate('WEB')">
-  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  <svg-icon icon="next"></svg-icon>&nbsp;
   Delegate Funds
 </button>
 
 <button *ngIf="tezosWalletDetail?.type === 'TREZOR_T'" mat-flat-button (click)="delegate('TREZOR_T')">
-  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  <svg-icon icon="next"></svg-icon>&nbsp;
   Continue to Connect Trezor
 </button>

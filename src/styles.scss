@@ -86,6 +86,7 @@ mat-toolbar {
     // -webkit-app-region: drag;
 }
 
+
 // stepper 
 .stepper {
     display: flex;
@@ -383,6 +384,12 @@ mat-card-content .tezos-trezor-verify-input {
     background-color: transparent;
 }
 
+// change button icon size
+button .svg-icon {
+    width: 18px !important;
+    height: 14px !important;
+    vertical-align: -1px !important;
+} 
 
 
 @include angular-material-theme($simple-theme);

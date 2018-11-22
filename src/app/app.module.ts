@@ -18,12 +18,6 @@ import { NgxElectronModule } from 'ngx-electron';
 
 import { DeviceDetectorModule } from 'ngx-device-detector';
 
-// added font awesome pro icons
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fal } from '@fortawesome/pro-light-svg-icons'
-library.add(fal);
-
 import { environment } from '../environments/environment';
 
 import { SharedModule } from './shared/shared.module'
@@ -115,7 +109,6 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     
     NgxElectronModule,
 
-    FontAwesomeModule,
     // NoopAnimationsModule,
     BrowserAnimationsModule,
     

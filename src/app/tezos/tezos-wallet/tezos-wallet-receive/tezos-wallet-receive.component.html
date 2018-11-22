@@ -32,7 +32,7 @@
             </app-tezos-trezor-connect>
 
             <button mat-flat-button matStepperNext *ngIf="tezosTrezorConnectConnected" (click)="tezosTrezorReceiveFunds()">
-              <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+              <svg-icon icon="next"></svg-icon>&nbsp;
               Continue to Verification&nbsp;
             </button>
           </div>
@@ -59,7 +59,7 @@
                     </span>
 
                     <div *ngIf="tezosOperationReceiveContract">
-                      <br/>
+                      <br />
                       <span class="mat-body-1">
                         Manager address (displayed on Trezor screen)
                       </span>
@@ -108,9 +108,10 @@
                     </span>
                     <span>
                       <button mat-button color="primary" ngxClipboard [cbContent]="tezosOperationReceive.form.to" style="font-weight:300;margin-top:25px">
-                        <fa-icon [icon]="['fal', 'clone']"></fa-icon>&nbsp;
+                        <svg-icon icon="copy"></svg-icon>&nbsp;
                         Copy address
                       </button>
+
                     </span>
                   </mat-card-content>
                 </mat-card>

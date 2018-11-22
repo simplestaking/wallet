@@ -58,11 +58,11 @@
 <br />
 
 <button mat-flat-button  *ngIf="tezosWalletDetail?.type !== 'TREZOR_T'" (click)="receive('WEB')">
-  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  <svg-icon icon="next"></svg-icon>&nbsp;
   Receive funds
 </button>
 
 <button *ngIf="tezosWalletDetail?.type === 'TREZOR_T'" mat-flat-button (click)="receive('TREZOR_T')">
-  <fa-icon [icon]="['fal', 'arrow-right']"></fa-icon> &nbsp;
+  <svg-icon icon="next"></svg-icon>&nbsp;
   Continue to Connect Trezor
 </button>

@@ -7,12 +7,6 @@ import { SharedModule } from 'app/shared/shared.module'
 import { QRCodeModule } from 'angularx-qrcode';
 import { ClipboardModule } from 'ngx-clipboard';
 
-// added font awesome pro icons
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fal } from '@fortawesome/pro-light-svg-icons'
-library.add(fal);
-
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -107,7 +101,6 @@ import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contra
     ReactiveFormsModule,
     HttpClientModule,
     
-    FontAwesomeModule,
     QRCodeModule,
     ClipboardModule,
 
