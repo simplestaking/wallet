@@ -111,9 +111,6 @@ export function reducer(state = initialState, action) {
                 }
 
                 if (action.payload.payload.status === 'available') {
-                    console.log('[passphrase]',
-                        action.payload.payload.features.passphrase_protection,
-                        action.payload.payload.features.passphrase_cached)
 
                     // if password is needed and there is no password in cache
                     if (action.payload.payload.features.passphrase_protection &&

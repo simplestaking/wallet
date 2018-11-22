@@ -14,12 +14,20 @@ export class TezosTrezorContractEffects {
     @Effect()
     TezosTrezorNewContractFitler = this.actions$.pipe(
         ofType('TEZOS_TREZOR_NEW_SELECT_SUCCESS'),
+        // get state from store
+        withLatestFrom(this.store, (action: any, state: any) => ({ action, state })),
         // only dispatch for addresses with contract
-
-        map((response: any) => ({
-            type: 'TEZOS_TREZOR_NEW_CONTRACT',
-            payload: response.payload,
-        })),
+        flatMap(({ action, state }) => state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].contracts > 0 ?
+            [{ type: 'TEZOS_TREZOR_NEW_CONTRACT', payload: action.payload }] : []
+        ),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_CONTRACT_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
     )
 
     // get tezos contract address from manager   
@@ -27,10 +35,8 @@ export class TezosTrezorContractEffects {
     TezosTrezorNewContract = this.actions$.pipe(
         ofType('TEZOS_TREZOR_NEW_CONTRACT'),
 
-        tap((action:any) => console.error('[TEZOS_TREZOR_NEW_CONTRACT]', action.payload.address)),
-
         // get state from store
-        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+        withLatestFrom(this.store, (action:any, state: any) => ({ action, state })),
 
         flatMap(({ action, state }) => of([]).pipe(
 
