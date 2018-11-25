@@ -38,6 +38,7 @@ export class TezosOperationTransactionEffects {
             transaction(stateWallet => ({
                 to: state.tezos.tezosOperationTransaction.form.to,
                 amount: state.tezos.tezosOperationTransaction.form.amount,
+                fee: state.tezos.tezosOperationTransaction.form.fee,
             })),
 
             // enter back into zone.js so change detection works
@@ -51,10 +52,10 @@ export class TezosOperationTransactionEffects {
             payload: { injectionOperation: data.injectionOperation }
         })),
         catchError((error, caught) => {
-            console.error(error.message)
+            console.error(error)
             this.store.dispatch({
                 type: 'TEZOS_OPERATION_TRANSACTION_ERROR',
-                payload: error.message,
+                payload: error.response,
             });
             return caught;
         }),
@@ -98,10 +99,10 @@ export class TezosOperationTransactionEffects {
         })),
 
         catchError((error, caught) => {
-            console.error(error.message)
+            console.error(error)
             this.store.dispatch({
                 type: 'TEZOS_OPERATION_TRANSACTION_PENDING_ERROR',
-                payload: error.message,
+                payload: error,
             });
             return caught;
         }),

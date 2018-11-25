@@ -45,6 +45,7 @@ export class TezosOperationDelegationEffects {
                 of(stateWallet).pipe(
                     setDelegation(stateWallet => ({
                         to: state.tezos.tezosOperationDelegation.form.to,
+                        fee: state.tezos.tezosOperationDelegation.form.fee,
                     }))
                 ) :
 
@@ -53,6 +54,7 @@ export class TezosOperationDelegationEffects {
                     originateContract(stateWallet => ({
                         to: state.tezos.tezosOperationDelegation.form.to,
                         amount: state.tezos.tezosOperationDelegation.form.amount,
+                        fee: state.tezos.tezosOperationDelegation.form.fee,
                     }))
                 )
 
