@@ -7,6 +7,7 @@
 /functions/node_modules
 /functions/node_modules/firebase-debug.log
 /tezos-wallet/node_modules
+/tezos-wallet/faucet
 /app-builds
 /electron/node_modules
 /electron/src/dist

@@ -34,7 +34,7 @@ export class TezosOperationTransactionEffects {
                 path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
-            // originate contract
+            // send xtz
             transaction(stateWallet => ({
                 to: state.tezos.tezosOperationTransaction.form.to,
                 amount: state.tezos.tezosOperationTransaction.form.amount,

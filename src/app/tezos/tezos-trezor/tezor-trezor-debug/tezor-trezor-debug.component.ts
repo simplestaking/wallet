@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TezosWalletDialogComponent } from '../../tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component'
 
+import { of, empty } from 'rxjs';
+import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
+
+import { initializeWallet, activateWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
+import { Config } from '../../../../../tezos-wallet/types'
+
 import TrezorConnect from 'trezor-connect';
 
 @Component({
@@ -129,5 +135,52 @@ export class TezorTrezorDebugComponent implements OnInit {
     this.dialog.open(TezosWalletDialogComponent, dialogConfig);
 
   }
+
+  activateWallet() {
+
+    const wallet: Config = {
+      secretKey: 'edsk3xJsET6qbtPFzejqdRQTwScNdLHoYskcjDcVyg5pboXZB6RivT',
+      publicKey: 'edpkuTckfBdV8Rb5t4tScDj7u5hE22YVtT85PeKbShGv61KPnELWdK',
+      publicKeyHash: 'tz1d4ZRi6abW6E2ACFznKxeDkjwgG4dpgx54',
+      node: {
+        name: 'zeronet',
+        display: 'Zeronet',
+        url: 'https://zeronet.simplestaking.com:3000',
+        tzscan: {
+          url: 'http://zeronet.tzscan.io/',
+        }
+      },
+      type: 'web',
+    }
+
+
+    of([]).pipe(
+
+      // wait for sodium to initialize
+      initializeWallet(stateWallet => ({
+        secretKey: wallet.secretKey,
+        publicKey: wallet.publicKey,
+        publicKeyHash: wallet.publicKeyHash,
+        // set Tezos node
+        node: wallet.node,
+        // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+        type: wallet.type,
+      })),
+
+      // activate wallet
+      activateWallet(() => ({
+        secret: 'a2676de2c4c5e83d1dfc6d08b145f98e8fc3d02e'
+      })),
+
+    )
+
+      .subscribe(data => {
+        console.log('[activateWallet]', data)
+      })
+
+  }
+
+
+
 
 }
