@@ -72,10 +72,10 @@ export class TezosOperationDelegationEffects {
             }
         })),
         catchError((error, caught) => {
-            console.error(error.message)
+            console.error(error)
             this.store.dispatch({
                 type: 'TEZOS_OPERATION_DELEGATION_ERROR',
-                payload: error.message,
+                payload: error.response,
             });
             return caught;
         }),
@@ -191,10 +191,10 @@ export class TezosOperationDelegationEffects {
             type: 'TEZOS_OPERATION_DELEGATION_NEW_CONTRACT_SAVE_SUCCESS',
         })),
         catchError((error, caught) => {
-            console.error(error.message)
+            console.error(error)
             this.store.dispatch({
                 type: 'TEZOS_OPERATION_DELEGATION_NEW_CONTRACT_SAVE_ERROR',
-                payload: error.message,
+                payload: error.response,
             });
             return caught;
         }),
