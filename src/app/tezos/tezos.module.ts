@@ -55,6 +55,7 @@ import { TezosWalletDetailEffects } from './tezos-wallet/tezos-wallet-detail/tez
 import { TezosWalletSendEffects } from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.effects'
 import { TezosWalletReceiveEffects } from './tezos-wallet/tezos-wallet-receive/tezos-wallet-receive.effects'
 import { TezosWalletDelegateEffects } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.effects'
+import { TezosWalletDialogEffects } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.effects'
 
 import { TezosWalletNewTrezorEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.effects';
 
@@ -63,6 +64,7 @@ import { TezosOperationOriginationEffects } from './tezos-operation/tezos-operat
 import { TezosOperationDelegationEffects } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.effects'
 import { TezosOperationHistoryEffects } from './tezos-operation/tezos-operation-history/tezos-operation-history.effects'
 import { TezosOperationReceiveEffects } from './tezos-operation/tezos-operation-receive/tezos-operation-receive.effects'
+
 
 
 import { TezosTrezorConnectEffects } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.effects'
@@ -118,6 +120,7 @@ import { TezosWalletDialogComponent } from './tezos-wallet/tezos-wallet-dialog/t
       TezosWalletSendEffects,
       TezosWalletReceiveEffects,
       TezosWalletDelegateEffects,
+      TezosWalletDialogEffects,
       TezosWalletNewTrezorEffects,
 
       TezosOperationTransactionEffects,

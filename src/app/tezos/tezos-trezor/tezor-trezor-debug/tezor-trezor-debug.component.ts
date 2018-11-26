@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TezosWalletDialogComponent } from '../../tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component'
+import { Store } from '@ngrx/store';
 
 import { of, empty } from 'rxjs';
 import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
@@ -18,7 +19,8 @@ import TrezorConnect from 'trezor-connect';
 export class TezorTrezorDebugComponent implements OnInit {
 
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public store: Store<any>,
   ) { }
 
   ngOnInit() {
@@ -127,12 +129,18 @@ export class TezorTrezorDebugComponent implements OnInit {
   getErrorDialog() {
     console.log('[getErrorDialog]')
 
-    const dialogConfig = new MatDialogConfig();
+    // const dialogConfig = new MatDialogConfig();
 
-    // dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    // // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
 
-    this.dialog.open(TezosWalletDialogComponent, dialogConfig);
+    // this.dialog.open(TezosWalletDialogComponent, dialogConfig);
+
+    
+    this.store.dispatch({
+      type: 'TEZOS_WALLET_DIALOG_SHOW',
+    })
+
 
   }
 

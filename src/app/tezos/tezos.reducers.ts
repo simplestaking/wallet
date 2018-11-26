@@ -3,6 +3,7 @@ import { ActionReducerMap, ActionReducer } from '@ngrx/store';
 import * as fromTezosNode from './tezos-node/tezos-node.reducer';
 import * as fromTezosWalletList from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.reducer';
 import * as fromTezosWalletDetail from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.reducer';
+import * as fromTezosWalletDialog from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.reducer';
 import * as fromTezosWalletReceive from './tezos-wallet/tezos-wallet-receive/tezos-wallet-receive.reducer';
 import * as fromTezosWalletSend from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.reducer';
 import * as fromTezosWalletDelegate from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.reducer';
@@ -22,6 +23,7 @@ export interface State {
     tezosNode: any;
     tezosWalletList: any;
     tezosWalletDetail: any;
+    tezosWalletDialog: any;
     tezosWalletReceive: any;
     tezosWalletSend: any;
     tezosWalletDelegate: any;
@@ -40,6 +42,7 @@ export const reducers: ActionReducerMap<State> = {
     tezosNode: fromTezosNode.reducer,
     tezosWalletList: fromTezosWalletList.reducer,
     tezosWalletDetail: fromTezosWalletDetail.reducer,
+    tezosWalletDialog: fromTezosWalletDialog.reducer,
     tezosWalletReceive: fromTezosWalletReceive.reducer,
     tezosWalletSend: fromTezosWalletSend.reducer,
     tezosWalletDelegate: fromTezosWalletDelegate.reducer,
