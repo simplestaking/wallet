@@ -4,7 +4,7 @@ const initialState: any = {
         from: '',
         to: '',
         amount: '',
-        fee: 0.001,
+        fee: 0.01,
     },
 }
 

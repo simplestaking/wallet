@@ -53,7 +53,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" *ngIf="tezosWalletDetail?.delegate?.setable===true">
     <mat-label>To</mat-label>
     <input matInput #address placeholder="To" formControlName="to" [errorStateMatcher]="tezosAddressErrorMatcher">
     <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>

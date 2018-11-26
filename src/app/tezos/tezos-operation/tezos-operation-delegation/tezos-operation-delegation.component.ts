@@ -118,7 +118,6 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
 
     // mark input 
     this.tezosOperationDelegationForm.controls.from.markAsTouched()
-    this.tezosOperationDelegationForm.controls.to.markAsTouched()
 
     if (!this.tezosWalletDetail.delegate || this.tezosWalletDetail.delegate.setable !== true) {
       this.tezosOperationDelegationForm.controls.amount.setValidators([
@@ -128,9 +127,13 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
         Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
       ])
       this.tezosOperationDelegationForm.controls.amount.markAsTouched()
+      this.tezosOperationDelegationForm.controls.to.setValidators([])
+      this.tezosOperationDelegationForm.controls.to.markAsTouched()
     } else {
       this.tezosOperationDelegationForm.controls.amount.setValidators([])
       this.tezosOperationDelegationForm.controls.amount.markAsTouched()
+      this.tezosOperationDelegationForm.controls.to.setValidators([Validators.required])
+      this.tezosOperationDelegationForm.controls.to.markAsTouched()
     }
 
     // check validity
@@ -180,10 +183,10 @@ class TezosAddressErrorStateMatcher implements ErrorStateMatcher {
     const isValidTezosAddress =
       (prefix === 'tz1' || prefix === 'tz2' || prefix === 'tz3' || prefix === 'KT1') && address.length === 36
 
-      return !!(control && control.invalid &&
-        (control.dirty || control.touched || isSubmitted) ||
-        ((control.dirty || control.touched || isSubmitted) && !isValidTezosAddress)
-      )
-  
+    return !!(control && control.invalid &&
+      (control.dirty || control.touched || isSubmitted) ||
+      ((control.dirty || control.touched || isSubmitted) && !isValidTezosAddress)
+    )
+
   }
 }
