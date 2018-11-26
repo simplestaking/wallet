@@ -1,7 +1,7 @@
 
 const initialState: any = {
     form: {
-        fee: 0,
+        fee: 0.001,
     },
 }
 

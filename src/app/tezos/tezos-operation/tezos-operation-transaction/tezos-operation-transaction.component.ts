@@ -43,7 +43,7 @@ export class TezosOperationTransactionComponent implements OnInit {
       fee: new FormControl('', {
         validators: [
           Validators.required,
-          Validators.min(0),
+          Validators.min(0.001),
           Validators.max(999999999),
           Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
         ],
