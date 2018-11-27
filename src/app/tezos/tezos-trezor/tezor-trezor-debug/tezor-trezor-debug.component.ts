@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TezosWalletDialogComponent } from '../../tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component'
 import { Store } from '@ngrx/store';
+import { HttpClient } from '@angular/common/http';
+
 
 import { of, empty } from 'rxjs';
 import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
@@ -21,6 +23,7 @@ export class TezorTrezorDebugComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     public store: Store<any>,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -188,6 +191,75 @@ export class TezorTrezorDebugComponent implements OnInit {
 
   }
 
+  sendTransactionToSmartContract() {
+
+    // https://insurance-api.smartcontractlabs.ee/quote?lat=12.345&lon=56.789&time=1543558400&payout=123510010
+
+    const config:any = {
+      transaction: {
+        // to: 'KT1XTXVNN3DwoK19CR55tprTvnK4UJr3CwQj',
+        // amount: '1.2345',
+        // fee: '1',
+        // parameters:{"parameters":{"prim":"Right","args":[{"prim":"Pair","args":[{"string":"edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8"},{"prim":"Pair","args":[{"string":"2018-11-27T01:28:13Z"},{"prim":"Pair","args":[{"bytes":"64566075b832cf9e7bcc0d63d3a9c71c3f03efc1"},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123510010"},{"int":"3890566"}]},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123450"},{"int":"567890"}]},{"string":"2018-11-30T06:13:20Z"}]}]}]}]}]}]}},        
+        // parameters_raw: '0000000d05050807070a00000040cf8f652b910019f0c1e07aeffe2491913efa4640ea247c940bf84229ae8aadb5b88fca98957d94f448320a078b7f165c4009dbfa773132fd9e761d9bdaa67501070700adf6e4bf0b07070a0000001464566075b832cf9e7bcc0d63d3a9c71c3f03efc10707070700baf3e4750086f6da030707070700ba880f0092a9450080d486c00b',
+      },
+      node: {
+        name: 'alphanet',
+        display: 'Alphanet',
+        url: 'https://alphanet.smartcontractlabs.ee',
+        tzscan: {
+          url: 'http://alphanet.tzscan.io/',
+        }
+      },
+    }
+    const wallet = {
+      publicKey: "edpktxkZTBo3yUibULEuzLAdqDRaMZ5YJUHnJPnb49E4SuRyPoKAr6",
+      publicKeyHash: "tz1Wkx2hQL2N4JiLarC6k9sAXj8Czu7igzwp",
+      type: 'TREZOR_T',
+      path: "m/44'/1729'/0'"
+    }
+
+
+    of([]).pipe(
+
+      flatMap(()=>
+       this.http.get('https://insurance-api.smartcontractlabs.ee/quote?lat=12.345&lon=56.789&time=1543558400&payout=123510010')),
+      
+
+      // wait for sodium to initialize
+      initializeWallet(stateWallet => ({
+        publicKey: wallet.publicKey,
+        publicKeyHash: wallet.publicKeyHash,
+        // set Tezos node
+        node: config.node,
+        // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+        type: wallet.type,
+        path: wallet.path,
+        // add smart contract params
+        contractParameters: stateWallet,
+      })),
+
+      tap(stateWallet => console.log('[stateWallet][contractParameters]',stateWallet , stateWallet.wallet.contractParameters.payreq.parameters, '0000000d'+ stateWallet.wallet.contractParameters.trezorParams )),
+
+      // send xtz
+      transaction(stateWallet => ({
+        to: stateWallet.wallet.contractParameters.payreq.destination,
+        amount: stateWallet.wallet.contractParameters.payreq.amount*0.000001,
+        fee: '0.01',
+        parameters: stateWallet.wallet.contractParameters.payreq.parameters,
+      })),
+
+      // wait for transacation to be confirmed
+      confirmOperation(stateWallet => ({
+        injectionOperation: stateWallet.injectionOperation,
+      })),
+
+
+    ).subscribe(data => {
+      //console.log(data)
+    })
+
+  }
 
 
 
