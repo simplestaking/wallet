@@ -22,23 +22,23 @@ let initialState: any = {
                 block_timestamp: 'https://api6.tzscan.io/v2/timestamp/',
             }
         },
-        alpha: {
-            display: 'Alphanet',
-            name: 'alpha',
-            url: 'https://alphanet.smartcontractlabs.ee',
-            tzscan: {
-                url: 'http://alphanet.tzscan.io/',
-                operations: 'https://api.alphanet.tzscan.io/v1/operations/',
-                operations_number: 'https://api.alphanet.tzscan.io/v1/number_operations/',
-                block_timestamp: 'https://api.alphanet.tzscan.io/v1/timestamp/',
-            }
-        },
+        // alpha: {
+        //     display: 'Alphanet',
+        //     name: 'alpha',
+        //     url: 'https://alphanet.smartcontractlabs.ee',
+        //     tzscan: {
+        //         url: 'http://alphanet.tzscan.io/',
+        //         operations: 'https://api.alphanet.tzscan.io/v1/operations/',
+        //         operations_number: 'https://api.alphanet.tzscan.io/v1/number_operations/',
+        //         block_timestamp: 'https://api.alphanet.tzscan.io/v1/timestamp/',
+        //     }
+        // },
     }
 }
 
 initialState = {
     ...initialState,
-    api: initialState.nodes.alpha,
+    api: initialState.nodes.main,
 }
 
 export function reducer(state = initialState, action) {

@@ -13,19 +13,19 @@ import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from
 export class TezosWalletDialogEffects {
 
     // trigger data load based on navigation change  
-    @Effect()
-    TezosWalletDialogWarning$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_DELEGATION_ERROR', 'TEZOS_OPERATION_TRANSACTION_ERROR'),
-        map(() => ({ type: 'TEZOS_WALLET_DIALOG_SHOW' })),
-        catchError((error, caught) => {
-            console.error(error.message)
-            this.store.dispatch({
-                type: 'TEZOS_WALLET_DETAIL_SHOW_ERROR',
-                payload: error.message,
-            });
-            return caught;
-        }),
-    )
+    // @Effect()
+    // TezosWalletDialogWarning$ = this.actions$.pipe(
+    //     ofType('TEZOS_OPERATION_DELEGATION_ERROR', 'TEZOS_OPERATION_TRANSACTION_ERROR'),
+    //     map(() => ({ type: 'TEZOS_WALLET_DIALOG_SHOW' })),
+    //     catchError((error, caught) => {
+    //         console.error(error.message)
+    //         this.store.dispatch({
+    //             type: 'TEZOS_WALLET_DETAIL_SHOW_ERROR',
+    //             payload: error.message,
+    //         });
+    //         return caught;
+    //     }),
+    // )
 
     @Effect()
     TezosWalletDialogWarningShow$ = this.actions$.pipe(
