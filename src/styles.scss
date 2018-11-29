@@ -393,7 +393,8 @@ button .svg-icon {
 
 // change dialog backdrop
 .cdk-overlay-dark-backdrop {
-    background: rgba(0, 0, 0, 0.225);
+    background: #ffffff;
+    opacity: 0.8 !important;
 }
 
 .mat-dialog-container {

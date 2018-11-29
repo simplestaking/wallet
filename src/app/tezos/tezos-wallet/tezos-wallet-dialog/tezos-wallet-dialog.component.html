@@ -1,28 +1,36 @@
-<div class="tezos-trezor-passpharse">
-  <div class="tezos-stepper-card"  style="padding: 0px !important;">
-    <div class="tezos-stepper-card-row">
+<div class="tezos-wallet-dialog" style="padding: 0px !important; width: 400px">
 
-      <mat-card>
-        <mat-card-header>
-          <h2 class="mat-h1" style="font-size: 20px;">
-            Warning
-          </h2>
-        </mat-card-header>
-        <mat-card-content style="padding:initial">
+  <mat-card class="tezos-wallet-dialog-warning" style="border: 1px solid red;border-radius: 5px;">
+    <mat-card-header style="display: flex;align-items: center;justify-content: center;">
+      <h2 class="mat-h1" style="font-size: 20px;color: red;">
+        Warning
+      </h2>
+    </mat-card-header>
+    <mat-card-content style="padding:initial">
 
-          <span style="display: block;margin: 20px 0px 5px 0px;font-weight: 500; text-align: left;">
-            Warning message
-            <br/>
-            <span style="font-weight: 400;">
-              Warning message detail<br/> 
-              Warning message detail<br/>
-              Warning message detail<br/>
-            </span>
-          </span>
+      <span style="display: block;margin: 20px 0px 5px 0px;font-weight: 500; text-align: center;">
 
-        </mat-card-content>
-      </mat-card>
+        <!-- <br />
+        Warning message
+        <br /> -->
+        <span style="font-weight: 400;">
+          Warning message detail.
+          Warning message detail<br />
+          Warning message detail<br />
+        </span>
 
-    </div>
-  </div>
+        <br />
+        <br />
+
+        <button class="tezos-wallet-dialog"  mat-flat-button >
+          <svg-icon icon="next"></svg-icon>&nbsp;
+          Done&nbsp;&nbsp;&nbsp;
+        </button>
+
+        <br />
+
+      </span>
+
+    </mat-card-content>
+  </mat-card>
 </div>

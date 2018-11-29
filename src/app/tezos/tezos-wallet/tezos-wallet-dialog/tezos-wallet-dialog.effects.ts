@@ -35,7 +35,7 @@ export class TezosWalletDialogEffects {
 
             const dialogConfig = new MatDialogConfig();
             // dialogConfig.disableClose = true;
-            dialogConfig.autoFocus = true;
+            dialogConfig.autoFocus = false;
             this.dialog.open(TezosWalletDialogComponent, dialogConfig);
 
         }),
