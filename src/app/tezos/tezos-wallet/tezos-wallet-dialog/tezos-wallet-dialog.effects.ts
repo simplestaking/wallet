@@ -15,8 +15,8 @@ export class TezosWalletDialogEffects {
     // trigger data load based on navigation change  
     @Effect()
     TezosWalletDialogWarning$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_DELEGATION_ERROR','TEZOS_OPERATION_TRANSACTION_ERROR', 'TEZOS_OPERATION_RECEIVE_ERROR'),
-        map(() => ({ type: 'TEZOS_WALLET_DIALOG_SHOW' })),
+        ofType('TEZOS_OPERATION_DELEGATION_ERROR', 'TEZOS_OPERATION_TRANSACTION_ERROR', 'TEZOS_OPERATION_RECEIVE_ERROR'),
+        map((action: any) => ({ type: 'TEZOS_WALLET_DIALOG_SHOW', payload: action.payload })),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -33,8 +33,8 @@ export class TezosWalletDialogEffects {
 
         tap((action: any) => {
             this.dialog.open(TezosWalletDialogComponent, {
-                disableClose : true,
-                autoFocus : false,
+                disableClose: true,
+                autoFocus: false,
                 //width : '400px',
             });
         }),

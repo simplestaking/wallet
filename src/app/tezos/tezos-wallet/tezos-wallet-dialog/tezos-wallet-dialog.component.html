@@ -1,4 +1,4 @@
-<div class="tezos-wallet-dialog" style="padding: 0px !important;width: 400px;">
+<div class="tezos-wallet-dialog" style="padding: 0px !important;min-width: 450px;">
 
   <mat-card class="tezos-wallet-dialog-warning" style="border: 1px solid red;border-radius: 5px;">
     <mat-card-header style="display: flex;align-items: center;justify-content: center;height: 65px;">
@@ -10,13 +10,18 @@
     <mat-card-content style="padding:initial">
 
       <span style="display: block;margin: 20px 0px 5px 0px;font-weight: 500; text-align: center;">
-
         <span style="font-weight: 400;">
-          {{ tezosWalletDialog.content }}
+
+          <span *ngFor="let content of tezosWalletDialog.content">
+            <ul *ngFor="let error of content" style="text-align: left;list-style-type: none;">
+              <li *ngFor="let line of error">
+                <span style="font-weight: 500;">{{line.name}}</span>: {{line.value}}
+              </li>
+            </ul>
+          </span>
+
         </span>
 
-        <br />
-        <br />
         <br />
         <br />
 
