@@ -3,27 +3,24 @@
   <mat-card class="tezos-wallet-dialog-warning" style="border: 1px solid red;border-radius: 5px;">
     <mat-card-header style="display: flex;align-items: center;justify-content: center;">
       <h2 class="mat-h1" style="font-size: 20px;color: red;">
-        Warning
+        <svg-icon icon="warning"></svg-icon>&nbsp;
+        {{ tezosWalletDialog.headline }}
       </h2>
     </mat-card-header>
     <mat-card-content style="padding:initial">
 
       <span style="display: block;margin: 20px 0px 5px 0px;font-weight: 500; text-align: center;">
 
-        <!-- <br />
-        Warning message
-        <br /> -->
         <span style="font-weight: 400;">
-          Warning message detail.
-          Warning message detail<br />
-          Warning message detail<br />
+          {{ tezosWalletDialog.content }}
         </span>
 
         <br />
         <br />
-
-        <button class="tezos-wallet-dialog"  mat-flat-button >
-          <svg-icon icon="next"></svg-icon>&nbsp;
+        <br />
+        
+        <button class="tezos-wallet-dialog" mat-flat-button (click)="closeDialog()">
+          <svg-icon icon="ok"></svg-icon>&nbsp;
           Done&nbsp;&nbsp;&nbsp;
         </button>
 

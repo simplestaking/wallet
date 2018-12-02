@@ -142,6 +142,10 @@ export class TezorTrezorDebugComponent implements OnInit {
     
     this.store.dispatch({
       type: 'TEZOS_WALLET_DIALOG_SHOW',
+      payload: {
+        headline: 'Transaction Faild',
+        content: ' error text error text error text error text error text error text </br>  jhg kjhg kjhg hjkjhg jkjhg hjkjhg jk',
+      },
     })
 
 

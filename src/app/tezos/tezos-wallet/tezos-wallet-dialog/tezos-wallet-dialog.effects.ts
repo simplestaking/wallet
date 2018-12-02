@@ -31,13 +31,13 @@ export class TezosWalletDialogEffects {
     TezosWalletDialogWarningShow$ = this.actions$.pipe(
         ofType('TEZOS_WALLET_DIALOG_SHOW'),
 
-        tap(() => {
+        tap((action: any) => {
+            console.log('[TEZOS_WALLET_DIALOG_SHOW][action]', action.payload)
 
             const dialogConfig = new MatDialogConfig();
-            // dialogConfig.disableClose = true;
+            dialogConfig.disableClose = true;
             dialogConfig.autoFocus = false;
             this.dialog.open(TezosWalletDialogComponent, dialogConfig);
-
         }),
 
         map(() => ({ type: 'TEZOS_WALLET_DIALOG_SHOW_SUCCESS' })),
@@ -54,9 +54,7 @@ export class TezosWalletDialogEffects {
     constructor(
         private actions$: Actions,
         private store: Store<any>,
-        private zone: NgZone,
         private dialog: MatDialog,
-
     ) { }
 
 }
