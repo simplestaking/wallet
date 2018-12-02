@@ -1,9 +1,9 @@
-<div class="tezos-wallet-dialog" style="padding: 0px !important; width: 400px">
+<div class="tezos-wallet-dialog" style="padding: 0px !important;width: 400px;">
 
   <mat-card class="tezos-wallet-dialog-warning" style="border: 1px solid red;border-radius: 5px;">
-    <mat-card-header style="display: flex;align-items: center;justify-content: center;">
+    <mat-card-header style="display: flex;align-items: center;justify-content: center;height: 65px;">
       <h2 class="mat-h1" style="font-size: 20px;color: red;">
-        <svg-icon icon="warning"></svg-icon>&nbsp;
+        <svg-icon icon="warning" scale="1.1" style="vertical-align: 0.05em !important;"></svg-icon>&nbsp;
         {{ tezosWalletDialog.headline }}
       </h2>
     </mat-card-header>
@@ -18,9 +18,10 @@
         <br />
         <br />
         <br />
-        
+        <br />
+
         <button class="tezos-wallet-dialog" mat-flat-button (click)="closeDialog()">
-          <svg-icon icon="ok"></svg-icon>&nbsp;
+          <svg-icon icon="ok" scale="1.2"></svg-icon>&nbsp;
           Done&nbsp;&nbsp;&nbsp;
         </button>
 

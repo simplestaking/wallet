@@ -130,7 +130,6 @@ export class TezorTrezorDebugComponent implements OnInit {
   }
 
   getErrorDialog() {
-    console.log('[getErrorDialog]')
 
     // const dialogConfig = new MatDialogConfig();
 
