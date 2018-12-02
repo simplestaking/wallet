@@ -4,7 +4,7 @@ import { ElectronService } from 'ngx-electron'
 @Directive({
   selector: '[externalLink]',
   host: {
-    '[style.text-decoration]': '"underline"',
+    // '[style.text-decoration]': '"underline"',
     '[style.color]': '"#2979ff"',
     '[style.cursor]': '"pointer"',
   }

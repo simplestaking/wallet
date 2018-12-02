@@ -135,22 +135,30 @@
                     </h2>
                   </mat-card-header>
                   <!-- Progress bar -->
-                  <mat-progress-bar mode="indeterminate" style="width:380px;margin-left:-30px">
-                  </mat-progress-bar>
+                  <!-- <mat-progress-bar mode="indeterminate" style="width:380px;margin-left:-30px">
+                  </mat-progress-bar> -->
                   <mat-card-content>
                     <span class="mat-body-1">
                       The transaction has been signed and sent to the network.
                       Your wallet balance will update once the blockchain has confirmed the transaction.
+                      <br />
+                      <span style="font-weight: 500">This typically take up to 1 minute.</span>
                     </span>
                     <br />
                     <br />
                     <br />
                     <span>
-                      <a style="text-decoration: initial !important;" externalLink href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationTransaction.injectionOperation}}"
+
+                      <button class="tezos-wallet-dialog" mat-flat-button (click)="redirectToWalletDetail()">
+                        <svg-icon icon="ok" scale="1.2"></svg-icon>&nbsp;
+                        Done&nbsp;&nbsp;&nbsp;
+                      </button>
+
+                      <a externalLink style="text-decoration: none;margin-left: 20px;" href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationTransaction.injectionOperation}}"
                         target="_blank">
-                        <svg-icon icon="link"></svg-icon>&nbsp;
-                        View in Explorer
+                        <svg-icon icon="link"></svg-icon>View in Explorer
                       </a>
+
                     </span>
                   </mat-card-content>
                 </mat-card>

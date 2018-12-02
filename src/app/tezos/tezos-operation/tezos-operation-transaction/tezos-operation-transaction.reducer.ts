@@ -12,7 +12,6 @@ export function reducer(state = initialState, action) {
     switch (action.type) {
 
         case 'TEZOS_OPERATION_TRANSACTION_DESTROY': {
-            console.log(state, action)
             return {
                 ...state,
                 form: {

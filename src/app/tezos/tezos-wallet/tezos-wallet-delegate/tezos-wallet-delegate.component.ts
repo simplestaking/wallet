@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tezos-wallet-delegate',
@@ -24,6 +25,7 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
 
   constructor(
     public store: Store<any>,
+    public router: Router,
   ) { }
 
   ngOnInit() {
@@ -96,6 +98,11 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
       }
     })
 
+  }
+
+  // redirect do detail and see pending operation
+  redirectToWalletDetail() {
+    this.router.navigate(['/tezos/wallet/detail/' + this.tezosOperationDelegation.form.from])
   }
 
   ngOnDestroy() {
