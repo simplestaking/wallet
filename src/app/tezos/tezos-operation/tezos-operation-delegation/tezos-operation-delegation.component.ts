@@ -127,13 +127,13 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
         Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
       ])
       this.tezosOperationDelegationForm.controls.amount.markAsTouched()
-      this.tezosOperationDelegationForm.controls.to.setValidators([])
-      this.tezosOperationDelegationForm.controls.to.markAsTouched()
+      // this.tezosOperationDelegationForm.controls.to.setValidators([])
+      // this.tezosOperationDelegationForm.controls.to.markAsTouched()
     } else {
       this.tezosOperationDelegationForm.controls.amount.setValidators([])
       this.tezosOperationDelegationForm.controls.amount.markAsTouched()
-      this.tezosOperationDelegationForm.controls.to.setValidators([Validators.required])
-      this.tezosOperationDelegationForm.controls.to.markAsTouched()
+      // this.tezosOperationDelegationForm.controls.to.setValidators([Validators.required])
+      // this.tezosOperationDelegationForm.controls.to.markAsTouched()
     }
 
     // check validity
