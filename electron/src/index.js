@@ -30,7 +30,7 @@ function createWindow() {
     width: 1024,
     height: 775,//768,
     titleBarStyle: 'hidden',
-    // frame: false,
+    frame: false,
     resizable: false
   });
 
