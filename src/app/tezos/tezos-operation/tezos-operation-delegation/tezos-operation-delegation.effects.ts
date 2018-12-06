@@ -52,6 +52,7 @@ export class TezosOperationDelegationEffects {
                 // originate contract with delegation 
                 of(stateWallet).pipe(
                     originateContract(stateWallet => ({
+                        to: state.tezos.tezosOperationDelegation.form.to,
                         amount: state.tezos.tezosOperationDelegation.form.amount,
                         fee: state.tezos.tezosOperationDelegation.form.fee,
                     }))
@@ -173,13 +174,14 @@ export class TezosOperationDelegationEffects {
                         // if user is not logged null will be stored
                         uid: state.app.user.uid,
                         name: state.tezos.tezosWalletDetail.name + '_' + action.payload.originatedPublicKeyHash.slice(0, 8),
+                        secretKey: state.tezos.tezosWalletDetail.secretKey ? state.tezos.tezosWalletDetail.secretKey : '',
                         publicKey: state.tezos.tezosWalletDetail.publicKey,
                         publicKeyHash: action.payload.originatedPublicKeyHash,
-                        path: state.tezos.tezosWalletDetail.path,
                         manager: state.tezos.tezosWalletDetail.publicKeyHash,
                         network: state.tezos.tezosNode.api.name,
                         balance: 0,
-                        type: 'TREZOR_T',
+                        path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : '',
+                        type: state.tezos.tezosWalletDetail.type,
                     })
             } else {
                 console.log('[TEZOS_OPERATION_DELEGATION_PENDING_SUCCESS] delegation ')

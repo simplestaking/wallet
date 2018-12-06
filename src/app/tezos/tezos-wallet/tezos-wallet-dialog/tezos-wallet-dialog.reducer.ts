@@ -9,9 +9,9 @@ export function reducer(state = initialState, action) {
         case 'TEZOS_WALLET_DIALOG_SHOW': {
             return {
                 headline: 'Warning',
-                content: action.payload.map(line => ([
+                content: action.payload ? action.payload.map(line => ([
                     Object.keys(line).map(key => ({ name: key, value: line[key] }))
-                ])),
+                ])) : '',
             }
         }
 
