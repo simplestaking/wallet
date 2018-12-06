@@ -1,10 +1,10 @@
 {
   "name": "simplestakingwallet",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "Simple Wallet with Trezor support",
   "main": "src/index.js",
   "scripts": {
-    "build": "electron-builder --dir",
+    "build": "electron-builder",
     "publish": "electron-builder --publish always",
     "postinstall": "electron-builder install-app-deps"
   },
