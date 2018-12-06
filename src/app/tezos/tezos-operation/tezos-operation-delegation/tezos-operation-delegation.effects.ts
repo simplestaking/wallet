@@ -174,6 +174,7 @@ export class TezosOperationDelegationEffects {
                         // if user is not logged null will be stored
                         uid: state.app.user.uid,
                         name: state.tezos.tezosWalletDetail.name + '_' + action.payload.originatedPublicKeyHash.slice(0, 8),
+                        secretKey: state.tezos.tezosWalletDetail.secretKey ? state.tezos.tezosWalletDetail.secretKey : '',
                         publicKey: state.tezos.tezosWalletDetail.publicKey,
                         publicKeyHash: action.payload.originatedPublicKeyHash,
                         manager: state.tezos.tezosWalletDetail.publicKeyHash,

@@ -38,7 +38,7 @@ let initialState: any = {
 
 initialState = {
     ...initialState,
-    api: initialState.nodes.main,
+    api: initialState.nodes.zero,
 }
 
 export function reducer(state = initialState, action) {
