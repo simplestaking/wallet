@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TezosWalletDialogComponent } from '../../tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component'
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 import { of, empty } from 'rxjs';
@@ -26,6 +27,7 @@ export class TezorTrezorDebugComponent implements OnInit {
     private dialog: MatDialog,
     public store: Store<any>,
     private http: HttpClient,
+    private db: AngularFirestore,
   ) { }
 
   ngOnInit() {
@@ -391,6 +393,16 @@ export class TezorTrezorDebugComponent implements OnInit {
     })
 
   }
+
+
+  getHistoricalData() {
+
+    console.log('[getHistoricalData]');
+
+    
+
+  }
+
 
 
 
