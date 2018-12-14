@@ -5,9 +5,11 @@ import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 
+import * as firebase from 'firebase/app';
+import 'firebase/firestore'
 
 import { of, empty } from 'rxjs';
-import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
+import { map, withLatestFrom, catchError, flatMap, concatMap, tap } from 'rxjs/operators';
 
 import { initializeWallet, activateWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
 import { Config } from '../../../../../tezos-wallet/types'
@@ -399,11 +401,53 @@ export class TezorTrezorDebugComponent implements OnInit {
 
     console.log('[getHistoricalData]');
 
-    
+    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Transaction&p=0&number=50
+    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Origination&p=0&number=10
+    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Delegation&p=0&number=10
+
+    // save wallet to wallet list in FireBase Store 
+    let transactionCollection = this.db.collection('tezos_' + 'main' + '_transaction');
+
+    of({}).pipe(
+
+      // 1. get data 
+      concatMap(() => transactionCollection.valueChanges()),
+      tap(transaction => console.log('[transaction][firebase]', transaction)),
+
+      // 2. check if we need to download data, get number of operations for each type ,
+      flatMap(operations => {
+        return this.http.get('https://api.zeronet.tzscan.io/v2/operations/tz1PSJadRETNHgr2DjZ7nCk142gDmTzex4PK?type=Transaction&p=0&number=50')
+      }),
+      tap(transaction => console.log('[transaction][tzscan]', transaction)),
+
+      // 3. download missing data for last 3 months 
+
+
+    ).subscribe(data => {
+      console.log('[transaction][result]', data)
+    })
+
+
+
+    // add transaction to firestore
+    transactionCollection
+      .doc('KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9')
+      .update({
+        // id: firebase.firestore.FieldValue.arrayUnion("9")
+        id: ['12', '2', '3'],
+      })
+
+    // add transaction to firestore
+    transactionCollection
+      .doc('KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9')
+      .set({
+        entities: {
+          '56': {
+            date: '543',
+          },
+        }
+      }, { merge: true })
 
   }
-
-
-
 
 }

@@ -81,7 +81,7 @@ export class TezosOperationHistoryEffects {
                     state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
                     // get public key hash from url 
                     state.routerReducer.state.root.children[0].firstChild.params.address +
-                    '?type=Origination&p=0&number=10')
+                    '?type=Origination&p=0&number=50')
             ),
 
             // add publicKeyHash
@@ -120,7 +120,7 @@ export class TezosOperationHistoryEffects {
                     state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
                     // get public key hash from url 
                     state.routerReducer.state.root.children[0].firstChild.params.address +
-                    '?type=Delegation&p=0&number=10')
+                    '?type=Delegation&p=0&number=50')
             ),
 
             // add publicKeyHash
