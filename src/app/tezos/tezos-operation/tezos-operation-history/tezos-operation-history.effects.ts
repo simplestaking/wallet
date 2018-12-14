@@ -142,6 +142,35 @@ export class TezosOperationHistoryEffects {
         }),
     )
 
+    // get pending operation data  
+    @Effect()
+    TezosWalletOperationHistoryPendingLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            tap(() => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS] pending ',
+                state.routerReducer.state.root.children[0].firstChild.params.address))
+            // look in mempool for pending transaction 
+            
+        )),
+
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS_', payload: response })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR_',
+                payload: error.message,
+            });
+            return caught;
+        }),
+    )
+
+
     // get historical operation data  
     @Effect()
     TezosWalletOperationHistoryTimpeLoad$ = this.actions$.pipe(

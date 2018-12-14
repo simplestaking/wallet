@@ -18,7 +18,6 @@ export class TezosWalletDelegateComponent implements OnInit, OnDestroy {
   public tezosWalletDelegateDeviceButton
   public tezosTrezorConnectConnected
 
-
   public destroy$ = new Subject<null>();
 
   @ViewChild('matHorizontalStepper') stepper

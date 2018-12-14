@@ -97,7 +97,7 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
 
   // redirect do detail and see pending operation
   redirectToWalletDetail() {
-    this.router.navigate(['/tezos/wallet/detail/' + this.tezosOperationTransaction.form.to])
+    this.router.navigate(['/tezos/wallet/detail/' + this.tezosOperationTransaction.form.from])
   }
 
   ngOnDestroy() {
