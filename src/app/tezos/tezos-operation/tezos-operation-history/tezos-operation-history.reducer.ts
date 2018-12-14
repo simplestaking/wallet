@@ -13,7 +13,7 @@ export function reducer(state = initialState, action) {
 
         case 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS': {
 
-            return {
+            let stateExtended = {
                 ...state,
                 ids: [
                     ...state.ids,
@@ -88,6 +88,20 @@ export function reducer(state = initialState, action) {
                             }
                         }
 
+                        if (operation.type.operations[0].timestamp) {
+
+                            // console.log('[timestamp]', operation.type.operations[0].timestamp, operation.type.operations[0], action.payload.publicKeyHash);
+
+                            operationTransformed = {
+                                ...operationTransformed,
+                                timestamp: operation.type.operations[0].timestamp,
+                                datetime:
+                                    // us timestamp
+                                    // moment(operation.type.operations[0].timestamp).format('MMM DD YYYY, h:mm:ss a'),
+                                    // eu timestamp
+                                    moment(operation.type.operations[0].timestamp).format('DD MMM YYYY, HH:mm:ss'),
+                            }
+                        }
 
                         return {
                             ...accumulator,
@@ -98,6 +112,14 @@ export function reducer(state = initialState, action) {
                         }
                     }, {})
                 },
+            }
+
+            // sort state according to timestamp 
+            return {
+                ...stateExtended,
+                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
+                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+                )
             }
         }
 

@@ -608,17 +608,17 @@ input[type="password"]:focus {
 @font-face {
   font-family: 'Roboto Mono';
   font-style: normal;
-  src: url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot?#iefix) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.8b0449900568bc4bd7690563901dd208.woff2) format('woff2'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.bb8858f0b5ca736da3d439d9d5f479fe.woff) format('woff'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.a48ac41620cd818c5020d0f4302489ff.ttf) format('truetype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1fb9c16fbda854ad9885c8fa360cd34d.svg#RobotoMono) format('svg');
+  src: url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot?#iefix) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.8b0449900568bc4bd7690563901dd208.woff2) format('woff2'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.bb8858f0b5ca736da3d439d9d5f479fe.woff) format('woff'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.a48ac41620cd818c5020d0f4302489ff.ttf) format('truetype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.86a02db6a5b5d65eaea01378876278e8.svg#RobotoMono) format('svg');
   /* Legacy iOS */
 }
 @font-face {
   font-family: 'icomoon';
-  src: url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot) format('embedded-opentype'), url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot?#iefix) format('embedded-opentype'), url(../fonts/icomoon.c8826b9535be7c13a73ffc413a38ee32.woff) format('woff'), url(../fonts/icomoon.b610a9be9486e52e1d6b191dc98ca1f9.ttf) format('truetype'), url(../fonts/icomoon.977a2c999a3eacaa1647a089041251de.svg#icomoon) format('svg');
+  src: url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot) format('embedded-opentype'), url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot?#iefix) format('embedded-opentype'), url(../fonts/icomoon.c8826b9535be7c13a73ffc413a38ee32.woff) format('woff'), url(../fonts/icomoon.b610a9be9486e52e1d6b191dc98ca1f9.ttf) format('truetype'), url(../fonts/icomoon.d9c3c70f07e30e3af1f7ff11e9379c86.svg#icomoon) format('svg');
 }
 @font-face {
   font-family: 'text-security-disc';
   src: url(../fonts/text-security-disc.6d04d79360f7263e0739bb3b194f6d64.eot);
-  src: url(../fonts/text-security-disc.6d04d79360f7263e0739bb3b194f6d64.eot?#iefix) format('embedded-opentype'), url(../fonts/text-security-disc.0e7e5cb49b1bb3ef9c948de9878d6ee2.woff) format('woff'), url(../fonts/text-security-disc.ea54324259d087da144746490d84dcb8.ttf) format('truetype'), url(../fonts/text-security-disc.ba919e19b1200a4ca349a8cb9dc3c139.svg#text-security) format('svg');
+  src: url(../fonts/text-security-disc.6d04d79360f7263e0739bb3b194f6d64.eot?#iefix) format('embedded-opentype'), url(../fonts/text-security-disc.0e7e5cb49b1bb3ef9c948de9878d6ee2.woff) format('woff'), url(../fonts/text-security-disc.ea54324259d087da144746490d84dcb8.ttf) format('truetype'), url(../fonts/text-security-disc.6b5dea63e684e63e5b9ea9f45a877164.svg#text-security) format('svg');
 }
 .icomoon-eject {
   display: inline-block;
@@ -1534,6 +1534,24 @@ section > div .divider span:after {
     width: 21.6px;
   }
 }
+.device-management {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.device-management h3 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.device-management h3 span {
+  white-space: nowrap;
+}
+.device-management .buttons .confirm {
+  margin-bottom: 10px;
+}
+.device-management .buttons .confirm.wipe {
+  background-color: #ED1212;
+}
 .export-account-info {
   display: flex;
   flex-direction: column;
@@ -1859,25 +1877,30 @@ section > div .divider span:after {
     width: 21.6px;
   }
 }
-.initialize {
+.initialize,
+.seedless {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.initialize h3 {
+.initialize h3,
+.seedless h3 {
   margin-bottom: 3px;
 }
-.initialize a.button {
+.initialize a.button,
+.seedless a.button {
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
 }
-.initialize a.button .exit {
+.initialize a.button .exit,
+.seedless a.button .exit {
   position: relative;
   top: 1px;
 }
-.initialize a.button .exit::after {
+.initialize a.button .exit::after,
+.seedless a.button .exit::after {
   display: inline-block;
   font-family: 'icomoon';
   font-style: normal;
