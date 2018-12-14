@@ -152,6 +152,8 @@ export class TezosOperationHistoryEffects {
 
         // create observable for each operation
         flatMap(({ action, state }) => action.payload.operations
+            // do not dispatch action with timestamp
+            .filter((operation: any) => !operation.type.operations[0].timestamp)
             .map(operation => ({
                 operation: operation,
                 url: state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.block_timestamp
