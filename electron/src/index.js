@@ -40,7 +40,7 @@ function createWindow() {
     slashes: true,
   }));
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // emitted when the window is closed.
   mainWindow.on('closed', () => {

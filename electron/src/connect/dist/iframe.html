@@ -16,14 +16,14 @@
 <body>
 
     <script type="text/javascript">
-        window.top.postMessage({
+        window.parent.postMessage({
             event: 'UI_EVENT',
             type: 'iframe-bootstrap',
         }, '*');
 
         const iframeScript = document.createElement('script');
         iframeScript.setAttribute('type', 'text/javascript');
-        iframeScript.setAttribute('src', './js/iframe.3cef8e1eadc2f132871b.js');
+        iframeScript.setAttribute('src', './js/iframe.3ab394312808dc22fc75.js');
         iframeScript.setAttribute('async', 'false');
         document.body.appendChild(iframeScript);
     </script>
