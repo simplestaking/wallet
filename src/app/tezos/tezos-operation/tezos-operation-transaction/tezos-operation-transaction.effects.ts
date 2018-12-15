@@ -85,7 +85,7 @@ export class TezosOperationTransactionEffects {
 
             // enter back into zone.js so change detection works
             enterZone(this.zone),
-            
+
             map(() => ({ action, state }))
         )),
 
@@ -106,11 +106,14 @@ export class TezosOperationTransactionEffects {
             });
             return caught;
         }),
-        // wait for tzscan to process tranzaction
+        // wait for tzscan to process transaction
         delay(5000),
         // redirect to wallet detail
         tap((action) => {
-            this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
+            // reload for same url
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+                this.router.navigate(['/tezos/wallet/detail/' + action.payload.wallet.publicKeyHash])
+            )
         }),
     )
 

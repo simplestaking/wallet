@@ -123,6 +123,79 @@ export function reducer(state = initialState, action) {
             }
         }
 
+
+        case 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS': {
+
+            let stateExtended = {
+                ...state,
+                ids: [
+                    ...state.ids,
+                    ...action.payload.applied.map(operation => operation.hash),
+                    //...action.payload.refused.map(operation => operation.hash),
+                ],
+                entities: {
+                    ...state.entities,
+                    ...action.payload.applied.reduce((accumulator, operation) => {
+
+                        let operationTransformed
+
+                        if (operation.contents[0].kind === "transaction") {
+                            operationTransformed = {
+                                operation: 'debit',
+                                address: operation.contents[0].destination,
+                                amount: operation.contents[0].amount * -1,
+                                fee: operation.contents[0].fee,
+                                timestamp: new Date(new Date().getTime() + 86400000).getTime(),
+                                pending: 'true'
+                            }
+                        }
+
+                        if (operation.contents[0].kind === "origination") {
+                            operationTransformed = {
+                                operation: 'origination',
+                                address: '', // TODO: find way how to add Contract address 
+                                amount: operation.contents[0].balance * -1,
+                                fee: operation.contents[0].fee,
+                                timestamp: new Date(new Date().getTime() + 86400000).getTime(),
+                                pending: 'true'
+                            }
+                        }
+
+                        if (operation.contents[0].kind === "delegation") {
+                            operationTransformed = {
+                                operation: 'delegation',
+                                address: operation.contents[0].delegate,
+                                fee: operation.contents[0].fee,
+                                timestamp: new Date(new Date().getTime() + 86400000).getTime(),
+                                pending: 'true'
+                            }
+                        }
+
+                        // console.log('[operation]', operationTransformed, accumulator)
+
+                        return {
+                            ...accumulator,
+                            [operation.hash]: {
+                                hash: operation.hash,
+                                ...operationTransformed,
+                            }
+                        }
+                    }, {})
+
+                }
+            }
+
+            // console.log('[TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS]', stateExtended)
+
+            // sort state according to time stamp 
+            return {
+                ...stateExtended,
+                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
+                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+                )
+            }
+        }
+
         case 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS': {
 
             // add timestamp to state
