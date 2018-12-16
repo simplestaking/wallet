@@ -99,7 +99,7 @@ export function reducer(state = initialState, action) {
                                     // us timestamp
                                     // moment(operation.type.operations[0].timestamp).format('MMM DD YYYY, h:mm:ss a'),
                                     // eu timestamp
-                                    moment(operation.type.operations[0].timestamp).format('DD MMM YYYY, HH:mm:ss'),
+                                    moment(operation.type.operations[0].timestamp).format('DD MMM YYYY, HH:mm'),
                             }
                         }
 
@@ -210,7 +210,7 @@ export function reducer(state = initialState, action) {
                             // us timestamp
                             // moment(action.payload.timestamp).format('MMM DD YYYY, h:mm:ss a'),
                             // eu timestamp
-                            moment(action.payload.timestamp).format('DD MMM YYYY, HH:mm:ss'),
+                            moment(action.payload.timestamp).format('DD MMM YYYY, HH:mm'),
                     }
                 }
             }
