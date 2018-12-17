@@ -267,6 +267,22 @@ export class TezorTrezorDebugComponent implements OnInit {
 
     // // dialogConfig.disableClose = true;
     // dialogConfig.autoFocus = true;
+    // this.dialog.open(TezosWalletDialogComponent, dialogConfig);
+
+    this.store.dispatch({
+      type: 'TEZOS_WALLET_DIALOG_SHOW',
+      payload: [{
+        name: 'error', content: 'error text error text error text error text error text error text' }],
+      })
+
+  }
+
+  getInfoDialog() {
+
+    // const dialogConfig = new MatDialogConfig();
+
+    // // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
 
     // this.dialog.open(TezosWalletDialogComponent, dialogConfig);
 
@@ -274,11 +290,11 @@ export class TezorTrezorDebugComponent implements OnInit {
     this.store.dispatch({
       type: 'TEZOS_WALLET_DIALOG_SHOW',
       payload: {
+        type: 'INFO',
         headline: 'Transaction Faild',
-        content: ' error text error text error text error text error text error text </br>  jhg kjhg kjhg hjkjhg jkjhg hjkjhg jk',
+        content: 'error text error text error text error text error text error text </br>  jhg kjhg kjhg hjkjhg jkjhg hjkjhg jk',
       },
     })
-
 
   }
 
