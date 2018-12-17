@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { withLatestFrom, flatMap, filter, map, tap, reduce, catchError } from 'rxjs/operators';
+import { withLatestFrom, flatMap, map, tap, catchError } from 'rxjs/operators';
 
-import { ofRoute } from './../../../shared/utils/rxjs/operators';
+import { ofRoute, enterZone } from '../../../shared/utils/rxjs/operators';
+
+import { initializeWallet, pendingOperation } from '../../../../../tezos-wallet'
 
 @Injectable()
 export class TezosOperationHistoryEffects {
@@ -52,7 +54,7 @@ export class TezosOperationHistoryEffects {
             }))
 
         )),
-        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS] transaction', response)),
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
         catchError((error, caught) => {
             console.error(error.message)
@@ -142,6 +144,50 @@ export class TezosOperationHistoryEffects {
         }),
     )
 
+    // get pending operation data  
+    @Effect()
+    TezosWalletOperationHistoryPendingLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            // wait until sodium is ready
+            initializeWallet(stateWallet => ({
+                // set publicKeyHash
+                publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+                // set tezos node
+                node: state.tezos.tezosNode.api,
+                // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+                type: state.tezos.tezosWalletDetail.walletType,
+                // set HD path for HW wallet
+                path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
+            })),
+
+            // look in mempool for pending transaction 
+            pendingOperation(stateWallet => ({
+                publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+            })),
+
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
+
+        )),
+
+        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS', payload: response })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+    )
+
+
     // get historical operation data  
     @Effect()
     TezosWalletOperationHistoryTimpeLoad$ = this.actions$.pipe(
@@ -189,7 +235,8 @@ export class TezosOperationHistoryEffects {
         private actions$: Actions,
         private http: HttpClient,
         private store: Store<any>,
-        private router: Router
+        private router: Router,
+        private zone: NgZone,
     ) { }
 
 }

@@ -144,7 +144,9 @@ export class TezosOperationDelegationEffects {
 
         // redirect to wallet detail
         tap((action: any) => {
-            this.router.navigate(['/tezos/wallet/detail/' + action.payload.publicKeyHash])
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+                this.router.navigate(['/tezos/wallet/detail/' + action.payload.publicKeyHash])
+            )
         }),
     )
 
