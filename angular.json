@@ -131,5 +131,10 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false
+    }    
   }
 }

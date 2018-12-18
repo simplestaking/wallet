@@ -73,7 +73,7 @@ export class TezosOperationTransactionEffects {
         flatMap(({ action, state }) => of([]).pipe(
 
             // wait until sodium is ready
-            initializeWallet(stateWallet => ({
+            initializeWallet(stateWallet => <any>({
                 // set tezos node
                 node: state.tezos.tezosNode.api,
             })),

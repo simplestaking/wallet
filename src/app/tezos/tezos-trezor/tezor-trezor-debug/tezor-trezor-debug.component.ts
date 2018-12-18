@@ -11,8 +11,8 @@ import 'firebase/firestore'
 import { of, empty } from 'rxjs';
 import { map, withLatestFrom, catchError, flatMap, concatMap, tap } from 'rxjs/operators';
 
-import { initializeWallet, activateWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
-import { Config } from '../../../../../tezos-wallet/types'
+import { initializeWallet, activateWallet, transaction, confirmOperation, WalletType } from '../../../../../tezos-wallet'
+import { Config } from '../../../../../tezos-wallet'
 
 import * as bs58check from 'bs58check'
 
@@ -312,7 +312,7 @@ export class TezorTrezorDebugComponent implements OnInit {
           url: 'http://zeronet.tzscan.io/',
         }
       },
-      type: 'web',
+      type: WalletType.WEB,
     }
 
 
@@ -378,13 +378,13 @@ export class TezorTrezorDebugComponent implements OnInit {
 
 
       // wait for sodium to initialize
-      initializeWallet(stateWallet => ({
+      initializeWallet((stateWallet: any) => ({
         publicKey: wallet.publicKey,
         publicKeyHash: wallet.publicKeyHash,
         // set Tezos node
         node: config.node,
         // set wallet type: WEB, TREZOR_ONE, TREZOR_T
-        type: wallet.type,
+        type: WalletType[wallet.type],
         path: wallet.path,
         // add smart contract params
         contractParameters: stateWallet,
@@ -395,7 +395,7 @@ export class TezorTrezorDebugComponent implements OnInit {
       // send xtz
       transaction(stateWallet => ({
         to: stateWallet.wallet.contractParameters.payreq.destination,
-        amount: stateWallet.wallet.contractParameters.payreq.amount * 0.000001,
+        amount: (stateWallet.wallet.contractParameters.payreq.amount * 0.000001).toString(),
         fee: '0.01',
         parameters: stateWallet.wallet.contractParameters.payreq.parameters,
       })),
