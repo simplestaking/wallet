@@ -107,7 +107,7 @@
 
         <a mat-list-item routerLink="/tezos/wallet/new/trezor">
           <svg-icon icon="new"></svg-icon>&nbsp;
-            New wallet
+          New wallet
         </a>
 
         <a mat-list-item routerLink="/tezos/wallet/trezor/debug">
@@ -129,8 +129,11 @@
     </mat-sidenav-content>
 
   </mat-sidenav-container>
-  <div class="app-version" class="mat-body" style="position: fixed;bottom: 10px;padding-left: 26px; z-index:1;opacity:0.1;font-size:10px;">
-    {{electronVersion}}
+  <div class="app-version" class="mat-body" style="position: fixed;bottom: 10px;padding-left: 26px; z-index:1;font-size:10px;">
+    <div *ngIf="app.version.type==='electron'">
+      <span *ngIf="!app.version.update" style="opacity:0.2;">{{app.version.value}}</span>
+      <button *ngIf="app.version.update" style="line-height:26px;font-size:13px;" mat-flat-button (click)="appUpdate()">Update Available</button>
+    </div>
   </div>
 
 

@@ -11,7 +11,7 @@ let mainWindow, connectWindow;
 function createWindow() {
 
   // auto update electron app 
-  autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdatesAndNotify();
 
   // create the connect hidden window
   connectWindow = new BrowserWindow({
@@ -79,12 +79,6 @@ function createWindow() {
 
 }
 
-// send auto update status to 
-function sendStatusToWindow(text) {
-  log.info(text);
-  mainWindow.webContents.send('message', text);
-}
-
 try {
 
   // set auto updater logging
@@ -113,14 +107,6 @@ try {
     }
   });
 
-  // listen for async message from renderer process
-  ipcMain.on('async', (event, arg) => {
-
-    log.info(event, arg);
-    event.sender.send('async-reply', 2);
-
-  });
-
 
 } catch (e) {
   log.error(e);
@@ -128,30 +114,27 @@ try {
   throw e;
 }
 
-autoUpdater.on('checking-for-update', () => {
-  sendStatusToWindow('checking-for-update');
+autoUpdater.on('update-available', (info, event) => {
+  log.info('update-available');
+  mainWindow.webContents.send('message', { type: 'update-available', payload: info });
 })
-autoUpdater.on('update-available', (ev, info) => {
-  sendStatusToWindow('update-available');
-})
-autoUpdater.on('update-not-available', (ev, info) => {
-  sendStatusToWindow('update-not-available');
-})
-autoUpdater.on('error', (ev, err) => {
-  sendStatusToWindow('error');
-})
-autoUpdater.on('download-progress', (ev, progressObj) => {
-  sendStatusToWindow('download-progress');
-})
-autoUpdater.on('update-downloaded', (ev, info) => {
-  sendStatusToWindow('update-downloaded');
 
-  // Wait 5 seconds, then quit and install
-  // In your application, you don't need to wait 5 seconds.
-  // You could call autoUpdater.quitAndInstall(); immediately
+autoUpdater.on('update-not-available', (info, event) => {
+  log.info('update-not-available');
+  mainWindow.webContents.send('message', { type: 'update-not-available', payload: info });
+})
 
-  // setTimeout(function () {
-  //   autoUpdater.quitAndInstall();
-  // }, 5000)
-
+autoUpdater.on('update-downloaded', (info, event) => {
+  log.info('update-downloaded');
+  mainWindow.webContents.send('message', { type: 'update-downloaded', payload: info });
 });
+
+// autoUpdater.on('error', (event, err) => {
+//   sendStatusToWindow('error');
+// })
+// autoUpdater.on('checking-for-update', () => {
+//   sendStatusToWindow('checking-for-update');
+// })
+// autoUpdater.on('download-progress', (event, progress) => {
+//   sendStatusToWindow('download-progress');
+// })

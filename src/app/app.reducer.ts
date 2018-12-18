@@ -26,6 +26,12 @@ const initialState = {
     },
     logo: {
         isVisible: true,
+    },
+    version: {
+        update: false,
+        type: 'web',
+        value: '',
+        valueUpdate: '',
     }
 
 };
@@ -196,6 +202,31 @@ export function reducer(state = initialState, action) {
             }
 
         }
+
+
+        case 'APP_ELECTRON_VERSION': {
+            return {
+                ...state,
+                version: {
+                    ...state.version,
+                    type: action.payload.type,
+                    value: action.payload.version
+                },
+            }
+        }
+
+        case 'APP_ELECTRON_UPDATE': {
+            return {
+                ...state,
+                version: {
+                    ...state.version,
+                    update: true,
+                    valueUpdate: action.payload.version,
+                }
+            }
+        }
+
+
 
         default:
             return state;

@@ -24,7 +24,8 @@
     "mac": {
         "icon": "src/dist/assets/icon/logo/electron_black_beta.png",
         "target": [
-            "dmg"
+            "dmg",
+            "zip"
         ],
         "publish": {
             "provider": "spaces",
