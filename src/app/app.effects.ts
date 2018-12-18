@@ -67,7 +67,6 @@ export class AllEffects {
         private db: AngularFirestore,
         private store: Store<any>,
         private router: Router,
-
     ) { }
 
 }

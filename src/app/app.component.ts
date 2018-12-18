@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core'
+import { Component, ViewEncapsulation, OnInit, NgZone } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { ElectronService } from 'ngx-electron'
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,12 +13,13 @@ export class AppComponent {
 
   public app
   public electronVersion = 'web'
+  public electronUpdateInfo
 
   constructor(
     public store: Store<any>,
     public electronService: ElectronService,
-    private router: Router,
-
+    public router: Router,
+    public zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -33,28 +34,45 @@ export class AppComponent {
     } else {
 
       console.log('[electron] electron ')
-      this.electronService.ipcRenderer.on('message', (event, arg) => {
-        console.warn('[ipcRenderer][message] message ', arg)
-      })
+      this.electronService.ipcRenderer.on('message', (event, action) => {
+        console.warn('[ipcRenderer][message] message ', action)
 
-      this.electronService.ipcRenderer.on('async-reply', (event, arg) => {
-        console.warn('[ipcRenderer][message] async-reply', arg)
+        if (action.type === "update-available" || action.type === "update-downloaded"
+          // || action.type === "update-not-available"
+        ) {
+          console.warn('[ipcRenderer][message] update', action)
+
+          // run in zone
+          this.zone.run(() =>
+            // dispatch action for zone update
+            this.store.dispatch({
+              type: 'APP_ELECTRON_UPDATE',
+              payload: {
+                type: 'electron',
+                version: action.payload.version,
+              }
+            })
+          )
+        }
+
       })
 
       this.electronVersion = this.electronService.remote.app.getVersion();
+
       console.warn('[electron][version]', this.electronVersion)
-      console.warn('[electron][check]', navigator.userAgent.toLowerCase().indexOf('electron') > -1 , navigator.userAgent.toLowerCase() )
+      console.warn('[electron][check]', navigator.userAgent.toLowerCase().indexOf('electron') > -1, navigator.userAgent.toLowerCase())
 
       this.store.dispatch({
-        type: 'ELECTRON_VERSION',
+        type: 'APP_ELECTRON_VERSION',
         payload: {
+          type: 'electron',
           version: this.electronVersion,
         }
       })
 
     }
-    
-    // this.router.navigate(['/tezos/wallet/start'])
+
+    this.router.navigate(['/tezos/wallet/start'])
     // this.router.navigate(['/tezos/wallet/trezor/debug'])
 
   }
@@ -67,4 +85,11 @@ export class AppComponent {
 
   }
 
+  appUpdate() {
+    console.log('[appUpdate] app update')
+
+    this.store.dispatch({
+      type: 'TEZOS_WALLET_DIALOG_APP_UPDATE_SHOW',
+    })
+  }
 }

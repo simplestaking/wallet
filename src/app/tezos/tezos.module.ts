@@ -56,6 +56,7 @@ import { TezosWalletSendEffects } from './tezos-wallet/tezos-wallet-send/tezos-w
 import { TezosWalletReceiveEffects } from './tezos-wallet/tezos-wallet-receive/tezos-wallet-receive.effects'
 import { TezosWalletDelegateEffects } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.effects'
 import { TezosWalletDialogEffects } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.effects'
+import { TezosWalletDialogAppUpdateEffects } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog-app-update/tezos-wallet-dialog-app-update.effects'
 
 import { TezosWalletNewTrezorEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.effects';
 
@@ -95,7 +96,8 @@ import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tez
 import { TezosTrezorPassphraseComponent } from './tezos-trezor/tezos-trezor-passphrase/tezos-trezor-passphrase.component';
 import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tezos-wallet-start.component';
 import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contract/tezos-trezor-contract.component';
-import { TezosWalletDialogComponent } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component'
+import { TezosWalletDialogComponent } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component';
+import { TezosWalletDialogAppUpdateComponent } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog-app-update/tezos-wallet-dialog-app-update.component'
 
 @NgModule({
   imports: [
@@ -121,6 +123,7 @@ import { TezosWalletDialogComponent } from './tezos-wallet/tezos-wallet-dialog/t
       TezosWalletReceiveEffects,
       TezosWalletDelegateEffects,
       TezosWalletDialogEffects,
+      TezosWalletDialogAppUpdateEffects,
       TezosWalletNewTrezorEffects,
 
       TezosOperationTransactionEffects,
@@ -193,10 +196,12 @@ import { TezosWalletDialogComponent } from './tezos-wallet/tezos-wallet-dialog/t
     TezosTrezorPassphraseComponent,
     TezosWalletStartComponent,
     TezosTrezorContractComponent,
-    TezosWalletDialogComponent
+    TezosWalletDialogComponent,
+    TezosWalletDialogAppUpdateComponent
   ],
   entryComponents: [
-    TezosWalletDialogComponent
+    TezosWalletDialogComponent,
+    TezosWalletDialogAppUpdateComponent
   ]
 })
 export class TezosModule { }
