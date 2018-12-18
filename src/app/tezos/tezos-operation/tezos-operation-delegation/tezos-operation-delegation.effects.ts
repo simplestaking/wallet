@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/operators';
 import { enterZone } from '../../../shared/utils/rxjs/operators';
 
-import { initializeWallet, setDelegation, originateContract, confirmOperation } from '../../../../../tezos-wallet'
+import { initializeWallet, setDelegation, originateContract, confirmOperation, Wallet } from '../../../../../tezos-wallet'
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
@@ -94,7 +94,7 @@ export class TezosOperationDelegationEffects {
         flatMap(({ action, state }) => of([]).pipe(
 
             // wait until sodium is ready
-            initializeWallet(stateWallet => ({
+            initializeWallet(stateWallet => (<Wallet>{
                 // set tezos node
                 node: state.tezos.tezosNode.api,
             })),

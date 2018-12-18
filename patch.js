@@ -12,4 +12,4 @@ fs.readFile(f, 'utf8', function (err, data) {
     });
 });
 
-// add removeing fs require from lib sodium
+// add removing fs require from lib sodium
