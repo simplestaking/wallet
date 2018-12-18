@@ -1,0 +1,39 @@
+<div class="tezos-wallet-dialog" style="padding: 0px !important;width:400px;">
+
+  <mat-card class="tezos-wallet-dialog-app-update" style="border: 1px solid #eaebee;border-radius: 4px;padding:0px;">
+    <mat-card-header style="display: flex;align-items: center;justify-content: center;height: 60px;background-color: whitesmoke;">
+      <h2 class="mat-h1" style="font-size: 20px;color: #3f4859;margin: 0px 0px 0px 0px">
+        A new version is available
+      </h2>
+    </mat-card-header>
+    <mat-card-content style="padding:initial">
+
+      <span style="display: block;margin: 35px 20px 35px 20px;font-weight: 400; text-align: center;">
+        <span>
+          SimpleStaking {{app.version.valueUpdate}} is now available - you have {{app.version.value}}
+        </span>
+        <br />
+        <span>
+          Would you like to update this project ?
+        </span>
+
+        <br />
+        <br />
+        <br />
+
+        <button mat-flat-button (click)="updateAndRestart()">
+          Update and restart now&nbsp;
+        </button>
+
+        <button mat-flat-button (click)="closeDialog()" style="margin-left: 20px;background-color: whitesmoke;
+        color: #2979ff;">
+          Later&nbsp;
+        </button>
+        <br />
+
+      </span>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>
