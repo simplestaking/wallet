@@ -8,7 +8,8 @@
 
         <br>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
           <input matInput #input placeholder="Email" formControlName="email" [errorStateMatcher]="emailLoginErrorMatcher" />
           <!-- <mat-hint align="end">{{input.value?.length || 0}}/64</mat-hint> -->
           <mat-error>
@@ -18,7 +19,8 @@
 
         <br>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
           <input matInput #input placeholder="Password" formControlName="password" type="password" (keyup.enter)="signIn()" />
           <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
           <mat-error>
@@ -34,7 +36,7 @@
 
         <br>
 
-        <button mat-raised-button color="primary" (click)="signIn()">
+        <button mat-flat-button color="primary" (click)="signIn()">
           Sign in
         </button>
 
@@ -80,4 +82,4 @@
 
   </mat-card> -->
 
-</div>  
+</div>
