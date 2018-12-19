@@ -19,10 +19,13 @@
                     Safe way to store & stake Tezos
                 </span>
 
-                <div style="border:1px solid rgba(0, 0, 0, 0.06);width:200px;height:200px;padding:5px 25px 5px 25px;border-radius:5px;display:flex;flex-direction: column;align-items: center;justify-content: center;text-align:center;margin-top:60px">
+                <div style="border:1px solid rgba(0, 0, 0, 0.06);width:200px;height:200px;padding:5px 25px 5px 25px;border-radius:5px;display:flex;flex-direction: column;align-items: center;justify-content: center;text-align:center;margin-top:80px">
 
                     <span class="mat-body" style="opacity:0.6">
                         Recommended option for best user experience
+                        <svg-icon icon="question" scale="0.7" style="vertical-align: -0.125em;cursor:pointer"
+                            matTooltip="Creating your own account greatly improves experience of using SimpleStaking. Only then you can have access to features like - immediately available transaction history, account names for public addresses, ..."
+                            matTooltipPosition="right"> </svg-icon>
                     </span>
 
                     <br />
@@ -40,7 +43,7 @@
 
                 </div>
 
-                <div style="width:220px;height:200px;padding:0px 20px 0px 20px;border-radius:3px;display:flex;flex-direction: column;align-items: center;justify-content: center;text-align:center;">
+                <div style="width:220px;height:220px;padding:0px 20px 0px 20px;border-radius:3px;display:flex;flex-direction: column;align-items: center;justify-content: center;text-align:center;">
 
                     <button mat-flat-button routerLink="/tezos/wallet/new/trezor" style="font-size: 15px;font-weight:400;padding: 3px 20px 3px 20px;background-color: whitesmoke;
                 color: #454d5e;border-radius:5px;">
@@ -50,18 +53,14 @@
 
                     <span class="mat-body" style="opacity:0.6;margin-top:10px">
                         We won't save your public address, names or transactions
+                        <svg-icon icon="question" scale="0.7" style="vertical-align: -0.125em;cursor:pointer"
+                            matTooltip="Private mode is the most secure option. Since we do not record anything, user experience will not be optimal. You will not be able to access all features and you might need repeatedly fill in same information."
+                            matTooltipPosition="right"></svg-icon>
                     </span>
-
 
                 </div>
 
             </div>
-
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
 
         </div>
     </div>

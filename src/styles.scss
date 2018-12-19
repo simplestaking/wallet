@@ -403,4 +403,11 @@ button .svg-icon {
     padding: 0px !important;
 }
 
+.mat-tooltip {
+    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif !important;
+    background-color: #3f4859 !important;
+    border-radius: 5px !important;
+    opacity: 0.95;
+}
+
 @include angular-material-theme($simple-theme);
