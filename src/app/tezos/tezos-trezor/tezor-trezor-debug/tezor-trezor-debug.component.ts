@@ -11,7 +11,7 @@ import 'firebase/firestore'
 import { of, empty } from 'rxjs';
 import { map, withLatestFrom, catchError, flatMap, concatMap, tap } from 'rxjs/operators';
 
-import { initializeWallet, activateWallet, transaction, confirmOperation, WalletType } from '../../../../../tezos-wallet'
+import { initializeWallet, activateWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
 import { Config } from '../../../../../tezos-wallet'
 
 import * as bs58check from 'bs58check'
@@ -307,7 +307,7 @@ export class TezorTrezorDebugComponent implements OnInit {
           url: 'http://zeronet.tzscan.io/',
         }
       },
-      type: WalletType.WEB,
+      type: 'web',
     }
 
 
@@ -379,7 +379,7 @@ export class TezorTrezorDebugComponent implements OnInit {
         // set Tezos node
         node: config.node,
         // set wallet type: WEB, TREZOR_ONE, TREZOR_T
-        type: WalletType[wallet.type],
+        type: <'TREZOR_T'>wallet.type,
         path: wallet.path,
         // add smart contract params
         contractParameters: stateWallet,
