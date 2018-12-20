@@ -6,20 +6,35 @@
 
       <div class="auth-content">
 
-        <br>
+        <span class="mat-display-1" style="font-weight: 300;font-size:28px;">
+          Create a new account
+        </span>
 
-        <mat-form-field>
-          <input matInput #input placeholder="Email" formControlName="email" 
-            [errorStateMatcher]="emailRegistrationErrorMatcher" />
+        <br />
+        <br />
+
+        <span class="mat-body" style="opacity: 0.6;">
+          Set a password to enable storing data in your account. This greatly improves
+          everyday use of Simple Staking.
+        </span>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput #input placeholder="Email" formControlName="email" [errorStateMatcher]="emailRegistrationErrorMatcher" />
           <!-- <mat-hint align="end">{{input.value?.length || 0}}/64</mat-hint> -->
           <mat-error>
             Please enter a valid email address
           </mat-error>
         </mat-form-field>
 
-        <br>
+        <br/>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
           <input matInput #password placeholder="Password" formControlName="password" type="password" maxlength="32" />
           <mat-hint align="end">{{password.value?.length || 0}}/32</mat-hint>
           <!-- <mat-error>
@@ -27,30 +42,38 @@
           </mat-error> -->
         </mat-form-field>
 
-        <br>
+        <br/>
 
-        <mat-form-field>
-          <input matInput #input placeholder="Repeat password" formControlName="repeatPassword" type="password" maxlength="32" 
-            [errorStateMatcher]="passwordRegistrationErrorMatcher" />
+        <mat-form-field appearance="outline">
+          <mat-label>Repeat password</mat-label>
+          <input matInput #input placeholder="Repeat password" formControlName="repeatPassword" type="password"
+            maxlength="32" [errorStateMatcher]="passwordRegistrationErrorMatcher" />
           <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
           <mat-error>
             Password does not match
           </mat-error>
         </mat-form-field>
 
-        <br>
+        <br/>
 
         <mat-error>
           {{this.registration.error.message}}
         </mat-error>
 
-        <br>
+        <br/>
+        <br/>
 
-        <button mat-raised-button color="primary" (click)="signUp()">
+        <button mat-flat-button color="primary" (click)="signUp()" class="button">
           Create account
         </button>
 
-        <br>
+        <br/>
+        <br/>
+        <br/>
+
+        <span class="mat-body" style="opacity: 0.6;">
+          Losing your Simple Staking password requires re-adding accounts, your funds will stay safe.
+        </span>
 
       </div>
 

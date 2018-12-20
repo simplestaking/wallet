@@ -42,7 +42,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // dispatch action for auth init
     this.store.dispatch({
-      type: "AUTH_INIT",
+      type: "AUTH_SHOW",
     })
   }
 

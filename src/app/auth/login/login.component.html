@@ -6,7 +6,13 @@
 
       <div class="auth-content">
 
-        <br>
+        <span class="mat-display-1" style="font-weight: 300;font-size:28px;">
+          Login
+        </span>
+
+        <br />
+        <br />
+        <br />
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
@@ -17,7 +23,7 @@
           </mat-error>
         </mat-form-field>
 
-        <br>
+        <br />
 
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
@@ -27,28 +33,35 @@
             Password is required
           </mat-error>
         </mat-form-field>
-
-        <br>
+        
+        <br />
 
         <mat-error>
           {{this.login.error.message}}
         </mat-error>
 
-        <br>
+        <br />
 
-        <button mat-flat-button color="primary" (click)="signIn()">
+        <!-- <button mat-flat-button routerLink="/auth/forgot" class="button" style="margin-left:-20px;opacity:0.6; font-size:14px; background-color: transparent;color: #454d5e;">
+          Forgot password ?
+        </button> -->
+
+        <br />
+
+        <button mat-flat-button (click)="signIn()" class="button" style="min-width:110px;">
           Sign in
+          <!-- Login -->
         </button>
 
-        <br>
+        <br />
+
+        <br />
 
         <div>
-          <button mat-button color="primary" routerLink="/registration">
+          <!-- <button mat-flat-button color="primary" routerLink="/auth/registration" class="button" style="background-color: whitesmoke;color: #454d5e;">
             Create an account
-          </button>
-          <button mat-button color="primary" routerLink="/forgot">
-            Forgot password ?
-          </button>
+          </button> -->
+
         </div>
 
       </div>

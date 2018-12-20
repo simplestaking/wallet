@@ -11,6 +11,14 @@
 }
 
 .auth-content {
-    display: flex;
+    // display: flex;
     flex-direction: column;
+}
+
+.button {
+    font-size: 15px;
+    font-weight:400;
+    padding: 3px 20px 3px 20px;
+    min-width:160px;
+    border-radius:3px; 
 }

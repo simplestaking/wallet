@@ -18,14 +18,12 @@ export class AuthForgotEffects {
         withLatestFrom(this.store, (action, state) => state),
         // forgot to service
         flatMap((state) =>
-            // convert promise to observable
-            of(this.fbAuth.auth.sendPasswordResetEmail(state.authForgot.form.email)).pipe(
-                // dispatch epmty observable
-                map(action => ({ type: 'AUTH_FORGOT_SUCCESS', payload: action })),
-                // dispatch error action
-                catchError(error => of({ type: 'AUTH_FORGOT_ERROR', payload: error }))
-            )
-        )
+            this.fbAuth.auth.sendPasswordResetEmail(state.authForgot.form.email)
+        ),
+        // dispatch epmty observable
+        map(action => ({ type: 'AUTH_FORGOT_SUCCESS', payload: action })),
+        // dispatch error action
+        catchError(error => of({ type: 'AUTH_FORGOT_ERROR', payload: error }))
     )
 
     constructor(

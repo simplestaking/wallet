@@ -15,7 +15,8 @@ const initialState = {
     // menu in sidebar/sideNav
     sidenav: {
         isVisible: false,
-        color: 'white',//'whitesmoke',
+        // color: 'white',
+        color: 'whitesmoke',
         toggleButton: {
             isVisible: false,
         },
@@ -182,6 +183,7 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'AUTH_SHOW':
         case 'TEZOS_WALLET_NEW_TREZOR_SHOW': {
             return {
                 ...state,
