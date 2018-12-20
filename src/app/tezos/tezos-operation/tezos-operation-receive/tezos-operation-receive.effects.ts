@@ -5,9 +5,6 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, catchError } from 'rxjs/operators';
-import { enterZone } from '../../../shared/utils/rxjs/operators';
-
-import { initializeWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
 
 import TrezorConnect from 'trezor-connect';
 

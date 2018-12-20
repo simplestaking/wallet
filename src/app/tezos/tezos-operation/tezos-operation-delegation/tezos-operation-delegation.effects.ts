@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/operators';
 import { enterZone } from '../../../shared/utils/rxjs/operators';
 
@@ -38,16 +38,21 @@ export class TezosOperationDelegationEffects {
                 path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
+            
             // if we have implicit contract originate new contract 
             flatMap(stateWallet => state.tezos.tezosWalletDetail.delegate.setable === true ?
 
+                // Different signatures!
+                // Observable<T & StateSetDelegate & ...>
+                // Observable<T & StateOriginateContract & ...>
+                
                 // delegate funds
                 of(stateWallet).pipe(
                     setDelegation(stateWallet => ({
                         to: state.tezos.tezosOperationDelegation.form.to,
                         fee: state.tezos.tezosOperationDelegation.form.fee,
                     }))
-                ) :
+                ) as Observable<any> :
 
                 // originate contract with delegation 
                 of(stateWallet).pipe(
@@ -56,8 +61,7 @@ export class TezosOperationDelegationEffects {
                         amount: state.tezos.tezosOperationDelegation.form.amount,
                         fee: state.tezos.tezosOperationDelegation.form.fee,
                     }))
-                )
-
+                ) as Observable<any>
             ),
 
             // enter back into zone.js so change detection works
