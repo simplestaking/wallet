@@ -118,6 +118,7 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
 
     // mark input 
     this.tezosOperationDelegationForm.controls.from.markAsTouched()
+    this.tezosOperationDelegationForm.controls.to.markAsTouched()
 
     if (!this.tezosWalletDetail.delegate || this.tezosWalletDetail.delegate.setable !== true) {
       this.tezosOperationDelegationForm.controls.amount.setValidators([

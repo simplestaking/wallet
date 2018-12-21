@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tezos-wallet-receive',
@@ -26,6 +27,7 @@ export class TezosWalletReceiveComponent implements OnInit, OnDestroy {
   constructor(
     public store: Store<any>,
     public fb: FormBuilder,
+    public router: Router,
   ) { }
 
   ngOnInit() {
@@ -87,6 +89,11 @@ export class TezosWalletReceiveComponent implements OnInit, OnDestroy {
     })
 
   }
+
+    // redirect do dashboard
+    redirectToWalletDashboard() {
+      this.router.navigate(['/tezos/wallet/'])
+    }
 
   ngOnDestroy() {
 

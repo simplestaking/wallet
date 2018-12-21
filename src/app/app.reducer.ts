@@ -146,41 +146,41 @@ export function reducer(state = initialState, action) {
         case 'TEZOS_WALLET_SEND_SHOW':
         case 'TEZOS_WALLET_RECEIVE_SHOW':
         case 'TEZOS_WALLET_DELEGATE_SHOW': {
-            // return {
-            //     ...state,
-            //     sidenav: {
-            //         isVisible: false,
-            //         color: 'white',
-            //         toggleButton: {
-            //             isVisible: false,
-            //         },
-            //     },
-            //     toolbar: {
-            //         isVisible: false,
-            //         color: 'white',
-            //     },
-            //     logo: {
-            //         isVisible: false,
-            //     }
-            // }
-
             return {
                 ...state,
                 sidenav: {
-                    isVisible: true,
-                    color: 'whitesmoke',
+                    isVisible: false,
+                    color: 'white',
                     toggleButton: {
                         isVisible: false,
                     },
                 },
                 toolbar: {
-                    isVisible: true,
-                    color: 'whitesmoke',
+                    isVisible: false,
+                    color: 'white',
                 },
                 logo: {
-                    isVisible: true,
+                    isVisible: false,
                 }
             }
+
+            // return {
+            //     ...state,
+            //     sidenav: {
+            //         isVisible: true,
+            //         color: 'whitesmoke',
+            //         toggleButton: {
+            //             isVisible: false,
+            //         },
+            //     },
+            //     toolbar: {
+            //         isVisible: true,
+            //         color: 'whitesmoke',
+            //     },
+            //     logo: {
+            //         isVisible: true,
+            //     }
+            // }
         }
 
         case 'AUTH_SHOW':

@@ -35,7 +35,7 @@ export class AppComponent {
       
       // set smaller window in Windows
       // set web zoom
-      this.electronService.webFrame.setZoomFactor(0.8);
+      this.electronService.webFrame.setZoomFactor(0.82);
 
       console.log('[electron] electron ')
       this.electronService.ipcRenderer.on('message', (event, action) => {
