@@ -36,6 +36,7 @@
     "@ngrx/store": "6.1.0",
     "@ngrx/store-devtools": "6.1.0",
     "@sendgrid/mail": "^6.3.1",
+    "@sentry/browser": "^4.4.2",
     "@swimlane/ngx-charts": "^9.0.0",
     "@types/d3-shape": "^1.2.4",
     "angularfire2": "5.0.2",
