@@ -66,7 +66,7 @@ export class TezosWalletDetailEffects {
 
         flatMap((state: any) => of([]).pipe(
 
-            // initialie 
+            // initialize 
             initializeWallet(stateWallet => ({
                 publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash,
                 node: state.tezos.tezosNode.api,

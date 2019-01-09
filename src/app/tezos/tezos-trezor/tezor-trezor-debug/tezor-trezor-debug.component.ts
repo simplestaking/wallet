@@ -385,7 +385,7 @@ export class TezorTrezorDebugComponent implements OnInit {
         contractParameters: stateWallet,
       })),
 
-      tap(stateWallet => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.wallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
+      tap((stateWallet:any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
 
       // send xtz
       transaction(stateWallet => ({
