@@ -1,0 +1,64 @@
+<div class="wallet-start">
+    <div class="wallet-start-container" style="display:flex;">
+        <div class="wallet-start-logo" style="display:flex;flex-direction: row;">
+
+            <div class="wallet-start-logo-column" style="display:flex;flex-direction: column;align-items: center">
+
+                <div style="display:flex;flex-direction: row;">
+
+                    <img style="flex-direction: column" src="./assets/icon/logo/electron_black.png" style="width:45px;height:45px;">
+
+                    <div style="flex-direction: column">
+                        <span class="mat-display-1" style="margin: initial;font-weight: 300;font-size:28px;display:flex;align-items:center;margin-top:8px">
+                            &nbsp;SimpleStaking
+                        </span>
+                    </div>
+                </div>
+
+                <span class="mat-body" style="opacity: 0.6;margin-top:5px;">
+                    Safe way to store & stake Tezos
+                </span>
+
+                <div style="border:1px solid rgba(0, 0, 0, 0.06);width:200px;height:200px;padding:5px 25px 5px 25px;border-radius:5px;display:flex;flex-direction: column;align-items: center;justify-content: center;text-align:center;margin-top:80px">
+
+                    <span class="mat-body" style="opacity:0.6">
+                        Recommended option for best user experience
+                        <svg-icon icon="question" scale="0.7" style="vertical-align: -0.125em;cursor:pointer"
+                            matTooltip="Creating your own account greatly improves experience of using SimpleStaking. Only then you can have access to features like - immediately available transaction history, account names for public addresses, ..."
+                            matTooltipPosition="right"> </svg-icon>
+                    </span>
+
+                    <br />
+
+                    <button mat-flat-button routerLink="/auth/registration" class="button">
+                        New Account
+                    </button>
+
+                    <br />
+
+                    <button mat-flat-button routerLink="/auth/login" class="button" style="background-color: whitesmoke;color: #454d5e;">
+                        I have an account
+                    </button>
+
+                </div>
+
+                <div style="width:220px;margin-top: 60px;padding:0px 20px 0px 20px;border-radius:3px;display:flex;flex-direction: column;align-items: center;justify-content: center;text-align:center;">
+
+                    <button mat-flat-button routerLink="/tezos/wallet/new/trezor" class="button" style="background-color: whitesmoke;color: #454d5e;">
+                        <svg-icon icon="trezor" scale="1"></svg-icon>
+                        &nbsp;Connect anonymously&nbsp;
+                    </button>
+
+                    <span class="mat-body" style="opacity:0.6;margin-top:10px">
+                        We won't save your public address, names or transactions
+                        <svg-icon icon="question" scale="0.7" style="vertical-align: -0.125em;cursor:pointer"
+                            matTooltip="Private mode is the most secure option. Since we do not record anything, user experience will not be optimal. You will not be able to access all features and you might need repeatedly fill in same information."
+                            matTooltipPosition="right"></svg-icon>
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>

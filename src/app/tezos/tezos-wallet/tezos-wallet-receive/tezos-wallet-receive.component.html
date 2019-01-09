@@ -1,9 +1,9 @@
-<!-- <div class="close">
+<div class="close">
   <button mat-button routerLink="/tezos/wallet">
     <mat-icon>close</mat-icon>
     Close
   </button>
-</div> -->
+</div>
 
 <div class="stepper">
 
@@ -107,7 +107,13 @@
                       {{tezosOperationReceive.form.to}}
                     </span>
                     <span>
-                      <button mat-button color="primary" ngxClipboard [cbContent]="tezosOperationReceive.form.to" style="font-weight:300;margin-top:25px">
+
+                      <button class="tezos-wallet-dialog" mat-flat-button (click)="redirectToWalletDashboard()">
+                        <svg-icon icon="ok" scale="1.2"></svg-icon>&nbsp;
+                          Done&nbsp;&nbsp;&nbsp;
+                      </button>
+
+                      <button mat-button color="primary" ngxClipboard [cbContent]="tezosOperationReceive.form.to" style="font-weight:300;margin:25px 0px 0px 10px;">
                         <svg-icon icon="copy"></svg-icon>&nbsp;
                         Copy address
                       </button>

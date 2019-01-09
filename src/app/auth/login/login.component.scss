@@ -1,17 +1,27 @@
 .auth-main {
-    height: 65vh;
+    position: absolute;
     display: flex;
-    justify-content: center;
+    width: 95%;
+    height: 95%;
     align-items: center;
+    justify-content: center;
 }
 
 .auth-card {
-    min-width: 300px;    
-    max-width: 330px;
+    width: 290px;    
 }
 
 .auth-content {
-    display: flex;
+    // display: flex;
     flex-direction: column;
 }
+
+.button {
+    font-size: 15px;
+    font-weight:400;
+    padding: 3px 20px 3px 20px;
+    min-width:160px;
+    border-radius:3px; 
+}
+
 

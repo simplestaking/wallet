@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, NgZone } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { ElectronService } from 'ngx-electron'
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router  } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +32,10 @@ export class AppComponent {
     // run only in electron application  
     if (this.electronService.ipcRenderer === null) {
     } else {
+      
+      // set smaller window in Windows
+      // set web zoom
+      this.electronService.webFrame.setZoomFactor(0.82);
 
       console.log('[electron] electron ')
       this.electronService.ipcRenderer.on('message', (event, action) => {

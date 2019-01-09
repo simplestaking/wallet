@@ -4,10 +4,9 @@ import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormGroupDirective, NgForm, FormBuilder, Validators } from '@angular/forms'
 import { ErrorStateMatcher } from '@angular/material/core';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import { AuthService } from '../auth.service'
 
 @Component({
   selector: 'app-forgot',
@@ -26,7 +25,6 @@ export class ForgotComponent implements OnInit {
     public fb: FormBuilder,
     public db: AngularFirestore,
     public fbAuth: AngularFireAuth,
-    public as: AuthService
   ) { }
 
   ngOnInit() {
