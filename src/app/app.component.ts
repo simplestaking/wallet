@@ -76,7 +76,7 @@ export class AppComponent {
 
     }
 
-    //this.router.navigate(['/tezos/wallet/start'])
+    this.router.navigate(['/tezos/wallet/start'])
     // this.router.navigate(['/tezos/wallet/trezor/debug'])
 
   }

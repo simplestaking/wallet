@@ -7,7 +7,7 @@ import { of, Observable } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/operators';
 import { enterZone } from '../../../shared/utils/rxjs/operators';
 
-import { initializeWallet, setDelegation, originateContract, confirmOperation, Wallet } from '../../../../../tezos-wallet'
+import { initializeWallet, setDelegation, originateContract, confirmOperation, Wallet } from 'tezos-wallet'
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 

@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
 import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
-import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
+import { initializeWallet, getWallet } from 'tezos-wallet'
 
 @Injectable()
 export class TezosWalletDetailEffects {
