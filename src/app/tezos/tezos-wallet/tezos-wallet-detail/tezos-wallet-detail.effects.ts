@@ -17,7 +17,10 @@ export class TezosWalletDetailEffects {
     @Effect()
     TezosWalletList$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/detail/:address'),
-        map(() => ({ type: 'TEZOS_WALLET_DETAIL_LOAD' })),
+        flatMap((action: any) => [
+            { type: 'TEZOS_WALLET_SHOW'},
+            { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+        ]),        
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({

@@ -1,9 +1,9 @@
-<!-- <div class="close">
+<div class="close">
   <button mat-button routerLink="/tezos/wallet">
     <mat-icon>close</mat-icon>
     Close
   </button>
-</div> -->
+</div>
 
 <div class="stepper">
   <h3>
@@ -154,7 +154,7 @@
                         Done&nbsp;&nbsp;&nbsp;
                       </button>
 
-                      <a externalLink style="text-decoration: none;margin-left: 20px;" href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationTransaction.injectionOperation}}"
+                      <a externalLink style="text-decoration: none;margin-left: 20px;" href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{tezosOperationTransaction.form.from}}"
                         target="_blank">
                         <svg-icon icon="link"></svg-icon>View in Explorer
                       </a>

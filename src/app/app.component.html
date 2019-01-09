@@ -26,7 +26,7 @@
         <mat-icon (click)="start.toggle()">menu</mat-icon>
       </button>
       <span *ngIf="app.logo.isVisible" style="margin: 40px 0px 0px 10px; font-weight: 300;font-size: 18px;display: flex;align-items: center;justify-content: center;">
-        <img src="./assets/icon/logo/electron_black_beta.png" alt="" style="width:28px; margin: -8px 6px 0px 0px;">
+        <img src="./assets/icon/logo/electron_black.png" alt="" style="width:28px; margin: -8px 6px 0px 0px;">
         <span>
           Simple<span style="color:#000000">Staking </span>
         </span>
@@ -58,19 +58,16 @@
       <!-- <app-tezos-node>
       </app-tezos-node> -->
 
-      <!-- <button *ngIf="!app.user.uid" mat-button routerLink="/login-via-file">
-        Sign in via file
-      </button> -->
-
-      <!-- <button *ngIf="!app.user.uid" mat-button routerLink="/login">
+      <!-- <button *ngIf="!app.user.uid" mat-button routerLink="/auth" style="font-weight: 400;margin-top: 25px;">
         Sign in
       </button>
 
-      <button *ngIf="app.user.uid" mat-button>
+      
+      <button *ngIf="app.user.uid" mat-button style="font-weight: 400;margin-top: 25px;">
         {{app.user.email}}
       </button>
 
-      <button *ngIf="app.user.uid" mat-button (click)="signOut()">
+      <button *ngIf="app.user.uid" mat-button (click)="signOut()" style="font-weight: 400;margin-top: 25px;">
         Sign out
       </button> -->
 
@@ -110,9 +107,9 @@
           New wallet
         </a>
 
-        <a mat-list-item routerLink="/tezos/wallet/trezor/debug">
+        <!-- <a mat-list-item routerLink="/tezos/wallet/trezor/debug">
           Debug
-        </a>
+        </a> -->
 
         <!-- <a mat-list-item routerLink="/settings">Settings</a>  -->
       </mat-nav-list>
@@ -132,7 +129,8 @@
   <div class="app-version" class="mat-body" style="position: fixed;bottom: 10px;padding-left: 26px; z-index:1;font-size:10px;">
     <div *ngIf="app.version.type==='electron'">
       <span *ngIf="!app.version.update" style="opacity:0.2;">{{app.version.value}}</span>
-      <button *ngIf="app.version.update" style="line-height:26px;font-size:13px;" mat-flat-button (click)="appUpdate()">Update Available</button>
+      <button *ngIf="app.version.update" style="line-height:26px;font-size:13px;" mat-flat-button (click)="appUpdate()">Update
+        Available</button>
     </div>
   </div>
 

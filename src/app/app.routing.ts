@@ -2,20 +2,22 @@ import { Routes } from '@angular/router'
 import { RouterStateSnapshot, Params } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
 
-// import { LoginComponent } from './auth/login/login.component';
-// import { RegistrationComponent } from './auth/registration/registration.component';
-// import { ForgotComponent } from './auth/forgot/forgot.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
+import { ForgotComponent } from './auth/forgot/forgot.component';
 
-import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
-import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
-import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/tezos-hardware-wallet.component';
+// import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
+// import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
+// import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/tezos-hardware-wallet.component';
 
 export const AppRouting: Routes = [
   
   // auth
-  // { path: 'login', component: LoginComponent },
-  // { path: 'registration', component: RegistrationComponent },
-  // { path: 'forgot', component: ForgotComponent },
+  { path: 'auth', component: AuthComponent },
+  { path: 'auth/login', component: LoginComponent },
+  { path: 'auth/registration', component: RegistrationComponent },
+  { path: 'auth/forgot', component: ForgotComponent },
 
   // landing pages
   // { path: 'tezos-baking', component: TezosBakingComponent },

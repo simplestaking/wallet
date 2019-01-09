@@ -6,28 +6,34 @@
 
       <div class="auth-content">
 
-        <br>
+        <span class="mat-display-1" style="font-weight: 300;font-size:28px;">
+          Reset password
+        </span>
 
-        <mat-form-field>
+        <br />
+        <br />
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
           <input matInput #input placeholder="Email" formControlName="email" [errorStateMatcher]="emailForgotErrorMatcher" />
           <mat-error>
             Please enter a valid email address
           </mat-error>
         </mat-form-field>
 
-        <br>
+        <br />
 
         <mat-error>
           {{this.forgot.error.message}}
         </mat-error>
 
-        <br>
+        <br />
 
-        <button mat-raised-button color="primary" (click)="resetPassword()">
+        <button mat-flat-button color="primary" (click)="resetPassword()" class="button">
           Reset password
         </button>
 
-        <br>
+        <br />
 
       </div>
 

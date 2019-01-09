@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const Menu = require('electron').Menu
+const webFrame = require('electron').webFrame;
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
 var path = require('path')
@@ -12,6 +13,11 @@ function createWindow() {
 
   // auto update electron app 
   autoUpdater.checkForUpdatesAndNotify();
+
+  console.log('[webFrame]', webFrame )
+  // windows
+  // set zoom factor to 80% on windows
+  // webFrame.setZoomFactor(0.8);
 
   // create the connect hidden window
   connectWindow = new BrowserWindow({
@@ -27,11 +33,16 @@ function createWindow() {
 
   // create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 775,//768,
+    // width: 1024, 
+    // height: 768,  
+    width: 896,
+    height: 640,  
     titleBarStyle: 'hidden',
-    frame: false,
-    resizable: false
+    resizable: false,
+    // windows 
+    frame: true,
+    // mac
+    //frame: false,
   });
 
   mainWindow.loadURL(url.format({
@@ -40,7 +51,7 @@ function createWindow() {
     slashes: true,
   }));
 
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -75,7 +86,10 @@ function createWindow() {
     ]
   }
   ];
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+  // Windows - copy paste works out of box  
+  // Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+  // Mac - enable 
+  // Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
 }
 

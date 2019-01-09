@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { NgModule, ErrorHandler, Injectable } from '@angular/core'
 import { RouterModule, Routes,PreloadAllModules } from '@angular/router'
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,9 +30,9 @@ import { reducers, metaReducers } from './app.reducers';
 import { AllEffects } from './app.effects'
 
 
-// import { AuthLoginEffects } from './auth/login/login.effects'
-// import { AuthRegistrationEffects } from './auth/registration/registration.effects'
-// import { AuthForgotEffects } from './auth/forgot/forgot.effects'
+import { AuthLoginEffects } from './auth/login/login.effects'
+import { AuthRegistrationEffects } from './auth/registration/registration.effects'
+import { AuthForgotEffects } from './auth/forgot/forgot.effects'
 
 
 import { TezosHardwareWalletEffects } from "./landing/tezos-hardware-wallet/tezos-hardware-wallet.effects";
@@ -57,7 +57,7 @@ import {
   MatTooltipModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
-  // MatCardModule,
+  MatCardModule,
   // MatCheckboxModule,
   // MatChipsModule,
   // MatDatepickerModule,
@@ -73,11 +73,10 @@ import {
   // MatStepperModule,
 } from '@angular/material';
 
-// import { AuthComponent } from './auth/auth.component';
-// import { LoginComponent } from './auth/login/login.component';
-// import { RegistrationComponent } from './auth/registration/registration.component';
-// import { AuthService } from './auth/auth.service';
-// import { ForgotComponent } from './auth/forgot/forgot.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
+import { ForgotComponent } from './auth/forgot/forgot.component';
 
 import { LandingComponent } from './landing/landing.component';
 import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
@@ -88,10 +87,10 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
   declarations: [
     AppComponent,
 
-    // AuthComponent,
-    // LoginComponent,
-    // RegistrationComponent,
-    // ForgotComponent,
+    AuthComponent,
+    LoginComponent,
+    RegistrationComponent,
+    ForgotComponent,
     
     // TrezorComponent,
     
@@ -103,9 +102,9 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
   ],
   imports: [
     BrowserModule,
+    SharedModule,
     HttpModule,
     HttpClientModule,
-    SharedModule,
     
     NgxElectronModule,
 
@@ -130,9 +129,9 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     EffectsModule.forRoot([
       AllEffects,
 
-      // AuthLoginEffects,
-      // AuthRegistrationEffects,
-      // AuthForgotEffects,
+      AuthLoginEffects,
+      AuthRegistrationEffects,
+      AuthForgotEffects,
 
       // TrezorEffects,
 
@@ -153,7 +152,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
-    // MatCardModule,
+    MatCardModule,
     // MatCheckboxModule,
     // MatChipsModule,
     MatTableModule,
@@ -187,7 +186,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     MatAutocompleteModule,
     MatButtonModule,
     // MatButtonToggleModule,
-    // MatCardModule,
+    MatCardModule,
     // MatCheckboxModule,
     // MatChipsModule,
     MatTableModule,
