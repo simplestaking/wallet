@@ -11,7 +11,7 @@ import { enterZone } from '../../../shared/utils/rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import TrezorConnect from 'trezor-connect';
-import { initializeWallet, getWallet } from '../../../../../tezos-wallet'
+import { initializeWallet, getWallet } from 'tezos-wallet'
 
 
 @Injectable()
@@ -33,7 +33,8 @@ export class TezosTrezorNewEffects {
                     { path: "m/44'/1729'/1'", showOnTrezor: false },
                     { path: "m/44'/1729'/2'", showOnTrezor: false },
                     { path: "m/44'/1729'/3'", showOnTrezor: false },
-                    { path: "m/44'/1729'/0'/0'", showOnTrezor: false },
+                    { path: "m/44'/1729'/4'", showOnTrezor: false },
+                    // { path: "m/44'/1729'/0'/0'", showOnTrezor: false },
                 ]
             }))
         ),

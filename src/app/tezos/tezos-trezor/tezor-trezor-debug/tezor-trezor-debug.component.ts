@@ -11,8 +11,8 @@ import 'firebase/firestore'
 import { of, empty } from 'rxjs';
 import { map, withLatestFrom, catchError, flatMap, concatMap, tap } from 'rxjs/operators';
 
-import { initializeWallet, activateWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
-import { Config } from '../../../../../tezos-wallet'
+import { initializeWallet, activateWallet, transaction, confirmOperation } from 'tezos-wallet'
+import { Config } from 'tezos-wallet'
 
 import * as bs58check from 'bs58check'
 

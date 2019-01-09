@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, catchError, delay } from 'rxjs/operators';
 import { enterZone } from '../../../shared/utils/rxjs/operators';
 
-import { initializeWallet, transaction, confirmOperation } from '../../../../../tezos-wallet'
+import { initializeWallet, transaction, confirmOperation } from 'tezos-wallet'
 
 @Injectable()
 export class TezosOperationTransactionEffects {
