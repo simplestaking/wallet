@@ -50,5 +50,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-electron/tmp
-src/assets
