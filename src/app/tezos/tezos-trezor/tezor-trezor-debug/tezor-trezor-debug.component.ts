@@ -14,6 +14,8 @@ import { map, withLatestFrom, catchError, flatMap, concatMap, tap } from 'rxjs/o
 import { initializeWallet, activateWallet, transaction, confirmOperation } from 'tezos-wallet'
 import { Config } from 'tezos-wallet'
 
+import Dexie from 'dexie';
+
 import * as bs58check from 'bs58check'
 
 import TrezorConnect from 'trezor-connect';
@@ -460,5 +462,34 @@ export class TezorTrezorDebugComponent implements OnInit {
       }, { merge: true })
 
   }
+
+
+  deleteHistory() {
+
+    Dexie.delete('firebaseLocalStorageDb').then((event) => {
+      console.log('[deleteHistory] firebaseLocalStorageDb', event)
+    })
+
+    Dexie.delete('firestore/[DEFAULT]/simplestakingcom-58d45/main').then((event) => {
+      console.log('[deleteHistory]', event)
+    })
+
+    // let dbRequest = window.indexedDB.open("firestore/[DEFAULT]/simplestakingcom-58d45/main")
+    
+    // console.log('[deleteHistory]', dbRequest)
+
+    // dbRequest.onsuccess = function(event) { 
+
+    //   let db = dbRequest.result;
+    //   console.log('[deleteHistory]', db)
+
+    //   indexedDB.deleteDatabase("firestore/[DEFAULT]/simplestakingcom-58d45/main")
+
+    //   console.log('[deleteHistory]', indexedDB)
+
+    // }
+
+  }
+
 
 }

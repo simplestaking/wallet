@@ -18,14 +18,7 @@ export const AppRouting: Routes = [
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/registration', component: RegistrationComponent },
   { path: 'auth/forgot', component: ForgotComponent },
-
-  // landing pages
-  // { path: 'tezos-baking', component: TezosBakingComponent },
-  //{ path: 'tezos-paper-wallet', component: TezosPaperWalletComponent },
-  // routing for web
-  //{ path: '', component: TezosHardwareWalletComponent },
   
-  // { path: 'account', loadChildren: 'app/account/account.module#AccountModule' },
   { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
   
   // routing for electron
