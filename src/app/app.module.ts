@@ -147,7 +147,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFirestoreModule.enablePersistence(),
+    // AngularFirestoreModule.enablePersistence(),
 
     MatAutocompleteModule,
     MatButtonModule,

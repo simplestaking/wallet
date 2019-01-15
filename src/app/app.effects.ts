@@ -39,14 +39,9 @@ export class AllEffects {
     @Effect()
     Init$ = defer(() => {
         // disable online data 
-        //this.db.firestore.disableNetwork();
+        this.db.firestore.disableNetwork();
         return of({ type: 'HEARTBEAT' })
-
     });
-
-    // effect to debug falling outside of zone
-    // @Effect({ dispatch: false })
-
 
 
     // effect to debug falling outside of zone

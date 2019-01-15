@@ -22,9 +22,18 @@ export class TezosTrezorPassphraseEffects {
         withLatestFrom(this.store, (action: any, state) => state),
 
         flatMap((state) => of(
-            TrezorConnect.setPassphrase({
-                'passphrase': state.tezos.tezosTrezorPassphrase.form.password,
+            // web based
+            TrezorConnect.uiResponse({
+                type: 'ui-receive_passphrase',
+                payload: {
+                    value: state.tezos.tezosTrezorPassphrase.form.password,
+                    save: true,
+                },
             })
+            // electron based
+            // TrezorConnect.setPassphrase({
+            //     'passphrase': state.tezos.tezosTrezorPassphrase.form.password,
+            // })
         )),
 
         map((response: any) => ({ type: 'TEZOS_TREZOR_PASSPHRASE_SUCCESS' })),
