@@ -30,7 +30,7 @@ export class ChartLineNavComponent implements OnInit {
   showYAxisLabel = false;
 
   autoScale = false
-  tooltipDisabled = true;
+  tooltipDisabled = false;
 
   animations = false;
   gradient = true;

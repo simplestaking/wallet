@@ -85,7 +85,7 @@ export class TezosWalletDetailComponent implements OnInit {
 
               let periodChange = amountSumByDay[entry.dateUnixTimeStamp] || 0;
 
-              console.log(entry.failed, entry.amount, 'fee', entry.fee, 'burn', entry.burn, entry)
+              // console.log(entry.failed, entry.amount, 'fee', entry.fee, 'burn', entry.burn, entry)
 
               // sum ammount for every transaction period 
               periodChange += entry.failed ? 0 : entry.amount;
@@ -102,12 +102,12 @@ export class TezosWalletDetailComponent implements OnInit {
 
               amountSumByDay[entry.dateUnixTimeStamp] = periodChange;
 
-              console.log('^^^^^^^^', new Date(entry.timestamp), periodChange);
+              // console.log('^^^^^^^^', new Date(entry.timestamp), periodChange);
             })
 
 
-          console.log(amountSumByDay)
-          console.log(this.operationHistory)
+          // console.log(amountSumByDay)
+          // console.log(this.operationHistory)
 
           // iterate over historical periods and find corresponding changes
           this.historicalPrice.ids.slice(-HISTORY_SIZE).map(id => id).reverse().map(id => {
@@ -127,7 +127,7 @@ export class TezosWalletDetailComponent implements OnInit {
             });
           });
 
-          console.log(this.historicalPrice)
+          // console.log(this.historicalPrice)
         }
 
         const lastBalanceTz = this.lastBalance / 1000000;
@@ -152,7 +152,7 @@ export class TezosWalletDetailComponent implements OnInit {
           }
         }
 
-        console.log(this.netAssetValue)
+        // console.log(this.netAssetValue)
 
         this.chartLineNavData = [
           {
