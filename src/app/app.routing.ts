@@ -7,10 +7,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { ForgotComponent } from './auth/forgot/forgot.component';
 
-// import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
-// import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
-// import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/tezos-hardware-wallet.component';
-
 export const AppRouting: Routes = [
   
   // auth
