@@ -1,4 +1,16 @@
-const initialState: any = {
+const initialState : any = {
+   
+};
+
+export interface WalletDetailState {
+    price?: number
+    balance?: number
+    name?: string
+    publicKeyHash?: string
+    delegate?: {
+        value: string
+        setable: boolean
+    }
 }
 
 export function reducer(state = initialState, action) {
@@ -14,7 +26,9 @@ export function reducer(state = initialState, action) {
         case 'TEZOS_NODE_PRICE_UPDATE_SUCCESS': {
             return {
                 ...state,
-                price: action.payload.XTZ.USD,
+               // price: action.payload.XTZ.USD,
+               price: 0.4696898
+                // price: action.payload.data.quote.XTZ.USD.price,
             }
         }
 

@@ -1,19 +1,48 @@
 import * as moment from 'moment/moment';
 
-const initialState: any = {
+import { OperationHistoryEntity, OperationTypeEnum } from "./tezos-operation-history.entity";
+
+const initialState: OperationHistoryState = {
     ids: [],
     entities: {},
+    reveals: {},
     page: 0,
     itemsPerPage: 10,
-    itemsTotalCount: 0,
+    itemsTotalCount: 0
 }
+
+export interface OperationHistoryState {
+    ids: string[],
+    entities: Record<string, OperationHistoryEntity>,
+    reveals: Record<string, OperationHistoryEntity>
+    page: number
+    itemsPerPage: number
+    itemsTotalCount: number
+    historicalPrice?: HistoricalPrice
+}
+
+export type HistoricalPrice = {
+    ids: number[]
+    entities: Record<number, HistoricalPriceEntity>
+}
+
+export type HistoricalPriceEntity = {
+    close: number
+    high: number
+    low: number
+    open: number
+    time: number // 1538438400
+    volumefrom: number
+    volumeto: number
+}
+
 
 export function reducer(state = initialState, action) {
     switch (action.type) {
 
         case 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS': {
 
-            let stateExtended = {
+            let stateExtended: OperationHistoryState = {
                 ...state,
                 ids: [
                     ...state.ids,
@@ -22,103 +51,48 @@ export function reducer(state = initialState, action) {
                 entities: {
                     ...state.entities,
                     ...action.payload.operations.reduce((accumulator, operation) => {
+                            accumulator[operation.hash] = operation;
 
-                        let operationTransformed
-                        if (operation.type.operations[0].kind === 'transaction' &&
-                            operation.type.source.tz === action.payload.publicKeyHash) {
-
-                            // console.log('[debit]', operation.type.operations[0], action.payload.publicKeyHash);
-
-                            operationTransformed = {
-                                operation: 'debit',
-                                address: operation.type.operations[0].destination.tz,
-                                amount: operation.type.operations[0].amount * -1,
-                                fee: operation.type.operations[0].fee,
-                            }
-                        }
-
-                        if (operation.type.operations[0].kind === 'transaction' &&
-                            operation.type.source.tz !== action.payload.publicKeyHash) {
-
-                            // console.log('[credit]', operation.type.operations[0], action.payload.publicKeyHash);
-
-                            operationTransformed = {
-                                operation: 'credit',
-                                address: operation.type.operations[0].src.tz,
-                                amount: operation.type.operations[0].amount * +1,
-                                fee: operation.type.operations[0].fee,
-                            }
-                        }
-
-                        if (operation.type.operations[0].kind === 'origination' &&
-                            operation.type.source.tz === action.payload.publicKeyHash) {
-
-                            // console.log('[origination] -', operation.type.operations[0], action.payload.publicKeyHash);
-
-                            operationTransformed = {
-                                operation: 'origination',
-                                address: operation.type.operations[0].tz1.tz,
-                                amount: operation.type.operations[0].balance * -1,
-                                fee: operation.type.operations[0].fee,
-                            }
-                        }
-
-                        if (operation.type.operations[0].kind === 'origination' &&
-                            operation.type.source.tz !== action.payload.publicKeyHash) {
-
-                            // console.log('[origination] +', operation.type.operations[0], action.payload.publicKeyHash);
-
-                            operationTransformed = {
-                                operation: 'origination',
-                                address: operation.type.operations[0].src.tz,
-                                amount: operation.type.operations[0].balance * +1,
-                                fee: operation.type.operations[0].fee,
-                            }
-                        }
-
-                        if (operation.type.operations[0].kind === 'delegation' &&
-                            operation.type.source.tz === action.payload.publicKeyHash) {
-
-                            // console.log('[delegation]', operation.type.operations[0], action.payload.publicKeyHash);
-
-                            operationTransformed = {
-                                operation: 'delegation',
-                                address: operation.type.operations[0].delegate.tz,
-                                fee: operation.type.operations[0].fee,
-                            }
-                        }
-
-                        if (operation.type.operations[0].timestamp) {
-
-                            // console.log('[timestamp]', operation.type.operations[0].timestamp, operation.type.operations[0], action.payload.publicKeyHash);
-
-                            operationTransformed = {
-                                ...operationTransformed,
-                                timestamp: operation.type.operations[0].timestamp,
-                                datetime:
-                                    // us timestamp
-                                    // moment(operation.type.operations[0].timestamp).format('MMM DD YYYY, h:mm:ss a'),
-                                    // eu timestamp
-                                    moment(operation.type.operations[0].timestamp).format('DD MMM YYYY, HH:mm'),
-                            }
-                        }
-
-                        return {
-                            ...accumulator,
-                            [operation.hash]: {
-                                hash: operation.hash,
-                                ...operationTransformed,
-                            }
-                        }
+                        return accumulator;
                     }, {})
                 },
-            }
+                reveals: {
+                    ...state.reveals,
+                    ...action.payload.reveals.reduce((accumulator, reveal) => {                        
+                        const operation = state.entities[reveal.hash];
+                        
+                       // update reveal with adress from the underlying operation
+                        accumulator[reveal.hash] = {
+                            ...reveal,
+                            address: operation ? operation.address : reveal.address
+                        };   
+
+                        return accumulator;
+                    }, {}),
+                    // update reveal with address if it was loaded before operation
+                    ...action.payload.operations
+                    .filter(operation => state.reveals[operation.hash])
+                    .reduce((accumulator, operation) => {
+                        const reveal = state.reveals[operation.hash];
+
+                       // update reveal with adress from the underlying operation
+                       accumulator[reveal.hash] = {
+                        ...reveal,
+                        address: operation.address
+                    }; 
+                   
+                    return accumulator;
+                }, {})
+                }
+            };
+
+
 
             // sort state according to timestamp 
             return {
                 ...stateExtended,
-                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
-                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+                ids: stateExtended.ids.slice().sort((a, b) =>
+                    stateExtended.entities[b].timestamp - stateExtended.entities[a].timestamp
                 )
             }
         }
@@ -136,39 +110,50 @@ export function reducer(state = initialState, action) {
                 entities: {
                     ...state.entities,
                     ...action.payload.applied.reduce((accumulator, operation) => {
+                        const firstOperation = operation.contents[0];
 
-                        let operationTransformed
+                        let operationTransformed;
 
-                        if (operation.contents[0].kind === "transaction") {
-                            operationTransformed = {
-                                operation: 'debit',
-                                address: operation.contents[0].destination,
-                                amount: operation.contents[0].amount * -1,
-                                fee: operation.contents[0].fee,
-                                timestamp: new Date(new Date().getTime() + 86400000).getTime(),
-                                pending: 'true'
-                            }
+                        if (firstOperation.kind === "transaction") {
+                            operationTransformed = new OperationHistoryEntity(
+                                OperationTypeEnum.debit,
+                                operation.hash,
+                                firstOperation.destination,
+                                new Date(new Date().getTime() + 86400000).toISOString(),
+                                false,
+                                firstOperation.amount * -1,
+                                firstOperation.fee,
+                                0,
+                                true
+                            );
                         }
 
-                        if (operation.contents[0].kind === "origination") {
-                            operationTransformed = {
-                                operation: 'origination',
-                                address: '', // TODO: find way how to add Contract address 
-                                amount: operation.contents[0].balance * -1,
-                                fee: operation.contents[0].fee,
-                                timestamp: new Date(new Date().getTime() + 86400000).getTime(),
-                                pending: 'true'
-                            }
+                        if (firstOperation.kind === "origination") {
+                            operationTransformed = new OperationHistoryEntity(
+                                OperationTypeEnum.origination,
+                                operation.hash,
+                                '',
+                                new Date(new Date().getTime() + 86400000).toISOString(),
+                                false,
+                                firstOperation.amount * -1,
+                                firstOperation.fee,
+                                257000,
+                                true
+                            );
                         }
 
-                        if (operation.contents[0].kind === "delegation") {
-                            operationTransformed = {
-                                operation: 'delegation',
-                                address: operation.contents[0].delegate,
-                                fee: operation.contents[0].fee,
-                                timestamp: new Date(new Date().getTime() + 86400000).getTime(),
-                                pending: 'true'
-                            }
+                        if (firstOperation.kind === "delegation") {
+                            operationTransformed = new OperationHistoryEntity(
+                                OperationTypeEnum.delegation,
+                                operation.hash,
+                                firstOperation.delegate,
+                                new Date(new Date().getTime() + 86400000).toISOString(),
+                                false,
+                                firstOperation.amount * -1,
+                                firstOperation.fee,
+                                0,
+                                true
+                            );
                         }
 
                         // console.log('[operation]', operationTransformed, accumulator)

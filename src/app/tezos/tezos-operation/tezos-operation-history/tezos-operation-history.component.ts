@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { OperationHistoryState } from './tezos-operation-history.reducer';
 
 @Component({
   selector: 'app-tezos-operation-history',
@@ -11,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TezosOperationHistoryComponent implements OnInit, OnDestroy {
 
-  public displayedColumns: string[] = ['date', 'operation', 'address', 'amount']; //fee
+  public displayedColumns: string[] = ['date', 'operation', 'address', 'fee' ,'burn' ,'amount']; //fee
 
   public onDestroy$ = new Subject()
 
@@ -30,10 +31,22 @@ export class TezosOperationHistoryComponent implements OnInit, OnDestroy {
     // wait for data changes from redux    
     this.store.select('tezos', 'tezosOperationHistory')
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe(data => {
+      .subscribe((data: OperationHistoryState)  => {
 
         //
-        this.dataSource = data.ids.map(id => ({ id, ...data.entities[id] }))
+        this.dataSource = data.ids
+        .map(id => ({ 
+          id, 
+          ...data.entities[id] 
+        }))
+        .concat(
+          Object.values(data.reveals).map(reveal => ({
+            id: 'r:' + reveal.hash,
+            ...reveal
+          }))
+        )
+        .sort((a,b) => b.timestamp - a.timestamp)
+
 
         //
         this.data = new MatTableDataSource<any>(this.dataSource);
