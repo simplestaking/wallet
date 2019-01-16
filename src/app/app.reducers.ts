@@ -27,7 +27,6 @@ import * as fromApp from './app.reducer';
 import * as fromAuthLogin from './auth/login/login.reducer';
 import * as fromAuthRegistration from './auth/registration/registration.reducer';
 import * as fromAuthForgot from './auth/forgot/forgot.reducer';
-import * as fromLandingTezosHardwareWallet from './landing/tezos-hardware-wallet/tezos-hardware-wallet.reducer';
 
 // meta reducert for dynamic forms
 import * as fromNgrxForm from './shared/ngrx-form.reducer';
@@ -43,7 +42,6 @@ export interface State {
   authRegistration: any;
   authForgot: any;
 
-  landingTezosHardwareWallet: any;
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
@@ -59,7 +57,6 @@ export const reducers: ActionReducerMap<State> = {
   authRegistration: fromAuthRegistration.reducer,
   authForgot: fromAuthForgot.reducer,
   
-  landingTezosHardwareWallet: fromLandingTezosHardwareWallet.reducer,
   routerReducer: fromRouter.routerReducer,
 };
 
