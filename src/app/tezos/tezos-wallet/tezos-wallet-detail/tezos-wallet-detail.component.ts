@@ -2,8 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { OperationHistoryState, HistoricalPrice } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.reducer';
+import { WalletDetailState } from './tezos-wallet-detail.reducer';
 
-import * as moment from 'moment/moment';
+
+const HISTORY_SIZE = 100;
+
+export interface HistoryChartDataPoint {
+  name: Date
+  balance: number
+  value: number
+}
 
 @Component({
   selector: 'app-tezos-wallet-detail',
@@ -12,15 +21,19 @@ import * as moment from 'moment/moment';
 })
 export class TezosWalletDetailComponent implements OnInit {
 
-  public chartLineNavData
-  public tezosWalletDetail
+  public tezosWalletDetail: WalletDetailState;
+  public chartLineNavData: {
+    name: string,
+    series: HistoryChartDataPoint[]
+  }[]
 
-  public historicalPrice
-  public operationHistory
-  public netAssetValue
+  public historicalPrice: HistoricalPrice;
+  public operationHistory: OperationHistoryState;
+  public netAssetValue: HistoryChartDataPoint[] = [];
 
-  public lastBalance
-  public lastPrice
+
+  public lastBalance = 0;
+  public lastPrice = 0;
 
   public destroy$ = new Subject<null>();
 
@@ -32,114 +45,128 @@ export class TezosWalletDetailComponent implements OnInit {
 
     this.store.select('tezos', 'tezosOperationHistory')
       .pipe(takeUntil(this.destroy$))
-      .subscribe(state => {
+      .subscribe((state: OperationHistoryState) => {
 
-        if (state.ids.length > 0) {
-
-          this.operationHistory = state
-          
-          // TODO: remove all operations without amount  
-          // Object.keys(state.entities)
-          //   .reduce((accum, value) =>
-          //     state.entities[value].amount ? { ...accum, ...state.entities[value] } : accum, {})
-
-        } else {
-          this.operationHistory = undefined
-        }
+        this.operationHistory = state.ids.length > 0 ? state : undefined;
 
         if (state.historicalPrice && state.historicalPrice.ids.length > 0) {
-          this.historicalPrice = state.historicalPrice
-        } else {
-          this.historicalPrice = undefined
-        }
+          this.historicalPrice = state.historicalPrice;
 
-      })
+        } else {
+          this.historicalPrice = undefined;
+        }
+      });
 
     this.store.select('tezos', 'tezosWalletDetail')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
 
-        this.tezosWalletDetail = state
+        this.tezosWalletDetail = state;
+        this.lastBalance = parseInt(state.balance, 10) || 0;
+        this.lastPrice = state.price || 0;
 
-        // last price point in chart 
-        if (this.tezosWalletDetail.balance && this.tezosWalletDetail.price) {
-          this.lastBalance = this.tezosWalletDetail.balance
-          this.lastPrice = this.tezosWalletDetail.price
-        } else {
-          this.lastBalance = 0
-          this.lastPrice = 0
-        }
-
-        // save last value to agregation
-        let amountSumByDay = {}
-        this.netAssetValue = []
-        let size = -100
 
         if (this.operationHistory && this.historicalPrice) {
+          this.netAssetValue = [];
+
+          // save last value to agregation
+          const amountSumByDay: Record<number, number> = {};
 
           // sum transaction per day 
           this.operationHistory.ids
-            .filter(id => this.operationHistory.entities[id].timestamp)
-            .map(id => {
+            .filter(id => {
+              const entry = this.operationHistory.entities[id];
 
-              // round datetime to day
-              let timeStamp = new Date(this.operationHistory.entities[id].timestamp).getTime()
-              timeStamp = (timeStamp - (timeStamp % (24 * 60 * 60 * 1000))) / 1000
+              return entry && entry.timestamp;
+            })
+            .map((id) => {
+              const entry = this.operationHistory.entities[id];
+              const reveal = this.operationHistory.reveals[entry.hash];
 
-              // sum ammount for every transaction day 
-              amountSumByDay[timeStamp] = !amountSumByDay[timeStamp] ? this.operationHistory.entities[id].amount : amountSumByDay[timeStamp] + (this.operationHistory.entities[id].amount)
+              let periodChange = amountSumByDay[entry.dateUnixTimeStamp] || 0;
 
+              console.log(entry.failed, entry.amount, 'fee', entry.fee, 'burn', entry.burn, entry)
+
+              // sum ammount for every transaction period 
+              periodChange += entry.failed ? 0 : entry.amount;
+              // add fees to calculation
+              periodChange -= entry.type === 'credit' ? 0 : entry.fee;
+              // burn operation cost
+              periodChange -= entry.failed ? 0 : entry.burn;
+
+              // add reveal costs if exists for operation
+              if (reveal) {
+                periodChange -= reveal.burn;
+                periodChange -= reveal.fee;
+              }
+
+              amountSumByDay[entry.dateUnixTimeStamp] = periodChange;
+
+              console.log('^^^^^^^^', new Date(entry.timestamp), periodChange);
             })
 
-          this.historicalPrice.ids.slice(size).map(id => id).reverse().map(id => {
 
-            if (amountSumByDay[this.historicalPrice.entities[id].time]) {
-              this.lastBalance -= amountSumByDay[this.historicalPrice.entities[id].time]
-            }
+          console.log(amountSumByDay)
+          console.log(this.operationHistory)
+
+          // iterate over historical periods and find corresponding changes
+          this.historicalPrice.ids.slice(-HISTORY_SIZE).map(id => id).reverse().map(id => {
+
+            const entry = this.historicalPrice.entities[id];
+            const entryTime = entry.time;
+            const periodChange = amountSumByDay[entryTime] || 0;
+
+            this.lastBalance -= periodChange;
+
+            const balanceTz = this.lastBalance / 1000000;
 
             this.netAssetValue.push({
-              name: new Date(this.historicalPrice.entities[id].time * 1000),
-              balance: this.lastBalance / 1000000,
-              value: this.lastBalance / 1000000 * this.historicalPrice.entities[id].close
-            })
+              name: new Date(entryTime * 1000),
+              balance: balanceTz,
+              value: balanceTz * entry.close
+            });
+          });
 
-          })
-
+          console.log(this.historicalPrice)
         }
+
+        const lastBalanceTz = this.lastBalance / 1000000;
 
         if (this.netAssetValue.length === 0) {
+
           this.netAssetValue = [{
             name: new Date(),
-            balance: this.lastBalance,
-            value: this.lastBalance / 1000000 * this.lastPrice
-          }]
+            balance: lastBalanceTz,
+            value: lastBalanceTz * this.lastPrice
+          }];
+
         } else {
+
           // save last price point in chart
-          if (this.tezosWalletDetail.balance && this.tezosWalletDetail.price) {
-            this.netAssetValue[0].balance = this.tezosWalletDetail.balance / 1000000
-            this.netAssetValue[0].value = this.tezosWalletDetail.balance / 1000000 * this.lastPrice
+          if (state.balance && state.price) {
+            const netValue = this.netAssetValue[0];
+            const balanceTz = state.balance / 1000000;
+
+            netValue.balance = balanceTz;
+            netValue.value = balanceTz * this.lastPrice;
           }
         }
+
+        console.log(this.netAssetValue)
 
         this.chartLineNavData = [
           {
             name: 'xtz',
             series: this.netAssetValue,
-          }
+          }          
         ];
-
-      })
-
+      });
   }
-
 
   ngOnDestroy() {
 
     // close all observables
     this.destroy$.next();
     this.destroy$.complete();
-
   }
-
-
 }

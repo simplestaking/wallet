@@ -2,8 +2,16 @@ table {
     width: 100%;
 }
 
-.mat-cell {
-    // opacity: 0.8;
+.mat-row.failed .mat-cell{
+    color: rgba(255,0,0,0.87);
+}
+
+.mat-row.failed .mat-cell > a{
+    color: rgba(255,0,0,0.87) !important;
+}
+
+.mat-row.self .mat-cell{
+    color: rgba(0,255,0,0.87);
 }
 
 // set white backgorund for list 
@@ -26,8 +34,16 @@ mat-paginator {
 .mat-cell.cdk-column-address.mat-column-address  {
     width: 350px;
 }
+.mat-cell.cdk-column-fee.mat-column-fee  {
+    width: 50px;
+    text-align: center;
+}
+.mat-cell.cdk-column-burn.mat-column-burn  {
+    width: 50px;
+    text-align: center;
+}
 .mat-cell.cdk-column-amount.mat-column-amount {
-    width: 135px;
+    width: 125px;
     text-align: right;
 }
 .mat-header-cell.cdk-column-amount.mat-column-amount {
