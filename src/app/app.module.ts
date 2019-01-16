@@ -29,13 +29,9 @@ import { reducers, metaReducers } from './app.reducers';
 
 import { AllEffects } from './app.effects'
 
-
 import { AuthLoginEffects } from './auth/login/login.effects'
 import { AuthRegistrationEffects } from './auth/registration/registration.effects'
 import { AuthForgotEffects } from './auth/forgot/forgot.effects'
-
-
-import { TezosHardwareWalletEffects } from "./landing/tezos-hardware-wallet/tezos-hardware-wallet.effects";
 
 // import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -78,11 +74,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { ForgotComponent } from './auth/forgot/forgot.component';
 
-import { LandingComponent } from './landing/landing.component';
-import { TezosPaperWalletComponent } from './landing/tezos-paper-wallet/tezos-paper-wallet.component';
-import { TezosBakingComponent } from './landing/tezos-baking/tezos-baking.component';
-import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/tezos-hardware-wallet.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,13 +82,7 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
     LoginComponent,
     RegistrationComponent,
     ForgotComponent,
-    
-    // TrezorComponent,
-    
-    LandingComponent,
-    TezosPaperWalletComponent,
-    TezosBakingComponent,
-    TezosHardwareWalletComponent,
+
 
   ],
   imports: [
@@ -133,9 +118,6 @@ import { TezosHardwareWalletComponent } from './landing/tezos-hardware-wallet/te
       AuthRegistrationEffects,
       AuthForgotEffects,
 
-      // TrezorEffects,
-
-      TezosHardwareWalletEffects
     ]),
 
     DeviceDetectorModule.forRoot(),
