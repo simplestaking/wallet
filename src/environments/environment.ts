@@ -11,5 +11,26 @@ export const environment = {
     databaseURL: "https://wallet-dd9dc.firebaseio.com",
     projectId: "wallet-dd9dc",
     storageBucket: "wallet-dd9dc.appspot.com",
-  }
+    disableNetwork: true
+  },
+  trezor: {
+    transportReconnect: true // true
+  },
+  nodes: 'main'
 };
+
+// export const environment  = {
+//   production: false,
+//   firebase: {
+//     apiKey: "AIzaSyAzA_HaF5PiNGji3qcqfoQFPosPvK9R3Ls",
+//     authDomain: "simplestakingcom-58d45.firebaseapp.com",
+//     databaseURL: "https://simplestakingcom-58d45.firebaseio.com",
+//     projectId: "simplestakingcom-58d45",
+//     storageBucket: "simplestakingcom-58d45.appspot.com",
+//     disableNetwork: false
+//   },
+//   trezor: {
+//     transportReconnect: false // true
+//   },
+//   nodes: 'zero'
+// };
