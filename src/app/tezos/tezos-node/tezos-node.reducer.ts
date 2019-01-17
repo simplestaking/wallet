@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 let initialState: any = {
     nodes: {
         zero: {
@@ -38,7 +40,7 @@ let initialState: any = {
 
 initialState = {
     ...initialState,
-    api: initialState.nodes.main,
+    api: initialState.nodes[environment.nodes],
 }
 
 export function reducer(state = initialState, action) {
