@@ -11,5 +11,10 @@ export const environment = {
     databaseURL: "https://wallet-dd9dc.firebaseio.com",
     projectId: "wallet-dd9dc",
     storageBucket: "wallet-dd9dc.appspot.com",
-  }
+    disableNetwork: true
+  },
+  trezor: {
+    transportReconnect: true // true
+  },
+  nodes: 'main'
 };

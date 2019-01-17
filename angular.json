@@ -71,7 +71,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "src/assets/connect.js"
             ],
             "styles": [
               "src/styles.scss"
