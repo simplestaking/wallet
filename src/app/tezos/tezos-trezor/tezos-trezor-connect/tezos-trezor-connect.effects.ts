@@ -7,6 +7,8 @@ import { of, empty } from 'rxjs';
 import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
 
 import TrezorConnect, { DEVICE, TRANSPORT, UI } from 'trezor-connect';
+import { environment } from '../../../../environments/environment';
+
 
 @Injectable()
 export class TezosTrezorConnectEffects {
@@ -213,7 +215,7 @@ export class TezosTrezorConnectEffects {
                     popup: false,
                     webusb: false,
                     // try to reconect when bridge is not working
-                    transportReconnect: true,
+                    transportReconnect: environment.trezor.transportReconnect,
                     debug: true,
 
                 }).then(response => console.log('[TrezorConnect][init]', response))

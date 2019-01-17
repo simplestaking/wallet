@@ -51,38 +51,38 @@ export function reducer(state = initialState, action) {
                 entities: {
                     ...state.entities,
                     ...action.payload.operations.reduce((accumulator, operation) => {
-                            accumulator[operation.hash] = operation;
+                        accumulator[operation.hash] = operation;
 
                         return accumulator;
                     }, {})
                 },
                 reveals: {
                     ...state.reveals,
-                    ...action.payload.reveals.reduce((accumulator, reveal) => {                        
+                    ...action.payload.reveals.reduce((accumulator, reveal) => {
                         const operation = state.entities[reveal.hash];
-                        
-                       // update reveal with adress from the underlying operation
+
+                        // update reveal with adress from the underlying operation
                         accumulator[reveal.hash] = {
                             ...reveal,
                             address: operation ? operation.address : reveal.address
-                        };   
+                        };
 
                         return accumulator;
                     }, {}),
                     // update reveal with address if it was loaded before operation
                     ...action.payload.operations
-                    .filter(operation => state.reveals[operation.hash])
-                    .reduce((accumulator, operation) => {
-                        const reveal = state.reveals[operation.hash];
+                        .filter(operation => state.reveals[operation.hash])
+                        .reduce((accumulator, operation) => {
+                            const reveal = state.reveals[operation.hash];
 
-                       // update reveal with adress from the underlying operation
-                       accumulator[reveal.hash] = {
-                        ...reveal,
-                        address: operation.address
-                    }; 
-                   
-                    return accumulator;
-                }, {})
+                            // update reveal with adress from the underlying operation
+                            accumulator[reveal.hash] = {
+                                ...reveal,
+                                address: operation.address
+                            };
+
+                            return accumulator;
+                        }, {})
                 }
             };
 
@@ -135,7 +135,7 @@ export function reducer(state = initialState, action) {
                                 '',
                                 new Date(new Date().getTime() + 86400000).toISOString(),
                                 false,
-                                firstOperation.amount * -1,
+                                firstOperation.balance * -1,
                                 firstOperation.fee,
                                 257000,
                                 true
@@ -149,7 +149,7 @@ export function reducer(state = initialState, action) {
                                 firstOperation.delegate,
                                 new Date(new Date().getTime() + 86400000).toISOString(),
                                 false,
-                                firstOperation.amount * -1,
+                                0,
                                 firstOperation.fee,
                                 0,
                                 true
@@ -158,13 +158,12 @@ export function reducer(state = initialState, action) {
 
                         // console.log('[operation]', operationTransformed, accumulator)
 
-                        return {
-                            ...accumulator,
-                            [operation.hash]: {
-                                hash: operation.hash,
-                                ...operationTransformed,
-                            }
+                        if (operationTransformed) {
+                            accumulator[operation.hash] = operationTransformed;
                         }
+
+                        return accumulator
+
                     }, {})
 
                 }
