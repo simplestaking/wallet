@@ -31,12 +31,12 @@ export interface FirebaseOperation {
 }
 
 export interface FirebaseHistoryData {
-    operations: FirebaseOperation[]
+    operations: Record<string, FirebaseOperation>
     publicKeyHash: string
-    balances: {
+    dailyBalances: Record<string, {
         unixTimestamp: number
         balance: number
-    }[]
+    }>
 }
 
 export interface TzScanOperation {

@@ -4,6 +4,7 @@ import { OperationHistoryEntity } from "./tezos-operation-history.entity";
 import { OperationTypeEnum } from './tezos-operation-history.operation';
 
 const initialState: OperationHistoryState = {
+    cacheLoadInitiated: false,
     ids: [],
     entities: {},
     reveals: {},
@@ -13,6 +14,7 @@ const initialState: OperationHistoryState = {
 }
 
 export interface OperationHistoryState {
+    cacheLoadInitiated: boolean,
     ids: string[],
     entities: Record<string, OperationHistoryEntity>,
     reveals: Record<string, OperationHistoryEntity>
@@ -40,6 +42,25 @@ export type HistoricalPriceEntity = {
 
 export function reducer(state = initialState, action) {
     switch (action.type) {
+
+        case 'TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS': {
+
+            const stateExtended = {                
+                ...state,
+                cacheLoadInitiated: true,
+                ids: [
+                    ...state.ids,
+                    ...Object.keys(action.payload)
+                ],
+                entities: {
+                    ...state.entities,
+                    ...action.payload
+                },
+                reveals: {}
+            }
+
+            return stateExtended;
+        }
 
         case 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS': {
 

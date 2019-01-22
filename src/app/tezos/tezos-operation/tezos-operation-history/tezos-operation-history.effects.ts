@@ -29,17 +29,32 @@ export class TezosOperationHistoryEffects {
     @Effect()
     TezosWalletOperationHistory$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/detail/:address'),
-        map(() => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD' })),
+        map(() => ({
+            type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD'
+        })),
         catchError((error, caught) => {
 
             console.error(error.message)
             this.store.dispatch({
-                type: 'TEZOS_OPERATION_HISTORY_LOAD',
+                type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD',
                 payload: error.message,
             });
             return caught;
-        }),
+        })
     )
+    // TezosWalletOperationHistory$ = this.actions$.pipe(
+    //     ofRoute('/tezos/wallet/detail/:address'),
+    //     map(() => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD' })),
+    //     catchError((error, caught) => {
+
+    //         console.error(error.message)
+    //         this.store.dispatch({
+    //             type: 'TEZOS_OPERATION_HISTORY_LOAD',
+    //             payload: error.message,
+    //         });
+    //         return caught;
+    //     })
+    // )
 
     // @TODO: do not fetch all data, but stop once we are out of history window or add some manual trigger...
 
@@ -67,7 +82,11 @@ export class TezosOperationHistoryEffects {
     // cyclicaly fetch operations until we get them all
     fetchMissingOperations = (path: string, page: number, cache: Record<string, OperationHistoryEntity>, type: OperationPrefixEnum) => (source: Observable<TzScanOperation[]>): Observable<TzScanOperation[]> => source.pipe(
         switchMap((operations) => {
-            return this.http.get<TzScanOperation[]>(path.replace(/&p=[0-9]+/, `&p=${page}`)).pipe(
+
+            // on onitial load fetch just 5 records, afterwards switch to
+            const url = path.replace(/&p=[0-9]+/, `&p=${page}`).replace(/&number=[0-9]+/, '&number=50');
+
+            return this.http.get<TzScanOperation[]>(url).pipe(
                 map(response => operations.concat(response))
             )
         }),
@@ -96,26 +115,67 @@ export class TezosOperationHistoryEffects {
         })
     )
 
+    intitialFetchMissingOperations = (path: string, page: number, cache: Record<string, OperationHistoryEntity>, type: OperationPrefixEnum) => (source: Observable<TzScanOperation[]>): Observable<TzScanOperation[]> => source.pipe(
+        switchMap((operations) => {
+
+            // on onitial load fetch just 5 records, afterwards switch to
+            const url = path.replace(/&p=[0-9]+/, `&p=${page}`).replace(/&number=[0-9]+/, '&number=5');
+
+            return this.http.get<TzScanOperation[]>(url).pipe(
+                map(response => operations.concat(response))
+            )
+        }),
+        switchMap(operations => {
+
+            const operationTypePrefix = type[0].toLowerCase() + '_';
+            let operationAlreadyInCache = false;
+
+
+            operations.reverse().some((op => {
+                console.log(operationTypePrefix + op.hash, cache[operationTypePrefix + op.hash])
+                return operationTypePrefix + op.hash in cache;
+            }))
+
+            // iterate back in operation history until we find already cached one
+            if (operationAlreadyInCache) {
+                return of(operations);
+
+                // or we have already loaded all operations so abort
+            } else if (operations.length < 5) {
+                return of(operations);
+
+            } else {
+                return of([]).pipe(this.fetchMissingOperations(path, page, cache, type));
+            }
+        }
+        )
+    )
 
     @Effect()
     TezosWalletFirebaseCacheLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+        ofType('TEZOS_OPERATION_HISTORY_CACHE_LOAD'),
 
-        withLatestFrom(this.store, (action, state: RootState & { tezos: TezosState }) => ({ action, state })),
+        withLatestFrom(
+            this.store.select(state => state)
+        ),
 
-        switchMap(({ action, state }) => {
+        flatMap(([action, state]) => {
 
-            const publicKeyHash = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const collectionName = `tezos_${state.tezos.tezosNode.api.name}_history`;
+
+            let initial = true;
 
 
-            return this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_history').
-                doc<FirebaseHistoryData>(state.routerReducer.state['root'].children[0].firstChild.params.address).
+            return this.db.collection(collectionName).
+                doc<FirebaseHistoryData>(walletAddress).
                 valueChanges().
                 pipe(
-                    map(
-                        dbData => {
-                            console.log('*****', dbData)
+                    map(dbData => {
+                        console.log('*****', dbData);
 
+
+                        if (dbData !== undefined) {
 
                             const operations = dbData.operations;
                             const convertedOperations: Record<string, OperationHistoryEntity> = {};
@@ -137,47 +197,132 @@ export class TezosOperationHistoryEffects {
                                 )
                             });
 
+                            if (initial) {
+                                initial = false;
+
+                                this.store.dispatch({
+                                    type: 'TEZOS_OPERATION_HISTORY_LOAD',
+                                    payload: convertedOperations
+                                });
+                            }
+
                             return convertedOperations;
-                        }),
-                    flatMap(
-                        (cachedOperations) => {
 
-                            // return this.http.get<TzScanOperation[]>(
-                            //     //  get api url
-                            //     state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
-                            //     // get public key hash from url 
-                            //     state.routerReducer.state['root'].children[0].firstChild.params.address +
-                            //     '?type=Transaction&p=0&number=5'
-                            // ).pipe(
-                            const queryPath = state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations + publicKeyHash + '?type=Transaction&p=0&number=50';
+                        } else {
 
-                            return of([]).
-                                pipe(
-                                    this.fetchMissingOperations(
-                                        queryPath,
-                                        0,
-                                        cachedOperations,
-                                        OperationPrefixEnum.transaction
-                                    ),
-                                    map(result => {
-                                        const tzMapped = result.map(operation => {
-                                            return OperationHistoryEntity.fromTzScanOperation(operation, publicKeyHash);
-                                        });
+                            this.store.dispatch({
+                                type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE'
+                            });
 
-                                        return {
-                                            pkh: publicKeyHash,
-                                            firebase: cachedOperations,
-                                            tzScan: {
-                                                transaction: tzMapped
-                                            }
-                                        }
+                            if (initial) {
+                                initial = false;
 
-                                    })
-                                )
+                                this.store.dispatch({
+                                    type: 'TEZOS_OPERATION_HISTORY_LOAD',
+                                    payload: {}
+                                });
+
+                                return {};
+                            }
                         }
-                    )
+                    })
                 )
         }),
+        map((response) => ({
+            type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS',
+            payload: response || {}
+
+        }),
+            catchError((error, caught) => {
+                console.error(error.message)
+                this.store.dispatch({
+                    type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD_ERROR',
+                    payload: error.message,
+                });
+                return caught;
+            })
+        )
+    )
+
+    @Effect({ dispatch: false })
+    TezosWalletCacheCreate$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_CACHE_CREATE'),
+
+        withLatestFrom(this.store, (action, state: RootState & { tezos: TezosState }) => ({ action, state })),
+
+        switchMap(({ action, state }) => {
+
+
+            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const collectionName = `tezos_${state.tezos.tezosNode.api.name}_history`;
+
+
+            return this.db.collection(collectionName).doc<FirebaseHistoryData>(walletAddress).set({
+                dailyBalances: {},
+                publicKeyHash: walletAddress,
+                operations: {}
+            });
+
+
+        })
+    )
+
+
+    @Effect()
+    TezosWalletHistoryLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+        withLatestFrom(this.store, (action, state: RootState & { tezos: TezosState }) => ({ action, state })),
+
+        switchMap(({ action, state }) => {
+
+            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const collectionName = `tezos_${state.tezos.tezosNode.api.name}_history`;
+            const cachedOperations = {
+                ...action['payload']
+            };
+
+
+            const queryPath = state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations + walletAddress + '?type=Transaction&p=0&number=50';
+
+            if (state.tezos.tezosOperationHistory.cacheLoadInitiated === true) {
+                return of({
+
+                    pkh: walletAddress,
+                    firebase: cachedOperations,
+                    tzScan: {
+                        transaction: []
+                    }
+                });
+            } else {
+
+                return of([]).
+                    pipe(
+                        this.intitialFetchMissingOperations(
+                            queryPath,
+                            0,
+                            cachedOperations,
+                            OperationPrefixEnum.transaction
+                        ),
+                        map(result => {
+                            const tzMapped = result.map(operation => {
+                                return OperationHistoryEntity.fromTzScanOperation(operation, walletAddress);
+                            });
+
+                            return {
+                                pkh: walletAddress,
+                                firebase: cachedOperations,
+                                tzScan: {
+                                    transaction: tzMapped
+                                }
+                            }
+
+                        })
+                    )
+
+            }
+        }),
+
         tap(data => console.log('%%%%%%', data)),
         map(mergedData => {
 
@@ -193,30 +338,18 @@ export class TezosOperationHistoryEffects {
                 updatedCache[index] = operation;
             });
 
-            // let haveAlreadyCachedOperation = false;
-
-            // mergedData.tzScan.forEach(op => {
-
-            //     // we already have
-            //     if (op.hash in map) {
-            //         haveAlreadyCachedOperation = true;
-
-            //         console.log('Cached')
-
-            //     } else {
-            //         map[op.hash] = op;
-
-
-            //     }
-            // })
-
-
+            return {
+                pkh: mergedData.pkh,
+                cache: updatedCache
+            }
+        }),
+        map(data => {
 
             //  console.log(mapped)
 
             const result = {
-                publicKeyHash: mergedData.pkh,
-                operations: Object.values(updatedCache),
+                publicKeyHash: data.pkh,
+                operations: Object.values(data.cache),
                 reveals: []
             }
 
