@@ -40,12 +40,12 @@ export class TezosWalletListEffects {
         // get data from firebase 
         // TODO: move to custom rxjs operator
         flatMap(state =>
-            of([]).pipe(
-                // get data from firebase 
-                flatMap(() => this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet',
-                    query => query.where('uid', '==', null)
-                        .orderBy('name', 'asc')
-                ).valueChanges()),
+            this.db.collection(
+                'tezos_' + state.tezos.tezosNode.api.name + '_wallet',
+                // why we are filtering for null uid? Useless and lead to composit index without reason!
+                query => query.orderBy('name', 'asc')
+            ).valueChanges().pipe(
+
                 // show only valid trezor addresses or dektop with private key 
                 map(addresses => addresses
                     .filter((address: any) =>

@@ -43,9 +43,9 @@ export class TezosWalletDetailComponent implements OnInit {
 
   ngOnInit() {
 
-    this.store.select('tezos', 'tezosOperationHistory')
+    this.store.select<OperationHistoryState>('tezos', 'tezosOperationHistory')
       .pipe(takeUntil(this.destroy$))
-      .subscribe((state: OperationHistoryState) => {
+      .subscribe(state => {
 
         this.operationHistory = state.ids.length > 0 ? state : undefined;
 
@@ -147,7 +147,8 @@ export class TezosWalletDetailComponent implements OnInit {
       chartValues.push({
         name: new Date(entryTime * 1000),
         balance: balanceTz,
-        value: balanceTz * entry.close
+        //value: balanceTz * entry.close
+        value: balanceTz * 1
       });
     });
 
@@ -178,7 +179,8 @@ export class TezosWalletDetailComponent implements OnInit {
       this.netAssetValue = [{
         name: new Date(),
         balance: lastBalanceTz,
-        value: lastBalanceTz * this.lastPrice
+        //value: lastBalanceTz * this.lastPrice
+        value: lastBalanceTz
       }];
 
     } else {
@@ -189,7 +191,8 @@ export class TezosWalletDetailComponent implements OnInit {
         const balanceTz = this.tezosWalletDetail.balance / 1000000;
 
         netValue.balance = balanceTz;
-        netValue.value = balanceTz * this.lastPrice;
+      //  netValue.value = balanceTz * this.lastPrice;
+        netValue.value = balanceTz;
       }
     }
 

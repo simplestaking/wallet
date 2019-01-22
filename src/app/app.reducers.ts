@@ -42,7 +42,7 @@ export interface State {
   authRegistration: any;
   authForgot: any;
 
-  routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+  routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;  
 }
 
 /**

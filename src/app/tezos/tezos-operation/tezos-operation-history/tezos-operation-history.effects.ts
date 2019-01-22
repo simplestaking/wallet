@@ -1,54 +1,30 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { of, from, Observable } from 'rxjs';
-import { withLatestFrom, flatMap, map, tap, catchError } from 'rxjs/operators';
+
+import { of, Observable } from 'rxjs';
+import { withLatestFrom, flatMap, map, tap, catchError, switchMap } from 'rxjs/operators';
+import { forkJoin } from "rxjs/observable/forkJoin";
+
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { ofRoute, enterZone } from '../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, pendingOperation } from 'tezos-wallet'
-import { OperationTypeEnum, OperationHistoryEntity } from './tezos-operation-history.entity';
+//import { OperationTypeEnum, OperationHistoryEntity } from './tezos-operation-history.entity';
+import { State as RootState } from '../../../app.reducers';
+import { State as TezosState } from '../../tezos.reducers';
+import { OperationHistoryEntity } from './tezos-operation-history.entity';
+import { TzScanOperation, FirebaseHistoryData, OperationTypeEnum, OperationPrefixEnum } from './tezos-operation-history.operation';
 
-interface TargetAddress {
-    tz: string
-}
 
-interface TzScanOperation {
-    block_hash: string
-    hash: string
-    network_hash: string
-    type: {
-        kind: 'manager'
-        operations: {
-            amount?: number
-            balance?: number
-            burn?: number
-            burn_tez?: number
-            counter: number
-            destination: TargetAddress
-            delegate: TargetAddress
-            failed: boolean
-            fee: number
-            gas_limit: string
-            internal: boolean
-            kind: 'transaction' | 'reval' | 'delegation' | 'origination'
-            op_level: number
-            src: TargetAddress
-            storage_limit: string
-            timestamp: string
-            tz1: TargetAddress
-        }[]
-        source: {
-            tz: string
-        }
-    }
-}
+
 
 
 @Injectable()
 export class TezosOperationHistoryEffects {
+
 
     @Effect()
     TezosWalletOperationHistory$ = this.actions$.pipe(
@@ -69,15 +45,16 @@ export class TezosOperationHistoryEffects {
 
     // cyclicaly fetch operations until we get them all
     fetchAllOperations = (path: string, page: number) => (source: Observable<TzScanOperation[]>): Observable<TzScanOperation[]> => source.pipe(
-        flatMap((operations) => {
+        switchMap((operations) => {
             return this.http.get<TzScanOperation[]>(path.replace(/&p=[0-9]+/, `&p=${page}`)).pipe(
                 map(response => operations.concat(response))
             )
         }),
-        flatMap(operations => {
+        switchMap(operations => {
             const nextPage = page + 1;
 
-            // check if we still have full page and mind that page starts with 0
+            // check if we still have full page 
+            // mind that page starts with 0
             if (operations.length < 50 + 50 * page) {
                 return of(operations);
                 //aaaaa
@@ -87,79 +64,168 @@ export class TezosOperationHistoryEffects {
         })
     )
 
+    // cyclicaly fetch operations until we get them all
+    fetchMissingOperations = (path: string, page: number, cache: Record<string, OperationHistoryEntity>, type: OperationPrefixEnum) => (source: Observable<TzScanOperation[]>): Observable<TzScanOperation[]> => source.pipe(
+        switchMap((operations) => {
+            return this.http.get<TzScanOperation[]>(path.replace(/&p=[0-9]+/, `&p=${page}`)).pipe(
+                map(response => operations.concat(response))
+            )
+        }),
+        switchMap(operations => {
+            const nextPage = page + 1;
+            const operationTypePrefix = type[0].toLowerCase() + '_';
+            let operationAlreadyInCache = false;
 
 
+            operations.reverse().some((op => {
+                console.log(operationTypePrefix + op.hash, cache[operationTypePrefix + op.hash])
+                return operationTypePrefix + op.hash in cache;
+            }))
+
+            // iterate back in operation history until we find already cached one
+            if (operationAlreadyInCache) {
+                return of(operations);
+
+                // or we have already loaded all operations so abort
+            } else if (operations.length < 50 + page * 50) {
+                return of(operations);
+
+            } else {
+                return of(operations).pipe(this.fetchMissingOperations(path, nextPage, cache, type));
+            }
+        })
+    )
 
 
-    // get historical operation data  
     @Effect()
-    TezosWalletOperationHistoryTransactionLoad$ = this.actions$.pipe(
+    TezosWalletFirebaseCacheLoad$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
-        // get state from store
-        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+        withLatestFrom(this.store, (action, state: RootState & { tezos: TezosState }) => ({ action, state })),
 
-        flatMap(({ action, state }) => of([]).pipe(
-            this.fetchAllOperations(
-                //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
-                // get public key hash from url 
-                state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Transaction&p=0&number=50',
-                0
-            ),
-            // add publicKeyHash
-            map(operations => {
+        switchMap(({ action, state }) => {
 
-                const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
-                const mapped = operations.map(operation => {
-
-                    const targetOperation = operation.type.operations[0];
-                    const selfSent = targetOperation.destination.tz === targetOperation.src.tz;
+            const publicKeyHash = state.routerReducer.state['root'].children[0].firstChild.params.address;
 
 
-                    // default to incomming credit operation
-                    let type = OperationTypeEnum.credit;
-                    let address = targetOperation.src.tz
-                    let amount = targetOperation.amount * +1
-                    let fee = 0;
-                    let burn = 0;
+            return this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_history').
+                doc<FirebaseHistoryData>(state.routerReducer.state['root'].children[0].firstChild.params.address).
+                valueChanges().
+                pipe(
+                    map(
+                        dbData => {
+                            console.log('*****', dbData)
 
 
-                    // override for outgoing debit
-                    if (operation.type.source.tz === publicKeyHash) {
+                            const operations = dbData.operations;
+                            const convertedOperations: Record<string, OperationHistoryEntity> = {};
 
-                        type = OperationTypeEnum.debit;
-                        address = targetOperation.destination.tz;
-                        amount = selfSent ? 0 : targetOperation.amount * -1
-                        fee = targetOperation.fee;
-                        burn = targetOperation.burn || targetOperation.burn_tez;
-                    }
+                            Object.keys(operations).forEach(key => {
+                                const operation = operations[key];
 
-                    return new OperationHistoryEntity(
-                        type,
-                        operation.hash,
-                        address,
-                        targetOperation.timestamp,
-                        targetOperation.failed,
-                        amount,
-                        fee,
-                        burn,
-                        false,
-                        selfSent
-                    );
-                });
+                                convertedOperations[key] = new OperationHistoryEntity(
+                                    operation.type,
+                                    operation.hash,
+                                    operation.address,
+                                    operation.timestamp,
+                                    operation.failed,
+                                    operation.amount,
+                                    operation.fee,
+                                    operation.burn,
+                                    false,
+                                    operation.circular
+                                )
+                            });
 
-                return {
-                    publicKeyHash: publicKeyHash,
-                    operations: mapped,
-                    reveals: []
+                            return convertedOperations;
+                        }),
+                    flatMap(
+                        (cachedOperations) => {
+
+                            // return this.http.get<TzScanOperation[]>(
+                            //     //  get api url
+                            //     state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                            //     // get public key hash from url 
+                            //     state.routerReducer.state['root'].children[0].firstChild.params.address +
+                            //     '?type=Transaction&p=0&number=5'
+                            // ).pipe(
+                            const queryPath = state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations + publicKeyHash + '?type=Transaction&p=0&number=50';
+
+                            return of([]).
+                                pipe(
+                                    this.fetchMissingOperations(
+                                        queryPath,
+                                        0,
+                                        cachedOperations,
+                                        OperationPrefixEnum.transaction
+                                    ),
+                                    map(result => {
+                                        const tzMapped = result.map(operation => {
+                                            return OperationHistoryEntity.fromTzScanOperation(operation, publicKeyHash);
+                                        });
+
+                                        return {
+                                            pkh: publicKeyHash,
+                                            firebase: cachedOperations,
+                                            tzScan: {
+                                                transaction: tzMapped
+                                            }
+                                        }
+
+                                    })
+                                )
+                        }
+                    )
+                )
+        }),
+        tap(data => console.log('%%%%%%', data)),
+        map(mergedData => {
+
+            const updatedCache = mergedData.firebase;
+
+
+            mergedData.tzScan.transaction.forEach(operation => {
+                const index = OperationPrefixEnum.transaction + operation.hash;
+
+                if (index in updatedCache) {
+                    console.log('Duplicate', index, operation, updatedCache)
                 }
-            })
+                updatedCache[index] = operation;
+            });
 
-        )),
-        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS] transaction', response)),
-        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+            // let haveAlreadyCachedOperation = false;
+
+            // mergedData.tzScan.forEach(op => {
+
+            //     // we already have
+            //     if (op.hash in map) {
+            //         haveAlreadyCachedOperation = true;
+
+            //         console.log('Cached')
+
+            //     } else {
+            //         map[op.hash] = op;
+
+
+            //     }
+            // })
+
+
+
+            //  console.log(mapped)
+
+            const result = {
+                publicKeyHash: mergedData.pkh,
+                operations: Object.values(updatedCache),
+                reveals: []
+            }
+
+            return result
+        }),
+        map((response) => ({
+            type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS',
+            payload: response
+        })),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -167,206 +233,286 @@ export class TezosOperationHistoryEffects {
                 payload: error.message,
             });
             return caught;
-        }),
+        })
     )
+
 
     // get historical operation data  
-    @Effect()
-    TezosWalletOperationHistoryRevealLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+    // @Effect()
+    // TezosWalletOperationHistoryTransactionLoad$ = this.actions$.pipe(
+    //     ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
-        // get state from store
-        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+    //     // get state from store
+    //     withLatestFrom(this.store, (action, state: any) => ({ action, state })),
 
-        flatMap(({ action, state }) => of([]).pipe(
-            this.fetchAllOperations(
-                //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
-                // get public key hash from url 
-                state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Reveal&p=0&number=50',
-                0
-            ),
+    //     switchMap(({ action, state }) => of([]).pipe(
+    //         this.fetchAllOperations(
+    //             //  get api url
+    //             state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+    //             // get public key hash from url 
+    //             state.routerReducer.state.root.children[0].firstChild.params.address +
+    //             '?type=Transaction&p=0&number=50',
+    //             0
+    //         ),
+    //         // add publicKeyHash
+    //         map(operations => {
 
-            // add publicKeyHash
-            map(operations => {
+    //             const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
+    //             const mapped = operations.map(operation => {
 
-                const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
-                const mapped = operations
-                    .filter(operation => operation.type.source.tz === publicKeyHash)
-                    .map(operation => {
-
-                        const targetOperation = operation.type.operations[0];
-
-                        return new OperationHistoryEntity(
-                            OperationTypeEnum.reveal,
-                            operation.hash,
-                            '',
-                            targetOperation.timestamp,
-                            targetOperation.failed,
-                            0,
-                            targetOperation.fee,
-                            targetOperation.burn
-                        );
-                    })
+    //                 const targetOperation = operation.type.operations[0];
+    //                 const selfSent = targetOperation.destination.tz === targetOperation.src.tz;
 
 
-                return {
-                    publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
-                    operations: [],
-                    reveals: mapped
-                }
-            })
-
-        )),
-        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
-        catchError((error, caught) => {
-            console.error(error.message)
-            this.store.dispatch({
-                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
-                payload: error.message,
-            });
-            return caught;
-        }),
-    )
-
-    // get historical operation data  
-    @Effect()
-    TezosWalletOperationHistoryOriginationLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
-
-        // get state from store
-        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
-
-        flatMap(({ action, state }) => of([]).pipe(
-
-            this.fetchAllOperations(
-                //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
-                // get public key hash from url 
-                state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Origination&p=0&number=50',
-                0
-            ),
+    //                 // default to incomming credit operation
+    //                 let type = OperationTypeEnum.credit;
+    //                 let address = targetOperation.src.tz
+    //                 let amount = targetOperation.amount * +1
+    //                 let fee = 0;
+    //                 let burn = 0;
 
 
-            // add publicKeyHash
+    //                 // override for outgoing debit
+    //                 if (operation.type.source.tz === publicKeyHash) {
 
-            map(operations => {
+    //                     type = OperationTypeEnum.debit;
+    //                     address = targetOperation.destination.tz;
+    //                     amount = selfSent ? 0 : targetOperation.amount * -1
+    //                     fee = targetOperation.fee;
+    //                     burn = targetOperation.burn || targetOperation.burn_tez;
+    //                 }
 
-                const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
-                const mapped = operations.map(operation => {
+    //                 return new OperationHistoryEntity(
+    //                     type,
+    //                     operation.hash,
+    //                     address,
+    //                     targetOperation.timestamp,
+    //                     targetOperation.failed,
+    //                     amount,
+    //                     fee,
+    //                     burn,
+    //                     false,
+    //                     selfSent
+    //                 );
+    //             });
 
-                    const targetOperation = operation.type.operations[0];
+    //             return {
+    //                 publicKeyHash: publicKeyHash,
+    //                 operations: mapped,
+    //                 reveals: []
+    //             }
+    //         })
 
-                    // origination creating this account (contract)
-                    let address = targetOperation.src.tz;
-                    let amount = targetOperation.balance * +1
-                    let fee = 0;
-                    let burn = 0;
+    //     )),
+    //     // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS] transaction', response)),
+    //     map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+    //     catchError((error, caught) => {
+    //         console.error(error.message)
+    //         this.store.dispatch({
+    //             type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+    //             payload: error.message,
+    //         });
+    //         return caught;
+    //     }),
+    // )
 
-                    // origination from the account
-                    if (operation.type.source.tz === publicKeyHash) {
+    // // get historical operation data  
+    // @Effect()
+    // TezosWalletOperationHistoryRevealLoad$ = this.actions$.pipe(
+    //     ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
-                        address = targetOperation.tz1.tz;
-                        amount = targetOperation.balance * -1;
-                        fee = targetOperation.fee;
-                        burn = targetOperation.burn || targetOperation.burn_tez;
+    //     // get state from store
+    //     withLatestFrom(this.store, (action, state: any) => ({ action, state })),
 
-                    }
+    //     switchMap(({ action, state }) => of([]).pipe(
+    //         this.fetchAllOperations(
+    //             //  get api url
+    //             state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+    //             // get public key hash from url 
+    //             state.routerReducer.state.root.children[0].firstChild.params.address +
+    //             '?type=Reveal&p=0&number=50',
+    //             0
+    //         ),
 
-                    return new OperationHistoryEntity(
-                        OperationTypeEnum.origination,
-                        operation.hash,
-                        address,
-                        targetOperation.timestamp,
-                        targetOperation.failed,
-                        amount,
-                        fee,
-                        burn
-                    );
-                });
+    //         // add publicKeyHash
+    //         map(operations => {
 
-                return {
-                    publicKeyHash: publicKeyHash,
-                    operations: mapped,
-                    reveals: []
-                }
-            })
-        )),
-        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
-        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
-        catchError((error, caught) => {
-            console.error(error.message)
-            this.store.dispatch({
-                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
-                payload: error.message,
-            });
-            return caught;
-        }),
-    )
+    //             const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
+    //             const mapped = operations
+    //                 .filter(operation => operation.type.source.tz === publicKeyHash)
+    //                 .map(operation => {
 
-    // get historical operation data  
-    @Effect()
-    TezosWalletOperationHistoryDelegationLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+    //                     const targetOperation = operation.type.operations[0];
 
-        // get state from store
-        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+    //                     return new OperationHistoryEntity(
+    //                         OperationTypeEnum.reveal,
+    //                         operation.hash,
+    //                         '',
+    //                         targetOperation.timestamp,
+    //                         targetOperation.failed,
+    //                         0,
+    //                         targetOperation.fee,
+    //                         targetOperation.burn
+    //                     );
+    //                 })
 
-        flatMap(({ action, state }) => of([]).pipe(
 
-            this.fetchAllOperations(
-                //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
-                // get public key hash from url 
-                state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Delegation&p=0&number=50',
-                0
-            ),
+    //             return {
+    //                 publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+    //                 operations: [],
+    //                 reveals: mapped
+    //             }
+    //         })
 
-            // add publicKeyHash
-            map((operations: any[]) => {
+    //     )),
+    //     map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+    //     catchError((error, caught) => {
+    //         console.error(error.message)
+    //         this.store.dispatch({
+    //             type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+    //             payload: error.message,
+    //         });
+    //         return caught;
+    //     }),
+    // )
 
-                const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
-                const mapped = operations
-                    // we care only about outgoing delegations
-                    .filter(operation => operation.type.source.tz === publicKeyHash)
-                    .map(operation => {
+    // // get historical operation data  
+    // @Effect()
+    // TezosWalletOperationHistoryOriginationLoad$ = this.actions$.pipe(
+    //     ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
-                        const targetOperation = operation.type.operations[0];
+    //     // get state from store
+    //     withLatestFrom(this.store, (action, state: any) => ({ action, state })),
 
-                        return new OperationHistoryEntity(
-                            OperationTypeEnum.delegation,
-                            operation.hash,
-                            targetOperation.delegate.tz,
-                            targetOperation.timestamp,
-                            targetOperation.failed,
-                            0,
-                            targetOperation.fee,
-                            targetOperation.burn_tez || targetOperation.burn
-                        );
-                    });
+    //     switchMap(({ action, state }) => of([]).pipe(
 
-                return {
-                    publicKeyHash: publicKeyHash,
-                    operations: mapped,
-                    reveals: []
-                }
-            })
+    //         this.fetchAllOperations(
+    //             //  get api url
+    //             state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+    //             // get public key hash from url 
+    //             state.routerReducer.state.root.children[0].firstChild.params.address +
+    //             '?type=Origination&p=0&number=50',
+    //             0
+    //         ),
 
-        )),
-        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
-        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
-        catchError((error, caught) => {
-            console.error(error.message)
-            this.store.dispatch({
-                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
-                payload: error.message,
-            });
-            return caught;
-        }),
-    )
+
+    //         // add publicKeyHash
+
+    //         map(operations => {
+
+    //             const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
+    //             const mapped = operations.map(operation => {
+
+    //                 const targetOperation = operation.type.operations[0];
+
+    //                 // origination creating this account (contract)
+    //                 let address = targetOperation.src.tz;
+    //                 let amount = targetOperation.balance * +1
+    //                 let fee = 0;
+    //                 let burn = 0;
+
+    //                 // origination from the account
+    //                 if (operation.type.source.tz === publicKeyHash) {
+
+    //                     address = targetOperation.tz1.tz;
+    //                     amount = targetOperation.balance * -1;
+    //                     fee = targetOperation.fee;
+    //                     burn = targetOperation.burn || targetOperation.burn_tez;
+
+    //                 }
+
+    //                 return new OperationHistoryEntity(
+    //                     OperationTypeEnum.origination,
+    //                     operation.hash,
+    //                     address,
+    //                     targetOperation.timestamp,
+    //                     targetOperation.failed,
+    //                     amount,
+    //                     fee,
+    //                     burn
+    //                 );
+    //             });
+
+    //             return {
+    //                 publicKeyHash: publicKeyHash,
+    //                 operations: mapped,
+    //                 reveals: []
+    //             }
+    //         })
+    //     )),
+    //     // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+    //     map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+    //     catchError((error, caught) => {
+    //         console.error(error.message)
+    //         this.store.dispatch({
+    //             type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+    //             payload: error.message,
+    //         });
+    //         return caught;
+    //     }),
+    // )
+
+    // // get historical operation data  
+    // @Effect()
+    // TezosWalletOperationHistoryDelegationLoad$ = this.actions$.pipe(
+    //     ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+    //     // get state from store
+    //     withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+    //     switchMap(({ action, state }) => of([]).pipe(
+
+    //         this.fetchAllOperations(
+    //             //  get api url
+    //             state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+    //             // get public key hash from url 
+    //             state.routerReducer.state.root.children[0].firstChild.params.address +
+    //             '?type=Delegation&p=0&number=50',
+    //             0
+    //         ),
+
+    //         // add publicKeyHash
+    //         map((operations: any[]) => {
+
+    //             const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
+    //             const mapped = operations
+    //                 // we care only about outgoing delegations
+    //                 .filter(operation => operation.type.source.tz === publicKeyHash)
+    //                 .map(operation => {
+
+    //                     const targetOperation = operation.type.operations[0];
+
+    //                     return new OperationHistoryEntity(
+    //                         OperationTypeEnum.delegation,
+    //                         operation.hash,
+    //                         targetOperation.delegate.tz,
+    //                         targetOperation.timestamp,
+    //                         targetOperation.failed,
+    //                         0,
+    //                         targetOperation.fee,
+    //                         targetOperation.burn_tez || targetOperation.burn
+    //                     );
+    //                 });
+
+    //             return {
+    //                 publicKeyHash: publicKeyHash,
+    //                 operations: mapped,
+    //                 reveals: []
+    //             }
+    //         })
+
+    //     )),
+    //     // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+    //     map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+    //     catchError((error, caught) => {
+    //         console.error(error.message)
+    //         this.store.dispatch({
+    //             type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+    //             payload: error.message,
+    //         });
+    //         return caught;
+    //     }),
+    // )
 
     // get pending operation data  
     @Effect()
@@ -459,7 +605,8 @@ export class TezosOperationHistoryEffects {
         private actions$: Actions,
         private http: HttpClient,
         private store: Store<any>,
-        private router: Router,
+        //private router: Router,
+        private db: AngularFirestore,
         private zone: NgZone,
     ) { }
 

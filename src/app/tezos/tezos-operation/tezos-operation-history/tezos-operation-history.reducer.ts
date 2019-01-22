@@ -1,6 +1,7 @@
 import * as moment from 'moment/moment';
 
-import { OperationHistoryEntity, OperationTypeEnum } from "./tezos-operation-history.entity";
+import { OperationHistoryEntity } from "./tezos-operation-history.entity";
+import { OperationTypeEnum } from './tezos-operation-history.operation';
 
 const initialState: OperationHistoryState = {
     ids: [],

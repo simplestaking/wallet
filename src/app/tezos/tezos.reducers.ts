@@ -30,7 +30,7 @@ export interface State {
     tezosOperationTransaction: any;
     tezosOperationOrigination: any;
     tezosOperationDelegation: any;
-    tezosOperationHistory: any;
+    tezosOperationHistory: fromTezosOperationHistory.OperationHistoryState;
     tezosOperationReceive: any;
     tezosTrezorConnect: any;
     tezosTrezorNew: any;
