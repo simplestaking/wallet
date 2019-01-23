@@ -5,7 +5,7 @@ import { OperationTypeEnum } from './tezos-operation-history.operation';
 
 const initialState: OperationHistoryState = {
     cacheLoadInitiated: false,
-    ids: [],
+    //ids: [],
     entities: {},
     reveals: {},
     page: 0,
@@ -15,7 +15,7 @@ const initialState: OperationHistoryState = {
 
 export interface OperationHistoryState {
     cacheLoadInitiated: boolean,
-    ids: string[],
+   // ids: string[],
     entities: Record<string, OperationHistoryEntity>,
     reveals: Record<string, OperationHistoryEntity>
     page: number
@@ -49,7 +49,6 @@ export function reducer(state = initialState, action) {
                 ...state,
                 cacheLoadInitiated: true,
                 ids: [
-                    ...state.ids,
                     ...Object.keys(action.payload)
                 ],
                 entities: {
@@ -62,21 +61,16 @@ export function reducer(state = initialState, action) {
             return stateExtended;
         }
 
-        case 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS': {
+        case 'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS': {
 
             let stateExtended: OperationHistoryState = {
                 ...state,
-                ids: [
-                    ...state.ids,
-                    ...action.payload.operations.map(operation => operation.hash).reverse()
-                ],
+                // ids: [
+                //     ...Object.keys(action.payload.operations)
+                // ],
                 entities: {
                     ...state.entities,
-                    ...action.payload.operations.reduce((accumulator, operation) => {
-                        accumulator[operation.hash] = operation;
-
-                        return accumulator;
-                    }, {})
+                    ...action.payload.operations
                 },
                 reveals: {
                     ...state.reveals,
@@ -92,7 +86,7 @@ export function reducer(state = initialState, action) {
                         return accumulator;
                     }, {}),
                     // update reveal with address if it was loaded before operation
-                    ...action.payload.operations
+                    ...Object.values<OperationHistoryEntity>(action.payload.operations)
                         .filter(operation => state.reveals[operation.hash])
                         .reduce((accumulator, operation) => {
                             const reveal = state.reveals[operation.hash];
@@ -107,16 +101,16 @@ export function reducer(state = initialState, action) {
                         }, {})
                 }
             };
-
+            return stateExtended;
 
 
             // sort state according to timestamp 
-            return {
-                ...stateExtended,
-                ids: stateExtended.ids.slice().sort((a, b) =>
-                    stateExtended.entities[b].timestamp - stateExtended.entities[a].timestamp
-                )
-            }
+            // return {
+            //     ...stateExtended,
+            //     ids: stateExtended.ids.slice().sort((a, b) =>
+            //         stateExtended.entities[b].timestamp - stateExtended.entities[a].timestamp
+            //     )
+            // }
         }
 
 
@@ -124,11 +118,11 @@ export function reducer(state = initialState, action) {
 
             let stateExtended = {
                 ...state,
-                ids: [
-                    ...state.ids,
-                    ...action.payload.applied.map(operation => operation.hash),
-                    //...action.payload.refused.map(operation => operation.hash),
-                ],
+                // ids: [
+                //     ...state.ids,
+                //     ...action.payload.applied.map(operation => operation.hash),
+                //     //...action.payload.refused.map(operation => operation.hash),
+                // ],
                 entities: {
                     ...state.entities,
                     ...action.payload.applied.reduce((accumulator, operation) => {
@@ -194,12 +188,13 @@ export function reducer(state = initialState, action) {
             // console.log('[TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS]', stateExtended)
 
             // sort state according to time stamp 
-            return {
-                ...stateExtended,
-                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
-                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
-                )
-            }
+            // return {
+            //     ...stateExtended,
+            //     ids: stateExtended.ids.slice().sort((a: any, b: any) =>
+            //         new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+            //     )
+            // }
+            return stateExtended;
         }
 
         case 'TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS': {
@@ -220,14 +215,15 @@ export function reducer(state = initialState, action) {
                     }
                 }
             }
+            return stateExtended;
 
             // sort state according to time stamp 
-            return {
-                ...stateExtended,
-                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
-                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
-                )
-            }
+            // return {
+            //     ...stateExtended,
+            //     ids: stateExtended.ids.slice().sort((a: any, b: any) =>
+            //         new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+            //     )
+            // }
         }
 
         case 'TEZOS_OPERATION_HISTORY_DESTROY': {

@@ -34,18 +34,19 @@ export class TezosOperationHistoryComponent implements OnInit, OnDestroy {
       .subscribe((data: OperationHistoryState)  => {
 
         //
-        this.dataSource = data.ids
-        .map(id => ({ 
-          id, 
-          ...data.entities[id] 
-        }))
-        .concat(
-          Object.values(data.reveals).map(reveal => ({
-            id: 'r:' + reveal.hash,
-            ...reveal
-          }))
-        )
-        .sort((a,b) => b.timestamp - a.timestamp)
+        // this.dataSource = data.ids
+        // .map(id => ({ 
+        //   id, 
+        //   ...data.entities[id] 
+        // }))
+        // .concat(
+        //   Object.values(data.reveals).map(reveal => ({
+        //     id: 'r:' + reveal.hash,
+        //     ...reveal
+        //   }))
+        // )
+        // .sort((a,b) => b.timestamp - a.timestamp)
+        this.dataSource = Object.values(data.entities).sort((a,b) => b.timestamp - a.timestamp);
 
 
         //

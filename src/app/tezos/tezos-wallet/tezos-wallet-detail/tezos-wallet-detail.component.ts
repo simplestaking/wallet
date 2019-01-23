@@ -47,7 +47,7 @@ export class TezosWalletDetailComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
 
-        this.operationHistory = state.ids.length > 0 ? state : undefined;
+        this.operationHistory = Object.values(state.entities).length > 0 ? state : undefined;
 
         if (state.historicalPrice && state.historicalPrice.ids.length > 0) {
           this.historicalPrice = state.historicalPrice;
@@ -58,7 +58,7 @@ export class TezosWalletDetailComponent implements OnInit {
 
         // console.log(this.historicalPrice)
         if (this.tezosWalletDetail && this.historicalPrice && this.operationHistory) {
-          this.preprareChartValues(this.operationHistory, this.historicalPrice, this.tezosWalletDetail.balance || 0);
+          this.netAssetValue = this.preprareChartValues(this.operationHistory, this.historicalPrice, this.tezosWalletDetail.balance || 0);
         }
 
         // wallet data are used in chart
@@ -88,14 +88,9 @@ export class TezosWalletDetailComponent implements OnInit {
     const balanceChangeForPeriod: Record<number, number> = {};
 
     // sum transaction per day 
-    operationHistory.ids
-      .filter(id => {
-        const entry = operationHistory.entities[id];
-
-        return entry && entry.timestamp;
-      })
-      .map((id) => {
-        const entry = operationHistory.entities[id];
+    Object.values(operationHistory.entities)
+      .filter(operation => operation.timestamp)
+      .map((entry) => {
         const reveal = operationHistory.reveals[entry.hash];
 
         let periodChange = balanceChangeForPeriod[entry.dateUnixTimeStamp] || 0;
@@ -191,7 +186,7 @@ export class TezosWalletDetailComponent implements OnInit {
         const balanceTz = this.tezosWalletDetail.balance / 1000000;
 
         netValue.balance = balanceTz;
-      //  netValue.value = balanceTz * this.lastPrice;
+        //  netValue.value = balanceTz * this.lastPrice;
         netValue.value = balanceTz;
       }
     }

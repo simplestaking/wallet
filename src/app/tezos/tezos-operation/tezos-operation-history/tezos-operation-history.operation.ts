@@ -8,10 +8,14 @@ export enum OperationTypeEnum {
 
 export enum OperationPrefixEnum {
     'transaction' = 't_',
+    'debit' = 't_',
+    'credit' = 't_',
     'origination' = 'o_',
     'delegation' = 'd_',
     'reveal' = 'r_'
 }
+
+export type OperationType = 'transaction' | 'reval' | 'delegation' | 'origination';
 
 export type TargetAddress = {
     tz: string
@@ -57,7 +61,7 @@ export interface TzScanOperation {
             fee: number
             gas_limit: string
             internal: boolean
-            kind: 'transaction' | 'reval' | 'delegation' | 'origination'
+            kind: OperationType
             op_level: number
             src: TargetAddress
             storage_limit: string
