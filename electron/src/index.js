@@ -3,6 +3,7 @@ const Menu = require('electron').Menu
 const webFrame = require('electron').webFrame;
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
+const { is } = require('electron-util');
 var path = require('path')
 var url = require('url')
 
@@ -14,7 +15,8 @@ function createWindow() {
   // auto update electron app 
   autoUpdater.checkForUpdatesAndNotify();
 
-  console.log('[webFrame]', webFrame )
+  log.info('[electron-util]', is.macos, is.linux, is.windows);
+
   // windows
   // set zoom factor to 80% on windows
   // webFrame.setZoomFactor(0.8);
@@ -36,7 +38,7 @@ function createWindow() {
     // width: 1024, 
     // height: 768,  
     width: 896,
-    height: 640,  
+    height: 640,
     titleBarStyle: 'hidden',
     resizable: false,
     // windows 
@@ -86,11 +88,14 @@ function createWindow() {
     ]
   }
   ];
-  // Windows - copy paste works out of box  
-  // Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-  // Mac - enable 
-  // Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
+  // only show copy paste menu for Mac
+  if (is.macos) {
+    // Windows - copy paste works out of box  
+    // Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    // Mac - enable 
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+  }
 }
 
 try {

@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  type: 'web',
   firebase: {
     apiKey: "AIzaSyBuVlOS05MaREe3cK0eycmd68nYr448Th4",
     authDomain: "wallet-dd9dc.firebaseapp.com",
@@ -9,6 +10,13 @@ export const environment = {
     disableNetwork: true
   },
   trezor: {
+    connectSrc: 'https://connect.trezor.io/6/',
+    frame_src: 'https://connect.trezor.io/6/iframe.html',
+    popup_src: 'https://connect.trezor.io/6/popup.html',
+    popup: false,
+    trustedHost: true,
+    webusb: true,
+    debug: false,
     transportReconnect: true // true
   },
   nodes: 'main'

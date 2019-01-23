@@ -26,7 +26,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "web": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -39,10 +39,28 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.prod.web.ts"
+                }
+              ]
+            },
+            "electron": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.electron.ts"
                 }
               ]
             }
+
           }
         },
         "serve": {
@@ -52,8 +70,11 @@
             "port": 5200
           },
           "configurations": {
-            "production": {
-              "browserTarget": "simplestaking.com:build:production"
+            "web": {
+              "browserTarget": "simplestaking.com:build:web"
+            },
+            "electron": {
+              "browserTarget": "simplestaking.com:build:electron"
             }
           }
         },

@@ -1,3 +1,4 @@
 node_modules
 release
+tmp
 electron-builder.env.sh
