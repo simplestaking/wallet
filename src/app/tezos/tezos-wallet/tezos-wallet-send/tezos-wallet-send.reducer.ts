@@ -31,26 +31,26 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS': {
+        // case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS': {
 
-            // reset stepper 
-            if (state.deviceButton === 0 || state.deviceButton === 1) {
-                return {
-                    ...state,
-                    stepper: 0,
-                    deviceButton: 0,
-                    stepperReset: true,
-                }
-            }
+        //     // reset stepper 
+        //     if (state.deviceButton === 0 || state.deviceButton === 1) {
+        //         return {
+        //             ...state,
+        //             stepper: 0,
+        //             deviceButton: 0,
+        //             stepperReset: true,
+        //         }
+        //     }
 
-            return state
-        }
-        case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_SUCCESS': {
-            return {
-                ...state,
-                stepperReset: false,
-            }
-        }
+        //     return state
+        // }
+        // case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_SUCCESS': {
+        //     return {
+        //         ...state,
+        //         stepperReset: false,
+        //     }
+        // }
 
         default:
             return state;
