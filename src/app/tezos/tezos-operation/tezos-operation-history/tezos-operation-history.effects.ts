@@ -113,7 +113,9 @@ export class TezosOperationHistoryEffects {
 
 
             operations.reverse().some((op => {
+                operationAlreadyInCache = true;
                 console.log(type + op.hash, cache[type + op.hash])
+                
                 return type + op.hash in cache;
             }))
 

@@ -54,6 +54,6 @@
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'failed': row.failed, 'self': row.circular}"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'failed': row.failed}"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[10, 20]" hidePageSize></mat-paginator>

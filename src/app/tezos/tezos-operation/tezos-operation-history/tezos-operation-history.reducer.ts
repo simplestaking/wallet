@@ -7,7 +7,7 @@ const initialState: OperationHistoryState = {
     cacheLoadInitiated: false,
     //ids: [],
     entities: {},
-    reveals: {},
+    //reveals: {},
     page: 0,
     itemsPerPage: 10,
     itemsTotalCount: 0
@@ -17,7 +17,7 @@ export interface OperationHistoryState {
     cacheLoadInitiated: boolean,
    // ids: string[],
     entities: Record<string, OperationHistoryEntity>,
-    reveals: Record<string, OperationHistoryEntity>
+    //reveals: Record<string, OperationHistoryEntity>
     page: number
     itemsPerPage: number
     itemsTotalCount: number
@@ -55,7 +55,7 @@ export function reducer(state = initialState, action) {
                     ...state.entities,
                     ...action.payload
                 },
-                reveals: {}
+                //reveals: {}
             }
 
             return stateExtended;
@@ -72,34 +72,34 @@ export function reducer(state = initialState, action) {
                     ...state.entities,
                     ...action.payload.operations
                 },
-                reveals: {
-                    ...state.reveals,
-                    ...action.payload.reveals.reduce((accumulator, reveal) => {
-                        const operation = state.entities[reveal.hash];
+                // reveals: {
+                //     ...state.reveals,
+                //     ...action.payload.reveals.reduce((accumulator, reveal) => {
+                //         const operation = state.entities[reveal.hash];
 
-                        // update reveal with adress from the underlying operation
-                        accumulator[reveal.hash] = {
-                            ...reveal,
-                            address: operation ? operation.address : reveal.address
-                        };
+                //         // update reveal with adress from the underlying operation
+                //         accumulator[reveal.hash] = {
+                //             ...reveal,
+                //             address: operation ? operation.address : reveal.address
+                //         };
 
-                        return accumulator;
-                    }, {}),
-                    // update reveal with address if it was loaded before operation
-                    ...Object.values<OperationHistoryEntity>(action.payload.operations)
-                        .filter(operation => state.reveals[operation.hash])
-                        .reduce((accumulator, operation) => {
-                            const reveal = state.reveals[operation.hash];
+                //         return accumulator;
+                //     }, {}),
+                //     // update reveal with address if it was loaded before operation
+                //     ...Object.values<OperationHistoryEntity>(action.payload.operations)
+                //         .filter(operation => state.reveals[operation.hash])
+                //         .reduce((accumulator, operation) => {
+                //             const reveal = state.reveals[operation.hash];
 
-                            // update reveal with adress from the underlying operation
-                            accumulator[reveal.hash] = {
-                                ...reveal,
-                                address: operation.address
-                            };
+                //             // update reveal with adress from the underlying operation
+                //             accumulator[reveal.hash] = {
+                //                 ...reveal,
+                //                 address: operation.address
+                //             };
 
-                            return accumulator;
-                        }, {})
-                }
+                //             return accumulator;
+                //         }, {})
+                // }
             };
             return stateExtended;
 

@@ -15,7 +15,7 @@ export enum OperationPrefixEnum {
     'reveal' = 'r_'
 }
 
-export type OperationType = 'transaction' | 'reval' | 'delegation' | 'origination';
+export type OperationType = 'transaction' | 'reveal' | 'delegation' | 'origination';
 
 export type TargetAddress = {
     tz: string

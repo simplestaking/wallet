@@ -66,10 +66,10 @@ export class OperationHistoryEntity {
     static fromTzScanOperation(operation: TzScanOperation, walletAddress: string) {
         const targetOperation = operation.type.operations[0];
 
-        switch(targetOperation.kind){
+        switch (targetOperation.kind) {
             case "transaction":
                 return this.fromTzScanTransaction(operation, walletAddress);
-            case "reval":
+            case "reveal":
                 return this.fromTzScanReveal(operation, walletAddress);
             case "origination":
                 return this.fromTzScanOrigination(operation, walletAddress);
@@ -80,7 +80,7 @@ export class OperationHistoryEntity {
                 return undefined;
         }
     };
- 
+
 
     private static fromTzScanTransaction(operation: TzScanOperation, walletAddress: string) {
 
@@ -153,6 +153,7 @@ export class OperationHistoryEntity {
 
     private static fromTzScanDelegation(operation: TzScanOperation, walletAddress: string) {
         const targetOperation = operation.type.operations[0];
+        const outgoing = operation.type.source.tz === walletAddress;
 
         return new OperationHistoryEntity(
             OperationTypeEnum.delegation,
@@ -161,8 +162,8 @@ export class OperationHistoryEntity {
             targetOperation.timestamp,
             targetOperation.failed,
             0,
-            targetOperation.fee,
-            targetOperation.burn_tez || targetOperation.burn
+            outgoing ? targetOperation.fee : 0,
+            outgoing ? (targetOperation.burn_tez || targetOperation.burn) : 0
         );
     }
 
@@ -172,7 +173,7 @@ export class OperationHistoryEntity {
         return new OperationHistoryEntity(
             OperationTypeEnum.reveal,
             operation.hash,
-            '',
+            walletAddress,
             targetOperation.timestamp,
             targetOperation.failed,
             0,

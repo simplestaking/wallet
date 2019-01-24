@@ -91,7 +91,7 @@ export class TezosWalletDetailComponent implements OnInit {
     Object.values(operationHistory.entities)
       .filter(operation => operation.timestamp)
       .map((entry) => {
-        const reveal = operationHistory.reveals[entry.hash];
+        //const reveal = operationHistory.reveals[entry.hash];
 
         let periodChange = balanceChangeForPeriod[entry.dateUnixTimeStamp] || 0;
 
@@ -105,10 +105,10 @@ export class TezosWalletDetailComponent implements OnInit {
         periodChange -= entry.failed ? 0 : entry.burn;
 
         // add reveal costs if exists for operation
-        if (reveal) {
-          periodChange -= reveal.burn;
-          periodChange -= reveal.fee;
-        }
+        // if (reveal) {
+        //   periodChange -= reveal.burn;
+        //   periodChange -= reveal.fee;
+        // }
 
         balanceChangeForPeriod[entry.dateUnixTimeStamp] = periodChange;
 
