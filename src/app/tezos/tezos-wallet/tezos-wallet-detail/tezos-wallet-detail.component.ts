@@ -4,15 +4,11 @@ import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { OperationHistoryState, HistoricalPrice } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.reducer';
 import { WalletDetailState } from './tezos-wallet-detail.reducer';
-
+import {HistoryChartDataPoint, TEZOS_OPERATION_HISTORY_BALANCES_UPDATE} from '../../tezos-operation/tezos-operation-history/tezos-operation-history.actions';
 
 const HISTORY_SIZE = 100;
 
-export interface HistoryChartDataPoint {
-  name: Date
-  balance: number
-  value: number
-}
+
 
 @Component({
   selector: 'app-tezos-wallet-detail',
@@ -27,14 +23,6 @@ export class TezosWalletDetailComponent implements OnInit {
     series: HistoryChartDataPoint[]
   }[];
 
-  public historicalPrice: HistoricalPrice;
-  public operationHistory: OperationHistoryState;
-  public netAssetValue: HistoryChartDataPoint[] = [];
-
-
-  public lastBalance = 0;
-  public lastPrice = 0;
-
   public destroy$ = new Subject<null>();
 
   constructor(
@@ -42,159 +30,17 @@ export class TezosWalletDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.store.select<OperationHistoryState>('tezos', 'tezosOperationHistory')
+    
+    this.store.select<WalletDetailState>('tezos', 'tezosWalletDetail')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
 
-        this.operationHistory = Object.values(state.entities).length > 0 ? state : undefined;
+        this.tezosWalletDetail = state;   
 
-        if (state.historicalPrice && state.historicalPrice.ids.length > 0) {
-          this.historicalPrice = state.historicalPrice;
-
-        } else {
-          this.historicalPrice = undefined;
+        if(state.chartValues){
+          this.chartLineNavData = state.chartValues;
         }
-
-        // console.log(this.historicalPrice)
-        if (this.tezosWalletDetail && this.historicalPrice && this.operationHistory) {
-          this.netAssetValue = this.preprareChartValues(this.operationHistory, this.historicalPrice, this.tezosWalletDetail.balance || 0);
-        }
-
-        // wallet data are used in chart
-        this.tezosWalletDetail && this.buildChart();
-      })
-
-    this.store.select('tezos', 'tezosWalletDetail')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((state: WalletDetailState) => {
-
-        this.tezosWalletDetail = state;
-        this.lastBalance = state.balance || 0;
-        this.lastPrice = state.price || 0;
-
-
-        if (this.operationHistory && this.historicalPrice) {
-          this.netAssetValue = this.preprareChartValues(this.operationHistory, this.historicalPrice, this.lastBalance);
-        }
-
-        this.buildChart();
       });
-  }
-
-  sumForPeriod(operationHistory: OperationHistoryState) {
-
-    // save last value to agregation
-    const balanceChangeForPeriod: Record<number, number> = {};
-
-    // sum transaction per day 
-    Object.values(operationHistory.entities)
-      .filter(operation => operation.timestamp)
-      .map((entry) => {
-        //const reveal = operationHistory.reveals[entry.hash];
-
-        let periodChange = balanceChangeForPeriod[entry.dateUnixTimeStamp] || 0;
-
-        // console.log(entry.failed, entry.amount, 'fee', entry.fee, 'burn', entry.burn, entry)
-
-        // sum ammount for every transaction period 
-        periodChange += entry.failed ? 0 : entry.amount;
-        // add fees to calculation
-        periodChange -= entry.type === 'credit' ? 0 : entry.fee;
-        // burn operation cost
-        periodChange -= entry.failed ? 0 : entry.burn;
-
-        // add reveal costs if exists for operation
-        // if (reveal) {
-        //   periodChange -= reveal.burn;
-        //   periodChange -= reveal.fee;
-        // }
-
-        balanceChangeForPeriod[entry.dateUnixTimeStamp] = periodChange;
-
-        // console.log('^^^^^^^^', new Date(entry.timestamp), periodChange);
-      })
-    // console.log(amountSumByPeriod)
-
-    return balanceChangeForPeriod;
-  }
-
-  composeChartValues(
-    historicalPrice: HistoricalPrice,
-    balanceChangeForPeriod: Record<number, number>,
-    lastBalance: number
-  ) {
-
-    let balance = lastBalance;
-    const chartValues = [];
-
-    // iterate over historical periods and find corresponding changes
-    historicalPrice.ids.slice(-HISTORY_SIZE).map(id => id).reverse().map(id => {
-
-      const entry = historicalPrice.entities[id];
-      const entryTime = entry.time;
-      const periodChange = balanceChangeForPeriod[entryTime] || 0;
-
-      balance -= periodChange;
-
-      const balanceTz = balance / 1000000;
-
-      chartValues.push({
-        name: new Date(entryTime * 1000),
-        balance: balanceTz,
-        //value: balanceTz * entry.close
-        value: balanceTz * 1
-      });
-    });
-
-    return chartValues;
-  }
-
-  preprareChartValues(
-    operationHistory: OperationHistoryState,
-    historicalPrice: HistoricalPrice,
-    lastBalance: number
-  ) {
-
-    const dailyBalanceChange = this.sumForPeriod(operationHistory);
-
-    const chartValues = this.composeChartValues(historicalPrice, dailyBalanceChange, lastBalance);
-
-    //console.log(this.netAssetValue)
-    return chartValues;
-  }
-
-  buildChart() {
-
-    // push at least some value to chart so it does not fail
-    const lastBalanceTz = this.lastBalance / 1000000;
-
-    if (this.netAssetValue.length === 0) {
-
-      this.netAssetValue = [{
-        name: new Date(),
-        balance: lastBalanceTz,
-        //value: lastBalanceTz * this.lastPrice
-        value: lastBalanceTz
-      }];
-
-    } else {
-
-      // save last price point in chart
-      if (this.tezosWalletDetail.balance && this.tezosWalletDetail.price) {
-        const netValue = this.netAssetValue[0];
-        const balanceTz = this.tezosWalletDetail.balance / 1000000;
-
-        netValue.balance = balanceTz;
-        //  netValue.value = balanceTz * this.lastPrice;
-        netValue.value = balanceTz;
-      }
-    }
-
-    this.chartLineNavData = [{
-      name: 'xtz',
-      series: this.netAssetValue
-    }];
   }
 
   ngOnDestroy() {

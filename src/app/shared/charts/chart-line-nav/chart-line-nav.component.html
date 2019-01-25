@@ -8,16 +8,16 @@
     <ng-template #seriesTooltipTemplate let-model="model">
       <div style="padding: 10px">
         <span style="font-size: 16px">
-          {{ model.value | number:'1.0-6' }} USD
+          {{ model?.value | number:'1.0-6' }} USD
         </span>
         <br />
         <span style="opacity:0.5">
-          {{ model.balance | number:'1.0-6' }} XTZ
+          {{ model?.balance | number:'1.0-6' }} XTZ
         </span>
         <br />
         <br />
         <span style="opacity:0.5">
-          {{ model.name | date: 'MMMM dd, yyyy' }}
+          {{ model?.name | date: 'MMMM dd, yyyy' }}
         </span>
       </div>
     </ng-template>

@@ -32,5 +32,6 @@ export const environment = {
   trezor: {
     transportReconnect: false // true
   },
-  nodes: 'zero'
+  nodes: 'zero',
+  testing: true
 };

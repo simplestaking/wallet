@@ -164,19 +164,21 @@ export class TooltipAreaNavComponent {
     if (this.anchorPos !== this.lastAnchorPos) {
       const toolTipComponent = this.ttp['component'];
 
-     // console.log('update')
-    
+      // console.log('update')
+
       this.anchorOpacity = 0.7;
       this.hover.emit({
         value: closestPoint
       });
 
-      if (toolTipComponent && toolTipComponent.instance) {
+      if (toolTipComponent && toolTipComponent.instance && this.anchorValues) {
         const context = toolTipComponent.instance.context;
 
-        context.value = this.anchorValues.value;
-        context.balance = this.anchorValues.balance;
-        context.name = this.anchorValues.name;
+        if (context) {
+          context.value = this.anchorValues.value;
+          context.balance = this.anchorValues.balance;
+          context.name = this.anchorValues.name;
+        }
 
         toolTipComponent.instance.position();
         toolTipComponent.changeDetectorRef.markForCheck();
@@ -218,7 +220,7 @@ export class TooltipAreaNavComponent {
   }
 
   showTooltip() {
-   this.ttp.showTooltip(true);
+    this.ttp.showTooltip(true);
   }
 
   hideTooltip() {

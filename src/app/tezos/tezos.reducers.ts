@@ -22,7 +22,7 @@ import * as fromTezosTrezorPassphrase from './tezos-trezor/tezos-trezor-passphra
 export interface State {
     tezosNode: any;
     tezosWalletList: any;
-    tezosWalletDetail: any;
+    tezosWalletDetail: fromTezosWalletDetail.WalletDetailState;
     tezosWalletDialog: any;
     tezosWalletReceive: any;
     tezosWalletSend: any;
