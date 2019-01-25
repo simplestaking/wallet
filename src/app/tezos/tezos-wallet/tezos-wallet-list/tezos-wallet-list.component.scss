@@ -2,35 +2,62 @@
     margin-top: -25px;
 }
 
-table {
-    width: 100%;
+.walletList {
+    
+    .wallet {
+        position: relative;
+        float: left;
+        width: 360px;
+        margin-left: 15px;
+        border: 1px solid grey;
+        box-sizing: border-box;
+        padding: 4%;
+        margin-bottom: 5%;
+        height: 260px;
+
+        app-chart-line-nav{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+    }
+
 }
 
-.mat-cell.cdk-column-name.mat-column-name  {
-    width: 270px
-}
 
-.mat-cell.cdk-column-identicon.mat-column-identicon {
-    width: 100px
-}
 
-.mat-cell.cdk-column-publicKeyHash.mat-column-publicKeyHash {
-    width: 300px
-}
 
-.mat-cell.cdk-column-balance.mat-column-balance {
-    width: 200px;
-    text-align: right;
-}
+// table {
+//     width: 100%;
+// }
 
-.mat-header-cell.cdk-column-balance.mat-column-balance {
-    text-align: right;
-}
+// .mat-cell.cdk-column-name.mat-column-name  {
+//     width: 270px
+// }
 
-a {
-    color: #000000;
-    text-decoration: none;
-}
+// .mat-cell.cdk-column-identicon.mat-column-identicon {
+//     width: 100px
+// }
+
+// .mat-cell.cdk-column-publicKeyHash.mat-column-publicKeyHash {
+//     width: 300px
+// }
+
+// .mat-cell.cdk-column-balance.mat-column-balance {
+//     width: 200px;
+//     text-align: right;
+// }
+
+// .mat-header-cell.cdk-column-balance.mat-column-balance {
+//     text-align: right;
+// }
+
+// a {
+//     color: #000000;
+//     text-decoration: none;
+// }
 
 
 .dashboard {
@@ -53,13 +80,13 @@ a {
     font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
 }
 
-// set white backgorund for list 
+// // set white backgorund for list 
 mat-card {
     background-color: whitesmoke !important;
 }
-table {
-    background-color: whitesmoke !important;
-}
-mat-paginator {
-    background-color: whitesmoke !important;
-}
+// table {
+//     background-color: whitesmoke !important;
+// }
+// mat-paginator {
+//     background-color: whitesmoke !important;
+// }

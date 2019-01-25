@@ -9,8 +9,8 @@
       </h2>
     </mat-card-header>
 
-    <mat-card-content>
-      <table mat-table [dataSource]="tableDataSource">
+    <mat-card-content class="walletList">
+      <!-- <table mat-table [dataSource]="tableDataSource">
 
         <ng-container matColumnDef="identicon">
           <th mat-header-cell *matHeaderCellDef>&nbsp;Icon </th>
@@ -47,16 +47,17 @@
         <tr mat-header-row *matHeaderRowDef="['identicon','name','publicKeyHash','balance']"></tr>
         <tr mat-row *matRowDef="let row; columns: ['identicon','name','publicKeyHash','balance'];"></tr>
 
-        <!-- <tr mat-header-row *matHeaderRowDef="['identicon','name','balance']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['identicon','name','balance'];"></tr> -->
-
-        <!-- <tr mat-header-row *matHeaderRowDef="['name','publicKeyHash','balance']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['name','publicKeyHash','balance'];"></tr> -->
-
+      
 
       </table>
-      <mat-paginator [pageSizeOptions]="[10,20]" hidePageSize></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[10,20]" hidePageSize></mat-paginator> -->
 
+      <div *ngFor="let wallet of tezosWalletList" class="wallet">
+        <app-chart-line-nav [data]="wallet.dailyBalances"></app-chart-line-nav>
+        <h3 class="name">{{wallet.name}}</h3>
+        <h2 class="ballance">{{wallet.balance | number:'1.0-6'}} XTZ</h2>
+        <p class="ballance.usd">{{wallet.usd | number:'1.0-6' }} USD</p>
+      </div>
     </mat-card-content>
   </mat-card>
 

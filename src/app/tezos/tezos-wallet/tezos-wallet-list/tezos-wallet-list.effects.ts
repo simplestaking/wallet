@@ -2,13 +2,21 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, catchError, filter, tap } from 'rxjs/operators';
+import { Observable, of, from } from 'rxjs';
+import { map, withLatestFrom, flatMap, catchError, filter, tap, mergeAll } from 'rxjs/operators';
 import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, getWallet } from 'tezos-wallet'
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+
+
+export interface FirebaseWalletHistoryDoc {
+    dailyBalances: Record<string, any>,
+    publicKeyHash: string,
+    operations: Record<string, any>
+}
+
 
 @Injectable()
 export class TezosWalletListEffects {
@@ -59,6 +67,7 @@ export class TezosWalletListEffects {
                 )
             )
         ),
+        tap(data => console.log('^^^^^^', data)),
         map(response => ({ type: 'TEZOS_WALLET_LIST_LOAD_SUCCESS', payload: response })),
         catchError((error, caught) => {
             console.error(error.message)
@@ -141,8 +150,54 @@ export class TezosWalletListEffects {
                 payload: error.message,
             });
             return caught;
+        })
+
+    )
+
+    @Effect()
+    TezosWalletOperationHistoryBalancesUpdate$ = this.actions$.pipe(
+        ofType('TEZOS_WALLET_LIST_LOAD_SUCCESS'),
+
+        withLatestFrom(
+            this.store,
+            (action, state) => ({ action, state })
+        ),
+
+        // get selected docs together
+        flatMap(({ action, state }) => {
+
+            const addresses: string[] = state.tezos.tezosWalletList.ids;
+            const promises = addresses.map(address => {
+
+                return this.db.collection(
+                    `tezos_${state.tezos.tezosNode.api.name}_history`
+                )
+                    .doc(address)
+                    .get().toPromise().then(doc => doc.data())
+
+            });
+
+            return Promise.all(promises).then(response => response)
         }),
 
+        // map((docs: FirebaseWalletHistoryDoc[]) => {
+        //     return docs.reduce((accumulator, value) => {
+        //         accumulator[value.publicKeyHash] = value;
+
+        //         return accumulator;
+        //     },{});
+        // }),
+
+        map(data => ({ type: 'TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS', payload: data })),
+
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_LIST_BALANCES_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
     )
 
     constructor(

@@ -21,7 +21,7 @@ import * as fromTezosTrezorPassphrase from './tezos-trezor/tezos-trezor-passphra
 
 export interface State {
     tezosNode: any;
-    tezosWalletList: any;
+    tezosWalletList: fromTezosWalletList.TezosWalletListState;
     tezosWalletDetail: fromTezosWalletDetail.WalletDetailState;
     tezosWalletDialog: any;
     tezosWalletReceive: any;
