@@ -52,12 +52,12 @@
     </span>
 
     <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='occupied'">
-      Your device is being used by another application.<br />
+      Your device is being occupied by another application.<br />
       Please re-connect device after closing another application.
     </span>
 
     <span class="action" *ngIf="tezosTrezorConnect.status.errorType=='unacquired'">
-      Please re-connect device.<br />
+      Please re-connect device. Device is unacquired.<br />
       Your device is being used by another application.
     </span>
 

@@ -4,10 +4,9 @@ const initialState : any = {
    
 };
 
-
 export interface WalletDetailState {
     price?: number
-    balance: number
+    balance?: number
     name?: string
     publicKeyHash?: string
     delegate?: {

@@ -199,24 +199,18 @@ export class TezosTrezorConnectEffects {
 
                 // Initialize TrezorConnect 
                 TrezorConnect.init({
+                    
+                    connectSrc: environment.trezor.connectSrc,
+                    frame_src: environment.trezor.frame_src,
+                    popup_src: environment.trezor.popup_src,
 
-                    connectSrc: 'https://connect.trezor.io/6/',
-                    frame_src: 'https://connect.trezor.io/6/iframe.html',
-                    popup_src: 'https://connect.trezor.io/6/popup.html',
-
-                    // connectSrc: '127.0.0.1:8088/',
-                    // frame_src: '127.0.0.1:8088/iframe.html',
-                    // popup_src: '127.0.0.1:8088/popup.html',
-
-                    // connectSrc: 'http://localhost:5500/build/',
-                    // frame_src: 'http://localhost:5500/build/iframe.html',
-                    // popup_src: 'http://localhost:5500/build/popup.html',
-
-                    popup: false,
-                    webusb: false,
+                    popup: environment.trezor.popup,
+                    trustedHost: environment.trezor.trustedHost,
+                    webusb: environment.trezor.webusb,
+                    
                     // try to reconect when bridge is not working
                     transportReconnect: environment.trezor.transportReconnect,
-                    debug: true,
+                    debug: environment.trezor.debug,
 
                 }).then(response => console.log('[TrezorConnect][init]', response))
                     .catch(error => {

@@ -145,6 +145,8 @@ export class TooltipAreaNavComponent {
           color
         });
       }
+
+      this.lastAnchorPos = this.anchorPos;
     }
 
     return results;

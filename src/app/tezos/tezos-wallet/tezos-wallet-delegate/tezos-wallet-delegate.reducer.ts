@@ -32,43 +32,43 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_PENDING': {
+        // case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_PENDING': {
 
-            if (action.payload.tezos.tezosWalletDetail.delegate) {
-                console.log('[TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_PENDING]', action.payload.tezos.tezosWalletDetail.delegate,
-                    state.deviceButton === 2 && (
-                        !!action.payload.tezos.tezosWalletDetail.delegate &&
-                        !action.payload.tezos.tezosWalletDetail.delegate.setable
-                    ),
-                    !!action.payload.tezos.tezosWalletDetail.delegate,
-                    !action.payload.tezos.tezosWalletDetail.delegate.setable,
-                )
-            }
+        //     if (action.payload.tezos.tezosWalletDetail.delegate) {
+        //         console.log('[TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_PENDING]', action.payload.tezos.tezosWalletDetail.delegate,
+        //             state.deviceButton === 2 && (
+        //                 !!action.payload.tezos.tezosWalletDetail.delegate &&
+        //                 !action.payload.tezos.tezosWalletDetail.delegate.setable
+        //             ),
+        //             !!action.payload.tezos.tezosWalletDetail.delegate,
+        //             !action.payload.tezos.tezosWalletDetail.delegate.setable,
+        //         )
+        //     }
 
-            // reset stepper     
-            if (state.deviceButton === 0 || state.deviceButton === 1 ||
-                (state.deviceButton === 2 && (
-                    !!action.payload.tezos.tezosWalletDetail.delegate &&
-                    !action.payload.tezos.tezosWalletDetail.delegate.setable
-                ))
-            ) {
-                return {
-                    ...state,
-                    stepper: 0,
-                    deviceButton: 0,
-                    stepperReset: true,
-                }
-            }
+        //     // reset stepper     
+        //     if (state.deviceButton === 0 || state.deviceButton === 1 ||
+        //         (state.deviceButton === 2 && (
+        //             !!action.payload.tezos.tezosWalletDetail.delegate &&
+        //             !action.payload.tezos.tezosWalletDetail.delegate.setable
+        //         ))
+        //     ) {
+        //         return {
+        //             ...state,
+        //             stepper: 0,
+        //             deviceButton: 0,
+        //             stepperReset: true,
+        //         }
+        //     }
 
-            return state
-        }
+        //     return state
+        // }
 
-        case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_SUCCESS': {
-            return {
-                ...state,
-                stepperReset: false,
-            }
-        }
+        // case 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_SUCCESS': {
+        //     return {
+        //         ...state,
+        //         stepperReset: false,
+        //     }
+        // }
 
         default:
             return state;

@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, OnInit, NgZone } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { ElectronService } from 'ngx-electron'
 import { Router  } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,8 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
+
+    console.log('[environment]', environment )
 
     this.store.select('app')
       .subscribe(data => {
@@ -77,7 +80,7 @@ export class AppComponent {
     }
 
     // this.router.navigate(['/auth'])
-    //this.router.navigate(['/tezos/wallet/start'])
+    this.router.navigate(['/tezos/wallet/start'])
     //this.router.navigate(['/tezos/wallet/trezor/debug'])
 
   }

@@ -24,8 +24,7 @@
     "mac": {
         "icon": "src/dist/assets/icon/logo/logo_black.png",
         "target": [
-            "dmg",
-            "zip"
+            "dmg"
         ],
         "publish": {
             "provider": "spaces",

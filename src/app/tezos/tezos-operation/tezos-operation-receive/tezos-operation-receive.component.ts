@@ -45,6 +45,7 @@ export class TezosOperationReceiveComponent implements OnInit {
 
         // create tezos wallet list to 
         this.tezosWalletListTo = of(state.ids
+          .filter(id => state.entities[id].publicKeyHash.substr(0,3) !== 'KT1')
           .map(id => state.entities[id])
         )
       })

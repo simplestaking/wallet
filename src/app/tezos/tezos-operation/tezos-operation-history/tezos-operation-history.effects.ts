@@ -25,9 +25,6 @@ interface OperationsDataIndex {
 }
 
 
-
-
-
 @Injectable()
 export class TezosOperationHistoryEffects {
 
