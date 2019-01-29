@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { OperationHistoryEntity } from './tezos-operation-history.entity';
 import { Mempool } from 'tezos-wallet';
+import { ChartDataPoint } from '../../../shared/charts/chart-line-nav/chart-line-nav.component';
 
 interface BlockMetadata {
     timestamp: number
@@ -8,11 +9,7 @@ interface BlockMetadata {
     block_hash: string
 }
 
-export interface HistoryChartDataPoint {
-    name: Date
-    balance: number
-    value: number
-  }
+
 
 export type TezosOperationHistoryAction = TEZOS_OPERATION_HISTORY_CACHE_LOAD | TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS | TEZOS_OPERATION_HISTORY_UPDATE |
     TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS | TEZOS_OPERATION_HISTORY_CACHE_CREATE | TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS | TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS |
@@ -64,7 +61,7 @@ export type TEZOS_OPERATION_HISTORY_DESTROY = {
 
 export type TEZOS_OPERATION_HISTORY_BALANCES_UPDATE = {
     type: 'TEZOS_OPERATION_HISTORY_BALANCES_UPDATE',
-    payload: HistoryChartDataPoint[]
+    payload: ChartDataPoint[]
 };
 
 

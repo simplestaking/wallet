@@ -7,16 +7,14 @@ import { takeUntil } from 'rxjs/operators'
 import { WalletListDetail } from './tezos-wallet-list.reducer';
 
 import { State as TezosState } from '../../tezos.reducers';
-import { HistoryChartDataPoint } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.actions';
+import { ChartData } from '../../../shared/charts/chart-line-nav/chart-line-nav.component';
 
 export type WalletDetail = {
   name: string
   balance: number
   usd: number
-  dailyBalances: {
-    name: string,
-    series: HistoryChartDataPoint[]
-  }[]
+  dailyBalances: ChartData[],
+  id: string
 }
 
 
@@ -45,9 +43,10 @@ export class TezosWalletListComponent implements OnInit, OnDestroy {
       .subscribe(data => {
 
         this.tezosWalletList = Object.values(data.entities).map(wallet => {
-          console.log(wallet.dailyBalances)
+          //console.log(wallet)
 
           return {
+            id: wallet.publicKeyHash,
             name: wallet.name,
             balance: parseFloat(wallet.balance) / 1000000,
             usd: parseFloat(wallet.balance) / 1000000 * data.exchangeRateUSD,

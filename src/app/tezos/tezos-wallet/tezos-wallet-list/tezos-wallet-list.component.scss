@@ -3,25 +3,37 @@
 }
 
 .walletList {
+    margin-top:  20px;   
+     
     
     .wallet {
         position: relative;
-        float: left;
-        width: 360px;
-        margin-left: 15px;
-        border: 1px solid grey;
+        width: 100%;
         box-sizing: border-box;
-        padding: 4%;
-        margin-bottom: 5%;
-        height: 260px;
+        margin-bottom: 15px;
+        height: 360px;
+
+       table{
+           width: 100%;
+           margin-bottom: 20px;
+
+           thead{
+               opacity: 0.65;
+           }
+
+           td:last-child{
+               text-align: right;
+           }
+       }
 
         app-chart-line-nav{
-            position: absolute;
+            position: relative;
             width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
+            height: 260px;
+            display: block;
+        }   
+
+       
     }
 
 }

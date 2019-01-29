@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { OperationHistoryState, HistoricalPrice } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.reducer';
 import { WalletDetailState } from './tezos-wallet-detail.reducer';
-import {HistoryChartDataPoint, TEZOS_OPERATION_HISTORY_BALANCES_UPDATE} from '../../tezos-operation/tezos-operation-history/tezos-operation-history.actions';
+import { ChartDataPoint } from '../../../shared/charts/chart-line-nav/chart-line-nav.component';
 
 const HISTORY_SIZE = 100;
 
@@ -20,7 +19,7 @@ export class TezosWalletDetailComponent implements OnInit {
   public tezosWalletDetail: WalletDetailState;
   public chartLineNavData: {
     name: string,
-    series: HistoryChartDataPoint[]
+    series: ChartDataPoint[]
   }[];
 
   public destroy$ = new Subject<null>();

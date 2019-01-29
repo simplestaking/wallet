@@ -1,4 +1,4 @@
-import { HistoryChartDataPoint } from "../../tezos-operation/tezos-operation-history/tezos-operation-history.actions";
+import { ChartData } from "../../../shared/charts/chart-line-nav/chart-line-nav.component";
 
 const initialState : any = {
    
@@ -15,10 +15,7 @@ export interface WalletDetailState {
     }
     walletType?: 'web' | 'TREZOR_T' | 'TREZOR_P'
     path?: string,
-    chartValues: {
-        name: string,
-        series: HistoryChartDataPoint[]
-      }[]
+    chartValues: ChartData[]
 }
 
 export function reducer(state = initialState, action) {

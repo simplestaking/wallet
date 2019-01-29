@@ -526,7 +526,10 @@ export class TezosOperationHistoryEffects {
             const balancesMap = {};
 
             balances.forEach(balance => {
-                balancesMap[balance.name.getTime()] = balance;
+                balancesMap[balance.name.getTime()] = {
+                    ...balance,
+                    name: balance.name.getTime()
+                };
             })
 
             console.log('balance update', balancesMap)

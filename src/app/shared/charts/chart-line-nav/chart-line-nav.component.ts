@@ -1,6 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment/moment';
 
+export interface ChartDataPoint {
+  name: Date
+  balance: number
+  value: number
+}
+
+export interface ChartData {
+  name: string
+  series: ChartDataPoint[]
+}
+
+
 @Component({
   selector: 'app-chart-line-nav',
   templateUrl: './chart-line-nav.component.html',
@@ -9,28 +21,31 @@ import * as moment from 'moment/moment';
 export class ChartLineNavComponent implements OnInit {
 
   // get data for graph
-  @Input() data: any[] = [
+  @Input() data: ChartData[] = [
     {
       name: 'default',
       series: [{
-        name: 0,
+        name: new Date(0),
+        balance: 0,
         value: 0
       }]
     }
-  ]
+  ];
+
+  @Input() showXAxis = true;
+  @Input() showYAxis = true;
+  @Input() showTooltip = true;
+  @Input() view;
 
   colorScheme = {
     domain: ['#6495ed', '#ffffff', '#ffffff', '#ffffff']
   };
 
-  showXAxis = true;
-  showYAxis = true;
 
   showXAxisLabel = false;
   showYAxisLabel = false;
 
   autoScale = false
-  tooltipDisabled = false;
 
   animations = false;
   gradient = true;

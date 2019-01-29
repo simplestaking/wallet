@@ -1,9 +1,9 @@
 import { FirebaseWalletHistoryDoc } from "./tezos-wallet-list.effects";
-import { HistoryChartDataPoint } from "../../tezos-operation/tezos-operation-history/tezos-operation-history.actions";
+import { ChartDataPoint } from "../../../shared/charts/chart-line-nav/chart-line-nav.component";
 
 export interface WalletListDetail {
     balance: string // number
-    dailyBalances: HistoryChartDataPoint[]
+    dailyBalances: ChartDataPoint[]
     manager: string
     name: string
     network: "zero" | "main"
@@ -63,7 +63,10 @@ export function reducer(state = initialState, action) {
                 if (entity) {
                     updatedEntities[entity.publicKeyHash] = {
                         ...entity,
-                        dailyBalances: Object.values(doc.dailyBalances)
+                        dailyBalances: Object.values(doc.dailyBalances).map(value => ({
+                            ...value,
+                            name: new Date(value.name)
+                        }))
                     }
                 }
             });

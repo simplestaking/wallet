@@ -146,7 +146,6 @@ export class TooltipAreaNavComponent {
         });
       }
 
-      this.lastAnchorPos = this.anchorPos;
     }
 
     return results;

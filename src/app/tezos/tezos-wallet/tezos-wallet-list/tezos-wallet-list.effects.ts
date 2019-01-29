@@ -9,12 +9,18 @@ import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 import { initializeWallet, getWallet } from 'tezos-wallet'
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { FirebaseOperation } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.operation';
 
+export interface FirebaseWalletBalance{
+    name: number
+    value: number
+    balance: number
+}
 
 export interface FirebaseWalletHistoryDoc {
-    dailyBalances: Record<string, any>,
-    publicKeyHash: string,
-    operations: Record<string, any>
+    dailyBalances: Record<string, FirebaseWalletBalance>
+    publicKeyHash: string
+    operations: Record<string, FirebaseOperation>
 }
 
 
@@ -178,15 +184,7 @@ export class TezosWalletListEffects {
             });
 
             return Promise.all(promises).then(response => response)
-        }),
-
-        // map((docs: FirebaseWalletHistoryDoc[]) => {
-        //     return docs.reduce((accumulator, value) => {
-        //         accumulator[value.publicKeyHash] = value;
-
-        //         return accumulator;
-        //     },{});
-        // }),
+        }),     
 
         map(data => ({ type: 'TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS', payload: data })),
 

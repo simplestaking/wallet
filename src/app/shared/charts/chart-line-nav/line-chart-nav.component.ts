@@ -187,10 +187,11 @@ import {
     @Input() showRefLines: boolean = false;
     @Input() referenceLines: any;
     @Input() showRefLabels: boolean = true;
-    @Input() xScaleMin: any;
-    @Input() xScaleMax: any;
+    @Input() xScaleMin: number;
+    @Input() xScaleMax: number;
     @Input() yScaleMin: number;
     @Input() yScaleMax: number;
+    @Input() view: [number, number];
   
     @Output() activate: EventEmitter<any> = new EventEmitter();
     @Output() deactivate: EventEmitter<any> = new EventEmitter();
@@ -227,7 +228,7 @@ import {
     timelineTransform: any;
     timelinePadding: number = 10;
   
-    update(): void {
+    update() {
       super.update();
   
       this.dims = calculateViewDimensions({

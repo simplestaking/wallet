@@ -53,10 +53,43 @@
       <mat-paginator [pageSizeOptions]="[10,20]" hidePageSize></mat-paginator> -->
 
       <div *ngFor="let wallet of tezosWalletList" class="wallet">
-        <app-chart-line-nav [data]="wallet.dailyBalances"></app-chart-line-nav>
-        <h3 class="name">{{wallet.name}}</h3>
-        <h2 class="ballance">{{wallet.balance | number:'1.0-6'}} XTZ</h2>
-        <p class="ballance.usd">{{wallet.usd | number:'1.0-6' }} USD</p>
+        <table>
+          <thead>
+            <tr>
+              <td>Icon</td>
+              <td>Name</td>
+              <td>Address</td>
+              <td>Ballance</td>
+            </tr>            
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <svg width="40" height="40" identiconHash="{{wallet.name}}">
+                  Fallback text for browsers not supporting inline svg
+                </svg>
+              </td>
+              <td>{{wallet.name}}</td>
+              <td>{{wallet.id}}</td>
+              <td>{{wallet.balance | number:'1.0-3'}} XTZ </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <p class="text headline">
+          <span class="name"> Name</span>
+          <span class="address">Address</span>
+          <span class="ballance">Total XTZ balance </span>
+        </p>
+        <p class="text">
+          <a class="link" routerLink="/tezos/wallet/detail/{{wallet.id}}">
+            <span class="name"> {{wallet.name}} </span>
+            <span class="address">{{wallet.id}}</span>
+            <span class="ballance">{{wallet.balance | number:'1.0-3'}} XTZ </span>
+          </a>
+        </p> -->
+
+        <app-chart-line-nav class="chart" [data]="wallet.dailyBalances" [view]="[720,240]"></app-chart-line-nav>
+
       </div>
     </mat-card-content>
   </mat-card>

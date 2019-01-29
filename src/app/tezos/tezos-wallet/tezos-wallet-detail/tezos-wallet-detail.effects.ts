@@ -14,7 +14,8 @@ import { environment } from '../../../../environments/environment';
 import { initializeWallet, getWallet } from 'tezos-wallet'
 import { OperationHistoryState, HistoricalPrice } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.reducer';
 import { OperationHistoryEntity } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.entity';
-import { HistoryChartDataPoint, TEZOS_OPERATION_HISTORY_BALANCES_UPDATE } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.actions';
+import { TEZOS_OPERATION_HISTORY_BALANCES_UPDATE } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.actions';
+import { ChartData, ChartDataPoint } from '../../../shared/charts/chart-line-nav/chart-line-nav.component';
 
 
 const HISTORY_SIZE = 100;
@@ -132,10 +133,7 @@ export class TezosWalletDetailEffects {
         map(({ state }) => {
 
             let values = [];
-            let chartData: {
-                name: string,
-                series: HistoryChartDataPoint[]
-            }[] = undefined;
+            let chartData: ChartData[] = undefined;
 
             if (state.tezos.tezosWalletDetail.balance !== undefined &&
                 state.tezos.tezosOperationHistory.entities &&
@@ -246,7 +244,7 @@ export class TezosWalletDetailEffects {
     ) {
 
         let balance = lastBalance;
-        const chartValues: HistoryChartDataPoint[] = [];
+        const chartValues: ChartDataPoint[] = [];
 
         // iterate over historical periods and find corresponding changes
         historicalPrice.ids.slice(-HISTORY_SIZE).map(id => id).reverse().map(id => {
@@ -270,7 +268,7 @@ export class TezosWalletDetailEffects {
         return chartValues;
     }
 
-    buildChart(balance: number, price: number, values: HistoryChartDataPoint[]) {
+    buildChart(balance: number, price: number, values: ChartDataPoint[]) {
 
         // push at least some value to chart so it does not fail
         const lastBalanceTz = balance / 1000000;
