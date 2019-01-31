@@ -1,14 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of, defer, } from 'rxjs';
 import { tap,  withLatestFrom } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 
-import { ofRoute } from './shared/utils/rxjs/operators';
 
 @Injectable()
 export class AllEffects {
@@ -57,10 +54,8 @@ export class AllEffects {
 
     constructor(
         private actions$: Actions,
-        private http: HttpClient,
         private db: AngularFirestore,
         private store: Store<any>,
-        private router: Router,
     ) { }
 
 }

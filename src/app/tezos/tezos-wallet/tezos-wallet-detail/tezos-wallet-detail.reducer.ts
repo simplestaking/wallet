@@ -1,4 +1,9 @@
 import { ChartData } from "../../../shared/charts/chart-line-nav/chart-line-nav.component";
+import { TezosWalletDetailActions } from "./tezos-wallet-detail.actions";
+import { TezosNodeActions } from "../../tezos-node/tezos-node.actions";
+import { TezosWalletSendActions } from "../tezos-wallet-send/tezos-wallet-send.actions";
+import { TezosWalletDelegateActions } from "../tezos-wallet-delegate/tezos-wallet-delegate.actions";
+import { TezosWalletReceiveActions } from "../tezos-wallet-receive/tezos-wallet-receive.actions";
 
 const initialState : any = {
    
@@ -18,12 +23,12 @@ export interface WalletDetailState {
     chartValues: ChartData[]
 }
 
-export function reducer(state = initialState, action) {
+export function reducer(state = initialState, action: TezosWalletDetailActions | TezosNodeActions | TezosWalletSendActions | TezosWalletReceiveActions | TezosWalletDelegateActions) {
     switch (action.type) {
 
         case 'TEZOS_WALLET_DETAIL_LOAD_SUCCESS': {
             return {
-                price: state.price,
+                ...state,
                 ...action.payload
             }
         }

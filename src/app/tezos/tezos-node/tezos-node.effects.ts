@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of, timer, defer } from 'rxjs';
-import { map, withLatestFrom, switchMap, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { map, switchMap, flatMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TezosNodeEffects {
@@ -34,7 +34,7 @@ export class TezosNodeEffects {
     // get actual tezos price    
     @Effect()
     TezosNodePriceUpdate$ = this.actions$
-        .ofType('TEZOS_WALLET_DETAIL_LOAD').pipe(
+        .ofType('TEZOS_WALLET_DETAIL_LOAD', 'TEZOS_NODE_PRICE_UPDATE').pipe(
             switchMap(() =>
                 // run heart beat each second
                 timer(0, 60000).pipe(
@@ -67,7 +67,7 @@ export class TezosNodeEffects {
     // get historical data     
     @Effect()
     TezosNodeHistoricalPriceUpdate$ = this.actions$
-        .ofType('TEZOS_WALLET_DETAIL_LOAD').pipe(
+        .ofType('TEZOS_WALLET_DETAIL_LOAD', 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE').pipe(
             flatMap(() =>
                 this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym=XTZ&tsym=USD&limit=100').pipe(
                     map(response => ({

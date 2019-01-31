@@ -1,5 +1,3 @@
-import * as moment from 'moment/moment';
-
 import { OperationHistoryEntity } from "./tezos-operation-history.entity";
 import { OperationTypeEnum } from './tezos-operation-history.operation';
 import{TezosOperationHistoryAction} from './tezos-operation-history.actions';
@@ -45,13 +43,10 @@ export function reducer(state = initialState, action: TezosOperationHistoryActio
 
             const stateExtended = {                
                 ...state,
-                cacheLoadInitiated: true,
-                ids: [
-                    ...Object.keys(action.payload)
-                ],
+                cacheLoadInitiated: true,               
                 entities: {
                     ...state.entities,
-                    ...action.payload
+                    ...action.payload.operations
                 }
             }
 
@@ -64,7 +59,7 @@ export function reducer(state = initialState, action: TezosOperationHistoryActio
                 ...state,              
                 entities: {
                     ...state.entities,
-                    ...action.payload
+                    ...action.payload.operationsMap
                 }               
             };
             return stateExtended;

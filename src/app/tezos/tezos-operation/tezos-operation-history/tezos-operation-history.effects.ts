@@ -14,12 +14,13 @@ import { initializeWallet, pendingOperation } from 'tezos-wallet'
 import { State as RootState } from '../../../app.reducers';
 import { State as TezosState } from '../../tezos.reducers';
 import { OperationHistoryEntity } from './tezos-operation-history.entity';
-import { TzScanOperation, FirebaseHistoryData, OperationPrefixEnum, OperationType } from './tezos-operation-history.operation';
+import { TzScanOperation, FirebaseHistoryData, OperationPrefixEnum, OperationType, FirebaseOperation } from './tezos-operation-history.operation';
 import * as actions from './tezos-operation-history.actions';
+import { RouterNavigationAction } from '@ngrx/router-store';
 
 
 interface OperationsDataIndex {
-    publicKeyHash: string
+    walletAddress: string
     firebase: Record<string, OperationHistoryEntity>
     tzScan: OperationHistoryEntity[]
 }
@@ -32,8 +33,9 @@ export class TezosOperationHistoryEffects {
     @Effect()
     TezosWalletOperationHistory$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/detail/:address'),
-        map(() => ({
-            type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD'
+        map((action: RouterNavigationAction) => ({
+            type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD',
+            payload: action.payload.routerState.root.children[0].firstChild.params.address
         })),
         catchError((error, caught) => {
 
@@ -101,14 +103,18 @@ export class TezosOperationHistoryEffects {
      * @param cachedOperations already cached operations 
      * @param type operation type (transaction, origination, delegation, reveal)
      */
-    getOperationsFromTzScanByType(state: RootState & { tezos: TezosState }, cachedOperations: Record<string, OperationHistoryEntity>, type: OperationType) {
+    getOperationsFromTzScanByType(
+        state: RootState & { tezos: TezosState },
+        walletAddress: string,
+        cachedOperations: Record<string, OperationHistoryEntity>,
+        type: OperationType
+    ) {
 
         const typeCapitalized = type[0].toUpperCase() + type.substring(1);
-        const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
         const queryPath = state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations + walletAddress + `?type=${typeCapitalized}&p=0&number=50`;
 
         const response = {
-            publicKeyHash: walletAddress,
+            walletAddress,
             firebase: cachedOperations,
             tzScan: []
         };
@@ -150,14 +156,14 @@ export class TezosOperationHistoryEffects {
         );
 
         return {
-            publicKeyHash: mergedData.publicKeyHash,
+            walletAddress: mergedData.walletAddress,
             operations: updatedCache
         }
     }
 
     @Effect()
     TezosWalletFirebaseCacheLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_CACHE_LOAD'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_CACHE_LOAD>('TEZOS_OPERATION_HISTORY_CACHE_LOAD'),
 
         withLatestFrom(
             this.store.select(state => state)
@@ -165,7 +171,7 @@ export class TezosOperationHistoryEffects {
 
         flatMap(([action, state]) => {
 
-            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const walletAddress = action.payload;
             const collectionName = `tezos_${state.tezos.tezosNode.api.name}_history`;
 
             let initial = true;
@@ -178,6 +184,11 @@ export class TezosOperationHistoryEffects {
                     map(dbData => {
                         console.log('*****', dbData);
 
+                        let result = {
+                            walletAddress,
+                            operationsMap: {}
+                        };
+
 
                         if (dbData !== undefined) {
 
@@ -188,21 +199,25 @@ export class TezosOperationHistoryEffects {
                                 convertedOperations[key] = OperationHistoryEntity.fromFirebaseObject(operations[key]);
                             });
 
+                            // add operations to result
+                            result.operationsMap = convertedOperations;                            
+
                             if (initial) {
                                 initial = false;
 
                                 this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_UPDATE>({
                                     type: 'TEZOS_OPERATION_HISTORY_UPDATE',
-                                    payload: convertedOperations
+                                    payload: result
                                 });
                             }
 
-                            return convertedOperations;
+                            return result;
 
                         } else {
 
                             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_CREATE>({
-                                type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE'
+                                type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE',
+                                payload: walletAddress
                             });
 
                             if (initial) {
@@ -210,20 +225,22 @@ export class TezosOperationHistoryEffects {
 
                                 this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_UPDATE>({
                                     type: 'TEZOS_OPERATION_HISTORY_UPDATE',
-                                    payload: {}
+                                    payload: result
                                 });
-
-                                return {};
                             }
+
+                            return result;
                         }
                     })
                 )
         }),
-        map((response) => ({
+        map(response => ({
             type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS',
-            payload: response || {}
-
-        }),
+            payload: {
+                walletAddress: response.walletAddress,
+                operations: response.operationsMap
+            }
+        } as actions.TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS),
             catchError((error, caught) => {
                 console.error(error.message)
                 this.store.dispatch({
@@ -237,16 +254,16 @@ export class TezosOperationHistoryEffects {
 
     @Effect({ dispatch: false })
     TezosWalletCacheCreate$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_CACHE_CREATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_CACHE_CREATE>('TEZOS_OPERATION_HISTORY_CACHE_CREATE'),
 
         withLatestFrom(
             this.store,
-            (action, state) => ({ state })
+            (action, state) => ({ action, state })
         ),
 
-        switchMap(({ state }) => {
+        switchMap(({ action, state }) => {
 
-            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const walletAddress = action.payload;
             const collectionName = `tezos_${state.tezos.tezosNode.api.name}_history`;
 
             return this.db.collection(collectionName).doc<FirebaseHistoryData>(walletAddress).set({
@@ -260,33 +277,44 @@ export class TezosOperationHistoryEffects {
 
     @Effect()
     TezosWalletHistoryTransactionsLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_UPDATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_UPDATE>('TEZOS_OPERATION_HISTORY_UPDATE'),
 
         withLatestFrom(
             this.store,
-            (action: actions.TEZOS_OPERATION_HISTORY_UPDATE, state) => ({ action, state })
+            (action, state) => ({ action, state })
         ),
 
-        switchMap(({ action, state }) => {
+        flatMap(({ action, state }) => {
             return this.getOperationsFromTzScanByType(
                 state,
-                action.payload,
+                action.payload.walletAddress,
+                action.payload.operationsMap,
                 'transaction'
             )
         }),
 
         tap(data => console.log('%%%%%%', data)),
+
         map(this.mergeTzScanOperationsWithCache),
+
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
-                payload: data.operations
+                payload: {
+                    walletAddress: data.walletAddress,
+                    operationsMap: data.operations
+                }
             })
         }),
-        map((response) => ({
+
+        map(response => ({
             type: 'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS',
-            payload: response.operations
-        })),
+            payload: {
+                walletAddress: response.walletAddress,
+                operationsMap: response.operations
+            }
+        }) as actions.TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS),
+
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -299,32 +327,43 @@ export class TezosOperationHistoryEffects {
 
     @Effect()
     TezosWalletHistoryOriginationsLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_UPDATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_UPDATE>('TEZOS_OPERATION_HISTORY_UPDATE'),
 
         withLatestFrom(
             this.store.select(state => state)
         ),
 
-        switchMap(([action, state]) => {
+        flatMap(([action, state]) => {
             return this.getOperationsFromTzScanByType(
                 state,
-                (<actions.TEZOS_OPERATION_HISTORY_UPDATE>action).payload,
+                action.payload.walletAddress,
+                action.payload.operationsMap,
                 'origination'
             )
         }),
 
         tap(data => console.log('%%%%%%', data)),
+
         map(this.mergeTzScanOperationsWithCache),
+
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
-                payload: data.operations
+                payload: {
+                    walletAddress: data.walletAddress,
+                    operationsMap: data.operations
+                }
             })
         }),
-        map((response) => ({
+
+        map(response => ({
             type: 'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS',
-            payload: response.operations
-        })),
+            payload: {
+                walletAddress: response.walletAddress,
+                operationsMap: response.operations
+            }
+        }) as actions.TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS),
+
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -337,32 +376,43 @@ export class TezosOperationHistoryEffects {
 
     @Effect()
     TezosWalletHistoryDelegationsLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_UPDATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_UPDATE>('TEZOS_OPERATION_HISTORY_UPDATE'),
 
         withLatestFrom(
             this.store.select(state => state)
         ),
 
-        switchMap(([action, state]) => {
+        flatMap(([action, state]) => {
             return this.getOperationsFromTzScanByType(
                 state,
-                (<actions.TEZOS_OPERATION_HISTORY_UPDATE>action).payload,
+                action.payload.walletAddress,
+                action.payload.operationsMap,
                 'delegation'
             )
         }),
 
         tap(data => console.log('%%%%%%', data)),
+
         map(this.mergeTzScanOperationsWithCache),
+
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
-                payload: data.operations
+                payload: {
+                    walletAddress: data.walletAddress,
+                    operationsMap: data.operations
+                }
             })
         }),
-        map((response) => ({
+
+        map(response => ({
             type: 'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS',
-            payload: response.operations
-        })),
+            payload: {
+                walletAddress: response.walletAddress,
+                operationsMap: response.operations
+            }
+        }) as actions.TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS),
+
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -375,16 +425,16 @@ export class TezosOperationHistoryEffects {
 
     @Effect()
     TezosWalletHistoryRevealLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_UPDATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_UPDATE>('TEZOS_OPERATION_HISTORY_UPDATE'),
 
         withLatestFrom(
             this.store.select(state => state)
         ),
 
-        switchMap(([action, state]) => {
+        flatMap(([action, state]) => {
 
-            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
-            const cachedOperations = (<actions.TEZOS_OPERATION_HISTORY_UPDATE>action).payload;
+            const walletAddress = action.payload.walletAddress;
+            const cachedOperations = action.payload.operationsMap;
 
             return this.http.get<TzScanOperation[]>(
                 state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations + walletAddress + '?type=Reveal&p=0&number=5'
@@ -393,7 +443,7 @@ export class TezosOperationHistoryEffects {
                     return result.map(operation => OperationHistoryEntity.fromTzScanOperation(operation, walletAddress));
                 }),
                 map(operations => ({
-                    publicKeyHash: walletAddress,
+                    walletAddress,
                     firebase: cachedOperations,
                     tzScan: operations
                 }))
@@ -401,17 +451,27 @@ export class TezosOperationHistoryEffects {
         }),
 
         tap(data => console.log('%%%%%%', data)),
+
         map(this.mergeTzScanOperationsWithCache),
+
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
-                payload: data.operations
+                payload: {
+                    walletAddress: data.walletAddress,
+                    operationsMap: data.operations
+                }
             })
         }),
-        map((response) => ({
+
+        map(response => ({
             type: 'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS',
-            payload: response.operations
-        })),
+            payload: {
+                walletAddress: response.walletAddress,
+                operationsMap: response.operations
+            }
+        })  as actions.TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS),
+        
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -424,20 +484,20 @@ export class TezosOperationHistoryEffects {
 
     @Effect({ dispatch: false })
     TezosWalletOperationHistoryPutToCache$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_CACHE_UPDATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>('TEZOS_OPERATION_HISTORY_CACHE_UPDATE'),
 
         withLatestFrom(
             this.store,
-            (action: actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE, state) => ({ action, state })
+            (action, state) => ({ action, state })
         ),
 
         map(({ action, state }) => {
 
-            const operationsMap = action.payload;
-            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const walletAddress = action.payload.walletAddress;
+            const operationsMap = action.payload.operationsMap;
             const collectionName = `tezos_${state.tezos.tezosNode.api.name}_history`;
 
-            const exportedOperations = {};
+            const exportedOperations: Record<string, FirebaseOperation> = {};
             Object.keys(operationsMap).forEach(key => {
                 const operation = operationsMap[key];
 
@@ -449,7 +509,7 @@ export class TezosOperationHistoryEffects {
                 walletAddress,
                 exportedOperations
             }
-        }),      
+        }),
 
         flatMap(data => {
             // we must use set with merge options to push new operations
@@ -465,20 +525,20 @@ export class TezosOperationHistoryEffects {
     // get pending operation data  
     @Effect()
     TezosWalletOperationHistoryPendingLoad$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_UPDATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_UPDATE>('TEZOS_OPERATION_HISTORY_UPDATE'),
 
         // get state from store
         withLatestFrom(
             this.store,
-            (action, state) => ({ state })
+            (action, state) => ({ action, state })
         ),
 
-        flatMap(({ state }) => of([]).pipe(
+        flatMap(({ action, state }) => of([]).pipe(
 
             // wait until sodium is ready
             initializeWallet(stateWallet => ({
                 // set publicKeyHash
-                publicKeyHash: state.routerReducer.state['root'].children[0].firstChild.params.address,
+                publicKeyHash: action.payload.walletAddress,
                 // set tezos node
                 node: state.tezos.tezosNode.api,
                 // set wallet type: WEB, TREZOR_ONE, TREZOR_T
@@ -489,7 +549,7 @@ export class TezosOperationHistoryEffects {
 
             // look in mempool for pending transaction 
             pendingOperation(stateWallet => ({
-                publicKeyHash: state.routerReducer.state['root'].children[0].firstChild.params.address,
+                publicKeyHash: action.payload.walletAddress,
             })),
 
             // enter back into zone.js so change detection works
@@ -497,7 +557,10 @@ export class TezosOperationHistoryEffects {
 
         )),
 
-        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS', payload: response })),
+        map(response => ({ 
+            type: 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS', 
+            payload: response 
+        }) as actions.TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -510,17 +573,17 @@ export class TezosOperationHistoryEffects {
 
     @Effect({ dispatch: false })
     TezosWalletOperationHistoryBalancesUpdate$ = this.actions$.pipe(
-        ofType('TEZOS_OPERATION_HISTORY_BALANCES_UPDATE'),
+        ofType<actions.TEZOS_OPERATION_HISTORY_BALANCES_UPDATE>('TEZOS_OPERATION_HISTORY_BALANCES_UPDATE'),
 
         withLatestFrom(
             this.store,
-            (action: actions.TEZOS_OPERATION_HISTORY_BALANCES_UPDATE, state) => ({ action, state })
+            (action, state) => ({ action, state })
         ),
 
         map(({ action, state }) => {
 
-            const balances = action.payload;
-            const walletAddress = state.routerReducer.state['root'].children[0].firstChild.params.address;
+            const balances = action.payload.balances;
+            const walletAddress = action.payload.walletAddress;
             const collectionName = `tezos_${state.tezos.tezosNode.api.name}_history`;
 
             const balancesMap = {};

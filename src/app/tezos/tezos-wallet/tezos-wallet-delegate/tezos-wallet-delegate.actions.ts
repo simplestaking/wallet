@@ -1,0 +1,5 @@
+export type TezosWalletDelegateActions = TEZOS_WALLET_DELEGATE_DESTROY;
+
+export type TEZOS_WALLET_DELEGATE_DESTROY = {
+    type: 'TEZOS_WALLET_DELEGATE_DESTROY'
+}

@@ -1,12 +1,18 @@
 import { FirebaseWalletHistoryDoc } from "./tezos-wallet-list.effects";
 import { ChartDataPoint } from "../../../shared/charts/chart-line-nav/chart-line-nav.component";
+import { TezosWalletListActions } from "./tezos-wallet-list.actions";
+import { TezosNodeActions } from "../../tezos-node/tezos-node.actions";
+import { TezosOperationHistoryAction } from "../../tezos-operation/tezos-operation-history/tezos-operation-history.actions";
+import { OperationHistoryEntity } from "../../tezos-operation/tezos-operation-history/tezos-operation-history.entity";
 
 export interface WalletListDetail {
     balance: string // number
-    dailyBalances: ChartDataPoint[]
+    dailyBalances?: ChartDataPoint[]
+    dailyBalancesLoaded: boolean
     manager: string
     name: string
     network: "zero" | "main"
+    operations: Record<string, OperationHistoryEntity>    
     publicKey: string
     publicKeyHash: string
     secretKey: string
@@ -17,6 +23,7 @@ export interface TezosWalletListState {
     exchangeRateUSD: number
     ids: string[]
     entities: Record<string, WalletListDetail>
+
 }
 
 const initialState: TezosWalletListState = {
@@ -27,7 +34,7 @@ const initialState: TezosWalletListState = {
 
 
 
-export function reducer(state = initialState, action) {
+export function reducer(state: TezosWalletListState = initialState, action: TezosWalletListActions | TezosNodeActions | TezosOperationHistoryAction) {
     switch (action.type) {
 
         case 'TEZOS_WALLET_LIST_LOAD_SUCCESS': {
@@ -41,7 +48,8 @@ export function reducer(state = initialState, action) {
                     [wallet.publicKeyHash]: {
                         ...state.entities[wallet.publicKeyHash],
                         ...wallet,
-                        dailyBalances: []
+                        dailyBalances: [],
+                        dailyBalancesLoaded: false
                     }
                 }), {}),
             }
@@ -55,21 +63,22 @@ export function reducer(state = initialState, action) {
         }
 
         case 'TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS': {
+
+            const data = action.payload;
             const updatedEntities = {};
+            const entity = state.entities[data.walletAddress];
 
-            (<FirebaseWalletHistoryDoc[]>action.payload).forEach(doc => {
-                const entity = state.entities[doc.publicKeyHash];
-
-                if (entity) {
-                    updatedEntities[entity.publicKeyHash] = {
-                        ...entity,
-                        dailyBalances: Object.values(doc.dailyBalances).map(value => ({
-                            ...value,
-                            name: new Date(value.name)
-                        }))
-                    }
+            if (entity) {
+                updatedEntities[entity.publicKeyHash] = {
+                    ...entity,
+                    dailyBalances: Object.values(data.balancesMap).map(value => ({
+                        ...value,
+                        name: new Date(value.name)
+                    })),
+                    dailyBalancesLoaded: true
                 }
-            });
+            }
+
 
             return {
                 ...state,
@@ -94,6 +103,31 @@ export function reducer(state = initialState, action) {
                 }
             }
 
+        }
+
+        case 'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS': {
+
+            const data = action.payload;
+            const updatedEntities = {};
+            const entity = state.entities[data.walletAddress];
+
+            if (entity) {
+                updatedEntities[entity.publicKeyHash] = {
+                    ...entity,
+                   operations: {
+                       ...entity.operations,
+                       ...data.operationsMap
+                   }
+                }
+            }
+
+            return {
+                ...state,
+                entities: {
+                    ...state.entities,
+                    ...updatedEntities
+                }
+            }
         }
 
         default:

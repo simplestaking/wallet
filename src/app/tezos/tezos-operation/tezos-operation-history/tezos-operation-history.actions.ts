@@ -1,4 +1,3 @@
-import { Action } from '@ngrx/store';
 import { OperationHistoryEntity } from './tezos-operation-history.entity';
 import { Mempool } from 'tezos-wallet';
 import { ChartDataPoint } from '../../../shared/charts/chart-line-nav/chart-line-nav.component';
@@ -18,31 +17,44 @@ export type TezosOperationHistoryAction = TEZOS_OPERATION_HISTORY_CACHE_LOAD | T
 
 export type TEZOS_OPERATION_HISTORY_CACHE_LOAD = {
     type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD',
-    payload?: string
+    payload: string
 };
 
 export type TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS = {
     type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS',
-    payload: Record<string, OperationHistoryEntity>
+    payload: {
+        walletAddress: string,
+        operations: Record<string, OperationHistoryEntity>
+    }
 };
 
 export type TEZOS_OPERATION_HISTORY_CACHE_UPDATE = {
     type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
-    payload: Record<string, OperationHistoryEntity>
+    payload: {
+        walletAddress: string,
+        operationsMap: Record<string, OperationHistoryEntity>
+    }
 };
 
 export type TEZOS_OPERATION_HISTORY_UPDATE = {
     type: 'TEZOS_OPERATION_HISTORY_UPDATE',
-    payload: Record<string, OperationHistoryEntity>
+    payload: {
+        walletAddress: string,
+        operationsMap: Record<string, OperationHistoryEntity>
+    }
 };
 
 export type TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS = {
     type: 'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS',
-    payload: Record<string, OperationHistoryEntity>
+    payload: {
+        walletAddress: string,
+        operationsMap: Record<string, OperationHistoryEntity>
+    }
 };
 
 export type TEZOS_OPERATION_HISTORY_CACHE_CREATE = {
-    type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE'
+    type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE',
+    payload: string
 };
 
 export type TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS = {
@@ -61,7 +73,10 @@ export type TEZOS_OPERATION_HISTORY_DESTROY = {
 
 export type TEZOS_OPERATION_HISTORY_BALANCES_UPDATE = {
     type: 'TEZOS_OPERATION_HISTORY_BALANCES_UPDATE',
-    payload: ChartDataPoint[]
+    payload: {
+        walletAddress: string,
+        balances: ChartDataPoint[]
+    }
 };
 
 

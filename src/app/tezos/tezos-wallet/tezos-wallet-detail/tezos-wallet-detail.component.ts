@@ -5,10 +5,6 @@ import { takeUntil } from 'rxjs/operators';
 import { WalletDetailState } from './tezos-wallet-detail.reducer';
 import { ChartDataPoint } from '../../../shared/charts/chart-line-nav/chart-line-nav.component';
 
-const HISTORY_SIZE = 100;
-
-
-
 @Component({
   selector: 'app-tezos-wallet-detail',
   templateUrl: './tezos-wallet-detail.component.html',
