@@ -119,26 +119,22 @@ export class TezosOperationHistoryEffects {
             tzScan: []
         };
 
-        if (state.tezos.tezosOperationHistory.cacheLoadInitiated === true) {
-            return of(response);
-        } else {
+        return of([]).
+            pipe(
+                this.loadNewOperationsFromTzScan(
+                    queryPath,
+                    0,
+                    cachedOperations,
+                    OperationPrefixEnum[type]
+                ),
+                map(result => {
+                    // add converted operations
+                    response.tzScan = result.map(operation => OperationHistoryEntity.fromTzScanOperation(operation, walletAddress));
 
-            return of([]).
-                pipe(
-                    this.loadNewOperationsFromTzScan(
-                        queryPath,
-                        0,
-                        cachedOperations,
-                        OperationPrefixEnum[type]
-                    ),
-                    map(result => {
-                        // add converted operations
-                        response.tzScan = result.map(operation => OperationHistoryEntity.fromTzScanOperation(operation, walletAddress));
+                    return response;
+                })
+            )
 
-                        return response;
-                    })
-                )
-        }
     }
 
     /**
@@ -217,8 +213,8 @@ export class TezosOperationHistoryEffects {
         }),
 
         flatMap((response): Observable<Action> => {
-            
-            if (response.operationsMap === undefined){
+
+            if (response.operationsMap === undefined) {
 
                 return from([
                     {
@@ -229,13 +225,16 @@ export class TezosOperationHistoryEffects {
                         type: 'TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS',
                         payload: {
                             walletAddress: response.walletAddress,
-                            operations: response.operationsMap
+                            operations: {}
                         }
-                    } as actions.TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS ,
+                    } as actions.TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS,
                     {
                         type: 'TEZOS_OPERATION_HISTORY_UPDATE',
-                        payload: response
-                    } as actions.TEZOS_OPERATION_HISTORY_UPDATE       
+                        payload: {
+                            walletAddress: response.walletAddress,
+                            operationsMap: {}
+                        }
+                    } as actions.TEZOS_OPERATION_HISTORY_UPDATE
                 ])
 
             } else {
@@ -253,7 +252,7 @@ export class TezosOperationHistoryEffects {
                         payload: response
                     } as actions.TEZOS_OPERATION_HISTORY_UPDATE
                 ])
-            }           
+            }
 
         }),
         catchError((error, caught) => {
@@ -265,7 +264,7 @@ export class TezosOperationHistoryEffects {
             return caught;
         })
     )
-    
+
 
     @Effect({ dispatch: false })
     TezosWalletCacheCreate$ = this.actions$.pipe(
