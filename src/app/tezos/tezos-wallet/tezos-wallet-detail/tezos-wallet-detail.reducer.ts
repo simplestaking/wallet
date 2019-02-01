@@ -36,8 +36,7 @@ export function reducer(state = initialState, action: TezosWalletDetailActions |
         case 'TEZOS_NODE_PRICE_UPDATE_SUCCESS': {
             return {
                 ...state,
-                price: action.payload.XTZ.USD,
-                // price: action.payload.data.quote.XTZ.USD.price,
+                price: action.payload.XTZ.USD
             }
         }
 
@@ -51,7 +50,7 @@ export function reducer(state = initialState, action: TezosWalletDetailActions |
         case 'TEZOS_WALLET_DETAIL_NODE_DETAIL_SUCCESS': {
             return {
                 ...state,
-                ...action.payload.getWallet,
+                ...action.payload.getWallet
             }
         }
 
@@ -60,7 +59,7 @@ export function reducer(state = initialState, action: TezosWalletDetailActions |
         case 'TEZOS_WALLET_DELEGATE_DESTROY': {
             return {
                 ...initialState,
-                price: state.price,
+                price: state.price
             }
         }
 

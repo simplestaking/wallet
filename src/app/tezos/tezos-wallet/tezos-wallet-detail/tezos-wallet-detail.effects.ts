@@ -67,13 +67,14 @@ export class TezosWalletDetailEffects {
 
                         // allow in testmode to view history of every wallet
                         // notice that other functionality does not work for unknown wallets
-                        if (!!environment.testing && response === undefined) {
-                            return {
-                                publicKeyHash: address
-                            }
-                        } else {
-                            return response;
-                        }
+                        // if (!!environment.testing && response === undefined) {
+                        //     return {
+                        //         publicKeyHash: address
+                        //     }
+                        // } else {
+                        //     return response;
+                        // }
+                        return response;
                     })
                 )
         }),

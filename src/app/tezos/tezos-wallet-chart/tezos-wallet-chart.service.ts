@@ -21,7 +21,6 @@ export class TezosWalletChartService {
         const dailyBalanceChange = this.sumForPeriod(entitiesArray);
         const chartValues = this.composeChartValues(historicalPrice, dailyBalanceChange, lastBalance);
 
-        //console.log(this.netAssetValue)
         return chartValues;
     }
 
@@ -36,7 +35,6 @@ export class TezosWalletChartService {
             .map((entry) => {
                 let periodChange = balanceChangeForPeriod[entry.dateUnixTimeStamp] || 0;
 
-                // console.log(entry.failed, entry.amount, 'fee', entry.fee, 'burn', entry.burn, entry)
 
                 // sum ammount for every transaction period 
                 periodChange += entry.failed ? 0 : entry.amount;
@@ -47,9 +45,7 @@ export class TezosWalletChartService {
 
                 balanceChangeForPeriod[entry.dateUnixTimeStamp] = periodChange;
 
-                // console.log('^^^^^^^^', new Date(entry.timestamp), periodChange);
             })
-        // console.log(amountSumByPeriod)
 
         return balanceChangeForPeriod;
     }
@@ -72,13 +68,14 @@ export class TezosWalletChartService {
 
             balance -= periodChange;
 
-            const balanceTz = balance / 1000000;
+            // @TODO remove when TzScan fix issue with ignoring burn on transaction to inactive wallet
+            // prevent negative values which might occure due to issue
+            const balanceTz = Math.max(0, balance / 1000000);
 
             chartValues.push({
                 name: new Date(entryTime * 1000),
                 balance: balanceTz,
-                //value: balanceTz * entry.close
-                value: balanceTz * 1
+                value: balanceTz * entry.close
             });
         });
 
@@ -87,7 +84,7 @@ export class TezosWalletChartService {
 
     buildChart(balance: number, price: number, values: ChartDataPoint[]) {
 
-        // push at least some value to chart so it does not fail
+        // push at least some value to chart so it does not fail        
         const lastBalanceTz = balance / 1000000;
         let finalValues = values;
 
@@ -99,14 +96,12 @@ export class TezosWalletChartService {
                 {
                     name: new Date(Date.now() - 3600 * 1000 * 24 * TezosWalletChartService.HISTORY_SIZE),
                     balance: lastBalanceTz,
-                    //value: lastBalanceTz * this.lastPrice
-                    value: lastBalanceTz
+                    value: lastBalanceTz * price
                 },
                 {
                     name: new Date(),
                     balance: lastBalanceTz,
-                    //value: lastBalanceTz * this.lastPrice
-                    value: lastBalanceTz
+                    value: lastBalanceTz * price
                 }
             ];
 
@@ -118,8 +113,7 @@ export class TezosWalletChartService {
                 const balanceTz = balance / 1000000;
 
                 netValue.balance = balanceTz;
-                //  netValue.value = balanceTz * this.lastPrice;
-                netValue.value = balanceTz;
+                netValue.value = balanceTz * price;
             }
         }
 

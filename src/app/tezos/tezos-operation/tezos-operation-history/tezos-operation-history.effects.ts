@@ -182,7 +182,7 @@ export class TezosOperationHistoryEffects {
                 .valueChanges()
                 .pipe(
                     map(dbData => {
-                        console.log('*****', dbData);
+                        //console.log('*****', dbData);
 
                         let result = {
                             walletAddress,
@@ -293,10 +293,11 @@ export class TezosOperationHistoryEffects {
             )
         }),
 
-        tap(data => console.log('%%%%%%', data)),
+        //tap(data => console.log('%%%%%%', data)),
 
         map(this.mergeTzScanOperationsWithCache),
 
+        // @TODO refactor to flatMap
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
@@ -342,10 +343,11 @@ export class TezosOperationHistoryEffects {
             )
         }),
 
-        tap(data => console.log('%%%%%%', data)),
+       // tap(data => console.log('%%%%%%', data)),
 
         map(this.mergeTzScanOperationsWithCache),
 
+        // @TODO refactor to flatMap
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
@@ -391,10 +393,11 @@ export class TezosOperationHistoryEffects {
             )
         }),
 
-        tap(data => console.log('%%%%%%', data)),
+       // tap(data => console.log('%%%%%%', data)),
 
         map(this.mergeTzScanOperationsWithCache),
 
+        // @TODO refactor to flatMap
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',
@@ -450,10 +453,11 @@ export class TezosOperationHistoryEffects {
             )
         }),
 
-        tap(data => console.log('%%%%%%', data)),
+       // tap(data => console.log('%%%%%%', data)),
 
         map(this.mergeTzScanOperationsWithCache),
 
+        // @TODO refactor to flatMap
         tap(data => {
             this.store.dispatch<actions.TEZOS_OPERATION_HISTORY_CACHE_UPDATE>({
                 type: 'TEZOS_OPERATION_HISTORY_CACHE_UPDATE',

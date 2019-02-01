@@ -24,7 +24,6 @@
 //     debug: true,
 //     transportReconnect: true // true
 //   },
-//  testing: true,
 //   nodes: 'main'
 // }
 
@@ -36,7 +35,7 @@ export const environment = {
     databaseURL: "https://wallet-dd9dc.firebaseio.com",
     projectId: "wallet-test-2690a",
     storageBucket: "wallet-dd9dc.appspot.com",
-    disableNetwork: true
+    disableNetwork: false
   },
     trezor: {
     connectSrc: 'https://connect.trezor.io/6/',
@@ -46,8 +45,7 @@ export const environment = {
     trustedHost: true,
     webusb: false,
     debug: true,
-    transportReconnect: false // true
+    transportReconnect: true // true
   },
-  nodes: 'zero',
-  testing: true
+  nodes: 'zero'
 };

@@ -42,9 +42,9 @@ export class TezosWalletListEffects {
     TezosWalletList$ = this.actions$.pipe(
         ofRoute('/tezos/wallet'),
         switchMap(() => [
-            { type: 'TEZOS_WALLET_LIST_LOAD' },
             { type: 'TEZOS_NODE_PRICE_UPDATE' },
-            { type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE' }
+            { type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE' },
+            { type: 'TEZOS_WALLET_LIST_LOAD' }
         ]),
         catchError((error, caught) => {
             console.error(error.message)
@@ -220,6 +220,7 @@ export class TezosWalletListEffects {
                 }))                
         }),
 
+        // @TODO change to flatmap
         tap(data => {
 
            if(data.firebaseResponse === undefined){
@@ -245,7 +246,6 @@ export class TezosWalletListEffects {
             const today = Date.now() - (Date.now() % DAY_MILISECONDS);
 
             if (today in data.dailyBalances) {
-                console.log('HURRAY we have actual data', data);
 
                 return from([
                     {
@@ -258,7 +258,7 @@ export class TezosWalletListEffects {
                 ]);
 
             } else {
-                console.log('We need to update chart', data)
+                console.log('[Tezos List][Balances] needs to be updated for', data.publicKeyHash);
 
                 return from([
                     {

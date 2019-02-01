@@ -37,18 +37,12 @@ export class TezosNodeEffects {
         .ofType('TEZOS_WALLET_DETAIL_LOAD', 'TEZOS_NODE_PRICE_UPDATE').pipe(
             switchMap(() =>
                 // run heart beat each second
-                timer(0, 60000).pipe(
+                timer(0, 5 * 60000).pipe(
                     switchMap(() =>
                         this.http.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=XTZ&tsyms=USD').pipe(
                             map(response => ({
-                                type: 'TEZOS_NODE_PRICE_UPDATE_SUCCESS',
-                                // mock till we get working API
-                                payload: {
-                                    XTZ: {
-                                        USD: 0.4696898
-                                    }
-                                }                                
-                                //payload: response
+                                type: 'TEZOS_NODE_PRICE_UPDATE_SUCCESS',                                                     
+                                payload: response
                             })),
                             catchError((error, caught) => {
                                 console.error(error.message)

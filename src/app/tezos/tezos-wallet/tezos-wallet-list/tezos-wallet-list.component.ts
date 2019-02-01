@@ -43,7 +43,6 @@ export class TezosWalletListComponent implements OnInit, OnDestroy {
       .subscribe(data => {
 
         this.tezosWalletList = Object.values(data.entities).map(wallet => {
-          //console.log(wallet)
 
           return {
             id: wallet.publicKeyHash,
