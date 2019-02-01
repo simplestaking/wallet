@@ -216,14 +216,21 @@ export class TezosWalletListEffects {
                 .doc(address)
                 .get().toPromise().then(doc => ({
                     walletAddress: address,
-                    firebaseResponse: doc.data() as FirebaseWalletHistoryDoc
+                    firebaseResponse: doc.data() as FirebaseWalletHistoryDoc,
+                    error: false
+                }),
+                // firebase offline or non reacheable - fallback
+                error => ({
+                    walletAddress: address,
+                    firebaseResponse: undefined,
+                    error: true
                 }))                
         }),
 
         // @TODO change to flatmap
         tap(data => {
 
-           if(data.firebaseResponse === undefined){
+           if(data.firebaseResponse === undefined && data.error === false){
                this.store.dispatch<TEZOS_OPERATION_HISTORY_CACHE_CREATE>({
                    type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE',
                    payload: data.walletAddress
@@ -232,7 +239,6 @@ export class TezosWalletListEffects {
         }),
 
         map(data => {
-
             return data.firebaseResponse || ({
                 publicKeyHash: data.walletAddress,
                 dailyBalances: {},
@@ -288,7 +294,7 @@ export class TezosWalletListEffects {
         // prevent useless intermediate updates while chart is being composed
         // event is triggered multiple times as we load operations from  cache
         // load partial operations from TzScan etc.
-        auditTime(500),
+        //auditTime(500),
 
         withLatestFrom(
             this.store,

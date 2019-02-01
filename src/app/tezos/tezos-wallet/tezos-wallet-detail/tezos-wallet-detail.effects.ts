@@ -31,6 +31,7 @@ export class TezosWalletDetailEffects {
         switchMap((action: RouterNavigationAction) => {
             const address = action.payload.routerState.root.children[0].firstChild.params.address;
             return [
+                { type: 'TEZOS_OPERATION_HISTORY_DESTROY' },
                 { type: 'TEZOS_WALLET_SHOW' },
                 { type: 'TEZOS_WALLET_DETAIL_LOAD', payload: address },
             ];
@@ -180,7 +181,7 @@ export class TezosWalletDetailEffects {
 
 
         tap(data => {
-            
+
             if (data.chartData) {
                 const chartPoints = data.chartData[0].series;
 
