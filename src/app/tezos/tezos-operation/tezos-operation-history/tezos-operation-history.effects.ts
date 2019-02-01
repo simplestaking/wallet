@@ -599,7 +599,7 @@ export class TezosOperationHistoryEffects {
                 };
             })
 
-            console.log('balance update', balancesMap)
+            //console.log('balance update', balancesMap)
 
             return {
                 walletAddress,

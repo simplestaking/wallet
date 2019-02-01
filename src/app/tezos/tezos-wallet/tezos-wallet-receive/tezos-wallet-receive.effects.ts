@@ -36,11 +36,15 @@ export class TezosWalletReceiveEffects {
     @Effect()
     TezosWalletReceiveAddressLoad$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/receive/:address'),
-        flatMap((action: any) => [
+        flatMap((action: any) => {
+            const address = action.payload.routerState.root.children[0].firstChild.params.address;
+
+            return [
             { type: 'TEZOS_WALLET_RECEIVE_SHOW', payload: action.payload },
-            { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+            { type: 'TEZOS_WALLET_DETAIL_LOAD', payload: address },
             { type: 'TEZOS_WALLET_LIST_LOAD' },
-        ]),
+        ]
+    }),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
