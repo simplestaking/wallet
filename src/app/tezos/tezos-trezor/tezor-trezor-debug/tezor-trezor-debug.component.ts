@@ -13,6 +13,7 @@ import { map, withLatestFrom, catchError, flatMap, concatMap, tap } from 'rxjs/o
 
 import { initializeWallet, activateWallet, transaction, confirmOperation } from 'tezos-wallet'
 import { Config } from 'tezos-wallet'
+import { environment } from '../../../../environments/environment';
 
 import Dexie from 'dexie';
 
@@ -67,20 +68,18 @@ export class TezorTrezorDebugComponent implements OnInit {
       // initialize TrezorConnect 
       TrezorConnect.init({
 
-        // connectSrc: 'http://localhost:5836/',
-        // frame_src: 'http://localhost:5836/iframe.html',
-        // popup_src: 'http://localhost:5836/popup.html',
+          
+        connectSrc: environment.trezor.connectSrc,
+        frame_src: environment.trezor.frame_src,
+        popup_src: environment.trezor.popup_src,
 
-        connectSrc: 'http://localhost:5500/build/',
-        frame_src: 'http://localhost:5500/build/iframe.html',
-        popup_src: 'http://localhost:5500/build/popup.html',
-
-        popup: false,
-        webusb: false,
+        popup: environment.trezor.popup,
+        trustedHost: environment.trezor.trustedHost,
+        webusb: environment.trezor.webusb,
+        
         // try to reconect when bridge is not working
-        transportReconnect: true,
-        debug: true,
-
+        transportReconnect: environment.trezor.transportReconnect,
+        debug: environment.trezor.debug,
 
       }).then(response => console.log('[TrezorConnect][init]', response))
         .catch(error => console.error('[ERROR][TrezorConnect][init]', error));

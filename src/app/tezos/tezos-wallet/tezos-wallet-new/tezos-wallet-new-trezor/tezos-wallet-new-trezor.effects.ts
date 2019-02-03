@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap, delay, filter } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ofRoute } from '../../../../shared/utils/rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable()
 export class TezosWalletNewTrezorEffects {
@@ -28,7 +29,24 @@ export class TezosWalletNewTrezorEffects {
             return caught;
         })
     )
+    
+    // trigger only if we have popup
+    @Effect()
+    TezosWalletNewTrezorPopup = this.actions$.pipe(
+        ofRoute('/tezos/wallet/new/trezor'),
+        filter(() => environment.trezor.popup),
+        delay(4000),
+        map(() => ({ type: 'TEZOS_TREZOR_NEW' })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        })
 
+    )
 
     //save new trezor wallet to tezos wallet list 
     @Effect()

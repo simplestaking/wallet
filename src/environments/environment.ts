@@ -14,10 +14,10 @@ export const environment = {
     frame_src: 'https://connect.trezor.io/6/iframe.html',
     popup_src: 'https://connect.trezor.io/6/popup.html',
     popup: true,
-    trustedHost: true,
+    trustedHost: false,
     webusb: false,
     debug: true,
-    transportReconnect: true // true
+    transportReconnect: false // true
   },
   nodes: 'main'
 };

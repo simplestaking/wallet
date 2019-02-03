@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store'
 import { Subject, of } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import TrezorConnect from 'trezor-connect';
 
 @Component({
   selector: 'app-tezos-trezor-connect',
@@ -11,10 +13,11 @@ import { takeUntil, filter } from 'rxjs/operators';
 export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public tezosTrezorConnect
+  public environmentTrezor = environment.trezor
   public destroy$ = new Subject<null>();
 
   constructor(
-    public store: Store<any>,
+    public store: Store<any>
   ) { }
 
   ngOnInit() {
@@ -28,6 +31,15 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterView
         this.tezosTrezorConnect = state
 
       })
+
+  }
+
+  openTrezorConnect() {
+
+    TrezorConnect.tezosGetAddress({
+      'path': "m/44'/1729'/0'",
+      'showOnTrezor': false,
+    })
 
   }
 
