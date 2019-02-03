@@ -35,7 +35,7 @@ export class TezosWalletNewTrezorEffects {
     TezosWalletNewTrezorPopup = this.actions$.pipe(
         ofRoute('/tezos/wallet/new/trezor'),
         filter(() => environment.trezor.popup),
-        delay(4000),
+        delay(3000),
         map(() => ({ type: 'TEZOS_TREZOR_NEW' })),
         catchError((error, caught) => {
             console.error(error.message)

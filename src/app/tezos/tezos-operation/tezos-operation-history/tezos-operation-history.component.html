@@ -5,7 +5,7 @@
     <th mat-header-cell *matHeaderCellDef> Date </th>
     <td mat-cell *matCellDef="let element">
 
-      <a *ngIf="!element.pending" href="http://zeronet.tzscan.io/{{element.hash}}" style="text-decoration:none;color: #000000" target="_blank">
+      <a *ngIf="!element.pending" href="http://tzscan.io/{{element.hash}}" style="text-decoration:none;color: #000000" target="_blank">
         {{element.datetime}}
       </a>
       <span *ngIf="element.pending">
