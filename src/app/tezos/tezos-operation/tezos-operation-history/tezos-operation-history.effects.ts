@@ -4,7 +4,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store, Action } from '@ngrx/store';
 
 import { of, Observable, from } from 'rxjs';
-import { withLatestFrom, flatMap, map, tap, catchError, switchMap, debounceTime, auditTime, take } from 'rxjs/operators';
+import { withLatestFrom, flatMap, map, tap, catchError, switchMap, debounceTime, auditTime, take, filter } from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 
@@ -24,6 +24,20 @@ interface OperationsDataIndex {
     firebase: Record<string, OperationHistoryEntity>
     tzScan: OperationHistoryEntity[]
 }
+
+/**
+ * Effects flow
+ * 
+ * Router --> TEZOS_OPERATION_HISTORY_CACHE_LOAD 
+ *              \ (side effect) (condtional) TEZOS_OPERATION_HISTORY_CACHE_CREATE
+ *              ---> TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS
+ *              ---> TEZOS_OPERATION_HISTORY_UPDATE 
+ *                   |     | 4x - once per operation type *                          
+ *                   |       \ (side effect) ---> TEZOS_OPERATION_HISTORY_CACHE_UPDATE
+ *                   |      ---> TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS
+ *                   |
+ *                    ---> TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS
+ */
 
 
 @Injectable()
@@ -550,6 +564,11 @@ export class TezosOperationHistoryEffects {
             this.store,
             (action, state) => ({ action, state })
         ),
+
+        // do not execute in wallet list as we do not need pending info here
+        filter(({ state }) => {
+            return state.routerReducer.state.url !== '/tezos/wallet'
+        }),
 
         flatMap(({ action, state }) => of([]).pipe(
 

@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of, from, Observable } from 'rxjs';
-import { map, withLatestFrom, flatMap, catchError, tap, switchMap, auditTime, filter } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, catchError, tap, switchMap, auditTime, filter, take } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { initializeWallet, getWallet } from 'tezos-wallet';
@@ -31,6 +31,29 @@ export interface FirebaseWalletHistoryDoc {
 }
 
 const DAY_MILISECONDS = 24 * 60 * 60 * 1000;
+
+
+/**
+ * Effects order
+ * 
+ * Router ---> TEZOS_NODE_PRICE_UPDATE ---> TEZOS_NODE_PRICE_UPDATE_SUCCESS
+ * Router ---> TEZOS_NODE_HISTORICAL_PRICE_UPDATE  ---> TEZOS_NODE_HISTORICAL_PRICE_UPDATE_SUCCESS
+ * 
+ * Router ---> TEZOS_WALLET_LIST_LOAD ---> TEZOS_WALLET_LIST_LOAD_SUCCESS
+ *                                         | ---> TEZOS_WALLET_LIST_NODE_DETAIL_SUCCESS
+ *                                           ---> TEZOS_WALLET_LIST_BALANCES_LOAD
+ *                                               * (switch map) multicast per wallet address 
+ *                                               |
+ *                                               | (condition) (side effect) ---> TEZOS_OPERATION_HISTORY_CACHE_CREATE
+ *                                                (if cache has today value) ---> TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS
+ *                                                (else) ---> TEZOS_OPERATION_HISTORY_CACHE_LOAD (see tezos-wallet-history.effect.ts)
+ * 
+ * ... ---> TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS
+ *          |
+ *          \ (conditional) (side effect) ---> TEZOS_OPERATION_HISTORY_BALANCES_UPDATE
+ *           (if all data available) ---> TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS
+ *           (else) ---> TEZOS_WALLET_CHART_PENDING
+ */
 
 @Injectable()
 export class TezosWalletListEffects {
@@ -183,7 +206,7 @@ export class TezosWalletListEffects {
         // proceed only if we are in tezos/wallet (prevent redundant invocation in receive / send / delegate funds screens)
         filter(({ state }) => {
             return state.routerReducer.state.url === '/tezos/wallet'
-        }),        
+        }),
 
         // create action stream separating wallets
         switchMap(({ action, state }) => {
@@ -214,28 +237,33 @@ export class TezosWalletListEffects {
 
             return this.db.collection(`tezos_${state.tezos.tezosNode.api.name}_history`)
                 .doc(address)
-                .get().toPromise().then(doc => ({
+                .get()
+                .pipe(
+                    // prevent multiple executions as we push updated to balances
+                    take(1)
+                )
+                .toPromise().then(doc => ({
                     walletAddress: address,
                     firebaseResponse: doc.data() as FirebaseWalletHistoryDoc,
                     error: false
                 }),
-                // firebase offline or non reacheable - fallback
-                error => ({
-                    walletAddress: address,
-                    firebaseResponse: undefined,
-                    error: true
-                }))                
+                    // firebase offline or non reacheable - fallback
+                    error => ({
+                        walletAddress: address,
+                        firebaseResponse: undefined,
+                        error: true
+                    }))
         }),
 
         // @TODO change to flatmap
         tap(data => {
 
-           if(data.firebaseResponse === undefined && data.error === false){
-               this.store.dispatch<TEZOS_OPERATION_HISTORY_CACHE_CREATE>({
-                   type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE',
-                   payload: data.walletAddress
-               })
-           }
+            if (data.firebaseResponse === undefined && data.error === false) {
+                this.store.dispatch<TEZOS_OPERATION_HISTORY_CACHE_CREATE>({
+                    type: 'TEZOS_OPERATION_HISTORY_CACHE_CREATE',
+                    payload: data.walletAddress
+                })
+            }
         }),
 
         map(data => {
@@ -289,7 +317,7 @@ export class TezosWalletListEffects {
     TezosWalletOperationHistoryBalancesRefresh$ = this.actions$.pipe(
         ofType<TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS>(
             'TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS'
-        ),        
+        ),
 
         // prevent useless intermediate updates while chart is being composed
         // event is triggered multiple times as we load operations from  cache
@@ -344,24 +372,9 @@ export class TezosWalletListEffects {
                 walletAddress,
                 chartData
             };
-        }),
+        }),       
 
-        tap(data => {
-            if (data.chartData) {
-                const chartPoints = data.chartData[0].series;
-
-                this.store.dispatch<TEZOS_OPERATION_HISTORY_BALANCES_UPDATE>({
-                    type: 'TEZOS_OPERATION_HISTORY_BALANCES_UPDATE',
-                    payload: {
-                        walletAddress: data.walletAddress,
-                        balances: [...chartPoints]
-
-                    }
-                })
-            }
-        }),
-
-        map(data => {
+        flatMap((data) : Observable<Action> => {
             if (data.chartData) {
                 const chartPoints = data.chartData[0].series;
 
@@ -376,19 +389,31 @@ export class TezosWalletListEffects {
                     return accumulator;
                 }, {});
 
-                return {
-                    type: 'TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS',
-                    payload: {
-                        walletAddress: data.walletAddress,
-                        balancesMap: balancesMap
-                    }
-                } as TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS;
+                return from([
+                    {
+                        type: 'TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS',
+                        payload: {
+                            walletAddress: data.walletAddress,
+                            balancesMap: balancesMap
+                        }
+                    } as TEZOS_WALLET_LIST_BALANCES_LOAD_SUCCESS,
+                    {
+                        type: 'TEZOS_OPERATION_HISTORY_BALANCES_UPDATE',
+                        payload: {
+                            walletAddress: data.walletAddress,
+                            balances: [...chartPoints]
+    
+                        }
+                    } as TEZOS_OPERATION_HISTORY_BALANCES_UPDATE
+                ]);
 
             } else {
-                return {
-                    type: 'TEZOS_WALLET_CHART_PENDING',
-                    payload: data
-                }
+                return from([
+                    {
+                        type: 'TEZOS_WALLET_CHART_PENDING',
+                        payload: data
+                    }
+                ]);
             }
         }),
 

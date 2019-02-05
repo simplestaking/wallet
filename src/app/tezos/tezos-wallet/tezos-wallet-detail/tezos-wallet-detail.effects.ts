@@ -10,16 +10,36 @@ import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
 import { State as RootState } from '../../../app.reducers';
 import { State as TezosState } from '../../tezos.reducers';
-import { environment } from '../../../../environments/environment';
 import { initializeWallet, getWallet } from 'tezos-wallet'
-import { HistoricalPrice } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.reducer';
-import { OperationHistoryEntity } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.entity';
 import { TEZOS_OPERATION_HISTORY_BALANCES_UPDATE, TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS, TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS } from '../../tezos-operation/tezos-operation-history/tezos-operation-history.actions';
 import { ChartData, ChartDataPoint } from '../../../shared/charts/chart-line-nav/chart-line-nav.component';
 import { RouterNavigationAction } from '@ngrx/router-store';
 import { TEZOS_WALLET_DETAIL_LOAD, TEZOS_WALLET_DETAIL_LOAD_SUCCESS, TEZOS_WALLET_DETAIL_NODE_DETAIL_SUCCESS, TezosWalletDetailActions } from './tezos-wallet-detail.actions';
 import { TezosWalletChartService } from '../../tezos-wallet-chart/tezos-wallet-chart.service';
 
+/**
+ * 
+ * Effects order
+ * 
+ * Router ---> TEZOS_OPERATION_HISTORY_DESTROY 
+ * Router ---> TEZOS_WALLET_SHOW
+ * 
+ * Router ---> TEZOS_WALLET_DETAIL_LOAD ---> TEZOS_WALLET_DETAIL_LOAD_SUCCESS ---> 
+ *             |
+ *             --> TEZOS_NODE_PRICE_UPDATE_SUCCESS
+ *             --> TEZOS_NODE_HISTORICAL_PRICE_UPDATE_SUCCESS
+ * 
+ * Router --> TEZOS_OPERATION_HISTORY_CACHE_LOAD (see tezos-wallet-detail.effect.ts for the flow)
+ * 
+ * (check all events as order in not guarenteed!)
+ *  TEZOS_WALLET_DETAIL_NODE_DETAIL_SUCCESS     
+ *  TEZOS_OPERATION_HISTORY_CACHE_LOAD_SUCCESS  
+ *  TEZOS_OPERATION_HISTORY_UPDATE_SUCCESS
+ *      |
+ *      \ (if all data in store) (side effect) ---> TEZOS_OPERATION_HISTORY_BALANCES_UPDATE
+ *        (if all data in store) ---> TEZOS_WALLET_CHART_SUCCESS
+ *          (else) ---> TEZOS_WALLET_CHART_PENDING
+ */
 
 @Injectable()
 export class TezosWalletDetailEffects {
@@ -31,6 +51,7 @@ export class TezosWalletDetailEffects {
         switchMap((action: RouterNavigationAction) => {
             const address = action.payload.routerState.root.children[0].firstChild.params.address;
             return [
+                // clear any data leftover from wallet list!
                 { type: 'TEZOS_OPERATION_HISTORY_DESTROY' },
                 { type: 'TEZOS_WALLET_SHOW' },
                 { type: 'TEZOS_WALLET_DETAIL_LOAD', payload: address },
