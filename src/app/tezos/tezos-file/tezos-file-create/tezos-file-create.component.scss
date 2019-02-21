@@ -1,0 +1,21 @@
+.tezos-create-file-form mat-form-field {
+  width: 100%;
+}
+
+.wallet-location-box {
+  display:flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.wallet-location-field {
+  width: 70%;
+}
+
+.wallet-location-button {
+  width: 26%;
+}
+
+.wallet-location-button button {
+  margin-top: 9px;
+}

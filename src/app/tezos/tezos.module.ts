@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../shared/shared.module'
+import { SharedModule } from '../shared/shared.module';
 
 import { QRCodeModule } from 'angularx-qrcode';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -50,6 +50,8 @@ import { reducers } from './tezos.reducers';
 import { TezosEffects } from './tezos.effects'
 import { TezosNodeEffects } from './tezos-node/tezos-node.effects'
 
+import { TezosFileCreateEffects } from './tezos-file/tezos-file-create/tezos-file-create.effects';
+
 import { TezosWalletListEffects } from './tezos-wallet/tezos-wallet-list/tezos-wallet-list.effects'
 import { TezosWalletDetailEffects } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.effects'
 import { TezosWalletSendEffects } from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.effects'
@@ -59,13 +61,15 @@ import { TezosWalletDialogEffects } from './tezos-wallet/tezos-wallet-dialog/tez
 import { TezosWalletDialogAppUpdateEffects } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog-app-update/tezos-wallet-dialog-app-update.effects'
 
 import { TezosWalletNewTrezorEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.effects';
+import { TezosWalletNewMnemonicEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-mnemonic/tezos-wallet-new-mnemonic.effects';
+import { TezosWalletNewRestoreEffects } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-restore/tezos-wallet-new-restore.effects';
 
 import { TezosOperationTransactionEffects } from './tezos-operation/tezos-operation-transaction/tezos-operation-transaction.effects'
 import { TezosOperationOriginationEffects } from './tezos-operation/tezos-operation-origination/tezos-operation-origination.effects'
 import { TezosOperationDelegationEffects } from './tezos-operation/tezos-operation-delegation/tezos-operation-delegation.effects'
 import { TezosOperationHistoryEffects } from './tezos-operation/tezos-operation-history/tezos-operation-history.effects'
 import { TezosOperationReceiveEffects } from './tezos-operation/tezos-operation-receive/tezos-operation-receive.effects'
-
+import { TezosOperationMnemonicEffects } from './tezos-operation/tezos-operation-mnemonic/tezos-operation-mnemonic.effects'
 
 
 import { TezosTrezorConnectEffects } from './tezos-trezor/tezos-trezor-connect/tezos-trezor-connect.effects'
@@ -98,6 +102,10 @@ import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tez
 import { TezosTrezorContractComponent } from './tezos-trezor/tezos-trezor-contract/tezos-trezor-contract.component';
 import { TezosWalletDialogComponent } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog.component';
 import { TezosWalletDialogAppUpdateComponent } from './tezos-wallet/tezos-wallet-dialog/tezos-wallet-dialog-app-update/tezos-wallet-dialog-app-update.component'
+import { TezosWalletNewMnemonicComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-mnemonic/tezos-wallet-new-mnemonic.component';
+import { TezosOperationMnemonicComponent } from './tezos-operation/tezos-operation-mnemonic/tezos-operation-mnemonic.component';
+import { TezosWalletNewRestoreComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-restore/tezos-wallet-new-restore.component';
+import { TezosFileCreateComponent } from './tezos-file/tezos-file-create/tezos-file-create.component';
 
 @NgModule({
   imports: [
@@ -117,6 +125,8 @@ import { TezosWalletDialogAppUpdateComponent } from './tezos-wallet/tezos-wallet
       TezosEffects,
       TezosNodeEffects,
 
+      TezosFileCreateEffects,
+
       TezosWalletListEffects,
       TezosWalletDetailEffects,
       TezosWalletSendEffects,
@@ -125,11 +135,14 @@ import { TezosWalletDialogAppUpdateComponent } from './tezos-wallet/tezos-wallet
       TezosWalletDialogEffects,
       TezosWalletDialogAppUpdateEffects,
       TezosWalletNewTrezorEffects,
+      TezosWalletNewMnemonicEffects,
+      TezosWalletNewRestoreEffects,
 
       TezosOperationTransactionEffects,
       TezosOperationDelegationEffects,
       TezosOperationHistoryEffects,
       TezosOperationReceiveEffects,
+      TezosOperationMnemonicEffects,
 
       TezosTrezorConnectEffects,
       TezosTrezorNewEffects,
@@ -197,7 +210,11 @@ import { TezosWalletDialogAppUpdateComponent } from './tezos-wallet/tezos-wallet
     TezosWalletStartComponent,
     TezosTrezorContractComponent,
     TezosWalletDialogComponent,
-    TezosWalletDialogAppUpdateComponent
+    TezosWalletDialogAppUpdateComponent,
+    TezosWalletNewMnemonicComponent,
+    TezosOperationMnemonicComponent,
+    TezosWalletNewRestoreComponent,
+    TezosFileCreateComponent,
   ],
   entryComponents: [
     TezosWalletDialogComponent,

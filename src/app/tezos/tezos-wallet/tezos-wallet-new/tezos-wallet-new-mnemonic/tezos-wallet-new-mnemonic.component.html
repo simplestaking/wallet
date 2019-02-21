@@ -1,0 +1,212 @@
+<div style="display: flex;align-items: center; padding-left: 8px;">
+
+  <mat-spinner [diameter]="20" [strokeWidth]="1" *loadingSpinner></mat-spinner>
+
+  <span class="filler-content"></span>
+
+  <div class="close">
+    <button mat-button routerLink="/tezos/wallet">
+      <mat-icon>close</mat-icon>
+      Close
+    </button>
+  </div>
+
+</div>
+
+<div class="stepper">
+
+  <mat-card>
+    <mat-card-content>
+
+      <br />
+      <mat-card-header>
+        <h2 class="mat-h1 reset">
+          Generate a new Tezos address
+        </h2>
+      </mat-card-header>
+
+      <mat-horizontal-stepper [linear]="false" #stepper>
+  
+        <mat-step [editable]="false" [optional]="false" [completed]="true" label="Start">
+          <div class="center-content-medium">
+
+            <br />
+
+            <div class="flex-info-pannel">
+              <div fxFlex class="flex-info-box">
+                <div class="step-content-header-text">Instructions</div>
+              </div>
+              <div fxFlex class="smoked-backgroud flex-info-box">
+                <p>Now we are going to take you through process of generating your Mnemonic (also known as Seed), 
+                which you need to do only once. Your mnemonic is 15-world phrase that that will be used to 
+                restore your assets. Keep it safe!</p>
+                <!-- <app-tezos-file-create></app-tezos-file-create> -->
+              </div>
+              <div class="flex-info-box"> 
+                <strong>You will need: Pen and paper to save your phrase securely</strong>
+              </div>
+            </div>
+
+            <br />
+            <br />
+
+            <div class="center-content-next">
+              <button mat-flat-button matStepperNext (click)="tezosWalletNewMnemonicGenerate()">
+                <svg-icon icon="next"></svg-icon>&nbsp;
+                Continue to generate Mnemonic&nbsp;
+              </button>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" [optional]="false" label="Generate Mnemonic">
+          <div class="center-content">
+
+            <br />
+
+            <div class="flex-info-pannel">
+
+              <div class="smoked-backgroud flex-info-box">
+                <strong>Write these words down in correct order:</strong>
+              </div>
+              
+              <div class="flex-info-box">
+
+                <div class="mnemonic-flex-box" [formGroup]="fakeForm">
+                  <ng-container *ngFor="let row of mnemonicArray">
+                    <!-- {{row.id}}: {{row.word}} -->
+                    <mat-form-field class="mnemonic-flex-item" appearance="outline">
+                      <mat-label>{{row.id}}</mat-label>
+                      <input matInput value="{{row.word}}" formControlName="{{row.key}}" readonly>
+                    </mat-form-field>
+                  </ng-container>
+                </div>
+                
+              </div>
+
+              <div class="flex-info-box">
+                <p style="text-align: center">Do not take screenshot! Pen and paper is the only way to guarantee security</p>
+              </div>
+
+            </div>
+
+            <br />
+            <br />
+
+            <div class="center-content-next">
+              <button mat-flat-button matStepperNext>
+                <svg-icon icon="next"></svg-icon>&nbsp;
+                  Continue&nbsp;
+              </button>
+            </div>
+
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Verify Mnemonic">
+          <div class="center-content">
+
+            <br />
+
+            <div fxLayout="column" class="flex-info-pannel">
+              <div fxFlex class="smoked-backgroud flex-info-box">
+                <strong>Please enter the words as you wrote them down</strong>
+              </div>
+              <div fxFlex class="flex-info-box"> 
+                <app-tezos-operation-mnemonic [restoreMnemonic]="restoreFalse" ></app-tezos-operation-mnemonic>
+              </div>
+            </div>
+
+            <br />
+            <br />
+
+            <div class="center-content-next">
+              <button mat-flat-button type="submit" form="tezosOperationMnemonicFormId" (click)="verifyMnemonicSubmit(stepper)">
+                <svg-icon icon="next"></svg-icon>&nbsp;
+                  Continue&nbsp;
+              </button>
+            </div>
+
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Save and Finish">
+
+          <div class="center-content-medium" style="margin-left:25px;" *ngIf="saveScreen">
+
+            <br />
+
+            <div fxLayout="column" class="flex-info-pannel">
+              <div fxFlex class="smoked-backgroud flex-info-box">
+                <div class="step-content-header-text">Save wallet in encrypted file</div>
+              </div>
+              <div fxFlex class="flex-info-box">
+                <p>Please enter strong password to encrypt your wallet file</p>
+
+                <app-tezos-file-create></app-tezos-file-create>
+
+                <p>This file contains private key to your addres protected by your password. 
+                  Whoever has access to your private key, can control funds.
+                  In case you loose this file , you can still restore your funds through mnemonic phrase.
+                </p>
+              </div>
+            </div>
+
+            <br />
+            
+            <div class="center-content-next">
+              <button mat-flat-button type="submit" form="tezosCreateFileFormId" (click)="tezosWalletNewMnemonicSaveFile()">
+                <svg-icon icon="next"></svg-icon>&nbsp;
+                Save wallet&nbsp;
+              </button>
+              <button color="accent" style="margin-left:20px;" mat-flat-button (click)="tezosWalletNewMnemonicSaveFileNext()">
+                <svg-icon icon="next"></svg-icon>&nbsp;
+                Skipp saving&nbsp;
+              </button>
+            </div>
+
+          </div>
+
+          <div class="center-content-medium" style="margin-left:25px;" *ngIf="finishScreen">
+
+            <br />
+
+            <div fxLayout="column" class="flex-info-pannel">
+              <div fxFlex class=" flex-info-box">
+                  <div class="step-content-header-text">Your Tezos address is ready!</div>
+              </div>
+              <div fxFlex class="smoked-backgroud flex-info-box">
+                <p>Now is the right time to give a memorable name to your address - <strong>{{publicKeyHash}}</strong></p>
+
+                <div [formGroup]="mnemonicWalletNameForm" ngrxForm="tezos.tezosWalletNewMnemonic">
+                  <mat-form-field style="width: 100%" appearance="outline">
+                    <mat-label>Your new wallet name</mat-label>
+                    <!-- <input matInput #name placeholder="Wallet name" formControlName="name" type="text" maxlength="36"/> 
+                    maybe there should be max length similar to public hash key so wallet list GUI will look nice -->
+                    <input matInput #name placeholder="Wallet name" formControlName="name" type="text" />
+                  </mat-form-field>
+                </div>
+
+              </div>
+            </div>
+
+            <br />
+            <br />
+            
+            <div class="center-content-next">
+              <button mat-flat-button matStepperNext (click)="tezosWalletNewMnemonicStoreKey()" >
+                <svg-icon icon="next"></svg-icon>&nbsp;
+                Finish&nbsp;
+              </button>
+            </div>
+
+          </div>
+        </mat-step>
+
+      </mat-horizontal-stepper>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+  
+

@@ -1,0 +1,75 @@
+<div style="display: flex;align-items: center; padding-left: 8px;">
+
+  <mat-spinner [diameter]="20" [strokeWidth]="1" *loadingSpinner></mat-spinner>
+
+  <span class="filler-content"></span>
+
+  <div class="close">
+    <button mat-button routerLink="/tezos/wallet">
+      <mat-icon>close</mat-icon>
+      Close
+    </button>
+  </div>
+
+</div>
+
+<div class="stepper">
+
+  <mat-card>
+    <mat-card-content>
+
+      <br />
+      <mat-card-header>
+        <h2 class="mat-h1 reset">
+          Reatore Tezos address from mnemonic
+        </h2>
+      </mat-card-header>
+
+      <mat-horizontal-stepper [linear]="false" #stepper>
+  
+        <mat-step [editable]="false" [optional]="false" [completed]="true" label="Start">
+          <div class="center-content">
+
+            <br />
+
+            <div class="flex-info-pannel">
+              <div fxFlex class="smoked-backgroud flex-info-box">
+                <p>Now we are going to take you through process of restorimg your wallet by Mnemonic (also known as Seed phrase). 
+                  Your mnemonic is 15-world phrase that have writen down in the wallet creation.</p>
+              </div>
+              <div class="flex-info-box"> 
+                <strong>Please prepare your mnemonic phrase and go to next step. We can not check if your phrase is correct, please make sure you typed them correctly</strong>
+              </div>
+            </div>
+
+            <br />
+            <br />
+
+            <div class="center-content-next">
+              <button mat-flat-button matStepperNext>
+                <svg-icon icon="next"></svg-icon>&nbsp;
+                Continue to restore wallet&nbsp;
+              </button>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Enter Mnemonic">
+
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Save Wallet">
+ 
+        </mat-step>
+
+        <mat-step [editable]="false" optional="false" label="Finish">
+ 
+        </mat-step>
+
+      </mat-horizontal-stepper>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+  
+

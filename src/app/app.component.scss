@@ -38,9 +38,9 @@
   
   }
   
-  mat-sidenav {
-    // width: 100px;
-  }
+  // mat-sidenav {
+  //   // width: 100px;
+  // }
 
   .mat-list, .mat-nav-list, .mat-selection-list {
     padding-top: 0px;
@@ -66,9 +66,9 @@
 }
 
 // menu hover 
-mat-nav-list a.mat-list-item:hover {
-  // font-weight: 500;
-}
+// mat-nav-list a.mat-list-item:hover {
+//   // font-weight: 500;
+// }
 
 mat-nav-list a.mat-list-item:hover fa-icon:not(:hover) {
   color:#2c71f4;
@@ -85,4 +85,78 @@ hr {
   border: 0px;
   background-color: #eaeaea;
   margin: 16px;
+}
+
+
+// stepper
+
+//mat-horizontal-stepper-content
+
+// center addres table and next button
+.stepper .center-content {
+	display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.stepper .center-content-medium {
+	display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin:0 auto !important;
+}
+
+.stepper .center-content-next {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.stepper ::ng-deep .mat-horizontal-content-container {
+  padding: 0px !important; 
+}
+
+.mat-card-info-content {
+  background-color:whitesmoke; 
+  width:604px;
+}
+
+.step-content-header-text {
+  padding: 10px 0;
+  text-align: center; 
+  font-size: 1.4em;
+}
+
+
+// colors
+
+.smoked-backgroud {
+  background-color: whitesmoke;
+}
+
+// flex info
+
+.flex-info-pannel {
+  border: solid 1px whitesmoke; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.flex-info-box {
+  padding: 10px;
+}
+
+.mnemonic-flex-box {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-around;
+	align-content: space-around;
+	height: 300px;
+}
+
+.mnemonic-flex-item {
+	width: 30%;
+	height: 55px;
 }

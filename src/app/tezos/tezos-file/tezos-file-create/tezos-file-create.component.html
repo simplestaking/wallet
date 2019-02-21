@@ -1,0 +1,43 @@
+<!-- <p>status:{{ tezosCreateFileForm.status | json }}  valid:{{tezosCreateFileForm.valid | json}}
+    dirty:{{ tezosCreateFileForm.dirty | json }} touched:{{ tezosCreateFileForm.touched | json }}  pristine:{{tezosCreateFileForm.pristine | json}}
+</p> -->
+<form class="tezos-create-file-form" id="tezosCreateFileFormId" [formGroup]="tezosCreateFileForm" ngrxForm="tezos.tezosFileCreate">
+  <div class="wallet-location-box">
+    <div class="wallet-location-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Wallet location</mat-label>
+        <input matInput #walletLocation placeholder="Wallet location" formControlName="walletLocation" type="text" readonly/>
+        <mat-error>
+          Choose location to store wallet file
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="wallet-location-button">
+      <button mat-raised-button type="button" color="primary" (click)="selectWalletFile()">
+          Browse
+      </button>
+    </div>
+  </div>
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+    <input matInput #password placeholder="Password" formControlName="password" type="password" maxlength="32" />
+    <mat-hint align="end">{{password.value?.length || 0}}/32</mat-hint>
+    <mat-error>
+      Password is too weak
+    </mat-error>
+  </mat-form-field>
+  
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Repeat password</mat-label>
+    <input matInput #input placeholder="Repeat password" formControlName="repeatPassword" type="password"
+      maxlength="32" [errorStateMatcher]="createFileErrorStateMatcher" />
+    <mat-hint align="end">{{input.value?.length || 0}}/32</mat-hint>
+    <mat-error>
+      Password does not match
+    </mat-error>
+  </mat-form-field>
+</form>
+

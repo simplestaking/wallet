@@ -5,13 +5,15 @@ import { TezosWalletComponent } from './tezos-wallet/tezos-wallet.component';
 import { TezosWalletStartComponent } from './tezos-wallet/tezos-wallet-start/tezos-wallet-start.component'
 import { TezosWalletNewComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new.component';
 import { TezosWalletNewTrezorComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-trezor/tezos-wallet-new-trezor.component';
+import { TezosWalletNewMnemonicComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-mnemonic/tezos-wallet-new-mnemonic.component';
+import { TezosWalletNewRestoreComponent } from './tezos-wallet/tezos-wallet-new/tezos-wallet-new-restore/tezos-wallet-new-restore.component';
 
 import { TezosWalletDetailComponent } from './tezos-wallet/tezos-wallet-detail/tezos-wallet-detail.component';
 import { TezosWalletSendComponent } from './tezos-wallet/tezos-wallet-send/tezos-wallet-send.component';
 import { TezosWalletReceiveComponent } from './tezos-wallet/tezos-wallet-receive/tezos-wallet-receive.component';
 import { TezosWalletDelegateComponent } from './tezos-wallet/tezos-wallet-delegate/tezos-wallet-delegate.component';
 
-import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tezor-trezor-debug.component'
+import { TezorTrezorDebugComponent } from './tezos-trezor/tezor-trezor-debug/tezor-trezor-debug.component';
 
 
 export const TezosRouting: Routes = [
@@ -20,8 +22,10 @@ export const TezosRouting: Routes = [
   
   { path: 'wallet/start', component: TezosWalletStartComponent },
   
-  { path: 'wallet/new', component: TezosWalletNewComponent },
+  { path: 'wallet/new', component: TezosWalletNewComponent }, 
   { path: 'wallet/new/trezor', component: TezosWalletNewTrezorComponent },
+  { path: 'wallet/new/mnemonic', component: TezosWalletNewMnemonicComponent },
+  { path: 'wallet/new/restore', component: TezosWalletNewRestoreComponent },
   
   { path: 'wallet/detail/:address', component: TezosWalletDetailComponent },
   

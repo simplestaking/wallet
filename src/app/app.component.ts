@@ -27,7 +27,7 @@ export class AppComponent {
 
     console.log('[environment]', environment )
 
-    this.store.select('app')
+     this.store.select('app')
       .subscribe(data => {
         this.app = data
       })
@@ -79,9 +79,9 @@ export class AppComponent {
 
     }
 
-    // this.router.navigate(['/auth'])
-    this.router.navigate(['/tezos/wallet/start'])
-    //this.router.navigate(['/tezos/wallet/trezor/debug'])
+    this.router.navigate(['/tezos/wallet'])
+    // this.router.navigate(['/tezos/wallet/start'])
+    // this.router.navigate(['/tezos/wallet/trezor/debug'])
 
   }
 

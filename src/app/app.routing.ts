@@ -18,7 +18,8 @@ export const AppRouting: Routes = [
   { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
   
   // routing for electron
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/tezos/wallet', pathMatch: 'full' }
+  //{ path: '', redirectTo: '/', pathMatch: 'full' },
   // { path: '**', component: PageNotFoundComponent }
 
 ];

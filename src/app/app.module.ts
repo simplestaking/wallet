@@ -14,7 +14,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
-import { NgxElectronModule } from 'ngx-electron';
+import { ElectronService, NgxElectronModule } from 'ngx-electron';
 
 import { DeviceDetectorModule } from 'ngx-device-detector';
 
@@ -202,7 +202,8 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi: true
-    }
+    },
+    ElectronService,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,12 @@
+<p>{{mnemonicMap | json}}</p>
+
+<form class="mnemonic-flex-box" id="tezosOperationMnemonicFormId" [formGroup]="tezosOperationMnemonicForm" ngrxForm="tezos.tezosOperationMnemonic">
+
+  <ng-container *ngFor="let row of mnemonicArray">
+    <mat-form-field class="mnemonic-flex-item" appearance="outline">
+      <mat-label>{{row.id}}</mat-label>
+      <input matInput type="text" formControlName="{{row.key}}" [errorStateMatcher]="verifyMnemonicErrorStateMatcher">
+    </mat-form-field>
+  </ng-container>
+
+</form>

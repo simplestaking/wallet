@@ -184,6 +184,8 @@ export function reducer(state = initialState, action) {
         }
 
         case 'AUTH_SHOW':
+        case 'TEZOS_WALLET_NEW_MNEMONIC_SHOW':
+        case 'TEZOS_WALLET_NEW_RESTORE_SHOW':
         case 'TEZOS_WALLET_NEW_TREZOR_SHOW': {
             return {
                 ...state,
