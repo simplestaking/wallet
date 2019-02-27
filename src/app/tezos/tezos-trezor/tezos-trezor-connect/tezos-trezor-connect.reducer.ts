@@ -240,35 +240,15 @@ export function reducer(state = initialState, action) {
             }
         }
 
-        case 'TEZOS_TREZOR_CONNECT_UI': {
-            if (action.payload.type === "iframe-handshake") { 
-                return {
-                    ...state,
-                    connect: {
-                        initialized: true,
-                    },
-                    device: {
-                        ...state.device,
-                    },
-                    status: {
-                        ...state.status,
-                        event: action.payload.type
-                    }
-                }
-            } 
-            else {
-                return {
-                    ...state,
-                    device: {
-                        ...state.device,
-                    },
-                    status: {
-                        ...state.status,
-                        event: action.payload.type
-                    }
+        case 'TEZOS_TREZOR_CONNECT_INIT_SUCCESS': {
+            return {
+                ...state,
+                connect: {
+                    initialized: true,
                 }
             }
-        }
+        } 
+        
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE':
         case 'TEZOS_TREZOR_CONNECT_TRANSPORT': {

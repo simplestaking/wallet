@@ -199,7 +199,7 @@ export class TezosTrezorConnectEffects {
 
                 // Initialize TrezorConnect 
                 TrezorConnect.init({
-                    
+
                     connectSrc: environment.trezor.connectSrc,
                     frame_src: environment.trezor.frame_src,
                     popup_src: environment.trezor.popup_src,
@@ -207,12 +207,21 @@ export class TezosTrezorConnectEffects {
                     popup: environment.trezor.popup,
                     trustedHost: environment.trezor.trustedHost,
                     webusb: environment.trezor.webusb,
-                    
+
                     // try to reconect when bridge is not working
                     transportReconnect: environment.trezor.transportReconnect,
                     debug: environment.trezor.debug,
-
-                }).then(response => console.log('[TrezorConnect][init]', response))
+                    manifest: {
+                        email:  environment.trezor.manifest.email, 
+                        appUrl: environment.trezor.manifest.appUrl, 
+                    }
+                })
+                    .then(() => {
+                        console.log('[TrezorConnect][init]')
+                        this.store.dispatch({
+                            type: 'TEZOS_TREZOR_CONNECT_INIT_SUCCESS',
+                        })
+                    })
                     .catch(error => {
                         console.error('[ERROR][TrezorConnect][init]', error)
                         this.store.dispatch({
@@ -281,7 +290,7 @@ export class TezosTrezorConnectEffects {
             )
 
             // if device is connected with normal state get all address
-            return (!state.tezos.tezosTrezorNew.pending && !environment.trezor.popup &&(
+            return (!state.tezos.tezosTrezorNew.pending && !environment.trezor.popup && (
 
                 // !TODO check if we already downloaded all new addresses
                 // set flag in tezosTrezorNew has already all address download 
@@ -319,10 +328,10 @@ export class TezosTrezorConnectEffects {
     @Effect()
     TezosOperationTransaction$ = this.actions$.pipe(
         ofType('TEZOS_TREZOR_CONNECT_POPUP_OPEN'),
-   
+
         // add state to effect
         withLatestFrom(this.store, (action, state) => ({ state, action })),
-        
+
         // show address on device
         flatMap(({ state, action }) => {
 
@@ -335,7 +344,7 @@ export class TezosTrezorConnectEffects {
 
         }),
 
- 
+
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -346,7 +355,7 @@ export class TezosTrezorConnectEffects {
         }),
 
     )
-    
+
 
     constructor(
         private actions$: Actions,

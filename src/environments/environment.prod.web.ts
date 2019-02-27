@@ -10,14 +10,18 @@ export const environment = {
     disableNetwork: true
   },
   trezor: {
-    connectSrc: 'https://connect.trezor.io/6/',
-    frame_src: 'https://connect.trezor.io/6/iframe.html',
-    popup_src: 'https://connect.trezor.io/6/popup.html',
+    connectSrc: 'https://connect.trezor.io/7/',
+    frame_src: 'https://connect.trezor.io/7/iframe.html',
+    popup_src: 'https://connect.trezor.io/7/popup.html',
     popup: true,
     trustedHost: true,
     webusb: false,
     debug: true,
-    transportReconnect: false // true
+    transportReconnect: false, // true
+    manifest: {
+      email: 'jurajselep@simplestaking.com',
+      appUrl: 'https://wallet.simplestaking.com'
+    }
   },
   nodes: 'main'
 };

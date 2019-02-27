@@ -17,7 +17,11 @@ export const environment = {
     trustedHost: true,
     webusb: true,
     debug: true,
-    transportReconnect: true // true
+    transportReconnect: true, // true
+    manifest: {
+      email: 'jurajselep@simplestaking.com',
+      appUrl: 'https://wallet.simplestaking.com'
+    },
   },
   nodes: 'main'
 };  
