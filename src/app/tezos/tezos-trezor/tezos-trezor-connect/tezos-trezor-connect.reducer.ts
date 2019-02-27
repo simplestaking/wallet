@@ -17,6 +17,9 @@ const initialState: any = {
         isVisible: false,
         type: '',
     },
+    connect: {
+        initialized: false,
+    }
 }
 
 export function reducer(state = initialState, action) {
@@ -185,7 +188,7 @@ export function reducer(state = initialState, action) {
                 },
                 passphrase: {
                     isVisible: false,
-                    type:'',
+                    type: '',
                 }
             }
         }
@@ -237,8 +240,37 @@ export function reducer(state = initialState, action) {
             }
         }
 
+        case 'TEZOS_TREZOR_CONNECT_UI': {
+            if (action.payload.type === "iframe-handshake") { 
+                return {
+                    ...state,
+                    connect: {
+                        initialized: true,
+                    },
+                    device: {
+                        ...state.device,
+                    },
+                    status: {
+                        ...state.status,
+                        event: action.payload.type
+                    }
+                }
+            } 
+            else {
+                return {
+                    ...state,
+                    device: {
+                        ...state.device,
+                    },
+                    status: {
+                        ...state.status,
+                        event: action.payload.type
+                    }
+                }
+            }
+        }
+
         case 'TEZOS_TREZOR_CONNECT_DEVICE':
-        case 'TEZOS_TREZOR_CONNECT_UI':
         case 'TEZOS_TREZOR_CONNECT_TRANSPORT': {
             return {
                 ...state,

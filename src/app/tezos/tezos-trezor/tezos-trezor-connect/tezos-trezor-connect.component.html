@@ -71,7 +71,7 @@
       &nbsp;{{ tezosTrezorConnect.status.event }}
     </span>     -->
     <br>
-    <button mat-flat-button (click)="trezorConnectPopupOpen()" *ngIf="environmentTrezor.popup">
+    <button mat-flat-button (click)="trezorConnectPopupOpen()" *ngIf="environmentTrezor.popup && tezosTrezorConnect.connect.initialized ">
       <span>
         Launch Trezor connect to Continue&nbsp;
       </span>
