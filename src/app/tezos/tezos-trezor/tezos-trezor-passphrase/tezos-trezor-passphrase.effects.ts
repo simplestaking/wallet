@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, empty, } from 'rxjs';
-import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, filter, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 

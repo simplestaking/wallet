@@ -281,7 +281,7 @@ export class TezosTrezorConnectEffects {
             )
 
             // if device is connected with normal state get all address
-            return (!state.tezos.tezosTrezorNew.pending && (
+            return (!state.tezos.tezosTrezorNew.pending && !environment.trezor.popup &&(
 
                 // !TODO check if we already downloaded all new addresses
                 // set flag in tezosTrezorNew has already all address download 
@@ -316,6 +316,37 @@ export class TezosTrezorConnectEffects {
         }),
     )
 
+    @Effect()
+    TezosOperationTransaction$ = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT_POPUP_OPEN'),
+   
+        // add state to effect
+        withLatestFrom(this.store, (action, state) => ({ state, action })),
+        
+        // show address on device
+        flatMap(({ state, action }) => {
+
+            // console.error('[TEZOS_TREZOR_CONNECT_POPUP_OPEN] url', state.routerReducer.state.url)
+            // // only launch on /tezos/wallet/new/trezor
+            // return state.routerReducer.state.url === "/tezos/wallet/new/trezor" ?
+            //     of({ type: 'TEZOS_TREZOR_NEW' }) : empty()
+
+            return of({ type: 'TEZOS_TREZOR_NEW' })
+
+        }),
+
+ 
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TTEZOS_TREZOR_CONNECT_POPUP_OPEN_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
+    )
+    
 
     constructor(
         private actions$: Actions,

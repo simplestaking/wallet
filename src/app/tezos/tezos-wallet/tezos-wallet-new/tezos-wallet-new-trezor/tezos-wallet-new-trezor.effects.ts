@@ -30,23 +30,6 @@ export class TezosWalletNewTrezorEffects {
         })
     )
     
-    // trigger only if we have popup
-    @Effect()
-    TezosWalletNewTrezorPopup = this.actions$.pipe(
-        ofRoute('/tezos/wallet/new/trezor'),
-        filter(() => environment.trezor.popup),
-        delay(3000),
-        map(() => ({ type: 'TEZOS_TREZOR_NEW' })),
-        catchError((error, caught) => {
-            console.error(error.message)
-            this.store.dispatch({
-                type: 'TEZOS_TREZOR_NEW_ERROR',
-                payload: error.message,
-            });
-            return caught;
-        })
-
-    )
 
     //save new trezor wallet to tezos wallet list 
     @Effect()

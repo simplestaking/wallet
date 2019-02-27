@@ -7,7 +7,8 @@
     </span>
   </div>
 
-  <div class="trezor-disconnected" *ngIf="!tezosTrezorConnect.device.connected && !tezosTrezorConnect.passphrase.isVisible">
+  <div class="trezor-disconnected"
+    *ngIf="!tezosTrezorConnect.device.connected && !tezosTrezorConnect.passphrase.isVisible">
     <img src="./assets/trezor_disconnected.svg" alt="Connect your Trezor to Continue..." style="transform: scale(0.9)">
 
     <span class="action" *ngIf="!tezosTrezorConnect.status.error">
@@ -65,16 +66,16 @@
       Password is required. Please wait for Trezor to start.
     </span>
 
-    <!-- 
-      <span class="status">
-        &nbsp;{{ tezosTrezorConnect.status.event }}
-      </span> -->
-    <!-- <br>
-    <button mat-flat-button (click)="openTrezorConnect()" *ngIf="environmentTrezor.popup">
+
+    <!-- <span class="status">
+      &nbsp;{{ tezosTrezorConnect.status.event }}
+    </span>     -->
+    <br>
+    <button mat-flat-button (click)="trezorConnectPopupOpen()" *ngIf="environmentTrezor.popup">
       <span>
         Launch Trezor connect to Continue&nbsp;
       </span>
-    </button> -->
+    </button>
 
   </div>
 

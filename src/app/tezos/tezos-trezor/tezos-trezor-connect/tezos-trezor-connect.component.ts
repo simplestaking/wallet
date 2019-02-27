@@ -34,12 +34,11 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterView
 
   }
 
-  openTrezorConnect() {
+  trezorConnectPopupOpen() {
 
-    TrezorConnect.tezosGetAddress({
-      'path': "m/44'/1729'/0'",
-      'showOnTrezor': false,
-    })
+    this.store.dispatch({
+      type: "TEZOS_TREZOR_CONNECT_POPUP_OPEN",
+    });
 
   }
 
@@ -48,20 +47,20 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterView
     this.store.dispatch({
       type: 'TEZOS_TREZOR_CONNECT',
     })
-    
-  } 
+
+  }
 
   ngOnDestroy() {
-    
+
     // if TrezorConnect is in error state, close it
     this.store.dispatch({
-      type:'TEZOS_TREZOR_CONNECT_CLOSE'
+      type: 'TEZOS_TREZOR_CONNECT_CLOSE'
     })
-    
+
     // close all open observables
     this.destroy$.next();
     this.destroy$.complete();
 
   }
-  
+
 }

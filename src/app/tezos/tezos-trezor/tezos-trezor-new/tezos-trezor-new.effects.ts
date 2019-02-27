@@ -5,8 +5,9 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, empty, } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, concatMap, catchError, filter, delay, tap } from 'rxjs/operators';
 import { enterZone } from '../../../shared/utils/rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 
@@ -22,7 +23,7 @@ export class TezosTrezorNewEffects {
     TezosTrezorNew = this.actions$.pipe(
 
         ofType('TEZOS_TREZOR_NEW'),
-
+                
         // TODO: find action for connect initialization
         // delay(2000),
 
