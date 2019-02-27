@@ -11,8 +11,6 @@ export const environment = {
   },
   trezor: {
     connectSrc: 'https://connect.trezor.io/7/',
-    frame_src: 'https://connect.trezor.io/7/iframe.html',
-    popup_src: 'https://connect.trezor.io/7/popup.html',
     popup: true,
     trustedHost: false,
     webusb: false,

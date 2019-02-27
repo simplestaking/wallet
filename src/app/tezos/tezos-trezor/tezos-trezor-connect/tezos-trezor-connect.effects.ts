@@ -201,9 +201,7 @@ export class TezosTrezorConnectEffects {
                 TrezorConnect.init({
 
                     connectSrc: environment.trezor.connectSrc,
-                    frame_src: environment.trezor.frame_src,
-                    popup_src: environment.trezor.popup_src,
-
+  
                     popup: environment.trezor.popup,
                     trustedHost: environment.trezor.trustedHost,
                     webusb: environment.trezor.webusb,

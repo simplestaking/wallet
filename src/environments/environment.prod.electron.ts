@@ -11,8 +11,6 @@ export const environment = {
   },
   trezor: {
     connectSrc: 'http://localhost:5836/',
-    frame_src: 'http://localhost:5836/iframe.html',
-    popup_src: 'http://localhost:5836/popup.html',
     popup: false,
     trustedHost: true,
     webusb: true,

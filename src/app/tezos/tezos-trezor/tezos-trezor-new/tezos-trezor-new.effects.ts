@@ -23,7 +23,7 @@ export class TezosTrezorNewEffects {
     TezosTrezorNew = this.actions$.pipe(
 
         ofType('TEZOS_TREZOR_NEW'),
-                
+
         // TODO: find action for connect initialization
         // delay(2000),
 
@@ -63,7 +63,10 @@ export class TezosTrezorNewEffects {
         withLatestFrom(this.store, (action: any, state) => ({ action, state })),
 
         // download publicKey to path
-        flatMap(({ action, state }) => of([]).pipe(
+        concatMap(({ action, state }) => of([]).pipe(
+            flatMap(() => Promise.resolve(
+                TrezorConnect.cancel()
+            )),
             flatMap(() => Promise.resolve(
                 TrezorConnect.tezosGetPublicKey({
                     'path': state.tezos.tezosTrezorNew.entities[state.tezos.tezosTrezorNew.selected].path,

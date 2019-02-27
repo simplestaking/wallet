@@ -54,7 +54,7 @@ export function reducer(state = initialState, action) {
                         ...accumulator,
                         [value.address]: {
                             address: value.address,
-                            path: 'm/' + value.serializedPath,
+                            path: value.serializedPath,
                             contracts: '',
                             balance: '',
                         }
