@@ -24,21 +24,27 @@ export class TezosTrezorNewEffects {
 
         ofType('TEZOS_TREZOR_NEW'),
 
-        // TODO: find action for connect initialization
-        // delay(2000),
+        concatMap(() => of([]).pipe(
+            // cancel any pending trezor-connect requests
+            flatMap(() => Promise.resolve(
+                TrezorConnect.cancel()
+            )),
+            // add multiple addresses to response
+            flatMap(() => Promise.resolve(
+                TrezorConnect.tezosGetAddress({
+                    bundle: [
+                        { path: "m/44'/1729'/0'", showOnTrezor: false },
+                        { path: "m/44'/1729'/1'", showOnTrezor: false },
+                        { path: "m/44'/1729'/2'", showOnTrezor: false },
+                        { path: "m/44'/1729'/3'", showOnTrezor: false },
+                        { path: "m/44'/1729'/4'", showOnTrezor: false },
+                        // { path: "m/44'/1729'/0'/0'", showOnTrezor: false },
+                    ]
+                }))
+            ),
+    
+        )),
 
-        flatMap(() => Promise.resolve(
-            TrezorConnect.tezosGetAddress({
-                bundle: [
-                    { path: "m/44'/1729'/0'", showOnTrezor: false },
-                    { path: "m/44'/1729'/1'", showOnTrezor: false },
-                    { path: "m/44'/1729'/2'", showOnTrezor: false },
-                    { path: "m/44'/1729'/3'", showOnTrezor: false },
-                    { path: "m/44'/1729'/4'", showOnTrezor: false },
-                    // { path: "m/44'/1729'/0'/0'", showOnTrezor: false },
-                ]
-            }))
-        ),
 
         map((response: any) => ({
             type: 'TEZOS_TREZOR_NEW_SUCCESS',

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
 import { of, empty } from 'rxjs';
-import { map, withLatestFrom, catchError, flatMap, tap } from 'rxjs/operators';
+import { map, withLatestFrom, catchError, flatMap, tap, combineLatest } from 'rxjs/operators';
 
 import TrezorConnect, { DEVICE, TRANSPORT, UI } from 'trezor-connect';
 import { environment } from '../../../../environments/environment';
@@ -201,7 +201,7 @@ export class TezosTrezorConnectEffects {
                 TrezorConnect.init({
 
                     connectSrc: environment.trezor.connectSrc,
-  
+
                     popup: environment.trezor.popup,
                     trustedHost: environment.trezor.trustedHost,
                     webusb: environment.trezor.webusb,
@@ -210,8 +210,8 @@ export class TezosTrezorConnectEffects {
                     transportReconnect: environment.trezor.transportReconnect,
                     debug: environment.trezor.debug,
                     manifest: {
-                        email:  environment.trezor.manifest.email, 
-                        appUrl: environment.trezor.manifest.appUrl, 
+                        email: environment.trezor.manifest.email,
+                        appUrl: environment.trezor.manifest.appUrl,
                     }
                 })
                     .then(() => {
@@ -270,11 +270,15 @@ export class TezosTrezorConnectEffects {
         }),
     )
 
-    // listen to device connection   
+    // 1. wait for trezor connect initialization    
+    // 2. listen to device connection   
     // get all new address from trezor
     @Effect()
     TezosTrezorConnectDeviceConnect = this.actions$.pipe(
-        ofType('TEZOS_TREZOR_CONNECT_DEVICE_CONNECT'),
+        ofType('TEZOS_TREZOR_CONNECT_INIT_SUCCESS'),
+
+        // after trezor init wait for device connect action 
+        combineLatest(this.actions$.ofType('TEZOS_TREZOR_CONNECT_DEVICE_CONNECT')),
 
         // add state to effect
         withLatestFrom(this.store, (action, state) => ({ state, action })),
@@ -288,7 +292,7 @@ export class TezosTrezorConnectEffects {
             )
 
             // if device is connected with normal state get all address
-            return (!state.tezos.tezosTrezorNew.pending && !environment.trezor.popup && (
+            return (!state.tezos.tezosTrezorNew.pending && (
 
                 // !TODO check if we already downloaded all new addresses
                 // set flag in tezosTrezorNew has already all address download 
@@ -333,12 +337,8 @@ export class TezosTrezorConnectEffects {
         // show address on device
         flatMap(({ state, action }) => {
 
-            // console.error('[TEZOS_TREZOR_CONNECT_POPUP_OPEN] url', state.routerReducer.state.url)
-            // // only launch on /tezos/wallet/new/trezor
-            // return state.routerReducer.state.url === "/tezos/wallet/new/trezor" ?
-            //     of({ type: 'TEZOS_TREZOR_NEW' }) : empty()
-
-            return of({ type: 'TEZOS_TREZOR_NEW' })
+            return !state.tezos.tezosTrezorNew.pending ?
+                of({ type: 'TEZOS_TREZOR_NEW' }) : empty()
 
         }),
 
@@ -346,7 +346,7 @@ export class TezosTrezorConnectEffects {
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
-                type: 'TTEZOS_TREZOR_CONNECT_POPUP_OPEN_ERROR',
+                type: 'TEZOS_TREZOR_CONNECT_POPUP_OPEN_ERROR',
                 payload: error.message,
             });
             return caught;

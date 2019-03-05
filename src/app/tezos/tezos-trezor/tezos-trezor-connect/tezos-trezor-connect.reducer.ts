@@ -5,6 +5,10 @@ const initialState: any = {
         connected: false,
         button: 0,
         buttonType: '',
+        // features: {
+        //     passphrase_protection: false,
+        //     passphrase_cached: false,
+        // }
     },
     response: {},
     ui: {},
