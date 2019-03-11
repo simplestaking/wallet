@@ -62,7 +62,6 @@ export function reducer(state = initialState, action) {
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE_CHANGED':
         case 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT': {
-
             let connected = false
             let error = false
             let errorType = ''
@@ -89,15 +88,15 @@ export function reducer(state = initialState, action) {
                 error = true
                 errorType = 'bootloader'
 
-                // check for firmware version
-                // TODO: refactor to safer way 
-            } else if (
-                (!(version['major'] >= 2 && version['minor'] >= 0 && version['patch'] >= 8)) &&
-                (version['major'] !== undefined && version['minor'] !== undefined && version['patch'] !== undefined)
-            ) {
+            // check for firmware version
+            // TODO: refactor to safer way 
+            // } else if (
+            //     (!(version['major'] >= 2 && version['minor'] >= 0 && version['patch'] >= 8)) &&
+            //     (version['major'] !== undefined && version['minor'] !== undefined && version['patch'] !== undefined)
+            // ) {
 
-                error = true
-                errorType = 'firmware'
+            //     error = true
+            //     errorType = 'firmware'
 
                 // check for not initialized device    
             } else if (action.payload.payload.mode === 'initialize') {
@@ -137,25 +136,25 @@ export function reducer(state = initialState, action) {
                     }
 
                 }
+            }
 
-                return {
-                    ...state,
-                    device: {
-                        ...state.device,
-                        ...action.payload.payload,
-                        connected: connected,
-                    },
-                    status: {
-                        ...state.status,
-                        event: action.payload.type,
-                        error: error,
-                        errorType: errorType,
-                    },
-                    passphrase: {
-                        ...state.passpharse,
-                        isVisible: false, // isVisible: passphraseIsVisible,
-                        type: '',
-                    }
+            return {
+                ...state,
+                device: {
+                    ...state.device,
+                    ...action.payload.payload,
+                    connected: connected,
+                },
+                status: {
+                    ...state.status,
+                    event: action.payload.type,
+                    error: error,
+                    errorType: errorType,
+                },
+                passphrase: {
+                    ...state.passpharse,
+                    isVisible: false, // isVisible: passphraseIsVisible,
+                    type: '',
                 }
             }
         }
@@ -251,8 +250,8 @@ export function reducer(state = initialState, action) {
                     initialized: true,
                 }
             }
-        } 
-        
+        }
+
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE':
         case 'TEZOS_TREZOR_CONNECT_TRANSPORT': {
