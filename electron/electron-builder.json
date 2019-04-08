@@ -33,7 +33,7 @@
         }
     },
     "linux": {
-        "icon": "src/dist/assets/icon/logo/electron.png",
+        "icon": "src/dist/assets/icon/logo/logo_black.png",
         "target": [
             "AppImage"
         ],

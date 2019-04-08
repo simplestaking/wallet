@@ -25,6 +25,7 @@ function createWindow() {
   connectWindow = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
+    icon: path.join(__dirname, 'dist/assets/icon/logo/logo_black.png')
   })
 
   connectWindow.loadURL(url.format({
