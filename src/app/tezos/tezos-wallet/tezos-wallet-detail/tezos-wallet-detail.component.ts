@@ -201,6 +201,8 @@ export class TezosWalletDetailComponent implements OnInit {
 
   ngOnDestroy() {
 
+    this.store.dispatch({ type: 'TEZOS_WALLET_DETAIL_DESTORY' });
+
     // close all observables
     this.destroy$.next();
     this.destroy$.complete();

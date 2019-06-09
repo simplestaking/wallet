@@ -20,6 +20,8 @@ export class TezosWalletDetailEffects {
         flatMap((action: any) => [
             { type: 'TEZOS_WALLET_SHOW'},
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
+            { type: 'TEZOS_NODE_PRICE_UPDATE' },
+            { type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE' },
         ]),        
         catchError((error, caught) => {
             console.error(error.message)
