@@ -5,7 +5,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, empty, } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, concatMap, catchError, onErrorResumeNext, delay, tap, filter } from 'rxjs/operators';
 import { enterZone } from '../../../shared/utils/rxjs/operators';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class TezosTrezorContractEffects {
         ofType('TEZOS_TREZOR_NEW_CONTRACT'),
 
         // get state from store
-        withLatestFrom(this.store, (action:any, state: any) => ({ action, state })),
+        withLatestFrom(this.store, (action: any, state: any) => ({ action, state })),
 
         flatMap(({ action, state }) => of([]).pipe(
 
@@ -51,9 +51,10 @@ export class TezosTrezorContractEffects {
             ),
 
             // add publicKeyHash
-            map(operations => ({
+            map((operations: any) => ({
                 publicKeyHash: action.payload.address,
-                operations: operations,
+                // filter failed transactions
+                operations: operations.filter(operation => !operation.type.operations[0].failed)
             }))
 
         )),

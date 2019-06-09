@@ -3,3 +3,4 @@
 
 ### 0.7.2
 - fixed issue with historical data load 
+- fixed api request for failed originations 
