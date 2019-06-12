@@ -4,7 +4,8 @@
     <th mat-header-cell *matHeaderCellDef>
     </th>
     <td mat-cell *matCellDef="let row">
-      <mat-checkbox *ngIf="true" color="primary" (change)="selectRow(row)" [disableRipple]="true" [checked]="isRowSelected(row)">
+      <mat-checkbox *ngIf="true" color="primary" (change)="selectRow(row)" [disableRipple]="true"
+        [checked]="isRowSelected(row)">
       </mat-checkbox>
     </td>
   </ng-container>
