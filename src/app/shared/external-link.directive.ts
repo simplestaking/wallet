@@ -21,13 +21,16 @@ export class ExternalLinkDirective {
       event.preventDefault();
 
       this.electronService.shell.openExternal(this.href);
+    } else {
+      // console.info('[externalLink][browser]', this.href);
+      window.open(this.href, "_blank");
     }
   }
 
   constructor(
     public electronService: ElectronService
   ) {
-    console.info('[externalLink]');
+    // console.info('[externalLink]');
   }
 
 }
