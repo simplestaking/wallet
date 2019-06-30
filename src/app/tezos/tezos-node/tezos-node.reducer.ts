@@ -2,17 +2,6 @@ import { environment } from '../../../environments/environment';
 
 let initialState: any = {
     nodes: {
-        zero: {
-            display: 'Zeronet',
-            name: 'zero',
-            url: 'https://zeronet.simplestaking.com:3000',
-            tzscan: {
-                url: 'http://zeronet.tzscan.io/',
-                operations: 'https://api.zeronet.tzscan.io/v3/operations/',
-                operations_number: 'https://api.zeronet.tzscan.io/v3/number_operations/',
-                block_timestamp: 'https://api.zeronet.tzscan.io/v3/timestamp/',
-            }
-        },
         main: {
             display: 'Mainnet',
             name: 'main',
@@ -24,17 +13,29 @@ let initialState: any = {
                 block_timestamp: 'https://api6.tzscan.io/v3/timestamp/',
             }
         },
-        // alpha: {
-        //     display: 'Alphanet',
-        //     name: 'alpha',
-        //     url: 'https://alphanet.smartcontractlabs.ee',
-        //     tzscan: {
-        //         url: 'http://alphanet.tzscan.io/',
-        //         operations: 'https://api.alphanet.tzscan.io/v1/operations/',
-        //         operations_number: 'https://api.alphanet.tzscan.io/v1/number_operations/',
-        //         block_timestamp: 'https://api.alphanet.tzscan.io/v1/timestamp/',
-        //     }
-        // },
+        alpha: {
+            display: 'Alphanet',
+            name: 'alpha',
+            url: 'https://alphanet.simplestaking.com:3000',
+            tzscan: {
+                url: 'http://alphanet.tzscan.io/',
+                operations: 'https://api.alphanet.tzscan.io/v1/operations/',
+                operations_number: 'https://api.alphanet.tzscan.io/v1/number_operations/',
+                block_timestamp: 'https://api.alphanet.tzscan.io/v1/timestamp/',
+            }
+        },
+        zero: {
+            display: 'Zeronet',
+            name: 'zero',
+            url: 'https://zeronet.simplestaking.com:3000',
+            tzscan: {
+                url: 'http://zeronet.tzscan.io/',
+                operations: 'https://api.zeronet.tzscan.io/v3/operations/',
+                operations_number: 'https://api.zeronet.tzscan.io/v3/number_operations/',
+                block_timestamp: 'https://api.zeronet.tzscan.io/v3/timestamp/',
+            }
+        },
+
     }
 }
 
