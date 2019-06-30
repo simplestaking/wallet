@@ -7,3 +7,4 @@
 
 ### 0.7.3
 - allow ctr-c ctrl-v 
+- fixed issue with XTZ/USD price update 

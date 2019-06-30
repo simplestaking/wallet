@@ -18,6 +18,7 @@ export class TezosOperationHistoryComponent implements OnInit, OnDestroy {
 
   public data
   public dataSource
+  public tezosNode
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -52,6 +53,12 @@ export class TezosOperationHistoryComponent implements OnInit, OnDestroy {
         this.data = new MatTableDataSource<any>(this.dataSource);
         this.data.paginator = this.paginator;
 
+      })
+
+      this.store.select('tezos', 'tezosNode')
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(state => {
+        this.tezosNode = state
       })
 
   }
