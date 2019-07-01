@@ -5,7 +5,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, switchMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
 import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, getWallet } from 'tezos-wallet'
@@ -41,7 +41,9 @@ export class TezosWalletDetailEffects {
         withLatestFrom(this.store, (action, state: any) => state),
 
         // get data from firebase 
-        flatMap(state => this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet', query => query.where('uid', '==', null))
+        // TODO: update data only after has final state this.db.collection
+        // it will reduce number of request to BE
+        switchMap(state => this.db.collection('tezos_' + state.tezos.tezosNode.api.name + '_wallet', query => query.where('uid', '==', null))
             .doc(state.routerReducer.state.root.children[0].firstChild.params.address)
             .valueChanges()
         ),

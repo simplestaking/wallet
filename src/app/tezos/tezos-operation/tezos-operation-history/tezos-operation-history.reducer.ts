@@ -86,14 +86,13 @@ export function reducer(state = initialState, action) {
                 }
             };
 
-
-
             // sort state according to timestamp 
             return {
                 ...stateExtended,
-                ids: stateExtended.ids.slice().sort((a, b) =>
-                    stateExtended.entities[b].timestamp - stateExtended.entities[a].timestamp
-                )
+                ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
+                    stateExtended.ids.slice().sort((a, b) =>
+                        stateExtended.entities[b].timestamp - stateExtended.entities[a].timestamp
+                    )
             }
         }
 
@@ -169,14 +168,15 @@ export function reducer(state = initialState, action) {
                 }
             }
 
-            // console.log('[TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS]', stateExtended)
+            console.log('[TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS]', stateExtended, stateExtended.ids.length)
 
             // sort state according to time stamp 
             return {
                 ...stateExtended,
-                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
-                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
-                )
+                ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
+                    stateExtended.ids.slice().sort((a: any, b: any) =>
+                        new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+                    )
             }
         }
 
@@ -199,12 +199,15 @@ export function reducer(state = initialState, action) {
                 }
             }
 
+            console.log('[TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS]', stateExtended)
+
             // sort state according to time stamp 
             return {
                 ...stateExtended,
-                ids: stateExtended.ids.slice().sort((a: any, b: any) =>
-                    new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
-                )
+                ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
+                    stateExtended.ids.slice().sort((a: any, b: any) =>
+                        new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime()
+                    )
             }
         }
 
