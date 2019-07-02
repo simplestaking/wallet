@@ -35,12 +35,8 @@ export class TezosWalletListEffects {
     TezosWalletListLoad$ = this.actions$.pipe(
         ofType('TEZOS_WALLET_LIST_LOAD'),
 
-        tap(action => console.log('[TEZOS_WALLET_LIST_LOAD][action]', action)),
-
         // get state from store
         withLatestFrom(this.store, (action, state: any) => state),
-
-        tap(state => console.log('[TEZOS_WALLET_LIST_LOAD][state]', state)),
 
         // get data from firebase 
         // TODO: move to custom rxjs operator
@@ -57,8 +53,6 @@ export class TezosWalletListEffects {
                         .orderBy('name', 'asc'))
                     .valueChanges()
                 ),
-
-                tap(address => console.log('[TEZOS_WALLET_LIST_LOAD] address', address)),
 
                 // show only valid trezor addresses or dektop with private key 
                 map(addresses => addresses
@@ -89,12 +83,8 @@ export class TezosWalletListEffects {
     TezosWalletListBalanceUpdate$ = this.actions$.pipe(
         ofType('TEZOS_WALLET_LIST_LOAD_SUCCESS'),
 
-        tap(action => console.log('[TEZOS_WALLET_LIST_LOAD_SUCCESS][action]', action)),
-
         // get state from store
         withLatestFrom(this.store, (action, state: any) => state),
-
-        tap(state => console.log('[TEZOS_WALLET_LIST_LOAD_SUCCESS][state]', state)),
 
         // get all accounts address
         flatMap((state: any) => state.tezos.tezosWalletList.ids

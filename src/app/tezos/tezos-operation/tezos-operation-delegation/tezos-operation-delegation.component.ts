@@ -18,7 +18,8 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
   public tezosOperationDelegation
   public tezosOperationDelegationForm
   public destroy$ = new Subject<null>();
-  public tezosAddressErrorMatcher = new TezosAddressErrorStateMatcher();
+  public tezosAddressErrorMatcher = new TezosAddressDelegationErrorStateMatcher();
+  public tezosAmountErrorMatcher = new TezosAmountDelegationErrorStateMatcher();
 
   constructor(
     public store: Store<any>,
@@ -40,6 +41,7 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
         ],
         updateOn: 'blur'
       }),
+      amountMax: new FormControl(''),
       fee: new FormControl('', {
         validators: [
           Validators.required,
@@ -91,7 +93,15 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
         }
 
         // create OperationOrigination 
-        this.tezosOperationDelegation = state
+        this.tezosOperationDelegation = {
+          ...state,
+          // get max allowed amount for delegation
+          // TODO: move to reducer, add effect for fee estimation
+          amountMax:
+            this.tezosWalletDetail.balance && state.fee ?
+              ((this.tezosWalletDetail.balance * 0.000001) - (state.fee + 0.26)).toFixed(2) : 0,
+
+        }
 
         // set redux data to form 
         this.tezosOperationDelegationForm
@@ -171,7 +181,7 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
 }
 
 
-class TezosAddressErrorStateMatcher implements ErrorStateMatcher {
+class TezosAddressDelegationErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
 
     const isSubmitted = form && form.submitted;
@@ -183,6 +193,26 @@ class TezosAddressErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid &&
       (control.dirty || control.touched || isSubmitted) ||
       ((control.dirty || control.touched || isSubmitted) && !isValidTezosAddress)
+    )
+
+  }
+}
+
+class TezosAmountDelegationErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+
+
+    const isSubmitted = form && form.submitted;
+
+    const amount = form.control.controls.amount.value;
+    const amountMax = form.control.controls.amountMax.value;
+
+    const isValidDelegationAmount = (amount <= amountMax)
+    console.log('[TezosAmountDelegationErrorStateMatcher]', amount, amountMax, (amount <= amountMax))
+
+    return !!(control && control.invalid &&
+      (control.dirty || control.touched || isSubmitted) ||
+      ((control.dirty || control.touched || isSubmitted) && !isValidDelegationAmount)
     )
 
   }

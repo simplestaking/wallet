@@ -38,7 +38,7 @@ export class TezosOperationDelegationEffects {
                 path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
-            
+
             // if we have implicit contract originate new contract 
             flatMap(stateWallet => state.tezos.tezosWalletDetail.delegate.setable === true ?
 

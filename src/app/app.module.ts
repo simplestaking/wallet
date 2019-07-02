@@ -129,7 +129,9 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    // AngularFirestoreModule.enablePersistence(),
+
+    // enable offline persistence for electron
+    environment.type === 'electron' ? AngularFirestoreModule.enablePersistence() : [],
 
     MatAutocompleteModule,
     MatButtonModule,
