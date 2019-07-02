@@ -1,4 +1,5 @@
-<div class="tezos-operation-transaction" [formGroup]="tezosOperationTransactionForm" ngrxForm="tezos.tezosOperationTransaction">
+<div class="tezos-operation-transaction" [formGroup]="tezosOperationTransactionForm"
+  ngrxForm="tezos.tezosOperationTransaction">
 
   <mat-form-field appearance="outline">
 
@@ -8,7 +9,8 @@
       <mat-select-trigger>
         <div class="tezos-wallet-list-option">
           <div class="tezos-wallet-list-option-left">
-            <svg width="25" height="25" identiconHash="{{tezosWalletDetail?.publicKeyHash}}" class="tezos-wallet-list-option-identicon">
+            <svg width="25" height="25" identiconHash="{{tezosWalletDetail?.publicKeyHash}}"
+              class="tezos-wallet-list-option-identicon">
             </svg>
             <span class="tezos-wallet-list-option-name">
               {{ tezosWalletDetail?.name }}
@@ -29,7 +31,8 @@
       <mat-option *ngFor="let from of tezosWalletListFrom | async" [value]="from.publicKeyHash" #selected>
         <div class="tezos-wallet-list-option">
           <div class="tezos-wallet-list-option-left">
-            <svg width="25" height="25" identiconHash="{{from.publicKeyHash}}" class="tezos-wallet-list-option-identicon">
+            <svg width="25" height="25" identiconHash="{{from.publicKeyHash}}"
+              class="tezos-wallet-list-option-identicon">
             </svg>
             <span class="tezos-wallet-list-option-name">
               {{ from.name }}
@@ -56,7 +59,8 @@
   <mat-form-field appearance="outline">
 
     <mat-label>To</mat-label>
-    <input matInput #to placeholder="To" formControlName="to" [matAutocomplete]="auto" [errorStateMatcher]="tezosAddressErrorMatcher" />
+    <input matInput #to placeholder="To" formControlName="to" [matAutocomplete]="auto"
+      [errorStateMatcher]="tezosAddressErrorMatcher" />
     <mat-hint align="end">{{to.value?.length || 0}}/36</mat-hint>
     <mat-error>
       Please enter valid address
@@ -88,12 +92,15 @@
   <mat-form-field appearance="outline">
 
     <mat-label>Amount</mat-label>
-    <input matInput #amount type="number" placeholder="Amount" formControlName="amount" />
+    <input matInput #amount type="number" placeholder="Amount" formControlName="amount" [errorStateMatcher]="tezosAmountErrorMatcher"/>
     <mat-hint align="end">{{amount.value?.length || 0}}/16</mat-hint>
     <mat-error>
-      Please enter valid amount
+      Please enter valid amount.
+      <span *ngIf="tezosOperationTransaction.amountMax >0"> Maximum amount is
+        {{ tezosOperationTransaction.amountMax | number:'1.2-6' }} XTZ.</span>
     </mat-error>
   </mat-form-field>
+
 
   <mat-form-field appearance="outline">
 

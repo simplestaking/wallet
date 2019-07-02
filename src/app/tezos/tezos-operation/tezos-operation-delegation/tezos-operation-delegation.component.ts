@@ -147,7 +147,9 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
     this.tezosOperationDelegationForm.updateValueAndValidity()
 
     // dispatch only if valid
-    if (this.tezosOperationDelegationForm.valid) {
+    if (this.tezosOperationDelegationForm.valid &&
+      // dynamic validation of max allowed
+      (this.tezosOperationDelegationForm.controls.amount.value <= this.tezosOperationDelegationForm.controls.amountMax.value)) {
 
       console.log('[TEZOS_OPERATION_DELEGATION]');
 
@@ -201,14 +203,11 @@ class TezosAddressDelegationErrorStateMatcher implements ErrorStateMatcher {
 class TezosAmountDelegationErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
 
-
     const isSubmitted = form && form.submitted;
-
     const amount = form.control.controls.amount.value;
     const amountMax = form.control.controls.amountMax.value;
 
     const isValidDelegationAmount = (amount <= amountMax)
-    console.log('[TezosAmountDelegationErrorStateMatcher]', amount, amountMax, (amount <= amountMax))
 
     return !!(control && control.invalid &&
       (control.dirty || control.touched || isSubmitted) ||

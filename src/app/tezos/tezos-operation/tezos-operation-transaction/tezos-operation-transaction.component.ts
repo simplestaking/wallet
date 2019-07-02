@@ -18,7 +18,8 @@ export class TezosOperationTransactionComponent implements OnInit {
   public tezosOperationTransaction
   public tezosOperationTransactionForm
   public destroy$ = new Subject<null>();
-  public tezosAddressErrorMatcher = new TezosAddressErrorStateMatcher();
+  public tezosAddressErrorMatcher = new TezosAddressTransactionErrorStateMatcher();
+  public tezosAmountErrorMatcher = new TezosAmountTransactionErrorStateMatcher();
 
   constructor(
     public store: Store<any>,
@@ -40,6 +41,7 @@ export class TezosOperationTransactionComponent implements OnInit {
         ],
         updateOn: 'blur'
       }),
+      amountMax: new FormControl(''),
       fee: new FormControl('', {
         validators: [
           Validators.required,
@@ -92,7 +94,15 @@ export class TezosOperationTransactionComponent implements OnInit {
         }
 
         // create tezos wallet detail 
-        this.tezosOperationTransaction = state
+        this.tezosOperationTransaction = {
+          ...state,
+          // get max allowed amount for delegation
+          // TODO: move to reducer, add effect for fee estimation
+          amountMax:
+            this.tezosWalletDetail.balance && state.fee ?
+              ((this.tezosWalletDetail.balance * 0.000001) - (state.fee + 0.26)).toFixed(2) : 0,
+
+        }
 
         // set redux data to form 
         this.tezosOperationTransactionForm
@@ -126,7 +136,10 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.tezosOperationTransactionForm.updateValueAndValidity()
 
     // dispatch only if valid
-    if (this.tezosOperationTransactionForm.valid) {
+    if (this.tezosOperationTransactionForm.valid &&
+      // dynamic validation of max allowed amount
+      (this.tezosOperationTransactionForm.controls.amount.value <= this.tezosOperationTransactionForm.controls.amountMax.value)) {
+
 
       // TODO: remove after WEB wallet verification page is added   
       if (walletType === 'WEB') {
@@ -157,7 +170,7 @@ export class TezosOperationTransactionComponent implements OnInit {
 
 }
 
-class TezosAddressErrorStateMatcher implements ErrorStateMatcher {
+class TezosAddressTransactionErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
 
     const isSubmitted = form && form.submitted;
@@ -169,6 +182,23 @@ class TezosAddressErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid &&
       (control.dirty || control.touched || isSubmitted) ||
       ((control.dirty || control.touched || isSubmitted) && !isValidTezosAddress)
+    )
+
+  }
+}
+
+class TezosAmountTransactionErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+
+    const isSubmitted = form && form.submitted;
+    const amount = form.control.controls.amount.value;
+    const amountMax = form.control.controls.amountMax.value;
+
+    const isValidTransactionAmount = (amount <= amountMax)
+
+    return !!(control && control.invalid &&
+      (control.dirty || control.touched || isSubmitted) ||
+      ((control.dirty || control.touched || isSubmitted) && !isValidTransactionAmount)
     )
 
   }
