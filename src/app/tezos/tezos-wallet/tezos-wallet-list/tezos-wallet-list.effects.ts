@@ -43,8 +43,6 @@ export class TezosWalletListEffects {
         switchMap(state =>
 
             of([]).pipe(
-                tap(address => console.log('[TEZOS_WALLET_LIST_LOAD][start] address', address)),
-
                 // get data from firebase 
                 // TODO: update data only after has final state this.db.collection
                 // it will reduce number of request to BE
