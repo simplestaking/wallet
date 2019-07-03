@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of, timer, defer } from 'rxjs';
-import { map, withLatestFrom, switchMap, flatMap, catchError, takeUntil, tap } from 'rxjs/operators';
+import { map, withLatestFrom, switchMap, flatMap, catchError, takeUntil, tap  } from 'rxjs/operators';
 
 @Injectable()
 export class TezosNodeEffects {
@@ -45,12 +45,13 @@ export class TezosNodeEffects {
                                 payload: response
                             })),
                             catchError((error, caught) => {
-                                console.error(error.message)
+                                console.error(error)
                                 this.store.dispatch({
                                     type: 'TEZOS_NODE_PRICE_UPDATE_ERROR',
                                     payload: error.message,
                                 });
-                                return caught;
+                                return Observable.throw(error);
+                                // return caught;
                             }),
                         )
                     ),
@@ -69,12 +70,13 @@ export class TezosNodeEffects {
                         payload: response
                     })),
                     catchError((error, caught) => {
-                        console.error(error.message)
+                        console.error(error)
                         this.store.dispatch({
                             type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_ERROR',
                             payload: error.message,
                         });
-                        return caught;
+                        return Observable.throw(error);
+                        //return caught;
                     }),
                 ),
             ),

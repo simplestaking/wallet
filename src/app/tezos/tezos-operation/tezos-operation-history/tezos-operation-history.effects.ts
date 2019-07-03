@@ -402,10 +402,10 @@ export class TezosOperationHistoryEffects {
 
         map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS', payload: response })),
         catchError((error, caught) => {
-            console.error(error.message)
+            console.error(error)
             this.store.dispatch({
                 type: 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_ERROR',
-                payload: error.message,
+                payload: error,
             });
             return caught;
         }),
