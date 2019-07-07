@@ -44,6 +44,14 @@
               ]
             },
             "electron": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.electron.ts"
+                }
+              ]
+            },
+            "electron_prod": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -60,7 +68,6 @@
                 }
               ]
             }
-
           }
         },
         "serve": {
@@ -91,8 +98,7 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-            ],
+            "scripts": [],
             "styles": [
               "src/styles.scss"
             ],
@@ -155,6 +161,6 @@
   "cli": {
     "warnings": {
       "typescriptMismatch": false
-    }    
+    }
   }
 }

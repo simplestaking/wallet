@@ -79,6 +79,11 @@ export class TezorTrezorDebugComponent implements OnInit {
         transportReconnect: environment.trezor.transportReconnect,
         debug: environment.trezor.debug,
 
+        manifest: {
+          email: environment.trezor.manifest.email,
+          appUrl: environment.trezor.manifest.appUrl,
+        }
+
       }).then(response => console.log('[TrezorConnect][init]', response))
         .catch(error => console.error('[ERROR][TrezorConnect][init]', error));
 

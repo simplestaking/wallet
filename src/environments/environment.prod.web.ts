@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  type: 'web', 
+  type: 'web',
   firebase: {
     apiKey: "AIzaSyBuVlOS05MaREe3cK0eycmd68nYr448Th4",
     authDomain: "wallet-dd9dc.firebaseapp.com",

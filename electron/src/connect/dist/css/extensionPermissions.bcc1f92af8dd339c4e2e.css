@@ -326,7 +326,7 @@ button.check-devices .plus::after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90D";
+  content: "\e90d";
 }
 a.button.check-devices .text,
 button.check-devices .text {
@@ -516,7 +516,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91C";
+  content: "\e91c";
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
   position: absolute;
   top: 0;
@@ -608,17 +608,17 @@ input[type="password"]:focus {
 @font-face {
   font-family: 'Roboto Mono';
   font-style: normal;
-  src: url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot?#iefix) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.8b0449900568bc4bd7690563901dd208.woff2) format('woff2'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.bb8858f0b5ca736da3d439d9d5f479fe.woff) format('woff'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.a48ac41620cd818c5020d0f4302489ff.ttf) format('truetype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.86a02db6a5b5d65eaea01378876278e8.svg#RobotoMono) format('svg');
+  src: url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1047e03c490537e0e0c93b8ac3a44925.eot?#iefix) format('embedded-opentype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.8b0449900568bc4bd7690563901dd208.woff2) format('woff2'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.bb8858f0b5ca736da3d439d9d5f479fe.woff) format('woff'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.a48ac41620cd818c5020d0f4302489ff.ttf) format('truetype'),  url(../fonts/roboto-mono-v4-greek_cyrillic-ext_greek-ext_latin_cyrillic_vietnamese_latin-ext-regular.1fb9c16fbda854ad9885c8fa360cd34d.svg#RobotoMono) format('svg');
   /* Legacy iOS */
 }
 @font-face {
   font-family: 'icomoon';
-  src: url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot) format('embedded-opentype'), url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot?#iefix) format('embedded-opentype'), url(../fonts/icomoon.c8826b9535be7c13a73ffc413a38ee32.woff) format('woff'), url(../fonts/icomoon.b610a9be9486e52e1d6b191dc98ca1f9.ttf) format('truetype'), url(../fonts/icomoon.d9c3c70f07e30e3af1f7ff11e9379c86.svg#icomoon) format('svg');
+  src: url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot) format('embedded-opentype'), url(../fonts/icomoon.a26761da53dda8f3d29442266e091bfc.eot?#iefix) format('embedded-opentype'), url(../fonts/icomoon.c8826b9535be7c13a73ffc413a38ee32.woff) format('woff'), url(../fonts/icomoon.b610a9be9486e52e1d6b191dc98ca1f9.ttf) format('truetype'), url(../fonts/icomoon.977a2c999a3eacaa1647a089041251de.svg#icomoon) format('svg');
 }
 @font-face {
   font-family: 'text-security-disc';
   src: url(../fonts/text-security-disc.6d04d79360f7263e0739bb3b194f6d64.eot);
-  src: url(../fonts/text-security-disc.6d04d79360f7263e0739bb3b194f6d64.eot?#iefix) format('embedded-opentype'), url(../fonts/text-security-disc.0e7e5cb49b1bb3ef9c948de9878d6ee2.woff) format('woff'), url(../fonts/text-security-disc.ea54324259d087da144746490d84dcb8.ttf) format('truetype'), url(../fonts/text-security-disc.6b5dea63e684e63e5b9ea9f45a877164.svg#text-security) format('svg');
+  src: url(../fonts/text-security-disc.6d04d79360f7263e0739bb3b194f6d64.eot?#iefix) format('embedded-opentype'), url(../fonts/text-security-disc.0e7e5cb49b1bb3ef9c948de9878d6ee2.woff) format('woff'), url(../fonts/text-security-disc.ea54324259d087da144746490d84dcb8.ttf) format('truetype'), url(../fonts/text-security-disc.ba919e19b1200a4ca349a8cb9dc3c139.svg#text-security) format('svg');
 }
 .icomoon-eject {
   display: inline-block;
@@ -630,7 +630,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E902";
+  content: "\e902";
 }
 .icomoon-refresh {
   display: inline-block;
@@ -642,7 +642,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E903";
+  content: "\e903";
 }
 .icomoon-info {
   display: inline-block;
@@ -654,7 +654,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E904";
+  content: "\e904";
 }
 .icomoon-chat {
   display: inline-block;
@@ -666,7 +666,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E905";
+  content: "\e905";
 }
 .icomoon-redirect {
   display: inline-block;
@@ -678,7 +678,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E906";
+  content: "\e906";
 }
 .icomoon-settings {
   display: inline-block;
@@ -690,7 +690,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E907";
+  content: "\e907";
 }
 .icomoon-warning {
   display: inline-block;
@@ -702,7 +702,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E908";
+  content: "\e908";
 }
 .icomoon-arrow-down {
   display: inline-block;
@@ -714,7 +714,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E909";
+  content: "\e909";
 }
 .icomoon-close {
   display: inline-block;
@@ -726,7 +726,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90A";
+  content: "\e90a";
 }
 .icomoon-arrow-up {
   display: inline-block;
@@ -738,7 +738,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90B";
+  content: "\e90b";
 }
 .icomoon-arrow-right2 {
   display: inline-block;
@@ -750,7 +750,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90C";
+  content: "\e90c";
 }
 .icomoon-plus {
   display: inline-block;
@@ -762,7 +762,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90D";
+  content: "\e90d";
 }
 .icomoon-arrow-right {
   display: inline-block;
@@ -774,7 +774,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90E";
+  content: "\e90e";
 }
 .icomoon-help {
   display: inline-block;
@@ -786,7 +786,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90F";
+  content: "\e90f";
 }
 .icomoon-eye-error {
   display: inline-block;
@@ -798,7 +798,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E911";
+  content: "\e911";
 }
 .icomoon-T1 {
   display: inline-block;
@@ -810,7 +810,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E912";
+  content: "\e912";
 }
 .icomoon-arrow-left {
   display: inline-block;
@@ -822,7 +822,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91A";
+  content: "\e91a";
 }
 .icomoon-setmax {
   display: inline-block;
@@ -834,7 +834,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91B";
+  content: "\e91b";
 }
 .icomoon-checked {
   display: inline-block;
@@ -846,7 +846,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91C";
+  content: "\e91c";
 }
 .icomoon-error {
   display: inline-block;
@@ -858,7 +858,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91D";
+  content: "\e91d";
 }
 .icomoon-eye {
   display: inline-block;
@@ -870,7 +870,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91E";
+  content: "\e91e";
 }
 .icomoon-back {
   display: inline-block;
@@ -882,7 +882,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91F";
+  content: "\e91f";
 }
 .icomoon-exit {
   display: inline-block;
@@ -894,7 +894,7 @@ input[type="password"]:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E920";
+  content: "\e920";
 }
 footer {
   position: fixed;
@@ -1134,7 +1134,7 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E908";
+  content: "\e908";
   position: relative;
   top: 2px;
   right: 5px;
@@ -1157,7 +1157,7 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E90A";
+  content: "\e90a";
   position: relative;
   top: 1px;
   left: 5px;
@@ -1483,6 +1483,16 @@ section > div .divider span:after {
 .browser .wrapper .icon p {
   font-size: 10px;
 }
+@keyframes toast {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  5%,
+  75% {
+    opacity: 1;
+  }
+}
 .check-address {
   display: flex;
   flex-direction: column;
@@ -1498,10 +1508,67 @@ section > div .divider span:after {
   color: #01B757;
   animation: pulsate 1.3s ease-out infinite;
 }
+.check-address .button-request-data {
+  padding: 8px 0px;
+}
+.check-address .button-request-data p {
+  margin: 0;
+  animation: none;
+}
+.check-address .button-request-data .path-value {
+  color: #E3E3E3;
+  font-weight: 400;
+}
+.check-address .button-request-data .address-value-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.check-address .button-request-data .address-value-container .toast {
+  display: none;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 400;
+}
+.check-address .button-request-data .address-value-container .toast.visible {
+  display: block;
+  animation: toast 3s ease-out infinite;
+}
+.check-address .button-request-data .address-value-container .address-value {
+  word-break: break-all;
+  color: #757575;
+}
+.check-address .button-request-data .address-value-container .clipboard-button {
+  margin-left: 8px;
+  cursor: pointer;
+}
+.check-address .button-request-data .address-value-container .clipboard-button svg {
+  padding: 0px !important;
+  width: 24px !important;
+  height: 100% !important;
+  fill: #757575;
+  transition: fill 0.3s;
+}
+.check-address .button-request-data .address-value-container .clipboard-button:hover svg {
+  fill: #494949;
+}
 @media screen and (min-width: 768px) {
+  .check-address {
+    max-width: 100%;
+  }
   .check-address svg {
     height: 63px;
     width: 21.6px;
+  }
+}
+@media screen and (max-width: 639px) {
+  .check-address {
+    max-width: 100%;
   }
 }
 .connect {
@@ -1626,7 +1693,7 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91A";
+  content: "\e91a";
   position: relative;
   font-size: 18px;
   left: -4px;
@@ -1855,7 +1922,24 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E920";
+  content: "\e920";
+}
+.firmware-not-compatible {
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.firmware-not-compatible .buttons {
+  margin-top: 18px;
+  padding-bottom: 24px;
+  display: block;
+}
+.firmware-not-compatible .buttons .confirm {
+  margin-bottom: 10px;
+  margin-right: 0px;
+  border: 1px solid #1E7FF0;
+  background-color: #1E7FF0;
 }
 .follow-device {
   display: flex;
@@ -1876,6 +1960,38 @@ section > div .divider span:after {
   .follow-device svg {
     height: 63px;
     width: 21.6px;
+  }
+}
+.confirm-output {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.confirm-output svg {
+  height: 49px;
+  width: 40px;
+}
+.confirm-output p {
+  margin: 0 auto;
+  font-weight: 600;
+}
+@media screen and (min-width: 768px) {
+  .confirm-output svg {
+    height: 63px;
+    width: 21.6px;
+  }
+}
+@media screen and (max-width: 639px) {
+  .confirm-output {
+    max-width: 100%;
+  }
+  .confirm-output svg {
+    height: 49px;
+    width: 40px;
+    padding-top: 0px;
+  }
+  .confirm-output p {
+    font-size: 15px;
   }
 }
 .initialize,
@@ -1911,7 +2027,7 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E920";
+  content: "\e920";
 }
 .passphrase {
   display: flex;
@@ -2060,7 +2176,7 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E904";
+  content: "\e904";
   width: 28px;
   height: 28px;
   color: #1E7FF0;
@@ -2187,7 +2303,7 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E91F";
+  content: "\e91f";
 }
 .invalid-pin {
   display: flex;
@@ -2206,6 +2322,73 @@ section > div .divider span:after {
   }
   .pin .pin-row {
     margin-left: 11px;
+  }
+}
+.word {
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+}
+.word h3 {
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 0;
+}
+.word h3 span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0px 4px;
+}
+.word .wrapper {
+  flex: 1;
+}
+.word .input-row {
+  margin-top: 24px;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+.word .input-row input {
+  line-height: 40px;
+  font-size: 19px;
+  min-width: 100%;
+  height: auto;
+  padding: 0px 12px;
+  color: #494949;
+  background: transparent;
+}
+.word .word-row {
+  display: flex;
+  justify-content: space-around;
+}
+.word .word-row button {
+  width: 30%;
+  height: 80px;
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #494949;
+  border: 1px solid #E3E3E3;
+  background: #ffffff;
+  transition: all 0.3s;
+}
+.word .word-row button:first-child {
+  margin-left: 0;
+}
+.word .word-row button:hover {
+  color: #494949;
+  border-color: #757575;
+}
+.word .word-row button:active {
+  color: #494949;
+  background: #E3E3E3;
+  border-color: #E3E3E3;
+}
+@media screen and (min-width: 768px) {
+  .word .input-row input {
+    font-size: 24px;
   }
 }
 .select-device .wrapper {
@@ -2341,7 +2524,7 @@ section > div .divider span:after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  content: "\E920";
+  content: "\e920";
 }
 .invalid-passphrase {
   display: flex;
@@ -2353,5 +2536,65 @@ section > div .divider span:after {
 }
 .invalid-passphrase .buttons .confirm {
   margin-bottom: 10px;
+}
+.no-backup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.no-backup h3 {
+  color: #EB8A00;
+}
+.no-backup p {
+  background-color: #FFEFD9;
+  color: #EB8A00;
+  padding: 14px;
+}
+.no-backup .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+}
+.no-backup .buttons {
+  margin-top: 18px;
+  padding-bottom: 24px;
+  display: block;
+}
+.no-backup .buttons .cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  margin-bottom: 10px;
+  margin-right: 0px;
+  border: 1px solid #01B757;
+  background-color: #01B757;
+  color: #ffffff;
+}
+.no-backup .buttons .cancel .exit {
+  position: relative;
+  top: 1px;
+}
+.no-backup .buttons .cancel .exit::after {
+  display: inline-block;
+  font-family: 'icomoon';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  font-size: 24px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  content: "\e920";
+}
+.no-backup .buttons .cancel:hover {
+  background-color: #01B757;
+  color: #ffffff;
+}
+.no-backup .buttons .confirm {
+  border: 1px solid #EB8A00;
+  color: #EB8A00;
+  background: #ffffff;
 }
 
