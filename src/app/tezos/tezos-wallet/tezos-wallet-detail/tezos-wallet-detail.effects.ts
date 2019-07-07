@@ -5,7 +5,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, switchMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, switchMap, catchError, onErrorResumeNext, tap, delay } from 'rxjs/operators';
 import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, getWallet } from 'tezos-wallet'
@@ -18,11 +18,11 @@ export class TezosWalletDetailEffects {
     TezosWalletList$ = this.actions$.pipe(
         ofRoute('/tezos/wallet/detail/:address'),
         flatMap((action: any) => [
-            { type: 'TEZOS_WALLET_SHOW'},
+            { type: 'TEZOS_WALLET_SHOW' },
             { type: 'TEZOS_WALLET_DETAIL_LOAD' },
             { type: 'TEZOS_NODE_PRICE_UPDATE' },
             { type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE' },
-        ]),        
+        ]),
         catchError((error, caught) => {
             console.error(error.message)
             this.store.dispatch({
@@ -66,7 +66,6 @@ export class TezosWalletDetailEffects {
 
         // get state from store
         withLatestFrom(this.store, (action, state: any) => state),
-
 
         flatMap((state: any) => of([]).pipe(
 

@@ -14,7 +14,7 @@ export const environment = {
       popup: false,
       trustedHost: true,
       webusb: true,
-      debug: true,
+      debug: false,
       transportReconnect: true, // true
       manifest: {
         email: 'jurajselep@simplestaking.com',

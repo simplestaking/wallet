@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, switchMap, catchError, filter, tap, takeLast, first } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, switchMap, catchError, filter, tap, takeLast, first, delay } from 'rxjs/operators';
 import { ofRoute, enterZone } from './../../../shared/utils/rxjs/operators';
 
 import { initializeWallet, getWallet } from 'tezos-wallet'
@@ -34,7 +34,6 @@ export class TezosWalletListEffects {
     @Effect()
     TezosWalletListLoad$ = this.actions$.pipe(
         ofType('TEZOS_WALLET_LIST_LOAD'),
-
         // get state from store
         withLatestFrom(this.store, (action, state: any) => state),
 
@@ -97,8 +96,11 @@ export class TezosWalletListEffects {
             }))
         ),
 
+        // wait for animation to finish
+        delay(500),
+       
         flatMap((state: any) => of([]).pipe(
-
+            
             // initialie 
             initializeWallet(stateWallet => ({
                 publicKeyHash: state.detail.publicKeyHash,
