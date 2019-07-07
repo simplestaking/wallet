@@ -1,11 +1,12 @@
 {
   "name": "simplestakingwallet",
-  "version": "0.6.0",
+  "version": "0.7.3",
   "description": "Simple Wallet with Trezor support",
   "main": "src/index.js",
   "scripts": {
     "build": "electron-builder",
     "publish:mac": "electron-builder -m --publish always",
+    "publish:win": "electron-builder -w --publish always",
     "postinstall": "electron-builder install-app-deps",
     "log:mac": "tail -f  ~/Library/Logs/simplestakingwallet/log.log"
   },
