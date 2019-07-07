@@ -11,4 +11,7 @@
 - fixed issue with external links 
 - added max allowed amount validation for origination, transaction
 
+### 0.7.4
+- updated trezor-connect to support new electron version
+
 
