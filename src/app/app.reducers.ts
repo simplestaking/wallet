@@ -8,6 +8,10 @@ import { RouterStateUrl } from './app.routing';
 import * as fromRouter from '@ngrx/router-store';
 import { storeLogger } from 'ngrx-store-logger';
 
+// add remote error loging
+import * as LogRocket from 'logrocket';
+import createNgrxMiddleware from 'logrocket-ngrx';
+
 
 /**
  * storeFreeze prevents state from being mutated. When mutation occurs, an
@@ -66,6 +70,8 @@ export function logger(reducer: ActionReducer<State>): any {
   return storeLogger()(reducer);
 }
 
+const logrocketMiddleware = createNgrxMiddleware(LogRocket);
+
 /**
  * By default, @ngrx/store uses combineReducers with the reducer map to compose
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
@@ -73,7 +79,7 @@ export function logger(reducer: ActionReducer<State>): any {
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [fromNgrxForm.form, storeFreeze]
-  : [fromNgrxForm.form, logger];
+  : [fromNgrxForm.form, logger, logrocketMiddleware];
 
 
 

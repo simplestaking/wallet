@@ -51,6 +51,8 @@
     "firebase": "5.7.3",
     "jdenticon": "^2.1.0",
     "js-yaml": "^3.12.2",
+    "logrocket": "^1.0.3",
+    "logrocket-ngrx": "^0.1.1",
     "moment": "^2.24.0",
     "ngrx-store-freeze": "0.2.4",
     "ngrx-store-logger": "^0.2.2",
