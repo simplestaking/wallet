@@ -14,4 +14,6 @@
 ### 0.7.4
 - updated trezor-connect to support new electron version
 
+### 0.7.5
+- added support for longer HD Path 44'/1729'/0'/0' (TezBox)
 
