@@ -48,7 +48,7 @@ export class TezosOperationHistoryComponent implements OnInit, OnDestroy {
           )
           .sort((a, b) => b.timestamp - a.timestamp)
 
-        console.log('[tezos-operation-history]', this.dataSource, data.ids )
+        // console.log('[tezos-operation-history]', this.dataSource, data.ids )
 
         //
         this.data = new MatTableDataSource<any>(this.dataSource);
