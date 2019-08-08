@@ -94,6 +94,8 @@ export function reducer(state = initialState, action) {
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
                     stateExtended.ids.slice().sort((a, b) =>
                         (stateExtended.entities !== undefined &&
+                            (stateExtended.entities[b] !== undefined &&
+                                stateExtended.entities[a] !== undefined) &&
                             (stateExtended.entities[b].timestamp !== undefined &&
                                 stateExtended.entities[a].timestamp !== undefined)) ?
                             stateExtended.entities[b].timestamp - stateExtended.entities[a].timestamp : 0
@@ -173,7 +175,7 @@ export function reducer(state = initialState, action) {
                 }
             }
 
-            //            console.log('[TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS]', stateExtended, stateExtended.ids.length)
+            console.log('[TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS]', stateExtended, stateExtended.ids.length)
 
             // sort state according to time stamp 
             return {
@@ -181,6 +183,8 @@ export function reducer(state = initialState, action) {
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
                     stateExtended.ids.slice().sort((a: any, b: any) =>
                         (stateExtended.entities !== undefined &&
+                            (stateExtended.entities[b] !== undefined &&
+                                stateExtended.entities[a] !== undefined) &&
                             (stateExtended.entities[b].timestamp !== undefined &&
                                 stateExtended.entities[a].timestamp !== undefined)) ?
                             new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime() : 0
@@ -215,6 +219,8 @@ export function reducer(state = initialState, action) {
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
                     stateExtended.ids.slice().sort((a: any, b: any) =>
                         (stateExtended.entities !== undefined &&
+                            (stateExtended.entities[b] !== undefined &&
+                                stateExtended.entities[a] !== undefined) &&
                             (stateExtended.entities[b].timestamp !== undefined &&
                                 stateExtended.entities[a].timestamp !== undefined)) ?
                             new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime() : 0

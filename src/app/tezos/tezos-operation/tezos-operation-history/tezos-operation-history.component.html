@@ -8,7 +8,7 @@
       <a *ngIf="!element.pending" externalLink href="{{tezosNode.nodes[tezosNode.api.name].tzscan.url}}{{element.hash}}" style="text-decoration:none;color: #000000" target="_blank">
         {{element.datetime}}
       </a>
-      <span *ngIf="element.pending">
+      <span *ngIf="element.pending||element.pending===undefined">
         pending
       </span>
     </td>
