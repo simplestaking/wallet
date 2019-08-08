@@ -180,7 +180,9 @@ export function reducer(state = initialState, action) {
                 ...stateExtended,
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
                     stateExtended.ids.slice().sort((a: any, b: any) =>
-                        stateExtended.entities[b].timestamp && stateExtended.entities[a].timestamp ?
+                        (stateExtended.entities !== undefined &&
+                            (stateExtended.entities[b].timestamp !== undefined &&
+                                stateExtended.entities[a].timestamp !== undefined)) ?
                             new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime() : 0
                     )
             }
@@ -212,7 +214,9 @@ export function reducer(state = initialState, action) {
                 ...stateExtended,
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
                     stateExtended.ids.slice().sort((a: any, b: any) =>
-                        stateExtended.entities[b].timestamp && stateExtended.entities[a].timestamp ?
+                        (stateExtended.entities !== undefined &&
+                            (stateExtended.entities[b].timestamp !== undefined &&
+                                stateExtended.entities[a].timestamp !== undefined)) ?
                             new Date(stateExtended.entities[b].timestamp).getTime() - new Date(stateExtended.entities[a].timestamp).getTime() : 0
                     )
             }
