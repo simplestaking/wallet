@@ -191,59 +191,6 @@ asn1.js@4.10.1
 MIT
 MIT
 
-trezor-connect@7.0.1
-SEE LICENSE IN LICENSE.md
-# TREZOR REFERENCE SOURCE LICENSE (T-RSL)
-
-This license governs use of the accompanying software. If you use the software,
-you accept this license. If you do not accept the license, do not use the
-software.
-
-## 1. Definitions
-
-The terms "reproduce," "reproduction" and "distribution" have the same meaning
-here as under U.S. copyright law.
-
-"You" means the licensee of the software.
-
-"Your company" means the company you worked for when you downloaded the
-software.
-
-"Reference use" means use of the software within your company as a reference,
-in read only form, for the sole purposes of debugging your products,
-maintaining your products, or enhancing the interoperability of your products
-with the software, and specifically excludes the right to distribute the
-software outside of your company.
-
-"Licensed patents" means any Licensor patent claims which read directly on the
-software as distributed by the Licensor under this license.
-
-## 2. Grant of Rights
-
-(A) Copyright Grant - Subject to the terms of this license, the Licensor grants
-you a non-transferable, non-exclusive, worldwide, royalty-free copyright
-license to reproduce the software for reference use.
-
-(B) Patent Grant - Subject to the terms of this license, the Licensor grants
-you a non-transferable, non-exclusive, worldwide, royalty-free patent license
-under licensed patents for reference use.
-
-## 3. Limitations
-
-(A) No Trademark License - This license does not grant you any rights to use
-the Licensor's name, logo, or trademarks.
-
-(B) If you begin patent litigation against the Licensor over patents that you
-think may apply to the software (including a cross-claim or counterclaim in
-a lawsuit), your license to the software ends automatically.
-
-(C) The software is licensed "as-is." You bear the risk of using it. The
-Licensor gives no express warranties, guarantees or conditions. You may have
-additional consumer rights under your local laws which this license cannot
-change. To the extent permitted under your local laws, the Licensor excludes
-the implied warranties of merchantability, fitness for a particular purpose and
-non-infringement.
-
 create-hmac@1.1.7
 MIT
 The MIT License (MIT)
@@ -305,7 +252,7 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-@babel/runtime@7.3.4
+@babel/runtime@7.6.3
 MIT
 MIT License
 
@@ -345,6 +292,59 @@ INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
 LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
 OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
+
+trezor-connect@8.0.6
+SEE LICENSE IN LICENSE.md
+# TREZOR REFERENCE SOURCE LICENSE (T-RSL)
+
+This license governs use of the accompanying software. If you use the software,
+you accept this license. If you do not accept the license, do not use the
+software.
+
+## 1. Definitions
+
+The terms "reproduce," "reproduction" and "distribution" have the same meaning
+here as under U.S. copyright law.
+
+"You" means the licensee of the software.
+
+"Your company" means the company you worked for when you downloaded the
+software.
+
+"Reference use" means use of the software within your company as a reference,
+in read only form, for the sole purposes of debugging your products,
+maintaining your products, or enhancing the interoperability of your products
+with the software, and specifically excludes the right to distribute the
+software outside of your company.
+
+"Licensed patents" means any Licensor patent claims which read directly on the
+software as distributed by the Licensor under this license.
+
+## 2. Grant of Rights
+
+(A) Copyright Grant - Subject to the terms of this license, the Licensor grants
+you a non-transferable, non-exclusive, worldwide, royalty-free copyright
+license to reproduce the software for reference use.
+
+(B) Patent Grant - Subject to the terms of this license, the Licensor grants
+you a non-transferable, non-exclusive, worldwide, royalty-free patent license
+under licensed patents for reference use.
+
+## 3. Limitations
+
+(A) No Trademark License - This license does not grant you any rights to use
+the Licensor's name, logo, or trademarks.
+
+(B) If you begin patent litigation against the Licensor over patents that you
+think may apply to the software (including a cross-claim or counterclaim in
+a lawsuit), your license to the software ends automatically.
+
+(C) The software is licensed "as-is." You bear the risk of using it. The
+Licensor gives no express warranties, guarantees or conditions. You may have
+additional consumer rights under your local laws which this license cannot
+change. To the extent permitted under your local laws, the Licensor excludes
+the implied warranties of merchantability, fitness for a particular purpose and
+non-infringement.
 
 path-browserify@0.0.0
 MIT
@@ -739,32 +739,7 @@ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-base-x@3.0.5
-MIT
-The MIT License (MIT)
-
-Copyright (c) 2018 base-x contributors
-Copyright (c) 2014-2018 The Bitcoin Core developers
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-unorm@1.5.0
+unorm@1.6.0
 MIT or GPL-2.0
 The software dual licensed under the MIT and GPL licenses. MIT license:
 
@@ -852,6 +827,31 @@ INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
 LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
+
+base-x@3.0.7
+MIT
+The MIT License (MIT)
+
+Copyright (c) 2018 base-x contributors
+Copyright (c) 2014-2018 The Bitcoin Core developers
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 rxjs@6.3.2
 Apache-2.0
@@ -1821,6 +1821,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+logrocket@1.0.3
+MIT
+MIT
+
 @angular/core@6.1.8
 MIT
 MIT
@@ -2217,6 +2221,30 @@ MIT
 The MIT License (MIT)
 
 Copyright (c) 2016 Brian Troncone
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+logrocket-ngrx@0.1.1
+MIT
+MIT License
+
+Copyright (c) 2016 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

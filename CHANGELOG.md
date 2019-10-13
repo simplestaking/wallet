@@ -17,3 +17,5 @@
 ### 0.7.5
 - added support for longer HD Path 44'/1729'/0'/0' (TezBox)
 
+### 0.7.6
+- added support for Trezor-connect 8.0.6

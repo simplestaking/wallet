@@ -10,7 +10,8 @@ export const environment = {
       disableNetwork: true
     },
     trezor: {
-      connectSrc: 'http://localhost:5836/', 
+      // connectSrc: 'http://localhost:5836/', 
+      connectSrc: 'https://localhost:8088/', 
       popup: false,
       trustedHost: true,
       webusb: true,
@@ -21,5 +22,5 @@ export const environment = {
         appUrl: 'https://wallet.simplestaking.com'
       },
     },
-    nodes: 'alpha'
+    nodes: 'main'
   };  

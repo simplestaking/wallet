@@ -27,6 +27,7 @@ let initialState: any = {
         zero: {
             display: 'Zeronet',
             name: 'zero',
+            // url: 'https://zeronet.simplestaking.com:3000',
             url: 'https://zeronet.simplestaking.com:3000',
             tzscan: {
                 url: 'http://zeronet.tzscan.io/',
