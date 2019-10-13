@@ -40,7 +40,7 @@ export class TezosOperationDelegationEffects {
 
 
             // if we have implicit contract originate new contract 
-            flatMap(stateWallet => state.tezos.tezosWalletDetail.delegate.setable === true ?
+            flatMap(stateWallet => //state.tezos.tezosWalletDetail.delegate.setable === true ?
 
                 // Different signatures!
                 // Observable<T & StateSetDelegate & ...>
@@ -52,16 +52,18 @@ export class TezosOperationDelegationEffects {
                         to: state.tezos.tezosOperationDelegation.form.to,
                         fee: state.tezos.tezosOperationDelegation.form.fee,
                     }))
-                ) as Observable<any> :
+                ) as Observable<any> 
 
-                // originate contract with delegation 
-                of(stateWallet).pipe(
-                    originateContract(stateWallet => ({
-                        to: state.tezos.tezosOperationDelegation.form.to,
-                        amount: state.tezos.tezosOperationDelegation.form.amount,
-                        fee: state.tezos.tezosOperationDelegation.form.fee,
-                    }))
-                ) as Observable<any>
+                // :
+                // // originate contract with delegation 
+                // of(stateWallet).pipe(
+                //     originateContract(stateWallet => ({
+                //         to: state.tezos.tezosOperationDelegation.form.to,
+                //         amount: state.tezos.tezosOperationDelegation.form.amount,
+                //         fee: state.tezos.tezosOperationDelegation.form.fee,
+                //     }))
+                // ) as Observable<any>
+                
             ),
 
             // enter back into zone.js so change detection works

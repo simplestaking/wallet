@@ -56,10 +56,10 @@
         <span class="mat-h2 label">
           Delegate
         </span>
-        <span class="mat-h1 label" *ngIf="tezosWalletDetail?.delegate?.value">
-          {{tezosWalletDetail?.delegate?.value}}
+        <span class="mat-h1 label" *ngIf="tezosWalletDetail?.delegate">
+          {{tezosWalletDetail?.delegate}}
         </span>
-        <span class="mat-h1 label" *ngIf="!tezosWalletDetail?.delegate?.value">
+        <span class="mat-h1 label" *ngIf="!tezosWalletDetail?.delegate">
           No delegate
         </span>
       </div>
