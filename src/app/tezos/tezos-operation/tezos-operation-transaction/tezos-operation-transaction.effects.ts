@@ -39,6 +39,75 @@ export class TezosOperationTransactionEffects {
                 to: state.tezos.tezosOperationTransaction.form.to,
                 amount: state.tezos.tezosOperationTransaction.form.amount,
                 fee: state.tezos.tezosOperationTransaction.form.fee,
+
+                // transfer tokens from smart contract to implicit
+                parameters_manager: {
+                    transfer: {
+                        destination: 'tz1UKmZhi8dhUX5a5QTfCrsH9pK4dt1dVfJo',
+                        amount: '100',
+                    }
+                },
+
+                parameters: {
+                    "entrypoint": "do",
+                    "value":
+                        [{ "prim": "DROP" },
+                        { "prim": "NIL", "args": [{ "prim": "operation" }] },
+                        {
+                            "prim": "PUSH",
+                            "args":
+                                [{ "prim": "key_hash" },
+                                {
+                                    "bytes": "005f450441f41ee11eee78a31d1e1e55627c783bd6" // destination
+                                }]
+                        },
+                        { "prim": "IMPLICIT_ACCOUNT" },
+                        {
+                            "prim": "PUSH",
+                            "args":
+                                [{ "prim": "mutez" }, { "int": "100" }]
+                        },
+                        { "prim": "UNIT" }, { "prim": "TRANSFER_TOKENS" },
+                        { "prim": "CONS" }]
+                },
+
+                // // set delegate from smart contract
+                // parameters_manager: {
+                //     set_delegate: 'tz1UKmZhi8dhUX5a5QTfCrsH9pK4dt1dVfJo',
+                // },
+
+                // parameters: {
+                //     "entrypoint": "do",
+                //     "value":
+                //         [{ "prim": "DROP" },
+                //         { "prim": "NIL", "args": [{ "prim": "operation" }] },
+                //         {
+                //             "prim": "PUSH",
+                //             "args":
+                //                 [{ "prim": "key_hash" },
+                //                 {
+                //                     "bytes": "005f450441f41ee11eee78a31d1e1e55627c783bd6" // delegate in hex
+                //                 }]
+                //         },
+                //         { "prim": "SOME" },
+                //         { "prim": "SET_DELEGATE" },
+                //         { "prim": "CONS" }]
+                // },
+
+                // // cancel delegation
+                // parameters_manager: {
+                //     cancel_delegate: true,
+                // },
+
+                // parameters: {
+                //     "entrypoint": "do",
+                //     "value":
+                //         [{ "prim": "DROP" },
+                //         { "prim": "NIL", "args": [{ "prim": "operation" }] },
+                //         { "prim": "NONE", "args": [{ "prim": "key_hash" }] },
+                //         { "prim": "SET_DELEGATE" },
+                //         { "prim": "CONS" }]
+                // },
             })),
 
             // enter back into zone.js so change detection works
