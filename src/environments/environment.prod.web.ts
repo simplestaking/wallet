@@ -10,7 +10,7 @@ export const environment = {
     disableNetwork: true
   },
   trezor: {
-    connectSrc: 'https://connect.trezor.io/7/',
+    connectSrc: 'https://connect.trezor.io/8/',
     popup: true,
     trustedHost: true,
     webusb: false,

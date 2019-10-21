@@ -42,7 +42,7 @@ export class TezosTrezorNewEffects {
                     ]
                 }))
             ),
-    
+
         )),
 
 
@@ -171,12 +171,20 @@ export class TezosTrezorNewEffects {
             flatMap(() =>
                 this.http.get(
                     // get api url
-                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations_number +
-                    action.payload.address +
-                    '?type=Origination')
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.url +
+                    'explorer/account/' +
+                    action.payload.address).pipe(
+                        // for status 404 return 0 contract, otherwise return observable with error
+                        catchError((error, caught) => 
+                             error.status === 404 ? of({ n_origination: 0 }) : caught
+                        ),
+
+                    )
             ),
+
             // add address to response
-            map((response: any) => ({ contracts: response[0], address: action.payload.address })),
+            map((response: any) => ({ contracts: response.n_origination, address: action.payload.address })),
+
         )),
 
         map((response: any) => ({

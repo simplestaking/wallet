@@ -11,7 +11,10 @@ let initialState: any = {
                 operations: 'https://api6.tzscan.io/v3/operations/',
                 operations_number: 'https://api6.tzscan.io/v3/number_operations/',
                 block_timestamp: 'https://api6.tzscan.io/v3/timestamp/',
-            }
+            },
+            tzstats: {
+                url: 'https://api.tzstats.com/',
+            },
         },
         alpha: {
             display: 'Alphanet',

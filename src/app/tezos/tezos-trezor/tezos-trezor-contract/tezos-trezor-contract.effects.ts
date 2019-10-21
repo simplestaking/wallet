@@ -44,18 +44,16 @@ export class TezosTrezorContractEffects {
             flatMap(() =>
                 this.http.get(
                     // get api url
-                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.url +
+                    'tables/op?columns=status,receiver,manager&'+
+                    'type=origination&limit=100&sender=' +
                     // get public key hash from url 
-                    action.payload.address +
-                    '?type=Origination&p=0&number=10')
+                    action.payload.address
+                )
             ),
 
-            // add publicKeyHash
-            map((operations: any) => ({
-                publicKeyHash: action.payload.address,
-                // filter failed transactions
-                operations: operations.filter(operation => !operation.type.operations[0].failed)
-            }))
+            // filter only valid applied operations
+            map((operations: any) => operations.filter(operation=>operation[0]==='applied'))
 
         )),
 

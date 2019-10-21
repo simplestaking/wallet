@@ -18,16 +18,20 @@ export function reducer(state = initialState, action) {
                 ...state,
                 pending: false,
                 ids: [
-                    ...action.payload.operations.map(item => item.type.operations[0].tz1.tz),
+                    // contract
+                    ...action.payload.map(item => item[1]),
                 ],
                 entities: {
                     ...state.entities,
-                    ...action.payload.operations.reduce((accumulator, value) => ({
+                    ...action.payload.reduce((accumulator, value) => ({
                         ...accumulator,
-                        [value.type.operations[0].tz1.tz]: {
-                            manager: action.payload.address,
-                            contract: value.type.operations[0].tz1.tz,
-                            balance: value.type.operations[0].balance / 1000000,
+                        // contract
+                        [value[1]]: {
+                            // manager
+                            manager: value[2],
+                            // contract
+                            contract: value[1],
+                            balance: 0,
                         }
                     }), {}),
 
@@ -42,7 +46,7 @@ export function reducer(state = initialState, action) {
                 // toggle row selection  
                 selected: state.selected.indexOf(action.payload.id) === -1 ?
                     [...state.selected, action.payload.id] :
-                    state.selected.filter(row => action.payload.id !== row )
+                    state.selected.filter(row => action.payload.id !== row)
             }
         }
 

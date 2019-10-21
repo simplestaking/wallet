@@ -10,16 +10,16 @@ export const environment = {
     disableNetwork: true
   },
   trezor: {
-    connectSrc: 'https://connect.trezor.io/7/',
+    connectSrc: 'https://connect.trezor.io/8/',
     popup: true,
     trustedHost: false,
     webusb: false,
-    debug: true,
+    debug: false,
     transportReconnect: false, // true
     manifest: {
       email: 'jurajselep@simplestaking.com',
       appUrl: 'https://wallet.simplestaking.com'
     }
   },
-  nodes: 'alpha'
+  nodes: 'main'
 };
