@@ -31,13 +31,29 @@ export function reducer(state = initialState, action) {
                             manager: value[2],
                             // contract
                             contract: value[1],
-                            balance: 0,
+                            balance: '',
                         }
                     }), {}),
 
                 },
             }
         }
+
+        case 'TEZOS_TREZOR_NEW_CONTRACT_BALANCE_SUCCESS': {
+            // console.log(action, state);
+ 
+            return {
+                ...state,
+                entities: {
+                    ...state.entities,
+                    [action.payload.wallet.publicKeyHash]: {
+                        ...state.entities[action.payload.wallet.publicKeyHash],
+                        balance: action.payload.getWallet.balance,
+                    }
+                },
+            }
+        }
+
 
         case 'TEZOS_TREZOR_CONTRACT_SELECT': {
             return {

@@ -175,10 +175,9 @@ export class TezosTrezorNewEffects {
                     'explorer/account/' +
                     action.payload.address).pipe(
                         // for status 404 return 0 contract, otherwise return observable with error
-                        catchError((error, caught) => 
-                             error.status === 404 ? of({ n_origination: 0 }) : caught
+                        catchError((error, caught) =>
+                            error.status === 404 ? of({ n_origination: 0 }) : caught
                         ),
-
                     )
             ),
 
@@ -201,6 +200,8 @@ export class TezosTrezorNewEffects {
         }),
 
     )
+
+
 
     constructor(
         private actions$: Actions,
