@@ -171,7 +171,7 @@ export class TezosTrezorNewEffects {
             flatMap(() =>
                 this.http.get(
                     // get api url
-                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.url +
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
                     'explorer/account/' +
                     action.payload.address).pipe(
                         // for status 404 return 0 contract, otherwise return observable with error

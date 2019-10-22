@@ -45,7 +45,7 @@ export class TezosTrezorContractEffects {
             flatMap(() =>
                 this.http.get(
                     // get api url
-                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.url +
+                    state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
                     'tables/op?columns=status,receiver,manager&' +
                     'type=origination&limit=100&sender=' +
                     // get public key hash from url 

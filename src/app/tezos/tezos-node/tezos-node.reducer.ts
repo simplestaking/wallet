@@ -7,13 +7,14 @@ let initialState: any = {
             name: 'main',
             url: 'https://mainnet.simplestaking.com:3000', // 'https://tezos-vpn01.westeurope.cloudapp.azure.com',
             tzscan: {
-                url: 'http://tzscan.io/',
-                operations: 'https://api6.tzscan.io/v3/operations/',
-                operations_number: 'https://api6.tzscan.io/v3/number_operations/',
-                block_timestamp: 'https://api6.tzscan.io/v3/timestamp/',
+                url: 'https://mystique.tzkt.io/',
+                operations: 'https://mystique.tzkt.io/v3/operations/',
+                operations_number: 'https://mystique.tzkt.io/v3/number_operations/',
+                block_timestamp: 'https://mystique.tzkt.io/v3/timestamp/',
             },
             tzstats: {
-                url: 'https://api.tzstats.com/',
+                url: 'https://tzstats.com/',
+                api: 'https://api.tzstats.com/',
             },
         },
         alpha: {

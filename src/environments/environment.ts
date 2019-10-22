@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  type: 'web',
+  type: 'electron',
   firebase: {
     apiKey: "AIzaSyBuVlOS05MaREe3cK0eycmd68nYr448Th4",
     authDomain: "wallet-dd9dc.firebaseapp.com",
@@ -11,7 +11,7 @@ export const environment = {
   },
   trezor: {
     connectSrc: 'https://connect.trezor.io/8/',
-    popup: true,
+    popup: false,
     trustedHost: false,
     webusb: false,
     debug: false,

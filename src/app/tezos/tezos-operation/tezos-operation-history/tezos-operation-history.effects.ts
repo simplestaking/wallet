@@ -68,32 +68,21 @@ export class TezosOperationHistoryEffects {
     // @TODO: do not fetch all data, but stop once we are out of history window or add some manual trigger...
 
     // cyclicaly fetch operations until we get them all
-    fetchAllOperations = (path: string, page: number) => (source: Observable<TzScanOperation[]>): Observable<TzScanOperation[]> => source.pipe(
+    fetchAllOperations = (path: string) => (source: Observable<TzScanOperation[]>): Observable<TzScanOperation[]> => source.pipe(
         flatMap((operations) => {
-            return this.http.get<TzScanOperation[]>(path.replace(/&p=[0-9]+/, `&p=${page}`)).pipe(
+            return this.http.get<TzScanOperation[]>(path).pipe(
                 map(response => operations.concat(response))
             )
         }),
         flatMap(operations => {
-            const nextPage = page + 1;
-
-            // check if we still have full page and mind that page starts with 0
-            if (operations.length < 50 + 50 * page) {
-                return of(operations);
-                //aaaaa
-            } else {
-                return of(operations).pipe(this.fetchAllOperations(path, nextPage));
-            }
+            return of(operations);
         })
     )
 
 
-
-
-
     // get historical operation data  
     @Effect()
-    TezosWalletOperationHistoryTransactionLoad$ = this.actions$.pipe(
+    TezosWalletOperationHistoryTransactionReceiverLoad$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
         // get state from store
@@ -102,11 +91,15 @@ export class TezosOperationHistoryEffects {
         flatMap(({ action, state }) => of([]).pipe(
             this.fetchAllOperations(
                 //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
+                'tables/op?columns=time,status,hash,sender,receiver,volume,fee,burned' +
+                '&receiver=' +
                 // get public key hash from url 
                 state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Transaction&p=0&number=50',
-                0
+                // '&sender.ne=' +
+                // // get public key hash from url 
+                // state.routerReducer.state.root.children[0].firstChild.params.address +
+                '&type=transaction'
             ),
             // add publicKeyHash
             map(operations => {
@@ -114,34 +107,100 @@ export class TezosOperationHistoryEffects {
                 const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
                 const mapped = operations.map(operation => {
 
-                    const targetOperation = operation.type.operations[0];
-                    const selfSent = targetOperation.destination.tz === targetOperation.src.tz;
-
+                    let timestamp = operation[0];
+                    // status
+                    let failed = operation[1] === 'failed' ? true : false;
+                    let hash = operation[2];
+                    let address = operation[3];
 
                     // default to incomming credit operation
                     let type = OperationTypeEnum.credit;
-                    let address = targetOperation.src.tz
-                    let amount = targetOperation.amount * +1
+                    let amount = operation[5] * +100000
                     let fee = 0;
                     let burn = 0;
 
-
-                    // override for outgoing debit
-                    if (operation.type.source.tz === publicKeyHash) {
-
-                        type = OperationTypeEnum.debit;
-                        address = targetOperation.destination.tz;
-                        amount = selfSent ? 0 : targetOperation.amount * -1
-                        fee = targetOperation.fee;
-                        burn = targetOperation.burn || targetOperation.burn_tez;
-                    }
+                    // sender is same as receiver
+                    const selfSent = operation[3] === operation[4];
 
                     return new OperationHistoryEntity(
                         type,
-                        operation.hash,
+                        hash,
                         address,
-                        targetOperation.timestamp,
-                        targetOperation.failed,
+                        timestamp,
+                        failed,
+                        amount,
+                        fee,
+                        burn,
+                        false,
+                        selfSent
+                    );
+                });
+
+                return {
+                    publicKeyHash: publicKeyHash,
+                    operations: mapped,
+                    reveals: []
+                }
+            })
+
+        )),
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS] transaction', response)),
+        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+    )
+
+    // get historical operation data  
+    @Effect()
+    TezosWalletOperationHistoryTransactionSenderLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+            this.fetchAllOperations(
+                //  get api url
+                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
+                'tables/op?columns=time,status,hash,sender,receiver,volume,fee,burned' +
+                '&sender=' +
+                // get public key hash from url 
+                state.routerReducer.state.root.children[0].firstChild.params.address +
+                '&type=transaction'
+            ),
+            // add publicKeyHash
+            map(operations => {
+
+                const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
+                const mapped = operations.map(operation => {
+
+                    let timestamp = operation[0];
+                    // status
+                    let failed = operation[1] === 'failed' ? true : false;
+                    let hash = operation[2];
+                    let address = operation[3];
+
+                    // default to incomming debit operation
+                    let type = OperationTypeEnum.debit;
+                    let amount = operation[5] * -100000
+                    let fee = operation[6] * 100000;
+                    let burn = operation[7] * 100000;
+
+                    //  // sender is same as receiver
+                    const selfSent = operation[3] === operation[4];
+
+                    return new OperationHistoryEntity(
+                        type,
+                        hash,
+                        address,
+                        timestamp,
+                        failed,
                         amount,
                         fee,
                         burn,
@@ -181,32 +240,38 @@ export class TezosOperationHistoryEffects {
         flatMap(({ action, state }) => of([]).pipe(
             this.fetchAllOperations(
                 //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
+                'tables/op?columns=time,status,hash,sender,receiver,volume,fee,burned' +
+                '&sender=' +
                 // get public key hash from url 
                 state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Reveal&p=0&number=50',
-                0
+                '&type=reveal'
             ),
 
             // add publicKeyHash
             map(operations => {
 
-                const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
                 const mapped = operations
-                    .filter(operation => operation.type.source.tz === publicKeyHash)
                     .map(operation => {
 
-                        const targetOperation = operation.type.operations[0];
+                        let timestamp = operation[0];
+                        // status
+                        let failed = operation[1] === 'failed' ? true : false;
+                        let hash = operation[2];
+
+                        let type = OperationTypeEnum.reveal;
+                        let fee = 0;
+                        let burn = 0;
 
                         return new OperationHistoryEntity(
-                            OperationTypeEnum.reveal,
-                            operation.hash,
+                            type,
+                            hash,
                             '',
-                            targetOperation.timestamp,
-                            targetOperation.failed,
+                            timestamp,
+                            failed,
                             0,
-                            targetOperation.fee,
-                            targetOperation.burn
+                            fee,
+                            burn
                         );
                     })
 
@@ -232,7 +297,7 @@ export class TezosOperationHistoryEffects {
 
     // get historical operation data  
     @Effect()
-    TezosWalletOperationHistoryOriginationLoad$ = this.actions$.pipe(
+    TezosWalletOperationHistoryOriginationReceiverLoad$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_HISTORY_LOAD'),
 
         // get state from store
@@ -242,45 +307,107 @@ export class TezosOperationHistoryEffects {
 
             this.fetchAllOperations(
                 //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
+                'tables/op?columns=time,status,hash,sender,receiver,volume,fee,burned' +
+                '&receiver=' +
                 // get public key hash from url 
                 state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Origination&p=0&number=50',
-                0
+                '&type=origination'
             ),
 
-
             // add publicKeyHash
-
             map(operations => {
 
                 const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
                 const mapped = operations.map(operation => {
 
-                    const targetOperation = operation.type.operations[0];
-
                     // origination creating this account (contract)
-                    let address = targetOperation.src.tz;
-                    let amount = targetOperation.balance * +1
+                    let timestamp = operation[0];
+                    // status
+                    let failed = operation[1] === 'failed' ? true : false;
+                    let hash = operation[2];
+                    let address = operation[3];
+
+                    let type = OperationTypeEnum.origination;
+                    let amount = operation[5] * +100000
                     let fee = 0;
                     let burn = 0;
 
+                    return new OperationHistoryEntity(
+                        type,
+                        hash,
+                        address,
+                        timestamp,
+                        failed,
+                        amount,
+                        fee,
+                        burn
+                    );
+                });
+
+                return {
+                    publicKeyHash: publicKeyHash,
+                    operations: mapped,
+                    reveals: []
+                }
+            })
+        )),
+        // tap((response) => console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', response)),
+        map((response) => ({ type: 'TEZOS_OPERATION_HISTORY_LOAD_SUCCESS', payload: response })),
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_OPERATION_HISTORY_LOAD_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+    )
+
+    // get historical operation data  
+    @Effect()
+    TezosWalletOperationHistoryOriginationSenderLoad$ = this.actions$.pipe(
+        ofType('TEZOS_OPERATION_HISTORY_LOAD'),
+
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            this.fetchAllOperations(
+                //  get api url
+                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
+                'tables/op?columns=time,status,hash,sender,receiver,volume,fee,burned' +
+                '&sender=' +
+                // get public key hash from url 
+                state.routerReducer.state.root.children[0].firstChild.params.address +
+                '&type=origination'
+            ),
+
+            // add publicKeyHash
+            map(operations => {
+                const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
+                const mapped = operations.map(operation => {
+
                     // origination from the account
-                    if (operation.type.source.tz === publicKeyHash) {
+                    let timestamp = operation[0];
+                    // status
+                    let failed = operation[1] === 'failed' ? true : false;
+                    let hash = operation[2];
+                    let address = operation[3];
 
-                        address = targetOperation.tz1.tz;
-                        amount = targetOperation.balance * -1;
-                        fee = targetOperation.fee;
-                        burn = targetOperation.burn || targetOperation.burn_tez;
+                    let type = OperationTypeEnum.origination;
+                    let amount = operation[5] * -100000;
 
-                    }
+                    let fee = operation[6] * 100000;
+                    let burn = operation[7] * 100000;
 
                     return new OperationHistoryEntity(
-                        OperationTypeEnum.origination,
-                        operation.hash,
+                        type,
+                        hash,
                         address,
-                        targetOperation.timestamp,
-                        targetOperation.failed,
+                        timestamp,
+                        failed,
                         amount,
                         fee,
                         burn
@@ -318,11 +445,12 @@ export class TezosOperationHistoryEffects {
 
             this.fetchAllOperations(
                 //  get api url
-                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.operations +
+                state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.api +
+                'tables/op?columns=time,status,hash,sender,delegate,volume,fee,burned' +
+                '&sender=' +
                 // get public key hash from url 
                 state.routerReducer.state.root.children[0].firstChild.params.address +
-                '?type=Delegation&p=0&number=50',
-                0
+                '&type=delegation'
             ),
 
             // add publicKeyHash
@@ -330,21 +458,29 @@ export class TezosOperationHistoryEffects {
 
                 const publicKeyHash = state.routerReducer.state.root.children[0].firstChild.params.address;
                 const mapped = operations
-                    // we care only about outgoing delegations
-                    .filter(operation => operation.type.source.tz === publicKeyHash)
                     .map(operation => {
 
-                        const targetOperation = operation.type.operations[0];
+                        let timestamp = operation[0];
+                        // status
+                        let failed = operation[1] === 'failed' ? true : false;
+                        let hash = operation[2];
+                        let delegate = operation[4];
+
+                        let type = OperationTypeEnum.delegation;
+                        let amount = operation[5] * 100000
+                        let fee = operation[6] * 100000;
+                        let burn = operation[7] * 100000;
 
                         return new OperationHistoryEntity(
-                            OperationTypeEnum.delegation,
-                            operation.hash,
-                            targetOperation.delegate.tz,
-                            targetOperation.timestamp,
-                            targetOperation.failed,
-                            0,
-                            targetOperation.fee,
-                            targetOperation.burn_tez || targetOperation.burn
+                            type,
+                            hash,
+                            delegate,
+                            timestamp,
+                            failed,
+                            // TODO: check how is this calculated
+                            amount,
+                            fee,
+                            burn
                         );
                     });
 
