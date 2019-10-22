@@ -14,7 +14,7 @@ let initialState: any = {
             },
             tzstats: {
                 url: 'https://tzstats.com/',
-                api: 'https://api.tzstats.com/',
+                api: 'https://cors-anywhere.herokuapp.com/api.tzstats.com/',
             },
         },
         alpha: {

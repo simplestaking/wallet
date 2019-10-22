@@ -22,5 +22,5 @@ export const environment = {
         appUrl: 'https://wallet.simplestaking.com'
       },
     },
-    nodes: 'zero'
+    nodes: 'main'
   };  
