@@ -7,7 +7,7 @@ import { of, Observable } from 'rxjs';
 import { withLatestFrom, flatMap, map, tap, delay, catchError } from 'rxjs/operators';
 import { enterZone } from '../../../shared/utils/rxjs/operators';
 
-import { initializeWallet, setDelegation, originateContract, confirmOperation, Wallet } from 'tezos-wallet'
+import { initializeWallet, setDelegation, originateContract, transaction, confirmOperation, Wallet } from 'tezos-wallet'
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
@@ -16,6 +16,7 @@ export class TezosOperationDelegationEffects {
 
     public walletCollection: AngularFirestoreCollection<any>;
 
+    // TODO: split to two effects for implicit and smart contract
     @Effect()
     TezosOperationDelegation$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_DELEGATION'),
@@ -29,7 +30,10 @@ export class TezosOperationDelegationEffects {
             initializeWallet(stateWallet => ({
                 secretKey: state.tezos.tezosWalletDetail.secretKey,
                 publicKey: state.tezos.tezosWalletDetail.publicKey,
-                publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash,
+                // for smart contract use manager address
+                publicKeyHash: state.tezos.tezosWalletDetail.script ?
+                    state.tezos.tezosWalletDetail.manager :
+                    state.tezos.tezosWalletDetail.publicKeyHash,
                 // set tezos node
                 node: state.tezos.tezosNode.api,
                 // set wallet type: WEB, TREZOR_ONE, TREZOR_T
@@ -38,32 +42,29 @@ export class TezosOperationDelegationEffects {
                 path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
-
             // if we have implicit contract originate new contract 
-            flatMap(stateWallet => //state.tezos.tezosWalletDetail.delegate.setable === true ?
+            flatMap(stateWallet => state.tezos.tezosWalletDetail.script ?
 
-                // Different signatures!
-                // Observable<T & StateSetDelegate & ...>
-                // Observable<T & StateOriginateContract & ...>
-                
+                // delegate funds on smart contract 
+                of(stateWallet).pipe(
+                    transaction(stateWallet => ({
+                        to: state.tezos.tezosOperationDelegation.form.from,
+                        amount: '0',
+                        fee: state.tezos.tezosOperationDelegation.form.fee,
+                        parameters_manager: {
+                            set_delegate: state.tezos.tezosOperationDelegation.form.to,
+                        }
+                    })),
+                ) :
+
                 // delegate funds
                 of(stateWallet).pipe(
                     setDelegation(stateWallet => ({
                         to: state.tezos.tezosOperationDelegation.form.to,
                         fee: state.tezos.tezosOperationDelegation.form.fee,
                     }))
-                ) as Observable<any> 
+                ) 
 
-                // :
-                // // originate contract with delegation 
-                // of(stateWallet).pipe(
-                //     originateContract(stateWallet => ({
-                //         to: state.tezos.tezosOperationDelegation.form.to,
-                //         amount: state.tezos.tezosOperationDelegation.form.amount,
-                //         fee: state.tezos.tezosOperationDelegation.form.fee,
-                //     }))
-                // ) as Observable<any>
-                
             ),
 
             // enter back into zone.js so change detection works

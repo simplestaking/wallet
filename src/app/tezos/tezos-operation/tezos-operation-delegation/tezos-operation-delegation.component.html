@@ -64,19 +64,6 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" *ngIf="tezosWalletDetail?.delegate?.setable!==true">
-
-    <mat-label>Amount</mat-label>
-    <input matInput #amount type="number" placeholder="Amount" formControlName="amount"
-      [errorStateMatcher]="tezosAmountErrorMatcher" />
-    <mat-hint align="end">{{amount.value?.length || 0}}/16</mat-hint>
-    <mat-error>
-      Please enter valid amount.
-      <span *ngIf="tezosOperationDelegation.amountMax > 0"> Maximum amount is
-        {{ tezosOperationDelegation.amountMax | number:'1.2-6' }} XTZ.</span>
-    </mat-error>
-  </mat-form-field>
-
   <mat-form-field appearance="outline">
 
     <mat-label>Fee</mat-label>
@@ -86,16 +73,6 @@
       Please enter valid fee
     </mat-error>
   </mat-form-field>
-
-  <!-- 
-  <mat-form-field appearance="outline" *ngIf="tezosWalletDetail?.delegate?.setable!==true">
-    <mat-label>Name</mat-label>
-    <input matInput #address placeholder="Name" formControlName="name" />
-    <mat-hint align="end">{{address.value?.length || 0}}/36</mat-hint>
-    <mat-error>
-      Please choose new address name
-    </mat-error>
-  </mat-form-field> -->
 
 </div>
 

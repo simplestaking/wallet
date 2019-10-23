@@ -32,16 +32,6 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
     this.tezosOperationDelegationForm = this.fb.group({
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
-      amount: new FormControl('', {
-        validators: [
-          Validators.required,
-          Validators.min(0.000001),
-          Validators.max(999999999),
-          Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
-        ],
-        updateOn: 'blur'
-      }),
-      amountMax: new FormControl(''),
       fee: new FormControl('', {
         validators: [
           Validators.required,
@@ -95,12 +85,6 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
         // create OperationOrigination 
         this.tezosOperationDelegation = {
           ...state,
-          // get max allowed amount for delegation
-          // TODO: move to reducer, add effect for fee estimation
-          amountMax:
-            this.tezosWalletDetail.balance && state.fee ?
-              ((this.tezosWalletDetail.balance * 0.000001) - (state.fee + 0.26)).toFixed(2) : 0,
-
         }
 
         // set redux data to form 
@@ -130,26 +114,11 @@ export class TezosOperationDelegationComponent implements OnInit, OnDestroy {
     this.tezosOperationDelegationForm.controls.from.markAsTouched()
     this.tezosOperationDelegationForm.controls.to.markAsTouched()
 
-    if (!this.tezosWalletDetail.delegate || this.tezosWalletDetail.delegate.setable !== true) {
-      this.tezosOperationDelegationForm.controls.amount.setValidators([
-        Validators.required,
-        Validators.min(0.000001),
-        Validators.max(999999999),
-        Validators.pattern('^[0-9]+(\.[0-9]{0,6})?'),
-      ])
-      this.tezosOperationDelegationForm.controls.amount.markAsTouched()
-    } else {
-      this.tezosOperationDelegationForm.controls.amount.setValidators([])
-      this.tezosOperationDelegationForm.controls.amount.markAsTouched()
-    }
-
     // check validity
     this.tezosOperationDelegationForm.updateValueAndValidity()
 
     // dispatch only if valid
-    if (this.tezosOperationDelegationForm.valid &&
-      // dynamic validation of max allowed
-      (this.tezosOperationDelegationForm.controls.amount.value <= this.tezosOperationDelegationForm.controls.amountMax.value)) {
+    if (this.tezosOperationDelegationForm.valid) {
 
       console.log('[TEZOS_OPERATION_DELEGATION]');
 
