@@ -68,13 +68,12 @@ export class TezorTrezorDebugComponent implements OnInit {
       // initialize TrezorConnect 
       TrezorConnect.init({
 
-          
         connectSrc: environment.trezor.connectSrc,
 
         popup: environment.trezor.popup,
         trustedHost: environment.trezor.trustedHost,
         webusb: environment.trezor.webusb,
-        
+
         // try to reconect when bridge is not working
         transportReconnect: environment.trezor.transportReconnect,
         debug: environment.trezor.debug,
@@ -116,7 +115,7 @@ export class TezorTrezorDebugComponent implements OnInit {
     console.log('[getTezosAddress]');
 
     TrezorConnect.tezosGetAddress({
-      'path': "m/44'/1729'/0'",
+      'path': "m/44'/1729'/1'",
       'showOnTrezor': true,
     }).then(response => { console.warn('[tezosGetAddress]', response) })
       .catch(error => { console.error('[ERROR][tezosGetAddress]', error) });
@@ -141,126 +140,104 @@ export class TezorTrezorDebugComponent implements OnInit {
 
   tezosSingTransaction() {
 
-    const prefix = {
-      tz1: new Uint8Array([6, 161, 159]),
-      tz2: new Uint8Array([6, 161, 161]),
-      tz3: new Uint8Array([6, 161, 164]),
-      KT1: new Uint8Array([2, 90, 121]),
-      B: new Uint8Array([1, 52]),
-      edpk: new Uint8Array([13, 15, 37, 217]),
-      sppk: new Uint8Array([3, 254, 226, 86]),
-      p2pk: new Uint8Array([3, 178, 139, 127]),
-      edsk64: new Uint8Array([43, 246, 78, 7]),
-      edsk32: new Uint8Array([13, 15, 58, 7]),
-      edsig: new Uint8Array([9, 245, 205, 134, 18]),
-      operation: new Uint8Array([5, 116]),
-    }
-
-    const bs58checkDecode = (prefix: any, enc: any) => {
-      return bs58check.decode(enc).slice(prefix.length);;
-    }
-
-    const concatKeys = (first: any, second: any) => {
-      let n: any = new Uint8Array(first.length + second.length);
-      n.set(first);
-      n.set(second, first.length);
-      return n;
-    }
-
-    // convert publicKeyHash to buffer
-    const publicKeyHash2buffer = (publicKeyHash: any) => {
-
-      switch (publicKeyHash.substr(0, 3)) {
-        case 'tz1':
-          return {
-            curve: 0,
-            originated: 0,
-            hash: concatKeys(new Uint8Array([0]), bs58checkDecode(prefix.tz1, publicKeyHash))
-          }
-        case 'tz2':
-          return {
-            curve: 1,
-            originated: 0,
-            hash: concatKeys(new Uint8Array([1]), bs58checkDecode(prefix.tz2, publicKeyHash))
-          }
-        case 'tz3':
-          return {
-            curve: 2,
-            originated: 0,
-            hash: concatKeys(new Uint8Array([2]), bs58checkDecode(prefix.tz3, publicKeyHash))
-          }
-        case 'KT1':
-          // debugger
-          return {
-            curve: -1,
-            originated: 1,
-            hash: concatKeys(bs58checkDecode(prefix.KT1, publicKeyHash), new Uint8Array([0]))
-          }
-        default:
-          return {
-            curve: -1,
-            originated: -1,
-            hash: null,
-          }
-      }
-
-    }
-
-    // convert publicKeyHash to buffer
-    const publicKey2buffer = (publicKey: any) => {
-
-      switch (publicKey.substr(0, 4)) {
-        case 'edpk':
-          return {
-            curve: 0,
-            hash: concatKeys(new Uint8Array([0]), bs58checkDecode(prefix.edpk, publicKey))
-          }
-        case 'sppk':
-          return {
-            curve: 1,
-            hash: concatKeys(new Uint8Array([1]), bs58checkDecode(prefix.sppk, publicKey))
-          }
-        case 'p2pk':
-          return {
-            curve: 2,
-            hash: concatKeys(new Uint8Array([2]), bs58checkDecode(prefix.p2pk, publicKey))
-          }
-        default:
-          return {
-            curve: -1,
-            hash: null,
-          }
-      }
-
-    }
-
-    console.log(publicKeyHash2buffer('tz1cTfmc5uuBr2DmHDgkXTAoEcufvXLwq5TP').originated, publicKeyHash2buffer('tz1cTfmc5uuBr2DmHDgkXTAoEcufvXLwq5TP').hash)
-
-
     TrezorConnect.tezosSignTransaction({
-      // method: 'tezosSignTransaction',
-      path: "m/44'/1729'/0'",
-      branch: 'f2ae0c72fdd41d7a89bebfe8d6dd6d38e0fcd0782adb8194717176eb70366f64',
+
+      path: "m/44'/1729'/10'",
+      branch: "BKk7ZsvvkQSntQ31j2Hxsw8bfYtUKGjsKHT2aQrxAqUYyQUHxmM",
       operation: {
         transaction: {
-          source: {
-            tag: publicKeyHash2buffer('tz1cTfmc5uuBr2DmHDgkXTAoEcufvXLwq5TP').originated,
-            hash: publicKeyHash2buffer('tz1cTfmc5uuBr2DmHDgkXTAoEcufvXLwq5TP').hash,
-          },
-          destination: {
-            tag: publicKeyHash2buffer('tz1cTfmc5uuBr2DmHDgkXTAoEcufvXLwq5TP').originated,
-            hash: publicKeyHash2buffer('tz1cTfmc5uuBr2DmHDgkXTAoEcufvXLwq5TP').hash,
-          },
-          fee: 0,
-          counter: 108925,
-          gas_limit: 200,
-          storage_limit: 0,
-          amount: 10000,
-        },
-      },
+          source: "tz1UKmZhi8dhUX5a5QTfCrsH9pK4dt1dVfJo",
+          destination: "KT1MJSg8YrnjSewrWGYL3e8XfqtLAG5WU4Hg",
+          counter: 20449,
+          amount: 0,
+          fee: 10000,
+          gas_limit: 30000,
+          storage_limit: 277,
+          parameters_manager: {
+            //cancel_delegate: true,
+            set_delegate: 'tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q',
+          }
+        }
+      }
 
     }).then(response => { console.warn('[tezosSignTransaction]', response) })
       .catch(error => { console.error('[ERROR][tezosSignTransaction]', error) });
+
+  }
+
+  tezosSendTransaction() {
+
+    console.log('[tezosSendTransaction]')
+
+    const config: any = {
+      transaction: {
+        to: 'KT1M1AEoVEJLiCRijmWbLA1k3ZRg9J7sCPKT',
+        amount: '0',
+        fee: '0.01',
+        parameters: { "parameters": { "prim": "Right", "args": [{ "prim": "Pair", "args": [{ "string": "edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8" }, { "prim": "Pair", "args": [{ "string": "2018-11-27T01:28:13Z" }, { "prim": "Pair", "args": [{ "bytes": "64566075b832cf9e7bcc0d63d3a9c71c3f03efc1" }, { "prim": "Pair", "args": [{ "prim": "Pair", "args": [{ "int": "123510010" }, { "int": "3890566" }] }, { "prim": "Pair", "args": [{ "prim": "Pair", "args": [{ "int": "123450" }, { "int": "567890" }] }, { "string": "2018-11-30T06:13:20Z" }] }] }] }] }] }] } },
+      },
+      node: {
+        name: 'mainnet',
+        display: 'Mainnet',
+        url: 'https://mainnet.simplestaking.com:3000',
+        tzscan: {
+          url: 'https://mvp.tezblock.io/transaction/',
+        }
+      },
+    }
+    const wallet = {
+      secretKey: 'edsk3hEtniBGLP2wqYnc1Lix1hhV74eEenRBTfxjHTRHP59R7BapMW',
+      publicKey: 'edpkth42B7j7rvLeZWmufj28a7sEdbMBb9y16qgQmGHYGX4hPis9V4',
+      publicKeyHash: 'tz1WCojrEZWrjenejUZmG8QNsMtKPELx2TFA',
+      //type: 'web',
+      type: 'TREZOR_T',
+      path: "m/44'/1729'/1'"
+    }
+
+    of([]).pipe(
+
+      // wait for sodium to initialize
+      initializeWallet((stateWallet: any) => ({
+        // secretKey: wallet.secretKey,
+        publicKey: wallet.publicKey,
+        publicKeyHash: wallet.publicKeyHash,
+        // set Tezos node
+        node: config.node,
+        // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+        //type: <'TREZOR_T'>wallet.type,
+        type: <any>wallet.type,
+        path: wallet.path,
+        // add smart contract params
+        // contractParameters: stateWallet,
+      })),
+
+      // tap((stateWallet: any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
+
+      // send xtz
+      transaction(stateWallet => ({
+        to: config.transaction.to,
+        amount: config.transaction.amount,
+        fee: config.transaction.fee,
+        parameters_manager: {
+          transfer: {
+            destination: wallet.publicKeyHash,
+            amount: '0.001'
+          }
+          //cancel_delegate: true,
+          // set_delegate: 'tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q',
+        }
+      })),
+
+      // wait for transacation to be confirmed
+      confirmOperation(stateWallet => ({
+        injectionOperation: stateWallet.injectionOperation,
+      })),
+
+
+    ).subscribe(data => {
+      console.log('[response]', data)
+    })
+
 
   }
 
@@ -276,8 +253,9 @@ export class TezorTrezorDebugComponent implements OnInit {
     this.store.dispatch({
       type: 'TEZOS_WALLET_DIALOG_SHOW',
       payload: [{
-        name: 'error', content: 'error text error text error text error text error text error text' }],
-      })
+        name: 'error', content: 'error text error text error text error text error text error text'
+      }],
+    })
 
   }
 
@@ -389,7 +367,7 @@ export class TezorTrezorDebugComponent implements OnInit {
         contractParameters: stateWallet,
       })),
 
-      tap((stateWallet:any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
+      tap((stateWallet: any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
 
       // send xtz
       transaction(stateWallet => ({
@@ -477,7 +455,7 @@ export class TezorTrezorDebugComponent implements OnInit {
     })
 
     // let dbRequest = window.indexedDB.open("firestore/[DEFAULT]/simplestakingcom-58d45/main")
-    
+
     // console.log('[deleteHistory]', dbRequest)
 
     // dbRequest.onsuccess = function(event) { 

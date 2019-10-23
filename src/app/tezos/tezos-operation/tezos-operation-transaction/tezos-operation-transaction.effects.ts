@@ -12,6 +12,7 @@ import { initializeWallet, transaction, confirmOperation } from 'tezos-wallet'
 @Injectable()
 export class TezosOperationTransactionEffects {
 
+    // TODO: split to two effects for implicit and smart contract
     @Effect()
     TezosOperationTransaction$ = this.actions$.pipe(
         ofType('TEZOS_OPERATION_TRANSACTION'),
@@ -25,7 +26,10 @@ export class TezosOperationTransactionEffects {
             initializeWallet(stateWallet => ({
                 secretKey: state.tezos.tezosWalletDetail.secretKey,
                 publicKey: state.tezos.tezosWalletDetail.publicKey,
-                publicKeyHash: state.tezos.tezosWalletDetail.publicKeyHash,
+                // for smart contract use manager address
+                publicKeyHash: state.tezos.tezosWalletDetail.script ?
+                    state.tezos.tezosWalletDetail.manager :
+                    state.tezos.tezosWalletDetail.publicKeyHash,
                 // set tezos node
                 node: state.tezos.tezosNode.api,
                 // set wallet type: WEB, TREZOR_ONE, TREZOR_T
@@ -34,12 +38,34 @@ export class TezosOperationTransactionEffects {
                 path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
-            // send xtz
-            transaction(stateWallet => ({
-                to: state.tezos.tezosOperationTransaction.form.to,
-                amount: state.tezos.tezosOperationTransaction.form.amount,
-                fee: state.tezos.tezosOperationTransaction.form.fee,
-            })),
+            // send xtz 
+            flatMap(stateWallet => state.tezos.tezosWalletDetail.script ?
+
+                // send xtz smart contract 
+                of(stateWallet).pipe(
+                    transaction(stateWallet => ({
+                        to: state.tezos.tezosOperationTransaction.form.from,
+                        amount: '0',
+                        fee: state.tezos.tezosOperationTransaction.form.fee,
+                        parameters_manager: {
+                            transfer: {
+                                destination: state.tezos.tezosOperationTransaction.form.to,
+                                amount: state.tezos.tezosOperationTransaction.form.amount
+                            }
+                        }
+                    })),
+                ) :
+
+                // send xtz implicit account
+                of(stateWallet).pipe(
+                    transaction(stateWallet => ({
+                        to: state.tezos.tezosOperationTransaction.form.to,
+                        amount: state.tezos.tezosOperationTransaction.form.amount,
+                        fee: state.tezos.tezosOperationTransaction.form.fee,
+                    })),
+                )
+
+            ),
 
             // enter back into zone.js so change detection works
             enterZone(this.zone),
