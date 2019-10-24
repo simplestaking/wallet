@@ -265,6 +265,7 @@ export class TezosOperationHistoryEffects {
                         // status
                         let failed = operation[2] === 'failed' ? true : false;
                         let hash = operation[3];
+                        let address = operation[4];
 
                         let type = OperationTypeEnum.reveal;
                         let fee = 0;
@@ -274,7 +275,7 @@ export class TezosOperationHistoryEffects {
                             id,
                             type,
                             hash,
-                            '',
+                            address,
                             timestamp,
                             failed,
                             0,
