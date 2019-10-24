@@ -59,7 +59,7 @@
     "ngx-clipboard": "^11.1.9",
     "ngx-device-detector": "^1.3.4",
     "ngx-electron": "^1.0.4",
-    "tezos-wallet": "^1.2.7",
+    "tezos-wallet": "1.2.7",
     "trezor-connect": "8.0.6"
   },
   "devDependencies": {

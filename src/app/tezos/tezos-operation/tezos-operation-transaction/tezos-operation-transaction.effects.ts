@@ -132,7 +132,7 @@ export class TezosOperationTransactionEffects {
             });
             return caught;
         }),
-        // wait for tzscan to process transaction
+        // wait for tzstats to process transaction
         delay(5000),
         // redirect to wallet detail
         tap((action) => {

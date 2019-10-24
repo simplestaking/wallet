@@ -10,8 +10,8 @@ export const environment = {
       disableNetwork: true
     },
     trezor: {
-      // connectSrc: 'http://localhost:5836/', 
-      connectSrc: 'https://localhost:8088/', 
+      connectSrc: 'http://localhost:5836/', 
+      // connectSrc: 'https://localhost:8088/', 
       popup: false,
       trustedHost: true,
       webusb: true,

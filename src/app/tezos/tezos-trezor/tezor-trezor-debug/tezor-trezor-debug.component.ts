@@ -191,7 +191,7 @@ export class TezorTrezorDebugComponent implements OnInit {
         name: 'mainnet',
         display: 'Mainnet',
         url: 'https://mainnet.simplestaking.com:3000',
-        tzscan: {
+        tzstats: {
           url: 'https://mvp.tezblock.io/transaction/',
         }
       },
@@ -346,8 +346,8 @@ export class TezorTrezorDebugComponent implements OnInit {
         name: 'alphanet',
         display: 'Alphanet',
         url: 'https://alphanet.smartcontractlabs.ee',
-        tzscan: {
-          url: 'http://alphanet.tzscan.io/',
+        tzstats: {
+          url: 'http://tzstats.io/',
         }
       },
     }
@@ -415,10 +415,7 @@ export class TezorTrezorDebugComponent implements OnInit {
 
     console.log('[getHistoricalData]');
 
-    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Transaction&p=0&number=50
-    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Origination&p=0&number=10
-    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Delegation&p=0&number=10
-
+  
     // save wallet to wallet list in FireBase Store 
     let transactionCollection = this.db.collection('tezos_' + 'main' + '_transaction');
 

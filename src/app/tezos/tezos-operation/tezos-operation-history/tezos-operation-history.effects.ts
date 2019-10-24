@@ -15,38 +15,6 @@ interface TargetAddress {
     tz: string
 }
 
-interface TzScanOperation {
-    block_hash: string
-    hash: string
-    network_hash: string
-    type: {
-        kind: 'manager'
-        operations: {
-            amount?: number
-            balance?: number
-            burn?: number
-            burn_tez?: number
-            counter: number
-            destination: TargetAddress
-            delegate: TargetAddress
-            failed: boolean
-            fee: number
-            gas_limit: string
-            internal: boolean
-            kind: 'transaction' | 'reval' | 'delegation' | 'origination'
-            op_level: number
-            src: TargetAddress
-            storage_limit: string
-            timestamp: string
-            tz1: TargetAddress
-        }[]
-        source: {
-            tz: string
-        }
-    }
-}
-
-
 @Injectable()
 export class TezosOperationHistoryEffects {
 
@@ -68,9 +36,9 @@ export class TezosOperationHistoryEffects {
     // @TODO: do not fetch all data, but stop once we are out of history window or add some manual trigger...
 
     // cyclicaly fetch operations until we get them all
-    fetchAllOperations = (path: string) => (source: Observable<TzScanOperation[]>): Observable<TzScanOperation[]> => source.pipe(
+    fetchAllOperations = (path: string) => (source: Observable<any>): Observable<any> => source.pipe(
         flatMap((operations) => {
-            return this.http.get<TzScanOperation[]>(path).pipe(
+            return this.http.get<any>(path).pipe(
                 map(response => operations.concat(response))
             )
         }),
@@ -577,7 +545,7 @@ export class TezosOperationHistoryEffects {
             .filter((operation: any) => !operation.timestamp)
             .map(operation => ({
                 operation: operation,
-                url: state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzscan.block_timestamp
+                url: state.tezos.tezosNode.nodes[state.tezos.tezosNode.api.name].tzstats.url
             }))
         ),
 
