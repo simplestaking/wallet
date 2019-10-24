@@ -34,6 +34,7 @@ export class TezosWalletListEffects {
     @Effect()
     TezosWalletListLoad$ = this.actions$.pipe(
         ofType('TEZOS_WALLET_LIST_LOAD'),
+        delay(1000),
         // get state from store
         withLatestFrom(this.store, (action, state: any) => state),
 

@@ -136,9 +136,10 @@ export class TezosOperationTransactionComponent implements OnInit {
     this.tezosOperationTransactionForm.updateValueAndValidity()
 
     // dispatch only if valid
-    if (this.tezosOperationTransactionForm.valid &&
+    if (this.tezosOperationTransactionForm.valid 
       // dynamic validation of max allowed amount
-      (this.tezosOperationTransactionForm.controls.amount.value <= this.tezosOperationTransactionForm.controls.amountMax.value)) {
+      // (this.tezosOperationTransactionForm.controls.amount.value <= this.tezosOperationTransactionForm.controls.amountMax.value)
+    ) {
 
 
       // TODO: remove after WEB wallet verification page is added   

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap } from 'rxjs/operators';
+import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, delay, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ofRoute } from './../../../shared/utils/rxjs/operators';
@@ -47,7 +47,7 @@ export class TezosWalletSendEffects {
             });
             return caught;
         })
-        
+
     )
 
     // redicert to url with tezos public address
@@ -69,7 +69,7 @@ export class TezosWalletSendEffects {
     @Effect()
     TezosWalletSendUiClose$ = this.actions$.pipe(
         ofType('TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS'),
-     
+
         map(() => ({ type: 'TEZOS_TREZOR_CONNECT_UI_CLOSE_WINDOWS_SUCCESS' })),
         catchError((error, caught) => {
             console.error(error.message)
@@ -80,8 +80,8 @@ export class TezosWalletSendEffects {
             return caught;
         })
 
-        ) 
-    
+    )
+
 
     constructor(
         private actions$: Actions,

@@ -48,7 +48,7 @@
   <ng-container matColumnDef="amount" stickyEnd>
     <th mat-header-cell *matHeaderCellDef> Amount (XTZ)</th>
     <td mat-cell *matCellDef="let element"> {{element.amount * 0.00001  | number:'1.2-6' }} 
-      <span *ngIf="element.amount">XTZ</span>
+      <span *ngIf="element.amount !== undefined">XTZ</span>
     </td>
   </ng-container>
 

@@ -46,12 +46,12 @@ export function reducer(state = initialState, action) {
                 ...state,
                 ids: [
                     ...state.ids,
-                    ...action.payload.operations.map(operation => operation.hash).reverse()
+                    ...action.payload.operations.map(operation => operation.id).reverse()
                 ],
                 entities: {
                     ...state.entities,
                     ...action.payload.operations.reduce((accumulator, operation) => {
-                        accumulator[operation.hash] = operation;
+                        accumulator[operation.id] = operation;
 
                         return accumulator;
                     }, {})
@@ -59,10 +59,10 @@ export function reducer(state = initialState, action) {
                 reveals: {
                     ...state.reveals,
                     ...action.payload.reveals.reduce((accumulator, reveal) => {
-                        const operation = state.entities[reveal.hash];
+                        const operation = state.entities[reveal.id];
 
                         // update reveal with adress from the underlying operation
-                        accumulator[reveal.hash] = {
+                        accumulator[reveal.id] = {
                             ...reveal,
                             address: operation ? operation.address : reveal.address
                         };
@@ -71,12 +71,12 @@ export function reducer(state = initialState, action) {
                     }, {}),
                     // update reveal with address if it was loaded before operation
                     ...action.payload.operations
-                        .filter(operation => state.reveals[operation.hash])
+                        .filter(operation => state.reveals[operation.id])
                         .reduce((accumulator, operation) => {
-                            const reveal = state.reveals[operation.hash];
+                            const reveal = state.reveals[operation.id];
 
                             // update reveal with adress from the underlying operation
-                            accumulator[reveal.hash] = {
+                            accumulator[reveal.id] = {
                                 ...reveal,
                                 address: operation.address
                             };
@@ -105,13 +105,14 @@ export function reducer(state = initialState, action) {
 
 
         case 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS': {
-
+            
+            // TODO: refactor amount handling
             let stateExtended = {
                 ...state,
                 ids: [
                     ...state.ids,
-                    ...action.payload.applied.map(operation => operation.hash),
-                    //...action.payload.refused.map(operation => operation.hash),
+                    ...action.payload.applied.map(operation => operation.id),
+                    //...action.payload.refused.map(operation => operation.id),
                 ],
                 entities: {
                     ...state.entities,
@@ -122,13 +123,14 @@ export function reducer(state = initialState, action) {
 
                         if (firstOperation.kind === "transaction") {
                             operationTransformed = new OperationHistoryEntity(
+                                0,
                                 OperationTypeEnum.debit,
                                 operation.hash,
                                 firstOperation.destination,
                                 new Date(new Date().getTime() + 86400000).toISOString(),
                                 false,
-                                firstOperation.amount * -1,
-                                firstOperation.fee,
+                                firstOperation.amount * -0.1,
+                                firstOperation.fee * 0.1,
                                 0,
                                 true
                             );
@@ -136,27 +138,29 @@ export function reducer(state = initialState, action) {
 
                         if (firstOperation.kind === "origination") {
                             operationTransformed = new OperationHistoryEntity(
+                                0,
                                 OperationTypeEnum.origination,
                                 operation.hash,
                                 '',
                                 new Date(new Date().getTime() + 86400000).toISOString(),
                                 false,
-                                firstOperation.balance * -1,
-                                firstOperation.fee,
-                                257000,
+                                firstOperation.balance * -0.1,
+                                firstOperation.fee * 0.1,
+                                257000 * 0.1,
                                 true
                             );
                         }
 
                         if (firstOperation.kind === "delegation") {
                             operationTransformed = new OperationHistoryEntity(
+                                0,
                                 OperationTypeEnum.delegation,
                                 operation.hash,
                                 firstOperation.delegate,
                                 new Date(new Date().getTime() + 86400000).toISOString(),
                                 false,
                                 0,
-                                firstOperation.fee,
+                                firstOperation.fee * 0.1,
                                 0,
                                 true
                             );
@@ -165,7 +169,7 @@ export function reducer(state = initialState, action) {
                         // console.log('[operation]', operationTransformed, accumulator)
 
                         if (operationTransformed) {
-                            accumulator[operation.hash] = operationTransformed;
+                            accumulator[operation.id] = operationTransformed;
                         }
 
                         return accumulator
@@ -199,8 +203,8 @@ export function reducer(state = initialState, action) {
                 ...state,
                 entities: {
                     ...state.entities,
-                    [action.payload.hash]: {
-                        ...state.entities[action.payload.hash],
+                    [action.payload.id]: {
+                        ...state.entities[action.payload.id],
                         timestamp: action.payload.timestamp,
                         datetime:
                             // us timestamp

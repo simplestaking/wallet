@@ -19,6 +19,7 @@ export class OperationHistoryEntity {
     public timestamp: number;  
 
     constructor(
+        public id: number,
         public type: OperationTypeEnum,
         public hash: string,
         public address: string,

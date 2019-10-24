@@ -17,28 +17,24 @@ let initialState: any = {
                 api: 'https://cors-anywhere.herokuapp.com/api.tzstats.com/',
             },
         },
-        alpha: {
-            display: 'Alphanet',
-            name: 'alpha',
+        babylon: {
+            display: 'Babylon',
+            name: 'babylon',
             url: 'https://alphanet.simplestaking.com:3000',
-            tzscan: {
-                url: 'http://alphanet.tzscan.io/',
-                operations: 'https://api.alphanet.tzscan.io/v1/operations/',
-                operations_number: 'https://api.alphanet.tzscan.io/v1/number_operations/',
-                block_timestamp: 'https://api.alphanet.tzscan.io/v1/timestamp/',
-            }
+            tzstats: {
+                url: 'https://babylonnet.tzstats.com/',
+                api: 'https://cors-anywhere.herokuapp.com/api.babylonnet.tzstats.com',
+            },
         },
         zero: {
             display: 'Zeronet',
             name: 'zero',
             // url: 'https://zeronet.simplestaking.com:3000',
             url: 'http://zeronet-node.tzscan.io',
-            tzscan: {
-                url: 'http://zeronet.tzscan.io/',
-                operations: 'https://api.zeronet.tzscan.io/v3/operations/',
-                operations_number: 'https://api.zeronet.tzscan.io/v3/number_operations/',
-                block_timestamp: 'https://api.zeronet.tzscan.io/v3/timestamp/',
-            }
+            tzstats: {
+                url: 'https://tzstats.com/',
+                api: 'https://cors-anywhere.herokuapp.com/api.tzstats.com/',
+            },
         },
 
     }
