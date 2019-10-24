@@ -532,7 +532,7 @@ export class TezosOperationHistoryEffects {
             // wait until sodium is ready
             initializeWallet(stateWallet => ({
                 // set publicKeyHash
-                publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+                publicKeyHash: state.tezos.tezosWalletDetail.manager,
                 // set tezos node
                 node: state.tezos.tezosNode.api,
                 // set wallet type: WEB, TREZOR_ONE, TREZOR_T
@@ -543,7 +543,7 @@ export class TezosOperationHistoryEffects {
 
             // look in mempool for pending transaction 
             pendingOperation(stateWallet => ({
-                publicKeyHash: state.routerReducer.state.root.children[0].firstChild.params.address,
+                publicKeyHash: state.tezos.tezosWalletDetail.manager,
             })),
 
             // enter back into zone.js so change detection works

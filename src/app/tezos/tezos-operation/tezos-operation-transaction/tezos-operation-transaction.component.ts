@@ -41,7 +41,7 @@ export class TezosOperationTransactionComponent implements OnInit {
         ],
         updateOn: 'blur'
       }),
-      amountMax: new FormControl(''),
+      // amountMax: new FormControl(''),
       fee: new FormControl('', {
         validators: [
           Validators.required,
@@ -98,9 +98,9 @@ export class TezosOperationTransactionComponent implements OnInit {
           ...state,
           // get max allowed amount for delegation
           // TODO: move to reducer, add effect for fee estimation
-          amountMax:
-            this.tezosWalletDetail.balance && state.fee ?
-              ((this.tezosWalletDetail.balance * 0.000001) - (state.fee + 0.26)).toFixed(2) : 0,
+          // amountMax:
+          //   this.tezosWalletDetail.balance && state.fee ?
+          //     ((this.tezosWalletDetail.balance * 0.000001) - (state.fee + 0.26)).toFixed(2) : 0,
 
         }
 
@@ -192,14 +192,15 @@ class TezosAmountTransactionErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
 
     const isSubmitted = form && form.submitted;
-    const amount = form.control.controls.amount.value;
-    const amountMax = form.control.controls.amountMax.value;
+    // const amount = form.control.controls.amount.value;
+    // const amountMax = form.control.controls.amountMax.value;
 
-    const isValidTransactionAmount = (amount <= amountMax)
+    const isValidTransactionAmount = true //(amount <= amountMax)
 
     return !!(control && control.invalid &&
       (control.dirty || control.touched || isSubmitted) ||
-      ((control.dirty || control.touched || isSubmitted) && !isValidTransactionAmount)
+      ((control.dirty || control.touched || isSubmitted) && !isValidTransactionAmount
+      )
     )
 
   }
