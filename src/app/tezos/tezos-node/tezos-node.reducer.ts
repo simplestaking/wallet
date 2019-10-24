@@ -5,10 +5,10 @@ let initialState: any = {
         main: {
             display: 'Mainnet',
             name: 'main',
-            url: 'https://mainnet.simplestaking.com:30001', 
+            url: 'https://mainnet.simplestaking.com:3000', 
             tzstats: {
                 url: 'https://tzstats.com/account/',
-                api: 'https://cors-anywhere.herokuapp.com/api.tzstats.com/',
+                api: 'https://api.tzstats.com/',
             },
         },
         babylon: {
@@ -17,7 +17,7 @@ let initialState: any = {
             url: 'https://alphanet.simplestaking.com:3000',
             tzstats: {
                 url: 'https://babylonnet.tzstats.com//account/',
-                api: 'https://cors-anywhere.herokuapp.com/api.babylonnet.tzstats.com',
+                api: 'https://api.babylonnet.tzstats.com',
             },
         },
         zero: {
@@ -26,7 +26,7 @@ let initialState: any = {
             url: 'https://zeronet.simplestaking.com:3000',
             tzstats: {
                 url: 'https://zeronet.tzstats.com//account/',
-                api: 'https://cors-anywhere.herokuapp.com/api.zeronet.tzstats.com/',
+                api: 'https://api.zeronet.tzstats.com/',
             },
         },
 

@@ -19,3 +19,6 @@
 
 ### 0.7.6
 - added support for Trezor-connect 8.0.6
+
+### 0.7.7
+- added support for tezos-wallet 1.2.7 (Babylon)
