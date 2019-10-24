@@ -13,7 +13,7 @@ let initialState: any = {
                 block_timestamp: 'https://mystique.tzkt.io/v3/timestamp/',
             },
             tzstats: {
-                url: 'https://tzstats.com/',
+                url: 'https://tzstats.com/account/',
                 api: 'https://cors-anywhere.herokuapp.com/api.tzstats.com/',
             },
         },
@@ -22,18 +22,17 @@ let initialState: any = {
             name: 'babylon',
             url: 'https://alphanet.simplestaking.com:3000',
             tzstats: {
-                url: 'https://babylonnet.tzstats.com/',
+                url: 'https://babylonnet.tzstats.com//account/',
                 api: 'https://cors-anywhere.herokuapp.com/api.babylonnet.tzstats.com',
             },
         },
         zero: {
             display: 'Zeronet',
             name: 'zero',
-            // url: 'https://zeronet.simplestaking.com:3000',
-            url: 'http://zeronet-node.tzscan.io',
+            url: 'https://zeronet.simplestaking.com:3000',
             tzstats: {
-                url: 'https://tzstats.com/',
-                api: 'https://cors-anywhere.herokuapp.com/api.tzstats.com/',
+                url: 'https://zeronet.tzstats.com//account/',
+                api: 'https://cors-anywhere.herokuapp.com/api.zeronet.tzstats.com/',
             },
         },
 

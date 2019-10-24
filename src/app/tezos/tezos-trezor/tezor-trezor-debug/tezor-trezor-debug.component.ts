@@ -159,328 +159,328 @@ export class TezorTrezorDebugComponent implements OnInit {
         //     set_delegate: 'tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q',
         //   }
         // }
-        
-        delegation: { 
-          source: "tz1WCojrEZWrjenejUZmG8QNsMtKPELx2TFA", 
+
+        delegation: {
+          source: "tz1WCojrEZWrjenejUZmG8QNsMtKPELx2TFA",
           delegate: "tz3NExpXn9aPNZPorRE4SdjJ2RGrfbJgMAaV",
           fee: 10000,
           counter: 316480,
           gas_limit: 10300,
-          storage_limit: 0 
-        } 
-
-      }
-
-}).then(response => { console.warn('[tezosSignTransaction]', response) })
-  .catch(error => { console.error('[ERROR][tezosSignTransaction]', error) });
-
-  }
-
-tezosSendTransaction() {
-
-  console.log('[tezosSendTransaction]')
-
-  const config: any = {
-    transaction: {
-      to: 'KT1M1AEoVEJLiCRijmWbLA1k3ZRg9J7sCPKT',
-      amount: '0',
-      fee: '0.01',
-      parameters: { "parameters": { "prim": "Right", "args": [{ "prim": "Pair", "args": [{ "string": "edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8" }, { "prim": "Pair", "args": [{ "string": "2018-11-27T01:28:13Z" }, { "prim": "Pair", "args": [{ "bytes": "64566075b832cf9e7bcc0d63d3a9c71c3f03efc1" }, { "prim": "Pair", "args": [{ "prim": "Pair", "args": [{ "int": "123510010" }, { "int": "3890566" }] }, { "prim": "Pair", "args": [{ "prim": "Pair", "args": [{ "int": "123450" }, { "int": "567890" }] }, { "string": "2018-11-30T06:13:20Z" }] }] }] }] }] }] } },
-    },
-    node: {
-      name: 'mainnet',
-      display: 'Mainnet',
-      url: 'https://mainnet.simplestaking.com:3000',
-      tzscan: {
-        url: 'https://mvp.tezblock.io/transaction/',
-      }
-    },
-  }
-  const wallet = {
-    secretKey: 'edsk3hEtniBGLP2wqYnc1Lix1hhV74eEenRBTfxjHTRHP59R7BapMW',
-    publicKey: 'edpkth42B7j7rvLeZWmufj28a7sEdbMBb9y16qgQmGHYGX4hPis9V4',
-    publicKeyHash: 'tz1WCojrEZWrjenejUZmG8QNsMtKPELx2TFA',
-    //type: 'web',
-    type: 'TREZOR_T',
-    path: "m/44'/1729'/1'"
-  }
-
-  of([]).pipe(
-
-    // wait for sodium to initialize
-    initializeWallet((stateWallet: any) => ({
-      // secretKey: wallet.secretKey,
-      publicKey: wallet.publicKey,
-      publicKeyHash: wallet.publicKeyHash,
-      // set Tezos node
-      node: config.node,
-      // set wallet type: WEB, TREZOR_ONE, TREZOR_T
-      //type: <'TREZOR_T'>wallet.type,
-      type: <any>wallet.type,
-      path: wallet.path,
-      // add smart contract params
-      // contractParameters: stateWallet,
-    })),
-
-    // tap((stateWallet: any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
-
-    // send xtz
-    transaction(stateWallet => ({
-      to: config.transaction.to,
-      amount: config.transaction.amount,
-      fee: config.transaction.fee,
-      parameters_manager: {
-        transfer: {
-          destination: wallet.publicKeyHash,
-          amount: '0.001'
+          storage_limit: 0
         }
-        //cancel_delegate: true,
-        // set_delegate: 'tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q',
+
       }
-    })),
 
-    // wait for transacation to be confirmed
-    confirmOperation(stateWallet => ({
-      injectionOperation: stateWallet.injectionOperation,
-    })),
+    }).then(response => { console.warn('[tezosSignTransaction]', response) })
+      .catch(error => { console.error('[ERROR][tezosSignTransaction]', error) });
 
-
-  ).subscribe(data => {
-    console.log('[response]', data)
-  })
-
-
-}
-
-
-getErrorDialog() {
-
-  // const dialogConfig = new MatDialogConfig();
-
-  // // dialogConfig.disableClose = true;
-  // dialogConfig.autoFocus = true;
-  // this.dialog.open(TezosWalletDialogComponent, dialogConfig);
-
-  this.store.dispatch({
-    type: 'TEZOS_WALLET_DIALOG_SHOW',
-    payload: [{
-      name: 'error', content: 'error text error text error text error text error text error text'
-    }],
-  })
-
-}
-
-getInfoDialog() {
-
-  // const dialogConfig = new MatDialogConfig();
-
-  // // dialogConfig.disableClose = true;
-  // dialogConfig.autoFocus = true;
-
-  // this.dialog.open(TezosWalletDialogComponent, dialogConfig);
-
-
-  this.store.dispatch({
-    type: 'TEZOS_WALLET_DIALOG_APP_UPDATE_SHOW',
-  })
-
-}
-
-activateWallet() {
-
-  const wallet: Config = {
-    secretKey: 'edsk3xJsET6qbtPFzejqdRQTwScNdLHoYskcjDcVyg5pboXZB6RivT',
-    publicKey: 'edpkuTckfBdV8Rb5t4tScDj7u5hE22YVtT85PeKbShGv61KPnELWdK',
-    publicKeyHash: 'tz1d4ZRi6abW6E2ACFznKxeDkjwgG4dpgx54',
-    node: {
-      name: 'zeronet',
-      display: 'Zeronet',
-      url: 'https://zeronet.simplestaking.com:3000',
-      tzscan: {
-        url: 'http://zeronet.tzscan.io/',
-      }
-    },
-    type: 'web',
   }
 
+  tezosSendTransaction() {
 
-  of([]).pipe(
+    console.log('[tezosSendTransaction]')
 
-    // wait for sodium to initialize
-    initializeWallet(stateWallet => ({
-      secretKey: wallet.secretKey,
-      publicKey: wallet.publicKey,
-      publicKeyHash: wallet.publicKeyHash,
-      // set Tezos node
-      node: wallet.node,
-      // set wallet type: WEB, TREZOR_ONE, TREZOR_T
-      type: wallet.type,
-    })),
+    const config: any = {
+      transaction: {
+        to: 'KT1M1AEoVEJLiCRijmWbLA1k3ZRg9J7sCPKT',
+        amount: '0',
+        fee: '0.01',
+        parameters: { "parameters": { "prim": "Right", "args": [{ "prim": "Pair", "args": [{ "string": "edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8" }, { "prim": "Pair", "args": [{ "string": "2018-11-27T01:28:13Z" }, { "prim": "Pair", "args": [{ "bytes": "64566075b832cf9e7bcc0d63d3a9c71c3f03efc1" }, { "prim": "Pair", "args": [{ "prim": "Pair", "args": [{ "int": "123510010" }, { "int": "3890566" }] }, { "prim": "Pair", "args": [{ "prim": "Pair", "args": [{ "int": "123450" }, { "int": "567890" }] }, { "string": "2018-11-30T06:13:20Z" }] }] }] }] }] }] } },
+      },
+      node: {
+        name: 'mainnet',
+        display: 'Mainnet',
+        url: 'https://mainnet.simplestaking.com:3000',
+        tzscan: {
+          url: 'https://mvp.tezblock.io/transaction/',
+        }
+      },
+    }
+    const wallet = {
+      secretKey: 'edsk3hEtniBGLP2wqYnc1Lix1hhV74eEenRBTfxjHTRHP59R7BapMW',
+      publicKey: 'edpkth42B7j7rvLeZWmufj28a7sEdbMBb9y16qgQmGHYGX4hPis9V4',
+      publicKeyHash: 'tz1WCojrEZWrjenejUZmG8QNsMtKPELx2TFA',
+      //type: 'web',
+      type: 'TREZOR_T',
+      path: "m/44'/1729'/1'"
+    }
 
-    // activate wallet
-    activateWallet(() => ({
-      secret: 'a2676de2c4c5e83d1dfc6d08b145f98e8fc3d02e'
-    })),
+    of([]).pipe(
 
-  )
+      // wait for sodium to initialize
+      initializeWallet((stateWallet: any) => ({
+        // secretKey: wallet.secretKey,
+        publicKey: wallet.publicKey,
+        publicKeyHash: wallet.publicKeyHash,
+        // set Tezos node
+        node: config.node,
+        // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+        //type: <'TREZOR_T'>wallet.type,
+        type: <any>wallet.type,
+        path: wallet.path,
+        // add smart contract params
+        // contractParameters: stateWallet,
+      })),
 
-    .subscribe(data => {
-      console.log('[activateWallet]', data)
+      // tap((stateWallet: any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
+
+      // send xtz
+      transaction(stateWallet => ({
+        to: config.transaction.to,
+        amount: config.transaction.amount,
+        fee: config.transaction.fee,
+        parameters_manager: {
+          transfer: {
+            destination: wallet.publicKeyHash,
+            amount: '0.001'
+          }
+          //cancel_delegate: true,
+          // set_delegate: 'tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q',
+        }
+      })),
+
+      // wait for transacation to be confirmed
+      confirmOperation(stateWallet => ({
+        injectionOperation: stateWallet.injectionOperation,
+      })),
+
+
+    ).subscribe(data => {
+      console.log('[response]', data)
     })
 
-}
 
-sendTransactionToSmartContract() {
-
-  // https://insurance-api.smartcontractlabs.ee/quote?lat=12.345&lon=56.789&time=1543558400&payout=123510010
-
-  const config: any = {
-    transaction: {
-      // to: 'KT1XTXVNN3DwoK19CR55tprTvnK4UJr3CwQj',
-      // amount: '1.2345',
-      // fee: '1',
-      // parameters:{"parameters":{"prim":"Right","args":[{"prim":"Pair","args":[{"string":"edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8"},{"prim":"Pair","args":[{"string":"2018-11-27T01:28:13Z"},{"prim":"Pair","args":[{"bytes":"64566075b832cf9e7bcc0d63d3a9c71c3f03efc1"},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123510010"},{"int":"3890566"}]},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123450"},{"int":"567890"}]},{"string":"2018-11-30T06:13:20Z"}]}]}]}]}]}]}},        
-      // parameters_raw: '0000000d05050807070a00000040cf8f652b910019f0c1e07aeffe2491913efa4640ea247c940bf84229ae8aadb5b88fca98957d94f448320a078b7f165c4009dbfa773132fd9e761d9bdaa67501070700adf6e4bf0b07070a0000001464566075b832cf9e7bcc0d63d3a9c71c3f03efc10707070700baf3e4750086f6da030707070700ba880f0092a9450080d486c00b',
-    },
-    node: {
-      name: 'alphanet',
-      display: 'Alphanet',
-      url: 'https://alphanet.smartcontractlabs.ee',
-      tzscan: {
-        url: 'http://alphanet.tzscan.io/',
-      }
-    },
-  }
-  const wallet = {
-    publicKey: "edpktxkZTBo3yUibULEuzLAdqDRaMZ5YJUHnJPnb49E4SuRyPoKAr6",
-    publicKeyHash: "tz1Wkx2hQL2N4JiLarC6k9sAXj8Czu7igzwp",
-    type: 'TREZOR_T',
-    path: "m/44'/1729'/0'"
   }
 
 
-  of([]).pipe(
+  getErrorDialog() {
 
-    flatMap(() =>
-      this.http.get('https://insurance-api.smartcontractlabs.ee/quote?lat=12.345&lon=56.789&time=1543558400&payout=123510010')),
+    // const dialogConfig = new MatDialogConfig();
 
+    // // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+    // this.dialog.open(TezosWalletDialogComponent, dialogConfig);
 
-    // wait for sodium to initialize
-    initializeWallet((stateWallet: any) => ({
-      publicKey: wallet.publicKey,
-      publicKeyHash: wallet.publicKeyHash,
-      // set Tezos node
-      node: config.node,
-      // set wallet type: WEB, TREZOR_ONE, TREZOR_T
-      type: <'TREZOR_T'>wallet.type,
-      path: wallet.path,
-      // add smart contract params
-      contractParameters: stateWallet,
-    })),
-
-    tap((stateWallet: any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
-
-    // send xtz
-    transaction(stateWallet => ({
-      to: stateWallet.wallet.contractParameters.payreq.destination,
-      amount: (stateWallet.wallet.contractParameters.payreq.amount * 0.000001).toString(),
-      fee: '0.01',
-      parameters: stateWallet.wallet.contractParameters.payreq.parameters,
-    })),
-
-    // wait for transacation to be confirmed
-    confirmOperation(stateWallet => ({
-      injectionOperation: stateWallet.injectionOperation,
-    })),
-
-
-  ).subscribe(data => {
-    //console.log(data)
-  })
-
-}
-
-
-getHistoricalData() {
-
-  console.log('[getHistoricalData]');
-
-  // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Transaction&p=0&number=50
-  // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Origination&p=0&number=10
-  // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Delegation&p=0&number=10
-
-  // save wallet to wallet list in FireBase Store 
-  let transactionCollection = this.db.collection('tezos_' + 'main' + '_transaction');
-
-  of({}).pipe(
-
-    // 1. get data 
-    concatMap(() => transactionCollection.valueChanges()),
-    tap(transaction => console.log('[transaction][firebase]', transaction)),
-
-    // 2. check if we need to download data, get number of operations for each type ,
-    flatMap(operations => {
-      return this.http.get('https://api.zeronet.tzscan.io/v2/operations/tz1PSJadRETNHgr2DjZ7nCk142gDmTzex4PK?type=Transaction&p=0&number=50')
-    }),
-    tap(transaction => console.log('[transaction][tzscan]', transaction)),
-
-    // 3. download missing data for last 3 months 
-
-
-  ).subscribe(data => {
-    console.log('[transaction][result]', data)
-  })
-
-
-
-  // add transaction to firestore
-  transactionCollection
-    .doc('KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9')
-    .update({
-      // id: firebase.firestore.FieldValue.arrayUnion("9")
-      id: ['12', '2', '3'],
+    this.store.dispatch({
+      type: 'TEZOS_WALLET_DIALOG_SHOW',
+      payload: [{
+        name: 'error', content: 'error text error text error text error text error text error text'
+      }],
     })
 
-  // add transaction to firestore
-  transactionCollection
-    .doc('KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9')
-    .set({
-      entities: {
-        '56': {
-          date: '543',
-        },
-      }
-    }, { merge: true })
+  }
 
-}
+  getInfoDialog() {
+
+    // const dialogConfig = new MatDialogConfig();
+
+    // // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+
+    // this.dialog.open(TezosWalletDialogComponent, dialogConfig);
 
 
-deleteHistory() {
+    this.store.dispatch({
+      type: 'TEZOS_WALLET_DIALOG_APP_UPDATE_SHOW',
+    })
 
-  Dexie.delete('firebaseLocalStorageDb').then((event) => {
-    console.log('[deleteHistory] firebaseLocalStorageDb', event)
-  })
+  }
 
-  Dexie.delete('firestore/[DEFAULT]/simplestakingcom-58d45/main').then((event) => {
-    console.log('[deleteHistory]', event)
-  })
+  activateWallet() {
 
-  // let dbRequest = window.indexedDB.open("firestore/[DEFAULT]/simplestakingcom-58d45/main")
+    const wallet: Config = {
+      secretKey: 'edsk3xJsET6qbtPFzejqdRQTwScNdLHoYskcjDcVyg5pboXZB6RivT',
+      publicKey: 'edpkuTckfBdV8Rb5t4tScDj7u5hE22YVtT85PeKbShGv61KPnELWdK',
+      publicKeyHash: 'tz1d4ZRi6abW6E2ACFznKxeDkjwgG4dpgx54',
+      node: {
+        name: 'zeronet',
+        display: 'Zeronet',
+        url: 'https://zeronet.simplestaking.com:3000',
+        tzstats: {
+          url: 'https://babylonnet.tzstats.com/',
+        }
+      },
+      type: 'web',
+    }
 
-  // console.log('[deleteHistory]', dbRequest)
 
-  // dbRequest.onsuccess = function(event) { 
+    of([]).pipe(
 
-  //   let db = dbRequest.result;
-  //   console.log('[deleteHistory]', db)
+      // wait for sodium to initialize
+      initializeWallet(stateWallet => ({
+        secretKey: wallet.secretKey,
+        publicKey: wallet.publicKey,
+        publicKeyHash: wallet.publicKeyHash,
+        // set Tezos node
+        node: wallet.node,
+        // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+        type: wallet.type,
+      })),
 
-  //   indexedDB.deleteDatabase("firestore/[DEFAULT]/simplestakingcom-58d45/main")
+      // activate wallet
+      activateWallet(() => ({
+        secret: 'a2676de2c4c5e83d1dfc6d08b145f98e8fc3d02e'
+      })),
 
-  //   console.log('[deleteHistory]', indexedDB)
+    )
 
-  // }
+      .subscribe(data => {
+        console.log('[activateWallet]', data)
+      })
 
-}
+  }
+
+  sendTransactionToSmartContract() {
+
+    // https://insurance-api.smartcontractlabs.ee/quote?lat=12.345&lon=56.789&time=1543558400&payout=123510010
+
+    const config: any = {
+      transaction: {
+        // to: 'KT1XTXVNN3DwoK19CR55tprTvnK4UJr3CwQj',
+        // amount: '1.2345',
+        // fee: '1',
+        // parameters:{"parameters":{"prim":"Right","args":[{"prim":"Pair","args":[{"string":"edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8"},{"prim":"Pair","args":[{"string":"2018-11-27T01:28:13Z"},{"prim":"Pair","args":[{"bytes":"64566075b832cf9e7bcc0d63d3a9c71c3f03efc1"},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123510010"},{"int":"3890566"}]},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123450"},{"int":"567890"}]},{"string":"2018-11-30T06:13:20Z"}]}]}]}]}]}]}},        
+        // parameters_raw: '0000000d05050807070a00000040cf8f652b910019f0c1e07aeffe2491913efa4640ea247c940bf84229ae8aadb5b88fca98957d94f448320a078b7f165c4009dbfa773132fd9e761d9bdaa67501070700adf6e4bf0b07070a0000001464566075b832cf9e7bcc0d63d3a9c71c3f03efc10707070700baf3e4750086f6da030707070700ba880f0092a9450080d486c00b',
+      },
+      node: {
+        name: 'alphanet',
+        display: 'Alphanet',
+        url: 'https://alphanet.smartcontractlabs.ee',
+        tzscan: {
+          url: 'http://alphanet.tzscan.io/',
+        }
+      },
+    }
+    const wallet = {
+      publicKey: "edpktxkZTBo3yUibULEuzLAdqDRaMZ5YJUHnJPnb49E4SuRyPoKAr6",
+      publicKeyHash: "tz1Wkx2hQL2N4JiLarC6k9sAXj8Czu7igzwp",
+      type: 'TREZOR_T',
+      path: "m/44'/1729'/0'"
+    }
+
+
+    of([]).pipe(
+
+      flatMap(() =>
+        this.http.get('https://insurance-api.smartcontractlabs.ee/quote?lat=12.345&lon=56.789&time=1543558400&payout=123510010')),
+
+
+      // wait for sodium to initialize
+      initializeWallet((stateWallet: any) => ({
+        publicKey: wallet.publicKey,
+        publicKeyHash: wallet.publicKeyHash,
+        // set Tezos node
+        node: config.node,
+        // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+        type: <'TREZOR_T'>wallet.type,
+        path: wallet.path,
+        // add smart contract params
+        contractParameters: stateWallet,
+      })),
+
+      tap((stateWallet: any) => console.log('[stateWallet][contractParameters]', stateWallet, stateWallet.gitkwallet.contractParameters.payreq.parameters, '0000000d' + stateWallet.wallet.contractParameters.trezorParams)),
+
+      // send xtz
+      transaction(stateWallet => ({
+        to: stateWallet.wallet.contractParameters.payreq.destination,
+        amount: (stateWallet.wallet.contractParameters.payreq.amount * 0.000001).toString(),
+        fee: '0.01',
+        parameters: stateWallet.wallet.contractParameters.payreq.parameters,
+      })),
+
+      // wait for transacation to be confirmed
+      confirmOperation(stateWallet => ({
+        injectionOperation: stateWallet.injectionOperation,
+      })),
+
+
+    ).subscribe(data => {
+      //console.log(data)
+    })
+
+  }
+
+
+  getHistoricalData() {
+
+    console.log('[getHistoricalData]');
+
+    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Transaction&p=0&number=50
+    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Origination&p=0&number=10
+    // https://api.zeronet.tzscan.io/v2/operations/KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9?type=Delegation&p=0&number=10
+
+    // save wallet to wallet list in FireBase Store 
+    let transactionCollection = this.db.collection('tezos_' + 'main' + '_transaction');
+
+    of({}).pipe(
+
+      // 1. get data 
+      concatMap(() => transactionCollection.valueChanges()),
+      tap(transaction => console.log('[transaction][firebase]', transaction)),
+
+      // 2. check if we need to download data, get number of operations for each type ,
+      flatMap(operations => {
+        return this.http.get('https://api.zeronet.tzscan.io/v2/operations/tz1PSJadRETNHgr2DjZ7nCk142gDmTzex4PK?type=Transaction&p=0&number=50')
+      }),
+      tap(transaction => console.log('[transaction][tzscan]', transaction)),
+
+      // 3. download missing data for last 3 months 
+
+
+    ).subscribe(data => {
+      console.log('[transaction][result]', data)
+    })
+
+
+
+    // add transaction to firestore
+    transactionCollection
+      .doc('KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9')
+      .update({
+        // id: firebase.firestore.FieldValue.arrayUnion("9")
+        id: ['12', '2', '3'],
+      })
+
+    // add transaction to firestore
+    transactionCollection
+      .doc('KT1XYKxAFhtpTKWyoK2MrAQsMQ39KyV7NyA9')
+      .set({
+        entities: {
+          '56': {
+            date: '543',
+          },
+        }
+      }, { merge: true })
+
+  }
+
+
+  deleteHistory() {
+
+    Dexie.delete('firebaseLocalStorageDb').then((event) => {
+      console.log('[deleteHistory] firebaseLocalStorageDb', event)
+    })
+
+    Dexie.delete('firestore/[DEFAULT]/simplestakingcom-58d45/main').then((event) => {
+      console.log('[deleteHistory]', event)
+    })
+
+    // let dbRequest = window.indexedDB.open("firestore/[DEFAULT]/simplestakingcom-58d45/main")
+
+    // console.log('[deleteHistory]', dbRequest)
+
+    // dbRequest.onsuccess = function(event) { 
+
+    //   let db = dbRequest.result;
+    //   console.log('[deleteHistory]', db)
+
+    //   indexedDB.deleteDatabase("firestore/[DEFAULT]/simplestakingcom-58d45/main")
+
+    //   console.log('[deleteHistory]', indexedDB)
+
+    // }
+
+  }
 
 
 }
