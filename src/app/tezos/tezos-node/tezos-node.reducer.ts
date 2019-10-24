@@ -5,13 +5,7 @@ let initialState: any = {
         main: {
             display: 'Mainnet',
             name: 'main',
-            url: 'https://mainnet.simplestaking.com:3000', // 'https://tezos-vpn01.westeurope.cloudapp.azure.com',
-            tzscan: {
-                url: 'https://mystique.tzkt.io/',
-                operations: 'https://mystique.tzkt.io/v3/operations/',
-                operations_number: 'https://mystique.tzkt.io/v3/number_operations/',
-                block_timestamp: 'https://mystique.tzkt.io/v3/timestamp/',
-            },
+            url: 'https://mainnet.simplestaking.com:30001', 
             tzstats: {
                 url: 'https://tzstats.com/account/',
                 api: 'https://cors-anywhere.herokuapp.com/api.tzstats.com/',

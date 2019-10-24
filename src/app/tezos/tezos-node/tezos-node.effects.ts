@@ -1,10 +1,13 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of, timer, defer } from 'rxjs';
-import { map, withLatestFrom, switchMap, flatMap, catchError, takeUntil, tap  } from 'rxjs/operators';
+import { map, withLatestFrom, switchMap, flatMap, catchError, takeUntil, tap } from 'rxjs/operators';
+
+import { initializeWallet, head } from 'tezos-wallet'
+import { enterZone } from '../../shared/utils/rxjs/operators';
 
 @Injectable()
 export class TezosNodeEffects {
@@ -28,6 +31,50 @@ export class TezosNodeEffects {
         }),
 
     )
+
+    // 
+    @Effect()
+    TezosNodeHead$ = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_CONNECT'),
+        // get state from store
+        withLatestFrom(this.store, (action, state: any) => ({ action, state })),
+
+        flatMap(({ action, state }) => of([]).pipe(
+
+            // wait until sodium is ready
+            initializeWallet(stateWallet => ({
+                // set publicKeyHash
+                publicKeyHash: '',
+                // set tezos node
+                node: state.tezos.tezosNode.api,
+                // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+                type: state.tezos.tezosWalletDetail.walletType,
+                // set HD path for HW wallet
+                path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
+            })),
+
+            // get block chain head 
+            head(),
+
+            // enter back into zone.js so change detection works
+            enterZone(this.zone),
+
+        )),
+
+        map((response) => ({ type: 'TEZOS_NODE_PING_SUCCESS', payload: response })),
+        catchError((error, caught) => {
+            console.error(error)
+            this.store.dispatch({
+                type: 'TEZOS_WALLET_DIALOG_SHOW',
+                payload: [{
+                    name: 'Tezos node is not responding', content: ' \n Please contact support for help - jurajselep@gmail.com',
+                }]
+            });
+            return caught;
+        }),
+    )
+
+
 
     // get actual tezos price    
     @Effect()
@@ -86,6 +133,8 @@ export class TezosNodeEffects {
         private actions$: Actions,
         private store: Store<any>,
         private http: HttpClient,
+        private zone: NgZone,
+
     ) { }
 
 }

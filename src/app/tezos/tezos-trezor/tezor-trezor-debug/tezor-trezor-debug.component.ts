@@ -400,6 +400,16 @@ export class TezorTrezorDebugComponent implements OnInit {
 
   }
 
+  tezosGetHead() {
+
+    this.store.dispatch({
+      type: 'TEZOS_NODE_PING',
+      payload: [{
+        name: 'error', content: 'error text error text error text error text error text error text'
+      }],
+    })
+
+  }
 
   getHistoricalData() {
 
