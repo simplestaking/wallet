@@ -52,6 +52,7 @@
     "firebase": "5.7.3",
     "jdenticon": "^2.1.0",
     "js-yaml": "^3.12.2",
+    "libsodium": "^0.7.6",
     "logrocket": "^1.0.3",
     "logrocket-ngrx": "^0.1.1",
     "moment": "^2.24.0",
@@ -94,6 +95,10 @@
     "typescript": "^2.9.2",
     "webpack-bundle-analyzer": "^2.13.1",
     "zone.js": "^0.8.29"
+  },
+  "browser": {
+    "crypto": false,
+    "stream": false
   },
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.4.",
   "main": "karma.conf.js",
