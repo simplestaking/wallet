@@ -7,7 +7,7 @@ let initialState: any = {
             name: 'main',
             url: 'https://mainnet.simplestaking.com:3000', 
             tzstats: {
-                url: 'https://tzstats.com/account/',
+                url: 'https://tzstats.com/',
                 api: 'https://api.tzstats.com/',
             },
         },
@@ -16,7 +16,7 @@ let initialState: any = {
             name: 'babylon',
             url: 'https://alphanet.simplestaking.com:3000',
             tzstats: {
-                url: 'https://babylonnet.tzstats.com//account/',
+                url: 'https://babylonnet.tzstats.com/',
                 api: 'https://api.babylonnet.tzstats.com',
             },
         },
@@ -25,7 +25,7 @@ let initialState: any = {
             name: 'zero',
             url: 'https://zeronet.simplestaking.com:3000',
             tzstats: {
-                url: 'https://zeronet.tzstats.com//account/',
+                url: 'https://zeronet.tzstats.com/',
                 api: 'https://api.zeronet.tzstats.com/',
             },
         },
