@@ -1,6 +1,6 @@
 <div class="trezor-connect">
 
-  <div class="trezor-connected" *ngIf="tezosTrezorConnect.device.connected">
+  <div class="trezor-connected" *ngIf="tezosTrezorConnect?.device?.state !== undefined">
     <img src="./assets/trezor_connected.svg" alt="Trezor Connected" style="transform: scale(0.9)">
     <span class="action">
       Trezor Connected
@@ -8,7 +8,7 @@
   </div>
 
   <div class="trezor-disconnected"
-    *ngIf="!tezosTrezorConnect.device.connected && !tezosTrezorConnect.passphrase.isVisible">
+    *ngIf="tezosTrezorConnect?.device?.state === undefined && !tezosTrezorConnect.passphrase.isVisible">
     <img src="./assets/trezor_disconnected.svg" alt="Connect your Trezor to Continue..." style="transform: scale(0.9)">
 
     <span class="action" *ngIf="!tezosTrezorConnect.status.error">

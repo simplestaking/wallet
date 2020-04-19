@@ -39,7 +39,7 @@ export function reducer(state = initialState, action) {
                 status: {
                     ...state.status,
                     event: action.payload.type,
-                    errorStatus: !state.device.connected && !state.status.error ? '' : state.status.errorStatus
+                    errorStatus: state.device.state !== undefined && !state.status.error ? '' : state.status.errorStatus
                 }
             }
         }

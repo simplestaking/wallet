@@ -49,7 +49,7 @@ export class TezosWalletReceiveComponent implements OnInit, OnDestroy {
       })
 
     // listen to trezor connect
-    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'connected')
+    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'state')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.tezosTrezorConnectConnected = state

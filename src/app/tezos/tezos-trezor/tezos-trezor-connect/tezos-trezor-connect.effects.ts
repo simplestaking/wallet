@@ -298,7 +298,7 @@ export class TezosTrezorConnectEffects {
                 // set flag in tezosTrezorNew has already all address download 
                 // 2. if we have address in tezosWalletDetail if it match addresses on trezor 
                 // if not we have wrong password or wrong device  
-                (state.tezos.tezosTrezorConnect.device.connected) ||
+                (state.tezos.tezosTrezorConnect.device.state) ||
 
                 // if we need password and password is not in cache
                 (state.tezos.tezosTrezorConnect.device.features.passphrase_protection &&

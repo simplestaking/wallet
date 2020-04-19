@@ -25,3 +25,6 @@
 
 ### 0.7.8
 - Fixed issue with storage fee
+
+### 0.7.9
+- Added support for new 2.3.0 Trezor firmware

@@ -35,7 +35,7 @@ export class TezosWalletSendComponent implements OnInit, OnDestroy {
         this.tezosNode = state
       })
 
-    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'connected')
+    this.store.select('tezos', 'tezosTrezorConnect', 'device', 'state')
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.tezosTrezorConnectConnected = state
