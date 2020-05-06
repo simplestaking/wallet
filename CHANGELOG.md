@@ -28,3 +28,6 @@
 
 ### 0.7.9
 - Added support for new 2.3.0 Trezor firmware
+
+### 0.7.10
+- Fixed issue with pending transaction
