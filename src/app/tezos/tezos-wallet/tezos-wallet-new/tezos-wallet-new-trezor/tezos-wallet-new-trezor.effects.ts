@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { Observable, of, empty } from 'rxjs';
 import { map, withLatestFrom, flatMap, catchError, onErrorResumeNext, tap, delay, filter } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -15,7 +15,7 @@ export class TezosWalletNewTrezorEffects {
 
     public walletCollection: AngularFirestoreCollection<any>;
 
-    // trigger layout change  
+    // trigger layout change
     @Effect()
     TezosWalletNewTrezor = this.actions$.pipe(
         ofRoute('/tezos/wallet/new/trezor'),
@@ -29,9 +29,35 @@ export class TezosWalletNewTrezorEffects {
             return caught;
         })
     )
-    
 
-    //save new trezor wallet to tezos wallet list 
+
+    @Effect()
+    TezosWalletNewConnectPopupOpen$ = this.actions$.pipe(
+        ofType('TEZOS_TREZOR_NEW_CONNECT_POPUP_OPEN'),
+
+        // add state to effect
+        withLatestFrom(this.store, (action, state) => ({ state, action })),
+
+        // show address on device
+        flatMap(({ state, action }) => {
+
+            return !state.tezos.tezosTrezorNew.pending ?
+                of({ type: 'TEZOS_TREZOR_NEW' }) : empty()
+
+        }),
+
+        catchError((error, caught) => {
+            console.error(error.message)
+            this.store.dispatch({
+                type: 'TEZOS_TREZOR_NEW_CONNECT_POPUP_ERROR',
+                payload: error.message,
+            });
+            return caught;
+        }),
+
+    )
+
+    // save new trezor wallet to tezos wallet list 
     @Effect()
     TezosWalletNewTrezorSave = this.actions$.pipe(
         ofType('TEZOS_WALLET_NEW_TREZOR_SAVE'),

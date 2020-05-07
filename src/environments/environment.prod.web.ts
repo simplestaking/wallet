@@ -15,7 +15,7 @@ export const environment = {
     trustedHost: true,
     webusb: false,
     debug: true,
-    transportReconnect: false, // true
+    transportReconnect: true,
     manifest: {
       email: 'jurajselep@simplestaking.com',
       appUrl: 'https://wallet.simplestaking.com'

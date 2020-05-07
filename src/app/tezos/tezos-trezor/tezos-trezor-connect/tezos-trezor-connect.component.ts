@@ -34,13 +34,13 @@ export class TezosTrezorConnectComponent implements OnInit, OnDestroy, AfterView
 
   }
 
-  trezorConnectPopupOpen() {
+  // trezorConnectPopupOpen() {
 
-    this.store.dispatch({
-      type: "TEZOS_TREZOR_CONNECT_POPUP_OPEN",
-    });
+  //   this.store.dispatch({
+  //     type: "TEZOS_TREZOR_CONNECT_POPUP_OPEN",
+  //   });
 
-  }
+  // }
 
   ngAfterViewInit() {
 

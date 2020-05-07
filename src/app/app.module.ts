@@ -123,7 +123,7 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
     DeviceDetectorModule.forRoot(),
 
     // https://github.com/zalmoxisus/redux-devtools-extension
-    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 25 }) : [],
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
 
     // Cloud firestore
     AngularFireModule.initializeApp(environment.firebase),

@@ -13,7 +13,7 @@ import { environment } from '../../../../environments/environment';
 @Injectable()
 export class TezosTrezorConnectEffects {
 
-    // connect trezor and and listen to trezor events   
+    // connect trezor and and listen to trezor events
     @Effect()
     TezosTrezorConnect = this.actions$.pipe(
         ofType('TEZOS_TREZOR_CONNECT'),
@@ -24,13 +24,14 @@ export class TezosTrezorConnectEffects {
         // TODO: ! refactor tap to flatMap so we can catch error
         tap((state: any) => {
 
-            // TODO: refactor windows.TrezorConnect 
+            // TODO: refactor windows.TrezorConnect
             if (!(<any>window).TrezorConnect) {
                 (<any>window).TrezorConnect = TrezorConnect
             }
 
             // if iframe exist do no initialize again
             if (!document.getElementById('trezorconnect')) {
+                console.log('[TrezorConnect][on] initializei iframe');
 
                 TrezorConnect.on('DEVICE_EVENT', (event) => {
                     console.log('[TrezorConnect][DEVICE_EVENT]', event);
@@ -197,7 +198,7 @@ export class TezosTrezorConnectEffects {
                     }
                 });
 
-                // Initialize TrezorConnect 
+                // Initialize TrezorConnect
                 TrezorConnect.init({
 
                     connectSrc: environment.trezor.connectSrc,
@@ -325,33 +326,6 @@ export class TezosTrezorConnectEffects {
             });
             return caught;
         }),
-    )
-
-    @Effect()
-    TezosOperationTransaction$ = this.actions$.pipe(
-        ofType('TEZOS_TREZOR_CONNECT_POPUP_OPEN'),
-
-        // add state to effect
-        withLatestFrom(this.store, (action, state) => ({ state, action })),
-
-        // show address on device
-        flatMap(({ state, action }) => {
-
-            return !state.tezos.tezosTrezorNew.pending ?
-                of({ type: 'TEZOS_TREZOR_NEW' }) : empty()
-
-        }),
-
-
-        catchError((error, caught) => {
-            console.error(error.message)
-            this.store.dispatch({
-                type: 'TEZOS_TREZOR_CONNECT_POPUP_OPEN_ERROR',
-                payload: error.message,
-            });
-            return caught;
-        }),
-
     )
 
 

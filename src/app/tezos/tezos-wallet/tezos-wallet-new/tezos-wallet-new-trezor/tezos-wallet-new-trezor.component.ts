@@ -56,13 +56,13 @@ export class TezosWalletNewTrezorComponent implements OnInit, OnDestroy {
 
   }
 
-  // get tezos address from trezor 
+  // get tezos address from trezor
   tezosTrezorSelectAddress() {
 
     // action is called from trezor connect effect
-    // this.store.dispatch({
-    //   type: 'TEZOS_TREZOR_NEW',
-    // })
+    this.store.dispatch({
+      type: 'TEZOS_TREZOR_NEW_CONNECT_POPUP_OPEN',
+    })
 
   }
 

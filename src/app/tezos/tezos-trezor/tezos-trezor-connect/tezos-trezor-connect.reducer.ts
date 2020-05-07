@@ -62,6 +62,9 @@ export function reducer(state = initialState, action) {
 
         case 'TEZOS_TREZOR_CONNECT_DEVICE_CHANGED':
         case 'TEZOS_TREZOR_CONNECT_DEVICE_CONNECT': {
+
+            console.warn('[TEZOS_TREZOR_CONNECT_DEVICE_CONNECT]', action );
+
             let connected = false
             let error = false
             let errorType = ''
