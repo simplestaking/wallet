@@ -306,13 +306,14 @@ export class TezosTrezorConnectEffects {
                     !state.tezos.tezosTrezorConnect.device.features.passphrase_cached)
 
             )) ?
-                of({ type: 'TEZOS_TREZOR_NEW' }) : empty()
+                // TODO: refactor and support electron version, for now disabled
+                of({ type: '_TEZOS_TREZOR_NEW' }) : empty()
 
         }),
 
     )
 
-    // listen for device passpharse event    
+    // listen for device passpharse event
     @Effect()
     TezosTrezorConnectDevicePasspharse = this.actions$.pipe(
         ofType('TEZOS_TREZOR_CONNECT_DEVICE_PASSHPARSE'),
