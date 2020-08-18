@@ -8,12 +8,12 @@ import { TrezorConnect } from 'trezor-connect'
 
 // add support for error logging
 import * as LogRocket from 'logrocket';
-LogRocket.init('hrewx0/wallet-simplestaking-com');
+// LogRocket.init('hrewx0/wallet-simplestaking-com');
 
-// log session for drift
-LogRocket.getSessionURL(function (sessionURL) {
-  (<any>window).drift.track('LogRocket', { sessionURL: sessionURL });
-});
+// // log session for drift
+// LogRocket.getSessionURL(function (sessionURL) {
+//   (<any>window).drift.track('LogRocket', { sessionURL: sessionURL });
+// });
 
 if (environment.production) {
 
