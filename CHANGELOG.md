@@ -31,3 +31,6 @@
 
 ### 0.7.10
 - Fixed issue with pending transaction
+
+### 0.7.11
+- Fixed issue with KT1 address api
