@@ -37,7 +37,7 @@ export class TezorTrezorDebugComponent implements OnInit {
 
   ngOnInit() {
 
-    // TODO: refactor windows.TrezorConnect 
+    // TODO: refactor windows.TrezorConnect
     if (!(<any>window).TrezorConnect) {
       (<any>window).TrezorConnect = TrezorConnect
     }
@@ -65,7 +65,7 @@ export class TezorTrezorDebugComponent implements OnInit {
 
       });
 
-      // initialize TrezorConnect 
+      // initialize TrezorConnect
       TrezorConnect.init({
 
         connectSrc: environment.trezor.connectSrc,
@@ -88,7 +88,7 @@ export class TezorTrezorDebugComponent implements OnInit {
 
     } else {
 
-      // remove iframe 
+      // remove iframe
       // document.getElementById('trezorconnect').remove();
 
       TrezorConnect.uiResponse({
@@ -190,7 +190,7 @@ export class TezorTrezorDebugComponent implements OnInit {
       node: {
         name: 'mainnet',
         display: 'Mainnet',
-        url: 'https://mainnet.simplestaking.com:3000',
+        url: 'http://trace.dev.tezedge.com/',
         tzstats: {
           url: 'https://mvp.tezblock.io/transaction/',
         }
@@ -339,7 +339,7 @@ export class TezorTrezorDebugComponent implements OnInit {
         // to: 'KT1XTXVNN3DwoK19CR55tprTvnK4UJr3CwQj',
         // amount: '1.2345',
         // fee: '1',
-        // parameters:{"parameters":{"prim":"Right","args":[{"prim":"Pair","args":[{"string":"edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8"},{"prim":"Pair","args":[{"string":"2018-11-27T01:28:13Z"},{"prim":"Pair","args":[{"bytes":"64566075b832cf9e7bcc0d63d3a9c71c3f03efc1"},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123510010"},{"int":"3890566"}]},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123450"},{"int":"567890"}]},{"string":"2018-11-30T06:13:20Z"}]}]}]}]}]}]}},        
+        // parameters:{"parameters":{"prim":"Right","args":[{"prim":"Pair","args":[{"string":"edsigtzxjqtrALAFpNfBYYji24hzsih2zH5zsvtge2oMrd3UxLLvKqUFbyqgdXt7KKFLafAucopnk3CRKH1z4Rq2Edatnmsqmy8"},{"prim":"Pair","args":[{"string":"2018-11-27T01:28:13Z"},{"prim":"Pair","args":[{"bytes":"64566075b832cf9e7bcc0d63d3a9c71c3f03efc1"},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123510010"},{"int":"3890566"}]},{"prim":"Pair","args":[{"prim":"Pair","args":[{"int":"123450"},{"int":"567890"}]},{"string":"2018-11-30T06:13:20Z"}]}]}]}]}]}]}},
         // parameters_raw: '0000000d05050807070a00000040cf8f652b910019f0c1e07aeffe2491913efa4640ea247c940bf84229ae8aadb5b88fca98957d94f448320a078b7f165c4009dbfa773132fd9e761d9bdaa67501070700adf6e4bf0b07070a0000001464566075b832cf9e7bcc0d63d3a9c71c3f03efc10707070700baf3e4750086f6da030707070700ba880f0092a9450080d486c00b',
       },
       node: {
@@ -415,13 +415,13 @@ export class TezorTrezorDebugComponent implements OnInit {
 
     console.log('[getHistoricalData]');
 
-  
-    // save wallet to wallet list in FireBase Store 
+
+    // save wallet to wallet list in FireBase Store
     let transactionCollection = this.db.collection('tezos_' + 'main' + '_transaction');
 
     of({}).pipe(
 
-      // 1. get data 
+      // 1. get data
       concatMap(() => transactionCollection.valueChanges()),
       tap(transaction => console.log('[transaction][firebase]', transaction)),
 
@@ -431,7 +431,7 @@ export class TezorTrezorDebugComponent implements OnInit {
       }),
       tap(transaction => console.log('[transaction][tzscan]', transaction)),
 
-      // 3. download missing data for last 3 months 
+      // 3. download missing data for last 3 months
 
 
     ).subscribe(data => {
@@ -476,7 +476,7 @@ export class TezorTrezorDebugComponent implements OnInit {
 
     // console.log('[deleteHistory]', dbRequest)
 
-    // dbRequest.onsuccess = function(event) { 
+    // dbRequest.onsuccess = function(event) {
 
     //   let db = dbRequest.result;
     //   console.log('[deleteHistory]', db)
