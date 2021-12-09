@@ -190,7 +190,7 @@ export class TezorTrezorDebugComponent implements OnInit {
       node: {
         name: 'mainnet',
         display: 'Mainnet',
-        url: 'http://trace.dev.tezedge.com/',
+        url: 'https://mainnet-tezos.giganode.io',
         tzstats: {
           url: 'https://mvp.tezblock.io/transaction/',
         }
