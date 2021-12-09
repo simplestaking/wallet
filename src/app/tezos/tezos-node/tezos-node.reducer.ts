@@ -5,7 +5,7 @@ let initialState: any = {
         main: {
             display: 'Mainnet',
             name: 'main',
-            url: 'http://trace.dev.tezedge.com/',
+            url: 'https://mainnet-tezos.giganode.io',
             tzstats: {
                 url: 'https://tzstats.com/',
                 api: 'https://api.tzstats.com/',
