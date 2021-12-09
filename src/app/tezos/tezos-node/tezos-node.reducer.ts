@@ -5,7 +5,7 @@ let initialState: any = {
         main: {
             display: 'Mainnet',
             name: 'main',
-            url: 'https://mainnet.simplestaking.com:3000', 
+            url: 'http://trace.dev.tezedge.com/',
             tzstats: {
                 url: 'https://tzstats.com/',
                 api: 'https://api.tzstats.com/',
@@ -51,7 +51,7 @@ export function reducer(state = initialState, action) {
             })
         }
 
-        // change tezos node 
+        // change tezos node
         case 'TEZOS_NODE_CHANGE': {
             return {
                 ...state,
