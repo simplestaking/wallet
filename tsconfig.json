@@ -17,6 +17,8 @@
     ]
   },
   "angularCompilerOptions": {
-    "disableTypeScriptVersionCheck": true
-  }
+    "disableTypeScriptVersionCheck": true,
+    "strictMetadataEmit": false
+  },
+  "include":  ["src/**/*.ts","node_modules/angular-bootstrap-md/**/*.ts" ]
 }

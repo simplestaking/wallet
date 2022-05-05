@@ -88,7 +88,7 @@ export function reducer(state = initialState, action) {
 
             console.log('[TEZOS_OPERATION_HISTORY_LOAD_SUCCESS]', stateExtended, stateExtended.ids.length < 2)
 
-            // sort state according to timestamp 
+            // sort state according to timestamp
             return {
                 ...stateExtended,
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
@@ -105,7 +105,7 @@ export function reducer(state = initialState, action) {
 
 
         case 'TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS': {
-            
+
             // TODO: refactor amount handling
             let stateExtended = {
                 ...state,
@@ -121,7 +121,7 @@ export function reducer(state = initialState, action) {
 
                         let operationTransformed;
 
-                        if (firstOperation.kind === "transaction") {
+                        if (firstOperation && firstOperation.kind === "transaction") {
                             operationTransformed = new OperationHistoryEntity(
                                 0,
                                 OperationTypeEnum.debit,
@@ -136,7 +136,7 @@ export function reducer(state = initialState, action) {
                             );
                         }
 
-                        if (firstOperation.kind === "origination") {
+                        if (firstOperation && firstOperation.kind === "origination") {
                             operationTransformed = new OperationHistoryEntity(
                                 0,
                                 OperationTypeEnum.origination,
@@ -151,7 +151,7 @@ export function reducer(state = initialState, action) {
                             );
                         }
 
-                        if (firstOperation.kind === "delegation") {
+                        if (firstOperation && firstOperation.kind === "delegation") {
                             operationTransformed = new OperationHistoryEntity(
                                 0,
                                 OperationTypeEnum.delegation,
@@ -181,7 +181,7 @@ export function reducer(state = initialState, action) {
 
             console.log('[TEZOS_OPERATION_HISTORY_PENDING_LOAD_SUCCESS]', stateExtended, stateExtended.ids.length)
 
-            // sort state according to time stamp 
+            // sort state according to time stamp
             return {
                 ...stateExtended,
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :
@@ -217,7 +217,7 @@ export function reducer(state = initialState, action) {
 
             console.log('[TEZOS_OPERATION_HISTORY_BlOCK_TIMESTAMP_LOAD_SUCCESS]', stateExtended)
 
-            // sort state according to time stamp 
+            // sort state according to time stamp
             return {
                 ...stateExtended,
                 ids: stateExtended.ids.length < 2 ? stateExtended.ids.slice() :

@@ -8,15 +8,15 @@ import { RegistrationComponent } from './auth/registration/registration.componen
 import { ForgotComponent } from './auth/forgot/forgot.component';
 
 export const AppRouting: Routes = [
-  
+
   // auth
   { path: 'auth', component: AuthComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/registration', component: RegistrationComponent },
   { path: 'auth/forgot', component: ForgotComponent },
-  
-  { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
-  
+
+  { path: 'tezos', loadChildren: './app/tezos/tezos.module#TezosModule' },
+
   // routing for electron
   { path: '', redirectTo: '/', pathMatch: 'full' },
   // { path: '**', component: PageNotFoundComponent }

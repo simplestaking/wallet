@@ -1,9 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser'
-import { NgModule, ErrorHandler, Injectable } from '@angular/core'
-import { RouterModule, Routes,PreloadAllModules } from '@angular/router'
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -20,53 +19,40 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { environment } from '../environments/environment';
 
-import { SharedModule } from './shared/shared.module'
+import { SharedModule } from './shared/shared.module';
 
-import { AppComponent } from './app.component'
-import { AppRouting } from './app.routing'
-import { AppInterceptor } from './app.interceptor'
-import { reducers, metaReducers } from './app.reducers';
+import { AppComponent } from './app.component';
+import { AppRouting } from './app.routing';
+import { AppInterceptor } from './app.interceptor';
+import { metaReducers, reducers } from './app.reducers';
 
-import { AllEffects } from './app.effects'
+import { AllEffects } from './app.effects';
 
-import { AuthLoginEffects } from './auth/login/login.effects'
-import { AuthRegistrationEffects } from './auth/registration/registration.effects'
-import { AuthForgotEffects } from './auth/forgot/forgot.effects'
+import { AuthLoginEffects } from './auth/login/login.effects';
+import { AuthRegistrationEffects } from './auth/registration/registration.effects';
+import { AuthForgotEffects } from './auth/forgot/forgot.effects';
 
 // import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
+  MatCardModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatProgressSpinnerModule,
-  MatSnackBarModule,
-  MatCardModule,
-  // MatCheckboxModule,
-  // MatChipsModule,
-  // MatDatepickerModule,
-  // MatDialogModule,
-  // MatExpansionModule,
-  // MatGridListModule,
-  // MatMenuModule,
-  // MatPaginatorModule,
-  // MatRadioModule,
-  // MatSliderModule,
-  // MatSlideToggleModule,
-  // MatSortModule,
-  // MatStepperModule,
 } from '@angular/material';
 
 import { AuthComponent } from './auth/auth.component';
@@ -77,25 +63,19 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
 @NgModule({
   declarations: [
     AppComponent,
-
     AuthComponent,
     LoginComponent,
     RegistrationComponent,
     ForgotComponent,
-
-
   ],
   imports: [
     BrowserModule,
     SharedModule,
     HttpModule,
     HttpClientModule,
-    
     NgxElectronModule,
-
     // NoopAnimationsModule,
     BrowserAnimationsModule,
-    
     ReactiveFormsModule,
 
     RouterModule.forRoot(AppRouting, {
@@ -104,20 +84,16 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
     }),
 
     // Connects RouterModule with StoreModule
-    StoreRouterConnectingModule.forRoot({
-    }),
-    
-    // Set reducers  
+    StoreRouterConnectingModule.forRoot({}),
+    // Set reducers
     StoreModule.forRoot(reducers, { metaReducers }),
 
     // Set side effects
     EffectsModule.forRoot([
       AllEffects,
-
       AuthLoginEffects,
       AuthRegistrationEffects,
       AuthForgotEffects,
-
     ]),
 
     DeviceDetectorModule.forRoot(),
@@ -166,7 +142,6 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
   ],
   exports: [
     BrowserModule,
-
     MatAutocompleteModule,
     MatButtonModule,
     // MatButtonToggleModule,
@@ -208,4 +183,4 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
