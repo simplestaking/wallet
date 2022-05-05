@@ -15,7 +15,7 @@ export const AppRouting: Routes = [
   { path: 'auth/registration', component: RegistrationComponent },
   { path: 'auth/forgot', component: ForgotComponent },
 
-  { path: 'tezos', loadChildren: './app/tezos/tezos.module#TezosModule' },
+  { path: 'tezos', loadChildren: 'app/tezos/tezos.module#TezosModule' },
 
   // routing for electron
   { path: '', redirectTo: '/', pathMatch: 'full' },

@@ -1,9 +1,10 @@
 
+import {throwError as observableThrowError,  Observable, of, timer, defer } from 'rxjs';
+
 import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of, timer, defer } from 'rxjs';
 import { map, withLatestFrom, switchMap, flatMap, catchError, takeUntil, tap } from 'rxjs/operators';
 
 import { initializeWallet, head } from 'tezos-wallet'
@@ -97,7 +98,7 @@ export class TezosNodeEffects {
                                     type: 'TEZOS_NODE_PRICE_UPDATE_ERROR',
                                     payload: error.message,
                                 });
-                                return Observable.throw(error);
+                                return observableThrowError(error);
                                 // return caught;
                             }),
                         )
@@ -122,7 +123,7 @@ export class TezosNodeEffects {
                             type: 'TEZOS_NODE_HISTORICAL_PRICE_UPDATE_ERROR',
                             payload: error.message,
                         });
-                        return Observable.throw(error);
+                        return observableThrowError(error);
                         //return caught;
                     }),
                 ),

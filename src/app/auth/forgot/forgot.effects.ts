@@ -1,12 +1,12 @@
 import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { withLatestFrom, flatMap, map, catchError } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class AuthForgotEffects {
@@ -28,7 +28,7 @@ export class AuthForgotEffects {
 
     constructor(
         private actions$: Actions,
-        private http: Http,
+        private http: HttpClient,
         private store: Store<any>,
         private router: Router,
         public fbAuth: AngularFireAuth,

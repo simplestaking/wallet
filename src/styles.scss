@@ -1,414 +1,414 @@
-//@import '~@angular/material/theming';
-//
-//@include mat-core();
-//
-//// available color palettes: https://material.io/design/color/
-//$simple-primary: mat-palette($mat-blue, A400);
-//$simple-accent:  mat-palette($mat-pink, A200, A100, A400);
-//$simple-warn:    mat-palette($mat-red);
-//
-//// create the theme object (a Sass map containing all of the palettes)
-//$simple-theme: mat-light-theme($simple-primary, $simple-accent, $simple-warn);
-//
-//
-//
-//// button
-//.mat-raised-button:not([class*=mat-elevation-z]) {
-//    box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09) !important;
-//}
-//
-//// raised button
-//.mat-raised-button:not([disabled]):active:not([class*=mat-elevation-z]) {
-//    box-shadow: 0 3px 3px -1px rgba(0,0,0,.2), 0 5px 7px 1px rgba(0,0,0,.14), 0 0px 11px 0px rgba(0,0,0,.12) !important;
-//}
-//
-//// card
-//.mat-card:not([class*=mat-elevation-z]) {
-//    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important
-//    // box-shadow: 0 0px 0px -1px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important
-//    // box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 0px 0px 0 rgba(0,0,0,.09) !important;
-//}
-//
-//// no border inside stepper
-//.stepper .mat-card:not([class*=mat-elevation-z]) {
-//    box-shadow: none;
-//}
-//
-//// table
-//.mat-table:not([class*=mat-elevation-z]) {
-//    box-shadow: none;
-//    // box-shadow:  0 0px 1px -1px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09) !important
-//}
-//
-//// menu
-//.mat-menu-panel {
-//    box-shadow:  0 0px 5px -1px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09) !important
-//}
-//
-//// select panel
-//.mat-select-panel:not([class*=mat-elevation-z]) {
-//    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
-//    border-radius: 2px;
-//    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
-//    // border-radius: 2px;
-//}
-//
-//// autocomplete
-//.mat-autocomplete-panel:not([class*=mat-elevation-z]) {
-//    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
-//    border-radius: 2px;
-//    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
-//    // border-radius: 2px;
-//}
-//
-//// backgorund
-//.mat-drawer-container {
-//    background-color: #f5f5f5;
-//}
-//
-//// preload images
-//body:after {
-//    display:none;
-//    content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg') url('/assets/trezor_verify_detail.svg') url('/assets/trezor_confirm_transaction.svg');
-//}
-//
-//// body {
-////     user-select: none;
-//// }
-//
-//// set dragable for electron
-//mat-toolbar {
-//    -webkit-user-select: none;
-//    -webkit-app-region: drag;
-//}
-//.sidenav-area {
-//    // -webkit-user-select: none;
-//    // -webkit-app-region: drag;
-//}
-//
-//
-//// stepper
-//.stepper {
-//    display: flex;
-//    align-items: center;
-//    justify-content: center;
-//}
-//
-//.stepper mat-card-header {
-//    display: flex;
-//    align-items: center;
-//    justify-content: center;
-//}
-//
-//.stepper mat-card {
-//    width: 700px;
-//}
-//
-//.stepper .mat-card:not([class*=mat-elevation-z]) {
-//    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09)
-//}
-//
-//.stepper .mat-h1 {
-//    font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
-//}
-//
-//// center trezor icon and next button
-//.stepper .tezos-trezor-connect {
-//    display: flex;
-//    align-items: center;
-//    flex-direction: column;
-//}
-//
-//.mat-horizontal-stepper-header{
-//    pointer-events: none !important;
-//}
-//
-//// close button for stepper
-//.close {
-//    display: flex;
-//    justify-content: flex-end;
-//}
-//
-//.close button {
-//    font-weight: 400;
-//    padding-left: 8px;
-//}
-//
-//.close button mat-icon {
-//    margin-top: 8px;
-//    font-size: 14px;
-//}
-//
-//// selected stepper font
-//.mat-step-label-selected {
-//    font-weight: 500;
-//}
-//
-//mat-horizontal-stepper .mat-step-header .mat-step-icon-not-touched {
-//    background-color:whitesmoke;
-//    color: gray
-//}
-//
-//// stepper button text color
-//mat-horizontal-stepper .mat-step-header .mat-step-label.mat-step-label-active {
-//    color: rgba(0,0,0,.6);
-//}
-//
-//// remove focus from stepper
-//mat-horizontal-stepper .mat-step-header.cdk-program-focused {
-//    background-color: initial;
-//}
-//
-//// remove hover background
-//mat-horizontal-stepper .mat-step-header:hover {
-//    background-color: initial;
-//}
-//
-//
-//.tezos-stepper-card {
-//    display:flex;
-//    align-items:center;
-//    flex-direction: column;
-//    padding: 30px;
-//}
-//
-//.tezos-stepper-card-row {
-//    display:flex;
-//    justify-content: center;
-//    flex-direction: row;
-//}
-//
-//.tezos-stepper-card-column {
-//    display:flex;
-//    align-items: center;
-//    flex-direction: column;
-//    width: 390px;
-//    border-radius:5px
-//}
-//
-//.tezos-stepper-card-qrcode svg {
-//    width: 100px;
-//    padding: 10px;
-//    margin: 20px 0px 15px 0px;
-//    background-color: white;
-//}
-//
-//.tezos-stepper-card-address {
-//    background-color: white;
-//    padding: 12px 0px 12px 0px;
-//    border-radius: 3px;
-//}
-//
-//.tezos-stepper-card .mat-card {
-//    padding: 0px 30px 20px 30px !important;
-//    background-color: #f5f6f8;
-//    width:320px;
-//    border: 1px #e6e8eb solid;
-//    border-radius:3px;
-//}
-//
-//.tezos-stepper-card .mat-card-header {
-//    background-color: white;
-//    border-radius: 3px;
-//    margin: -20px -30px 0px -30px;
-//    padding: 20px 30px 0px 30px;
-//}
-//
-//.tezos-stepper-card .mat-card-content {
-//    padding: 30px 0px 20px 0px;
-//    text-align: center;
-//}
-//
-//.tezos-stepper-card .mat-card-header-text {
-//    margin: initial;
-//}
-//
-//
-//// checkbox remove animation and change border
-//.mat-checkbox-frame {
-//    border-width: 1px !important;
-//    border-color: #00000075;
-//}
-//
-//// remove white like next to menu
-//.mat-drawer-container {
-//    background-color: whitesmoke !important;
-//}
-//
-///* form field */
-//
-//// // add missing border to form field outline
-//// mat-form-field .mat-form-field-outline .mat-form-field-outline-gap {
-////     border-top-color: initial !important;
-//// }
-//
-//// // move form field label
-//// .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-////     transform: translateY(-2.375em) scale(0.75) !important;
-//// }
-//
-//// // reset form field outline
-//// .mat-form-field-appearance-outline .mat-form-field-outline {
-////     top: 0 !important;
-//// }
-//
-//// // center form field placeholder
-//// .mat-form-field-label-wrapper {
-////     top: -1.0em;
-////     padding-top: 0.5em;
-//// }
-//// .mat-form-field-appearance-outline .mat-form-field-label {
-////     margin-top: 0.5em;
-//// }
-//
-//// // move form field label out off imput
-//// .mat-form-field-infix {
-////     border-top: initial !important;
-//// }
-//
-//// //set form field height
-//// .mat-form-field {
-////     height: 6.5em !important;
-//// }
-//
-//// // add padding to form
-//// .mat-form-field-appearance-outline .mat-form-field-infix {
-////     padding: 1.25em 0 1.25em 0;
-//// }
-//
-//// center form field arrow arrow
-//.mat-select-arrow-wrapper {
-//    padding-top: 0.5em
-//}
-//
-//// center form field text
-//.mat-form-field-appearance-outline .mat-form-field-infix {
-//    padding: 0.725em 0 1.12em 0;
-//}
-//
-///*  mat-select  */
-//.tezos-wallet-list-option {
-//    display: flex;
-//    justify-content:space-between;
-//    align-items: center;
-//    font-size: 14px;
-//}
-//
-//.tezos-wallet-list-option-left {
-//    display:flex;
-//    justify-content: flex-start;
-//    align-items:center;
-//}
-//
-//.tezos-wallet-list-option-name {
-//    justify-content: flex-start;margin-left: 30px
-//}
-//
-//.tezos-wallet-list-option-balance {
-//    justify-content: flex-end;
-//}
-//
-//.tezos-wallet-list-option-identicon {
-//    position: absolute;
-//}
-//
-//.tezos-wallet-list-option-opacity {
-//    opacity: 0.2;
-//    margin-left: 10px;
-//}
-//
-///* tezos trezor verify stepper   */
-//
-//.tezos-trezor-verify {
-//    display:flex;
-//    align-items:center;
-//    flex-direction: column;
-//}
-//
-//.tezos-trezor-verify-step {
-//    display:flex;
-//    justify-content: center;
-//    flex-direction: row;
-//    padding:30px
-//}
-//
-//.tezos-trezor-verify-info {
-//    display:flex;
-//    align-items: center;
-//    flex-direction: column;
-//    width: 390px;
-//    border-radius:5px
-//}
-//
-//mat-card.tezos-trezor-verify-card {
-//    background-color: #f5f6f8;
-//    width:314px;
-//    height: 160px;
-//    padding:20px
-//}
-//
-//mat-card.tezos-trezor-verify-card-short {
-//    background-color: #f5f6f8;
-//    width:314px;
-//    height: 80px;
-//    padding:20px
-//}
-//
-//mat-card-content .tezos-trezor-verify-input {
-//    display: flex;
-//    font-weight:500;
-//    background-color: #e3e5e8;
-//    border-radius: 2px;
-//    padding: 13px 10px 13px 10px;
-//    margin: 7px 0px 7px 0px;
-//    height: 15px;
-//    width: 295px;
-//    padding-right: 10px;
-//}
-//
-//.tezos-trezor-verify-warning {
-//    padding:17px;
-//    font-weight: 300;
-//}
-//
-//.tezos-stepper-next{
-//    font-size:18px;
-//}
-//
-//.app-status-bar {
-//    position:fixed;
-//    top:33px;
-//    margin-left:175px;
-//    z-index:1;
-//    height:40px;
-//    background-color: transparent;
-//}
-//
-//// change button icon size
-//button .svg-icon {
-//    width: 18px !important;
-//    height: 14px !important;
-//    vertical-align: -1px !important;
-//}
-//
-//// change dialog backdrop
-//.cdk-overlay-dark-backdrop {
-//    background: #ffffff;
-//    opacity: 0.8 !important;
-//}
-//
-//.mat-dialog-container {
-//    box-shadow: 0 1px 1px 0px rgba(0, 0, 0, 0.05), 0 1px 1px 0px rgba(0, 0, 0, 0.05), 0 0px 10px 5px rgba(0, 0, 0, 0.05) !important;
-//    border-radius: 4px !important;
-//    padding: 0px !important;
-//}
-//
-//.mat-tooltip {
-//    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif !important;
-//    background-color: #3f4859 !important;
-//    border-radius: 5px !important;
-//    padding: 20px !important;
-//    opacity: 0.95;
-//}
-//
-//@include angular-material-theme($simple-theme);
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+// available color palettes: https://material.io/design/color/
+$simple-primary: mat-palette($mat-blue, A400);
+$simple-accent:  mat-palette($mat-pink, A200, A100, A400);
+$simple-warn:    mat-palette($mat-red);
+
+// create the theme object (a Sass map containing all of the palettes)
+$simple-theme: mat-light-theme($simple-primary, $simple-accent, $simple-warn);
+
+
+
+// button
+.mat-raised-button:not([class*=mat-elevation-z]) {
+    box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09) !important;
+}
+
+// raised button
+.mat-raised-button:not([disabled]):active:not([class*=mat-elevation-z]) {
+    box-shadow: 0 3px 3px -1px rgba(0,0,0,.2), 0 5px 7px 1px rgba(0,0,0,.14), 0 0px 11px 0px rgba(0,0,0,.12) !important;
+}
+
+// card
+.mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important
+    // box-shadow: 0 0px 0px -1px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important
+    // box-shadow: 0 1px 1px -1px rgba(0,0,0,.09), 0 1px 1px 0 rgba(0,0,0,.09), 0 0px 0px 0 rgba(0,0,0,.09) !important;
+}
+
+// no border inside stepper
+.stepper .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+}
+
+// table
+.mat-table:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+    // box-shadow:  0 0px 1px -1px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09) !important
+}
+
+// menu
+.mat-menu-panel {
+    box-shadow:  0 0px 5px -1px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 1px 1px 0 rgba(0, 0, 0, 0.09) !important
+}
+
+// select panel
+.mat-select-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
+    border-radius: 2px;
+    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
+    // border-radius: 2px;
+}
+
+// autocomplete
+.mat-autocomplete-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.09), 0 1px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09) !important;
+    border-radius: 2px;
+    // box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09), 0 0px 1px 0 rgba(0, 0, 0, 0.09) !important;
+    // border-radius: 2px;
+}
+
+// backgorund
+.mat-drawer-container {
+    background-color: #f5f5f5;
+}
+
+// preload images
+body:after {
+    display:none;
+    content: url('/assets/trezor_connected.svg') url('/assets/trezor_disconnected.svg') url('/assets/trezor_verify_detail.svg') url('/assets/trezor_confirm_transaction.svg');
+}
+
+// body {
+//     user-select: none;
+// }
+
+// set dragable for electron
+mat-toolbar {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+.sidenav-area {
+    // -webkit-user-select: none;
+    // -webkit-app-region: drag;
+}
+
+
+// stepper
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepper mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepper mat-card {
+    width: 700px;
+}
+
+.stepper .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09), 0 0px 0px 0 rgba(0, 0, 0, 0.09)
+}
+
+.stepper .mat-h1 {
+    font: 300 24px/32px Roboto,"Helvetica Neue",sans-serif;
+}
+
+// center trezor icon and next button
+.stepper .tezos-trezor-connect {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+
+// close button for stepper
+.close {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close button {
+    font-weight: 400;
+    padding-left: 8px;
+}
+
+.close button mat-icon {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+// selected stepper font
+.mat-step-label-selected {
+    font-weight: 500;
+}
+
+mat-horizontal-stepper .mat-step-header .mat-step-icon-not-touched {
+    background-color:whitesmoke;
+    color: gray
+}
+
+// stepper button text color
+mat-horizontal-stepper .mat-step-header .mat-step-label.mat-step-label-active {
+    color: rgba(0,0,0,.6);
+}
+
+// remove focus from stepper
+mat-horizontal-stepper .mat-step-header.cdk-program-focused {
+    background-color: initial;
+}
+
+// remove hover background
+mat-horizontal-stepper .mat-step-header:hover {
+    background-color: initial;
+}
+
+
+.tezos-stepper-card {
+    display:flex;
+    align-items:center;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.tezos-stepper-card-row {
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.tezos-stepper-card-column {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 390px;
+    border-radius:5px
+}
+
+.tezos-stepper-card-qrcode svg {
+    width: 100px;
+    padding: 10px;
+    margin: 20px 0px 15px 0px;
+    background-color: white;
+}
+
+.tezos-stepper-card-address {
+    background-color: white;
+    padding: 12px 0px 12px 0px;
+    border-radius: 3px;
+}
+
+.tezos-stepper-card .mat-card {
+    padding: 0px 30px 20px 30px !important;
+    background-color: #f5f6f8;
+    width:320px;
+    border: 1px #e6e8eb solid;
+    border-radius:3px;
+}
+
+.tezos-stepper-card .mat-card-header {
+    background-color: white;
+    border-radius: 3px;
+    margin: -20px -30px 0px -30px;
+    padding: 20px 30px 0px 30px;
+}
+
+.tezos-stepper-card .mat-card-content {
+    padding: 30px 0px 20px 0px;
+    text-align: center;
+}
+
+.tezos-stepper-card .mat-card-header-text {
+    margin: initial;
+}
+
+
+// checkbox remove animation and change border
+.mat-checkbox-frame {
+    border-width: 1px !important;
+    border-color: #00000075;
+}
+
+// remove white like next to menu
+.mat-drawer-container {
+    background-color: whitesmoke !important;
+}
+
+/* form field */
+
+// // add missing border to form field outline
+// mat-form-field .mat-form-field-outline .mat-form-field-outline-gap {
+//     border-top-color: initial !important;
+// }
+
+// // move form field label
+// .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+//     transform: translateY(-2.375em) scale(0.75) !important;
+// }
+
+// // reset form field outline
+// .mat-form-field-appearance-outline .mat-form-field-outline {
+//     top: 0 !important;
+// }
+
+// // center form field placeholder
+// .mat-form-field-label-wrapper {
+//     top: -1.0em;
+//     padding-top: 0.5em;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-label {
+//     margin-top: 0.5em;
+// }
+
+// // move form field label out off imput
+// .mat-form-field-infix {
+//     border-top: initial !important;
+// }
+
+// //set form field height
+// .mat-form-field {
+//     height: 6.5em !important;
+// }
+
+// // add padding to form
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//     padding: 1.25em 0 1.25em 0;
+// }
+
+// center form field arrow arrow
+.mat-select-arrow-wrapper {
+    padding-top: 0.5em
+}
+
+// center form field text
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.725em 0 1.12em 0;
+}
+
+/*  mat-select  */
+.tezos-wallet-list-option {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.tezos-wallet-list-option-left {
+    display:flex;
+    justify-content: flex-start;
+    align-items:center;
+}
+
+.tezos-wallet-list-option-name {
+    justify-content: flex-start;margin-left: 30px
+}
+
+.tezos-wallet-list-option-balance {
+    justify-content: flex-end;
+}
+
+.tezos-wallet-list-option-identicon {
+    position: absolute;
+}
+
+.tezos-wallet-list-option-opacity {
+    opacity: 0.2;
+    margin-left: 10px;
+}
+
+/* tezos trezor verify stepper   */
+
+.tezos-trezor-verify {
+    display:flex;
+    align-items:center;
+    flex-direction: column;
+}
+
+.tezos-trezor-verify-step {
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+    padding:30px
+}
+
+.tezos-trezor-verify-info {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 390px;
+    border-radius:5px
+}
+
+mat-card.tezos-trezor-verify-card {
+    background-color: #f5f6f8;
+    width:314px;
+    height: 160px;
+    padding:20px
+}
+
+mat-card.tezos-trezor-verify-card-short {
+    background-color: #f5f6f8;
+    width:314px;
+    height: 80px;
+    padding:20px
+}
+
+mat-card-content .tezos-trezor-verify-input {
+    display: flex;
+    font-weight:500;
+    background-color: #e3e5e8;
+    border-radius: 2px;
+    padding: 13px 10px 13px 10px;
+    margin: 7px 0px 7px 0px;
+    height: 15px;
+    width: 295px;
+    padding-right: 10px;
+}
+
+.tezos-trezor-verify-warning {
+    padding:17px;
+    font-weight: 300;
+}
+
+.tezos-stepper-next{
+    font-size:18px;
+}
+
+.app-status-bar {
+    position:fixed;
+    top:33px;
+    margin-left:175px;
+    z-index:1;
+    height:40px;
+    background-color: transparent;
+}
+
+// change button icon size
+button .svg-icon {
+    width: 18px !important;
+    height: 14px !important;
+    vertical-align: -1px !important;
+}
+
+// change dialog backdrop
+.cdk-overlay-dark-backdrop {
+    background: #ffffff;
+    opacity: 0.8 !important;
+}
+
+.mat-dialog-container {
+    box-shadow: 0 1px 1px 0px rgba(0, 0, 0, 0.05), 0 1px 1px 0px rgba(0, 0, 0, 0.05), 0 0px 10px 5px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 4px !important;
+    padding: 0px !important;
+}
+
+.mat-tooltip {
+    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif !important;
+    background-color: #3f4859 !important;
+    border-radius: 5px !important;
+    padding: 20px !important;
+    opacity: 0.95;
+}
+
+@include angular-material-theme($simple-theme);

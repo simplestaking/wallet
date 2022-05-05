@@ -8,8 +8,6 @@ import { environment } from '../environments/environment';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
-import { ofRoute } from './shared/utils/rxjs/operators';
-
 @Injectable()
 export class AllEffects {
 
@@ -37,7 +35,7 @@ export class AllEffects {
 
     @Effect()
     Init$ = defer(() => {
-        // disable online data 
+        // disable online data
         environment.firebase.disableNetwork && this.db.firestore.disableNetwork();
         return of({ type: 'HEARTBEAT' })
     });

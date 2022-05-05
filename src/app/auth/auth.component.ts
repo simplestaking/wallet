@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Store } from '@ngrx/store'
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-auth',
@@ -16,7 +16,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     // https://angularfirebase.com/snippets/angularfire2-version-4-authentication-service/
     // this.fbAuth.auth.signOut()
 
-    // get curent user status 
+    // get curent user status
     this.fbAuth.authState.subscribe(user => {
       // console.log('[auth] state', user)
 

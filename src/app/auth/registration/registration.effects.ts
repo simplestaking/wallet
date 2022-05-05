@@ -4,8 +4,8 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { withLatestFrom, flatMap, tap, map, catchError } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class AuthRegistrationEffects {

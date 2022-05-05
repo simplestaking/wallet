@@ -1,6 +1,5 @@
-import { OperatorFunction } from 'rxjs/interfaces';
+import { OperatorFunction ,  Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 interface ActionWithPayload extends Action {

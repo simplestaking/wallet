@@ -1,6 +1,7 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { map, filter, catchError } from 'rxjs/operators';
 import { Action, Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material';
@@ -30,7 +31,7 @@ export class AppInterceptor implements HttpInterceptor {
                     verticalPosition: 'top',
                 });
 
-                return Observable.throw(error)
+                return observableThrowError(error)
             }),
         );
     }

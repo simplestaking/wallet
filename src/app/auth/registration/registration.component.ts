@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormGroupDirective, NgForm, FormBuilder, Validators } from '@angular/forms'
 import { ErrorStateMatcher } from '@angular/material/core';

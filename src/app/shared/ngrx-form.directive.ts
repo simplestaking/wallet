@@ -1,7 +1,7 @@
 import { Directive, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store'
 import { FormControl, FormGroup, FormGroupDirective, NgForm, FormBuilder, Validators } from '@angular/forms'
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -28,7 +28,6 @@ export class ForgotComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     // initialize component
     this.store.dispatch({
       type: "AUTH_FORGOT_INIT",
@@ -62,7 +61,7 @@ export class ForgotComponent implements OnInit {
 
   resetPassword() {
 
-    // mark input 
+    // mark input
     this.forgotForm.controls.email.markAsTouched()
 
     // check validity
@@ -71,7 +70,7 @@ export class ForgotComponent implements OnInit {
     // dispatch only if valid
     if (this.forgotForm.valid) {
 
-      // dispatch action with login 
+      // dispatch action with login
       this.store.dispatch({
         type: "AUTH_FORGOT",
         payload: {
@@ -85,7 +84,7 @@ export class ForgotComponent implements OnInit {
 
 }
 
-// Error when invalid control is dirty, touched, or submitted. 
+// Error when invalid control is dirty, touched, or submitted.
 export class EmailForgotErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;

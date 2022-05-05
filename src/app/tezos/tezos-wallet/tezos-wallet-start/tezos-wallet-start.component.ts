@@ -29,14 +29,14 @@ export class TezosWalletStartComponent implements OnInit {
 
     this.deviceInfo = this.deviceService.getDeviceInfo();
     console.log('[TezosWalletStart][device info]', this.deviceInfo.os)
-   
-    // recognize host os 
+
+    // recognize host os
     if (this.deviceInfo.os === 'windows') {
       this.donwloadUrlConfig = this.assetUrl + 'latest.yml'
     } else if (this.deviceInfo.os === 'mac') {
       this.donwloadUrlConfig = this.assetUrl + 'latest-mac.yml'
     }
-  
+
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'text/html'

@@ -1,69 +1,54 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild,
-  Renderer,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  TemplateRef,
-} from '@angular/core';
-import {
-  trigger,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
-import { MouseEvent } from '@swimlane/ngx-charts/release/events';
-import { TooltipDirective, TooltipContentComponent } from '@swimlane/ngx-charts';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, TemplateRef, ViewChild, } from '@angular/core';
+import { trigger } from '@angular/animations';
+import { TooltipDirective } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'g[ngx-charts-tooltip-area-nav]',
   template: `
     <svg:g>
-      <svg:rect 
-        class="tooltip-area" 
-        [attr.x]="0" 
-        y="0" 
-        [attr.width]="dims.width" 
-        [attr.height]="dims.height" 
-        style="opacity: 0; cursor: 'auto';" 
-        (mouseenter)="showTooltip()" 
+      <svg:rect
+        class="tooltip-area"
+        [attr.x]="0"
+        y="0"
+        [attr.width]="dims.width"
+        [attr.height]="dims.height"
+        style="opacity: 0; cursor: 'auto';"
+        (mouseenter)="showTooltip()"
         (mousemove)="mouseMove($event)"
         (mouseleave)="hideTooltip()"
       />
-    	<xhtml:ng-template #defaultTooltipTemplate let-model="model">
-    		<xhtml:div class="area-tooltip-container">
-    			<xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
-    				<span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></span>{{getToolTipText(tooltipItem)}}
-    			</xhtml:div>
-    		</xhtml:div>
-    	</xhtml:ng-template>
-      <svg:rect 
-        #tooltipAnchor 
+      <xhtml:ng-template #defaultTooltipTemplate let-model="model">
+        <xhtml:div class="area-tooltip-container">
+          <xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
+            <span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></span>
+            {{getToolTipText(tooltipItem)}}
+          </xhtml:div>
+        </xhtml:div>
+      </xhtml:ng-template>
+      <svg:rect
+        #tooltipAnchor
         [@animationState]="'active'"
-        class="tooltip-anchor" 
-        [attr.x]="anchorPos" 
-        y="0" 
-        [attr.width]="1" 
+        class="tooltip-anchor"
+        [attr.x]="anchorPos"
+        y="0"
+        [attr.width]="1"
         [attr.height]="dims.height"
-        [style.opacity]="anchorOpacity" 
-        [style.pointer-events]="'none'"          
-        ngx-tooltip 
-        [tooltipDisabled]="tooltipDisabled" 
-        [tooltipPlacement]="'top'" 
-        [tooltipType]="'tooltip'" 
-        [tooltipSpacing]="15" 
-        [tooltipTemplate]="tooltipTemplate ? tooltipTemplate: defaultTooltipTemplate" 
-        [tooltipContext]="anchorValues" 
-        [tooltipImmediateExit]="true" 
-        [tooltipShowCaret]="false" 
-        [tooltipHideTimeout]=0 
-        [tooltipShowTimeout]=0  
+        [style.opacity]="anchorOpacity"
+        [style.pointer-events]="'none'"
+        ngx-tooltip
+        [tooltipDisabled]="tooltipDisabled"
+        [tooltipPlacement]="'top'"
+        [tooltipType]="'tooltip'"
+        [tooltipSpacing]="15"
+        [tooltipTemplate]="tooltipTemplate ? tooltipTemplate: defaultTooltipTemplate"
+        [tooltipContext]="anchorValues"
+        [tooltipImmediateExit]="true"
+        [tooltipShowCaret]="false"
+        [tooltipHideTimeout]=0
+        [tooltipShowTimeout]=0
       />
     </svg:g>
-    `,
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('animationState', [
@@ -164,8 +149,8 @@ export class TooltipAreaNavComponent {
     if (this.anchorPos !== this.lastAnchorPos) {
       const toolTipComponent = this.ttp['component'];
 
-     // console.log('update')
-    
+      // console.log('update')
+
       this.anchorOpacity = 0.7;
       this.hover.emit({
         value: closestPoint
@@ -218,7 +203,7 @@ export class TooltipAreaNavComponent {
   }
 
   showTooltip() {
-   this.ttp.showTooltip(true);
+    this.ttp.showTooltip(true);
   }
 
   hideTooltip() {

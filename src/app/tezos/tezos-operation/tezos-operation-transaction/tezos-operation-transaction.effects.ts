@@ -32,16 +32,16 @@ export class TezosOperationTransactionEffects {
                     state.tezos.tezosWalletDetail.publicKeyHash,
                 // set tezos node
                 node: state.tezos.tezosNode.api,
-                // set wallet type: WEB, TREZOR_ONE, TREZOR_T
+                // set wallet type: WEB, TREZOR_ONE, TREZOR_T, LEDGER
                 type: action.payload.walletType,
                 // set HD path for HW wallet
                 path: state.tezos.tezosWalletDetail.path ? state.tezos.tezosWalletDetail.path : undefined
             })),
 
-            // send xtz 
+            // send xtz
             flatMap(stateWallet => state.tezos.tezosWalletDetail.script ?
 
-                // send xtz smart contract 
+                // send xtz smart contract
                 of(stateWallet).pipe(
                     transaction(stateWallet => ({
                         to: state.tezos.tezosOperationTransaction.form.from,

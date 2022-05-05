@@ -1,13 +1,13 @@
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { withLatestFrom, flatMap, tap, map, catchError } from 'rxjs/operators';
 
-import { AngularFireAuth } from 'angularfire2/auth';
+import { HttpClient } from '@angular/common/http';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable()
 export class AuthLoginEffects {
@@ -27,7 +27,7 @@ export class AuthLoginEffects {
         catchError(error => of({ type: 'AUTH_LOGIN_ERROR', payload: error })),
     )
 
-    // login success redirect 
+    // login success redirect
     @Effect()
     AuthLoginSuccessRedicert$: Observable<any> = this.actions$.pipe(
         ofType('AUTH_LOGIN_SUCCESS'),
@@ -35,7 +35,7 @@ export class AuthLoginEffects {
         map(action => ({ type: 'AUTH_LOGIN_SUCCESS_REDIRECT' })),
     )
 
-    // logout 
+    // logout
     @Effect()
     AuthLogout$: Observable<any> = this.actions$.pipe(
         ofType('AUTH_LOGOUT'),
@@ -46,14 +46,14 @@ export class AuthLoginEffects {
         catchError(error => of({ type: 'AUTH_LOGOUT_ERROR', payload: error }))
     )
 
-    // // clean/reload state after login logout 
+    // // clean/reload state after login logout
     // @Effect()
     // AuthClean$: Observable<any> = this.actions$.pipe(
     //     ofType('AUTH_LOGIN_SUCCESS', 'AUTH_LOGOUT_SUCCESS'),
     //     map(action => ({ type: 'ACCOUNT_CLEAN_ALL' })),
     // )
 
-    // // logout success redirect 
+    // // logout success redirect
     // @Effect()
     // AuthLogoutSuccessRedicert$: Observable<any> = this.actions$.pipe(
     //     ofType('AUTH_LOGOUT_SUCCESS'),
@@ -63,7 +63,7 @@ export class AuthLoginEffects {
 
     constructor(
         private actions$: Actions,
-        private http: Http,
+        private http: HttpClient,
         private store: Store<any>,
         private router: Router,
         public fbAuth: AngularFireAuth,
